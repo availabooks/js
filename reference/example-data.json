@@ -1,0 +1,1076 @@
+{
+  "season": 2027,
+  "members": [
+    {
+      "firstName": "Maya",
+      "lastName": "Thompson",
+      "email": "maya.thompson@example.com",
+      "duesPaid": true,
+      "volunteerHours": 24
+    },
+    {
+      "firstName": "Ava",
+      "lastName": "Lopez",
+      "email": "ava.lopez@example.com",
+      "duesPaid": true,
+      "volunteerHours": 12
+    },
+    {
+      "firstName": "Ben",
+      "lastName": "Okafor",
+      "email": "ben.okafor@example.com",
+      "duesPaid": false,
+      "volunteerHours": 4
+    },
+    {
+      "firstName": "Cam",
+      "lastName": "Nguyen",
+      "email": "cam.nguyen@example.com",
+      "duesPaid": true,
+      "volunteerHours": 9.5
+    },
+    {
+      "firstName": "Dev",
+      "lastName": "Patel",
+      "email": "dev.patel@example.com",
+      "duesPaid": true,
+      "volunteerHours": 15
+    },
+    {
+      "firstName": "Elena",
+      "lastName": "Rossi",
+      "email": "elena.rossi@example.com",
+      "duesPaid": false,
+      "volunteerHours": 6.5
+    },
+    {
+      "firstName": "Farah",
+      "lastName": "Haddad",
+      "email": "farah.haddad@example.com",
+      "duesPaid": true,
+      "volunteerHours": 11
+    },
+    {
+      "firstName": "Gabe",
+      "lastName": "Martinez",
+      "email": "gabe.martinez@example.com",
+      "duesPaid": false,
+      "volunteerHours": 2
+    },
+    {
+      "firstName": "Hana",
+      "lastName": "Kim",
+      "email": "hana.kim@example.com",
+      "duesPaid": true,
+      "volunteerHours": 18.5
+    },
+    {
+      "firstName": "Isaac",
+      "lastName": "Cohen",
+      "email": "isaac.cohen@example.com",
+      "duesPaid": true,
+      "volunteerHours": 7
+    },
+    {
+      "firstName": "Jordan",
+      "lastName": "Lee",
+      "email": "jordan.lee@example.com",
+      "duesPaid": false,
+      "volunteerHours": 0
+    },
+    {
+      "firstName": "Keisha",
+      "lastName": "Brown",
+      "email": "keisha.brown@example.com",
+      "duesPaid": true,
+      "volunteerHours": 13.5
+    }
+  ],
+  "beds": [
+    {
+      "id": "B1",
+      "name": "Bed 1",
+      "sizeSqFt": 32,
+      "sun": "full",
+      "zone": "north"
+    },
+    {
+      "id": "B2",
+      "name": "Bed 2",
+      "sizeSqFt": 32,
+      "sun": "full",
+      "zone": "north"
+    },
+    {
+      "id": "B3",
+      "name": "Bed 3",
+      "sizeSqFt": 48,
+      "sun": "full",
+      "zone": "south"
+    },
+    {
+      "id": "B4",
+      "name": "Bed 4",
+      "sizeSqFt": 48,
+      "sun": "partial",
+      "zone": "south"
+    },
+    {
+      "id": "B5",
+      "name": "Bed 5",
+      "sizeSqFt": 64,
+      "sun": "full",
+      "zone": "south"
+    },
+    {
+      "id": "B6",
+      "name": "Bed 6",
+      "sizeSqFt": 64,
+      "sun": "partial",
+      "zone": "east"
+    },
+    {
+      "id": "B7",
+      "name": "Bed 7",
+      "sizeSqFt": 24,
+      "sun": "partial",
+      "zone": "east"
+    },
+    {
+      "id": "B8",
+      "name": "Bed 8",
+      "sizeSqFt": 24,
+      "sun": "full",
+      "zone": "east"
+    }
+  ],
+  "plantings": [
+    {
+      "id": "P01",
+      "bed": "B1",
+      "crop": "Tomato",
+      "variety": "Cherokee Purple",
+      "plantedOn": "2027-04-10",
+      "expectedHarvest": "2027-06-29",
+      "plantedBy": "maya.thompson@example.com"
+    },
+    {
+      "id": "P02",
+      "bed": "B1",
+      "crop": "Basil",
+      "variety": "Genovese",
+      "plantedOn": "2027-04-10",
+      "expectedHarvest": "2027-06-09",
+      "plantedBy": "ava.lopez@example.com"
+    },
+    {
+      "id": "P03",
+      "bed": "B2",
+      "crop": "Lettuce",
+      "variety": "Buttercrunch",
+      "plantedOn": "2027-03-20",
+      "expectedHarvest": "2027-05-14",
+      "plantedBy": "ben.okafor@example.com"
+    },
+    {
+      "id": "P04",
+      "bed": "B2",
+      "crop": "Radish",
+      "variety": "French Breakfast",
+      "plantedOn": "2027-03-20",
+      "expectedHarvest": "2027-04-17",
+      "plantedBy": "cam.nguyen@example.com"
+    },
+    {
+      "id": "P05",
+      "bed": "B3",
+      "crop": "Zucchini",
+      "variety": "Black Beauty",
+      "plantedOn": "2027-04-24",
+      "expectedHarvest": "2027-06-13",
+      "plantedBy": "dev.patel@example.com"
+    },
+    {
+      "id": "P06",
+      "bed": "B3",
+      "crop": "Bean",
+      "variety": "Blue Lake Bush",
+      "plantedOn": "2027-04-24",
+      "expectedHarvest": "2027-06-21",
+      "plantedBy": "elena.rossi@example.com"
+    },
+    {
+      "id": "P07",
+      "bed": "B4",
+      "crop": "Kale",
+      "variety": "Lacinato",
+      "plantedOn": "2027-03-27",
+      "expectedHarvest": "2027-05-26",
+      "plantedBy": "farah.haddad@example.com"
+    },
+    {
+      "id": "P08",
+      "bed": "B4",
+      "crop": "Spinach",
+      "variety": "Bloomsdale",
+      "plantedOn": "2027-03-27",
+      "expectedHarvest": "2027-05-11",
+      "plantedBy": "gabe.martinez@example.com"
+    },
+    {
+      "id": "P09",
+      "bed": "B5",
+      "crop": "Tomato",
+      "variety": "Sungold",
+      "plantedOn": "2027-04-17",
+      "expectedHarvest": "2027-06-21",
+      "plantedBy": "hana.kim@example.com"
+    },
+    {
+      "id": "P10",
+      "bed": "B5",
+      "crop": "Pepper",
+      "variety": "California Wonder",
+      "plantedOn": "2027-04-17",
+      "expectedHarvest": "2027-07-01",
+      "plantedBy": "isaac.cohen@example.com"
+    },
+    {
+      "id": "P11",
+      "bed": "B6",
+      "crop": "Carrot",
+      "variety": "Nantes",
+      "plantedOn": "2027-04-03",
+      "expectedHarvest": "2027-06-12",
+      "plantedBy": "keisha.brown@example.com"
+    },
+    {
+      "id": "P12",
+      "bed": "B7",
+      "crop": "Mint",
+      "variety": "Spearmint",
+      "plantedOn": "2027-04-03",
+      "expectedHarvest": "2027-07-02",
+      "plantedBy": "maya.thompson@example.com"
+    },
+    {
+      "id": "P13",
+      "bed": "B8",
+      "crop": "Cucumber",
+      "variety": "Marketmore",
+      "plantedOn": "2027-05-01",
+      "expectedHarvest": "2027-06-30",
+      "plantedBy": "ava.lopez@example.com"
+    },
+    {
+      "id": "P14",
+      "bed": "B8",
+      "crop": "Squash",
+      "variety": "Waltham Butternut",
+      "plantedOn": "2027-05-01",
+      "expectedHarvest": "2027-08-09",
+      "plantedBy": "ben.okafor@example.com"
+    }
+  ],
+  "shifts": [
+    {
+      "date": "2027-03-20",
+      "task": "composting",
+      "memberEmail": "ava.lopez@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-03-20",
+      "task": "planting",
+      "memberEmail": "cam.nguyen@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-03-20",
+      "task": "watering",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-03-20",
+      "task": "composting",
+      "memberEmail": "isaac.cohen@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-03-20",
+      "task": "harvesting",
+      "memberEmail": "keisha.brown@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-03-20",
+      "task": "watering",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-04-03",
+      "task": "watering",
+      "memberEmail": "elena.rossi@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-04-03",
+      "task": "planting",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-04-10",
+      "task": "planting",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-04-10",
+      "task": "watering",
+      "memberEmail": "farah.haddad@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-04-10",
+      "task": "watering",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-04-17",
+      "task": "watering",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-04-24",
+      "task": "planting",
+      "memberEmail": "ava.lopez@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-04-24",
+      "task": "watering",
+      "memberEmail": "keisha.brown@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-05-01",
+      "task": "watering",
+      "memberEmail": "farah.haddad@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-05-01",
+      "task": "harvesting",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-05-01",
+      "task": "weeding",
+      "memberEmail": "keisha.brown@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-05-01",
+      "task": "harvesting",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-05-01",
+      "task": "composting",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-05-08",
+      "task": "composting",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-05-15",
+      "task": "watering",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-05-15",
+      "task": "planting",
+      "memberEmail": "elena.rossi@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-05-15",
+      "task": "watering",
+      "memberEmail": "isaac.cohen@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-05-15",
+      "task": "weeding",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-05-22",
+      "task": "weeding",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-05-22",
+      "task": "composting",
+      "memberEmail": "farah.haddad@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-05-22",
+      "task": "weeding",
+      "memberEmail": "farah.haddad@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-05-22",
+      "task": "weeding",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-05-22",
+      "task": "watering",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-05-22",
+      "task": "weeding",
+      "memberEmail": "keisha.brown@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-05-29",
+      "task": "harvesting",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-05-29",
+      "task": "planting",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-05-29",
+      "task": "weeding",
+      "memberEmail": "keisha.brown@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-06-05",
+      "task": "planting",
+      "memberEmail": "farah.haddad@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-06-05",
+      "task": "weeding",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-06-05",
+      "task": "weeding",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-06-12",
+      "task": "planting",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-06-12",
+      "task": "harvesting",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-06-19",
+      "task": "planting",
+      "memberEmail": "cam.nguyen@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-06-19",
+      "task": "composting",
+      "memberEmail": "cam.nguyen@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-06-19",
+      "task": "watering",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-06-19",
+      "task": "weeding",
+      "memberEmail": "keisha.brown@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-06-19",
+      "task": "watering",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-07-03",
+      "task": "weeding",
+      "memberEmail": "ava.lopez@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-07-03",
+      "task": "watering",
+      "memberEmail": "ava.lopez@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-07-03",
+      "task": "harvesting",
+      "memberEmail": "farah.haddad@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-07-10",
+      "task": "harvesting",
+      "memberEmail": "cam.nguyen@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-07-10",
+      "task": "weeding",
+      "memberEmail": "isaac.cohen@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-07-10",
+      "task": "watering",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-07-17",
+      "task": "harvesting",
+      "memberEmail": "farah.haddad@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-07-17",
+      "task": "watering",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-07-24",
+      "task": "watering",
+      "memberEmail": "ava.lopez@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-07-24",
+      "task": "harvesting",
+      "memberEmail": "gabe.martinez@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-07-24",
+      "task": "weeding",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-07-24",
+      "task": "composting",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-07-31",
+      "task": "watering",
+      "memberEmail": "ben.okafor@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-07-31",
+      "task": "planting",
+      "memberEmail": "cam.nguyen@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-07-31",
+      "task": "watering",
+      "memberEmail": "elena.rossi@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-08-07",
+      "task": "weeding",
+      "memberEmail": "ava.lopez@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-08-14",
+      "task": "watering",
+      "memberEmail": "ben.okafor@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-08-14",
+      "task": "planting",
+      "memberEmail": "cam.nguyen@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-08-14",
+      "task": "watering",
+      "memberEmail": "elena.rossi@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-08-21",
+      "task": "composting",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-08-21",
+      "task": "composting",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-08-28",
+      "task": "weeding",
+      "memberEmail": "cam.nguyen@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-08-28",
+      "task": "composting",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-08-28",
+      "task": "composting",
+      "memberEmail": "hana.kim@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-09-04",
+      "task": "harvesting",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-09-04",
+      "task": "weeding",
+      "memberEmail": "farah.haddad@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-09-04",
+      "task": "watering",
+      "memberEmail": "isaac.cohen@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-09-04",
+      "task": "planting",
+      "memberEmail": "keisha.brown@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-09-04",
+      "task": "planting",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-09-04",
+      "task": "planting",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-09-11",
+      "task": "composting",
+      "memberEmail": "isaac.cohen@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-09-11",
+      "task": "planting",
+      "memberEmail": "keisha.brown@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-09-18",
+      "task": "planting",
+      "memberEmail": "dev.patel@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-09-18",
+      "task": "composting",
+      "memberEmail": "farah.haddad@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-09-18",
+      "task": "planting",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-09-18",
+      "task": "watering",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 1
+    },
+    {
+      "date": "2027-09-25",
+      "task": "weeding",
+      "memberEmail": "ava.lopez@example.com",
+      "hours": 2
+    },
+    {
+      "date": "2027-09-25",
+      "task": "planting",
+      "memberEmail": "elena.rossi@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-09-25",
+      "task": "weeding",
+      "memberEmail": "keisha.brown@example.com",
+      "hours": 1.5
+    },
+    {
+      "date": "2027-09-25",
+      "task": "composting",
+      "memberEmail": "maya.thompson@example.com",
+      "hours": 1.5
+    }
+  ],
+  "harvests": [
+    {
+      "date": "2027-04-18",
+      "bed": "B2",
+      "crop": "Radish",
+      "kg": 1.2,
+      "loggedBy": "elena.rossi@example.com"
+    },
+    {
+      "date": "2027-05-13",
+      "bed": "B4",
+      "crop": "Spinach",
+      "kg": 2.4,
+      "loggedBy": "ben.okafor@example.com"
+    },
+    {
+      "date": "2027-05-15",
+      "bed": "B2",
+      "crop": "Lettuce",
+      "kg": 3.9,
+      "loggedBy": "hana.kim@example.com"
+    },
+    {
+      "date": "2027-05-21",
+      "bed": "B2",
+      "crop": "Lettuce",
+      "kg": 2.5,
+      "loggedBy": "dev.patel@example.com"
+    },
+    {
+      "date": "2027-05-21",
+      "bed": "B4",
+      "crop": "Spinach",
+      "kg": 0.6,
+      "loggedBy": "gabe.martinez@example.com"
+    },
+    {
+      "date": "2027-05-28",
+      "bed": "B4",
+      "crop": "Kale",
+      "kg": 2.2,
+      "loggedBy": "isaac.cohen@example.com"
+    },
+    {
+      "date": "2027-05-31",
+      "bed": "B2",
+      "crop": "Lettuce",
+      "kg": 2.4,
+      "loggedBy": "gabe.martinez@example.com"
+    },
+    {
+      "date": "2027-06-05",
+      "bed": "B4",
+      "crop": "Kale",
+      "kg": 0.6,
+      "loggedBy": "keisha.brown@example.com"
+    },
+    {
+      "date": "2027-06-09",
+      "bed": "B1",
+      "crop": "Basil",
+      "kg": 2,
+      "loggedBy": "gabe.martinez@example.com"
+    },
+    {
+      "date": "2027-06-11",
+      "bed": "B4",
+      "crop": "Kale",
+      "kg": 1.8,
+      "loggedBy": "dev.patel@example.com"
+    },
+    {
+      "date": "2027-06-13",
+      "bed": "B3",
+      "crop": "Zucchini",
+      "kg": 0.5,
+      "loggedBy": "elena.rossi@example.com"
+    },
+    {
+      "date": "2027-06-13",
+      "bed": "B6",
+      "crop": "Carrot",
+      "kg": 1.3,
+      "loggedBy": "gabe.martinez@example.com"
+    },
+    {
+      "date": "2027-06-18",
+      "bed": "B1",
+      "crop": "Basil",
+      "kg": 1.3,
+      "loggedBy": "cam.nguyen@example.com"
+    },
+    {
+      "date": "2027-06-21",
+      "bed": "B3",
+      "crop": "Zucchini",
+      "kg": 3.2,
+      "loggedBy": "dev.patel@example.com"
+    },
+    {
+      "date": "2027-06-22",
+      "bed": "B3",
+      "crop": "Bean",
+      "kg": 2.6,
+      "loggedBy": "elena.rossi@example.com"
+    },
+    {
+      "date": "2027-06-24",
+      "bed": "B5",
+      "crop": "Tomato",
+      "kg": 3.1,
+      "loggedBy": "ben.okafor@example.com"
+    },
+    {
+      "date": "2027-06-29",
+      "bed": "B3",
+      "crop": "Bean",
+      "kg": 3.8,
+      "loggedBy": "dev.patel@example.com"
+    },
+    {
+      "date": "2027-06-30",
+      "bed": "B3",
+      "crop": "Zucchini",
+      "kg": 0.6,
+      "loggedBy": "maya.thompson@example.com"
+    },
+    {
+      "date": "2027-07-01",
+      "bed": "B1",
+      "crop": "Tomato",
+      "kg": 2.6,
+      "loggedBy": "dev.patel@example.com"
+    },
+    {
+      "date": "2027-07-01",
+      "bed": "B5",
+      "crop": "Tomato",
+      "kg": 0.9,
+      "loggedBy": "ava.lopez@example.com"
+    },
+    {
+      "date": "2027-07-01",
+      "bed": "B8",
+      "crop": "Cucumber",
+      "kg": 2.6,
+      "loggedBy": "isaac.cohen@example.com"
+    },
+    {
+      "date": "2027-07-03",
+      "bed": "B5",
+      "crop": "Pepper",
+      "kg": 2,
+      "loggedBy": "elena.rossi@example.com"
+    },
+    {
+      "date": "2027-07-05",
+      "bed": "B7",
+      "crop": "Mint",
+      "kg": 3.6,
+      "loggedBy": "farah.haddad@example.com"
+    },
+    {
+      "date": "2027-07-07",
+      "bed": "B3",
+      "crop": "Bean",
+      "kg": 3.7,
+      "loggedBy": "hana.kim@example.com"
+    },
+    {
+      "date": "2027-07-08",
+      "bed": "B1",
+      "crop": "Tomato",
+      "kg": 2.2,
+      "loggedBy": "elena.rossi@example.com"
+    },
+    {
+      "date": "2027-07-09",
+      "bed": "B7",
+      "crop": "Mint",
+      "kg": 2.4,
+      "loggedBy": "keisha.brown@example.com"
+    },
+    {
+      "date": "2027-07-10",
+      "bed": "B8",
+      "crop": "Cucumber",
+      "kg": 2.9,
+      "loggedBy": "maya.thompson@example.com"
+    },
+    {
+      "date": "2027-07-13",
+      "bed": "B1",
+      "crop": "Tomato",
+      "kg": 1.4,
+      "loggedBy": "gabe.martinez@example.com"
+    },
+    {
+      "date": "2027-07-16",
+      "bed": "B8",
+      "crop": "Cucumber",
+      "kg": 3.9,
+      "loggedBy": "farah.haddad@example.com"
+    },
+    {
+      "date": "2027-07-17",
+      "bed": "B7",
+      "crop": "Mint",
+      "kg": 2.5,
+      "loggedBy": "ben.okafor@example.com"
+    },
+    {
+      "date": "2027-08-10",
+      "bed": "B8",
+      "crop": "Squash",
+      "kg": 1.9,
+      "loggedBy": "gabe.martinez@example.com"
+    },
+    {
+      "date": "2027-08-16",
+      "bed": "B8",
+      "crop": "Squash",
+      "kg": 2.3,
+      "loggedBy": "dev.patel@example.com"
+    }
+  ],
+  "supplies": [
+    {
+      "item": "Tomato cages",
+      "quantity": 18,
+      "unit": "each",
+      "reorderAt": 10
+    },
+    {
+      "item": "Compost",
+      "quantity": 6,
+      "unit": "bags",
+      "reorderAt": 8
+    },
+    {
+      "item": "Mulch",
+      "quantity": 12,
+      "unit": "bags",
+      "reorderAt": 5
+    },
+    {
+      "item": "Seed packets",
+      "quantity": 40,
+      "unit": "packets",
+      "reorderAt": 15
+    },
+    {
+      "item": "Garden gloves",
+      "quantity": 9,
+      "unit": "pairs",
+      "reorderAt": 12
+    },
+    {
+      "item": "Hose nozzles",
+      "quantity": 3,
+      "unit": "each",
+      "reorderAt": 2
+    },
+    {
+      "item": "Twine",
+      "quantity": 2,
+      "unit": "rolls",
+      "reorderAt": 3
+    },
+    {
+      "item": "Trowels",
+      "quantity": 11,
+      "unit": "each",
+      "reorderAt": 6
+    }
+  ],
+  "interests": [
+    "Home Food Growing",
+    "Community Gardening",
+    "Sustainable Living",
+    "Teaching Through Gardening",
+    "Nutrition & Wellness",
+    "Houseplant Care",
+    "Organic Gardening",
+    "Hydroponics",
+    "Pest Management",
+    "Microgreens & Sprouts",
+    "Vertical Gardening",
+    "Container Gardening",
+    "Composting & Vermiculture",
+    "Rainwater Harvesting",
+    "Native Plant Restoration",
+    "Heirloom Seeds",
+    "Pollinator Gardens",
+    "Mushroom Cultivation",
+    "Medicinal Herbs",
+    "Farm-to-Table Cooking",
+    "Canning & Preservation",
+    "Garden Photography",
+    "Therapeutic Horticulture"
+  ]
+}

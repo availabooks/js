@@ -20,44 +20,49 @@
           "filename": "1.html"
         },
         {
+          "id": "ai-assistant",
+          "title": "Working with an AI Assistant",
+          "filename": "2.html"
+        },
+        {
           "id": "first-code",
           "title": "Your First Lines of Code",
-          "filename": "2.html"
+          "filename": "3.html"
         },
         {
           "id": "apps-script",
           "title": "Getting Started with Google Apps Script in Google Sheets",
-          "filename": "3.html"
+          "filename": "4.html"
         },
         {
           "id": "variables",
           "title": "Variables and Data",
-          "filename": "4.html"
+          "filename": "5.html"
         },
         {
           "id": "decisions",
           "title": "Making Decisions",
-          "filename": "5.html"
+          "filename": "6.html"
         },
         {
           "id": "arrays",
           "title": "Arrays",
-          "filename": "6.html"
+          "filename": "7.html"
         },
         {
           "id": "loops",
           "title": "Loops and Repetition",
-          "filename": "7.html"
+          "filename": "8.html"
         },
         {
           "id": "case",
           "title": "College Community Garden: Case setup",
-          "filename": "8.html"
+          "filename": "9.html"
         },
         {
           "id": "google-forms",
           "title": "Google Forms",
-          "filename": "9.html"
+          "filename": "10.html"
         }
       ]
     },
@@ -69,24 +74,29 @@
           "filename": "1.html"
         },
         {
+          "id": "ai-assistant",
+          "title": "Working with an AI Assistant",
+          "filename": "2.html"
+        },
+        {
           "id": "first-code",
           "title": "Your First Lines of Code",
-          "filename": "2.html"
+          "filename": "3.html"
         },
         {
           "id": "apps-script",
           "title": "Getting Started with Google Apps Script in Google Sheets",
-          "filename": "3.html"
-        },
-        {
-          "id": "decisions",
-          "title": "Making Decisions",
-          "filename": "5.html"
+          "filename": "4.html"
         },
         {
           "id": "variables",
           "title": "Variables and Data",
-          "filename": "4.html"
+          "filename": "5.html"
+        },
+        {
+          "id": "decisions",
+          "title": "Making Decisions",
+          "filename": "6.html"
         }
       ]
     }

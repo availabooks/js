@@ -1,2 +1,4 @@
 /local/
 .DS_Store
+# local-only files: API keys and other secrets (never commit or publish)
+/private/

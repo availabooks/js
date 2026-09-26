@@ -1,0 +1,56 @@
+{
+  "title": "Welcome to Programming",
+  "lesson": "welcome",
+  "text": "These questions check your understanding of what programming is, how computers and AI assistants differ, and how this book's examples work.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A recipe says \"bake until golden brown.\" Why would an instruction like this cause trouble in a computer program?",
+      "choices": [
+        "Computers can't work with colors.",
+        "A computer can't use judgment to fill in what \"until golden brown\" means; every step has to be stated exactly.",
+        "Computer programs can't contain repeated steps.",
+        "The instruction is too short for a computer to read."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which statement best describes the difference between a computer running code and an AI assistant answering a prompt?",
+      "choices": [
+        "Both do exactly what they're told and nothing more.",
+        "Both guess what you meant when your instructions leave something out.",
+        "A computer does exactly what the code says; an AI assistant fills in whatever the prompt leaves out with its best guess.",
+        "An AI assistant does exactly what the prompt says; a computer guesses what the code means."
+      ],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "In this book's five-step workflow, which step comes right after you ask an AI assistant for code?",
+      "choices": ["Run", "Revise", "Read", "Plan"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "When asked to \"Write a JavaScript program that says hello,\" the assistant in this lesson made several decisions the prompt didn't specify. Name two of them.",
+      "answer": "Any two of: the exact words (\"Hello, World!\"); where the greeting appears (console, popup or web page); the punctuation style (semicolons at the ends of lines). Accept other reasonable decisions the student can point to in the reply.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "If an AI assistant can write code for you, why is it still worth learning to read code? Give at least two reasons in your own words.",
+      "answer": "Look for two of: someone has to judge whether the code is right; the assistant is guessing about your situation and can't see your data or goals; AI code can look correct but do something different from what you asked; code can do harmful things such as overwriting data, which you can only catch by reading it; you can't check code you can't read.",
+      "points": 4
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Open your AI assistant and send this prompt in a new chat: \"Write a JavaScript program that says hello.\" (1) List every decision the assistant made that your prompt didn't specify. (2) Rewrite the prompt so it leaves less to guess: say what the message should be and where it should appear. (3) Send your new prompt in a new chat, and describe how the reply changed.",
+      "answer": "Full credit: at least two unrequested decisions identified in the student's own reply; a rewritten prompt that specifies both the message and where it appears (for example, the console); an accurate description of how the second reply differs, such as fewer alternatives or exactly the requested output. Replies will vary, so grade the student's reasoning, not the specific code.",
+      "points": 10
+    }
+  ]
+}

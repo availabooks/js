@@ -1,0 +1,67 @@
+{
+  "title": "Working with an AI Assistant",
+  "lesson": "ai-assistant",
+  "text": "These questions check how well you can use an AI assistant safely, follow the five-step workflow, and set up and use a learner profile.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "You wrote your learner profile in one chat yesterday. Today you open a new chat and ask for help. What does the assistant know about your profile?",
+      "choices": [
+        "Everything; assistants remember all of your chats.",
+        "Nothing; a new chat starts fresh, so you need to paste the profile again.",
+        "Only the \"What I know so far\" list.",
+        "It depends on whether you used the same prompt."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which of these is safe to paste into an AI assistant?",
+      "choices": [
+        "Your club's real membership list, with names and email addresses",
+        "The password to your school account",
+        "The made-up example data from this book",
+        "An access key for an online service"
+      ],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What is the most important job of the rule \"Use only the concepts listed below under 'What I know so far'\" in your learner profile?",
+      "choices": [
+        "It makes the assistant reply faster.",
+        "It keeps the assistant from using code you can't read yet, and asks it to tell you when a task needs something new.",
+        "It stops the assistant from ever writing code.",
+        "It makes the assistant's replies match this book word for word."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "While reading code from an AI assistant, this lesson suggests asking yourself four questions. List them.",
+      "answer": "What does each line do? Does it use anything I haven't learned? Does it change or delete anything? Does it match my plan?",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "In this lesson, the assistant explained a one-line program accurately, but the explanation still didn't help a beginner. Why not, and what fixed the problem?",
+      "answer": "The explanation used other unfamiliar terms (variable, method, array, function, index, accumulator), so it was pitched above a beginner's level; the assistant didn't know who was asking. A learner profile fixed it by telling the assistant what the learner knows, and asking it to stay within that and say when something new is needed.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Your code stops with an error message you don't understand. Write the follow-up prompt you would send to your AI assistant, and explain why this lesson recommends that wording over simply asking the assistant to fix the code.",
+      "answer": "A prompt along the lines of \"What does this error message mean? Explain it, but don't fix it yet,\" including the error text. Understanding the error teaches the student something they can use next time; a fixed version alone doesn't.",
+      "points": 4
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your AI assistant. (1) Paste your learner profile from this lesson as the first message. (2) Then send: \"Write JavaScript that adds up the numbers from 1 to 10.\" (3) Compare the reply with the two replies shown in this lesson: the one sent without a profile and the one sent with it. Which is your reply more like? Point to specific parts of the reply that show whether your assistant followed the profile.",
+      "answer": "Full credit: evidence the profile was sent first; an accurate comparison with both of the lesson's replies; specific evidence from the reply (for example, it named concepts the student hasn't learned instead of writing code, or it wrote code without semicolons and explained each line). If the assistant ignored the profile, credit a student who notices this and describes what they would do next (remind it, or start a new chat with the profile).",
+      "points": 10
+    }
+  ]
+}

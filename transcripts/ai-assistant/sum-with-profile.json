@@ -1,0 +1,34 @@
+{
+  "lesson": "ai-assistant",
+  "name": "sum-with-profile",
+  "assistant": "Gemini",
+  "attempts": [
+    {
+      "profile": "ai-assistant",
+      "model": "gemini-3.8-flash",
+      "captured": "2026-09-26T14:58:40.342Z",
+      "messages": [
+        {
+          "role": "user",
+          "text": "I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm running JavaScript in an online editor that shows console.log output. I don't know any programming concepts yet.\n\nWhen you write code for me:\n- Use only the concepts listed below under \"What I know so far.\" If a task needs something I haven't learned, tell me what it is instead of using it.\n- Don't use semicolons at the ends of lines.\n- Keep the code short and simple, and explain what each line does in plain language.\n\nWhat I know so far: nothing yet.",
+          "isProfile": true
+        },
+        {
+          "role": "model",
+          "text": "Welcome! It's great to have you starting your programming journey. \n\nSince you're starting from absolute zero, our very first tool will be **how to make the computer display a message**. \n\nIn JavaScript, we do this using a command called `console.log`.\n\nHere is your very first line of code to try in your editor:\n\n```javascript\nconsole.log(\"Hello, world!\")\n```\n\n### What this line does:\n\n* `console.log(...)` tells the computer: *\"Print whatever is inside these parentheses to the screen.\"*\n* `\"Hello, world!\"` is the message you want to print. We put words inside quote marks so the computer knows it is regular text and not a computer command.\n\n---\n\nGo ahead and paste that into your editor and run it. You should see `Hello, world!` appear in your console. \n\nOnce you try that, let me know! What would you like to learn next, or what is the first topic in your textbook?",
+          "modelVersion": "gemini-3.8-flash"
+        },
+        {
+          "role": "user",
+          "text": "Write JavaScript that adds up the numbers from 1 to 10."
+        },
+        {
+          "role": "model",
+          "text": "To do this, we need a few concepts that you haven't learned yet:\n\n1. **Numbers and the `+` (addition) operator**: How JavaScript handles math.\n2. **Variables**: A way to create a container in the computer's memory to hold and update the running total.\n3. **Loops (like a `for` loop)**: A way to make the computer count and repeat an action automatically, rather than typing every single number out by hand.\n\nSince you haven't learned these yet, we can't write the complete code just yet! \n\nWould you like to start by learning how JavaScript does basic math with numbers, or would you like to start with variables?",
+          "modelVersion": "gemini-3.8-flash",
+          "finishReason": "STOP"
+        }
+      ]
+    }
+  ]
+}
