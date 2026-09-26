@@ -184,7 +184,7 @@ Add to "What I know so far":
 
 On each page, the build adds:
 
-- **After the Learning Objectives box** (or at the top, if a lesson has none): "Copy learner profile for this lesson", which copies the profile readers should use while working through the lesson (the one its examples were captured with), with a "Show the profile" toggle. It's omitted when no profile exists yet.
+- **After the Learning Objectives box** (or at the top, if a lesson has none): "Copy this lesson's learner profile", which copies the profile readers should use while working through the lesson (the one its examples were captured with), with a "Show the profile" toggle. Clicking the copy button also opens the toggle, so readers see what they copied. It's omitted when no profile exists yet.
 - **In place of each `ai-profile` block:** the complete updated profile, with this lesson's changes highlighted, and a copy button.
 - **At the bottom:** "Copy updated learner profile", but only when the lesson has an `ai-profile` block.
 
