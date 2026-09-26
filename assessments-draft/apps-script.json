@@ -1,0 +1,82 @@
+{
+  "title": "Getting Started with Apps Script",
+  "lesson": "apps-script",
+  "text": "These questions check that you can find your way around the Apps Script editor, read a line of Apps Script, run a function, and decide whether to approve a script's permissions.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Why does Apps Script code go inside a function?",
+      "choices": [
+        "Because JavaScript can't run without functions anywhere.",
+        "Because Apps Script runs code by function name: you choose a function in the toolbar's menu and click Run.",
+        "Because functions make code run faster.",
+        "Because Google requires functions for security."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Your Code.gs file contains two functions, writeHello and listMembers. You click Run, but nothing is written to your sheet. What should you check first?",
+      "choices": [
+        "Whether your spreadsheet is empty",
+        "Which function is selected in the toolbar's menu",
+        "Whether the code has semicolons",
+        "Whether you're signed in to Gmail"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "You run a script you wrote yourself, and Google warns that it \"hasn't verified this app\" until the developer verifies it. Whose email address should the warning show?",
+      "choices": [
+        "Google's support address",
+        "Your own, because you wrote the script",
+        "Your instructor's",
+        "No address; a real warning never shows one"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A script you were told \"just formats a spreadsheet\" asks for permission to send email as you and to delete files in your Google Drive. What should you do?",
+      "choices": [
+        "Approve it, since all scripts ask for these permissions.",
+        "Approve it, then check the results.",
+        "Stop, because the permissions don't match what the script is supposed to do, and find out why before approving anything.",
+        "Click Run again until the warning goes away."
+      ],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain what each part of this line does: SpreadsheetApp.getActiveSheet().getRange(\"C2\").setValue(\"Done\")",
+      "answer": "SpreadsheetApp is Apps Script's tool for Google Sheets; getActiveSheet() gets the sheet (tab) currently showing; getRange(\"C2\") gets cell C2 on that sheet; setValue(\"Done\") writes the text Done into that cell. Each dot means 'and then, from what we have so far,' and each step is a method.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "In this lesson, an assistant refused to write code that writes Hello into cell A1. Why did it refuse, and what should the learner do about it?",
+      "answer": "Its learner profile said to use only what the learner knows and to say when a task needs something new; writing to a sheet needs SpreadsheetApp and methods, which weren't in the profile. The profile was out of date: it still described an online editor and listed nothing about Apps Script. The learner should learn the new concept and update the profile (environment and what they know), after which the assistant can write the code.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write an Apps Script function named writeWelcome that writes the text Welcome into cell B2 of the active sheet. Test it on a practice sheet (in the book, or a new Google Sheet).",
+      "start": "function writeWelcome() {\n\n}",
+      "key": ["function writeWelcome() {\n  SpreadsheetApp.getActiveSheet().getRange(\"B2\").setValue(\"Welcome\")\n}"],
+      "expectedCells": {"B2": "Welcome"},
+      "lines": 5,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat and paste the updated learner profile from the end of this lesson. Then send: \"Write an Apps Script function that writes Hello into cell A1 of my Google Sheet.\" (1) Paste the reply. (2) Did the assistant write the code this time? What in the profile made the difference? (3) Read the code line by line and explain each part. Does it use anything you haven't learned? (4) Run it on a practice sheet, and describe the permission screen you saw and why you did or didn't approve it.",
+      "answer": "Full credit: evidence the updated profile was used; an explanation linking the change to the new environment line and the added items (functions, methods and SpreadsheetApp); a correct line-by-line reading, noting anything outside the profile; a sensible account of the permission screen (edit access to spreadsheets matches the task). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

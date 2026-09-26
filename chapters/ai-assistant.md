@@ -1,13 +1,5 @@
 ---
 _$_import: monaco
-_$_profile:
-  environment: "an online editor that shows console.log output"
-  knows: []
-  rules_add:
-    - "Use only the concepts listed below under \"What I know so far.\" If a task needs something I haven't learned, tell me what it is instead of using it."
-    - "Don't use semicolons at the ends of lines."
-    - "Keep the code short and simple, and explain what each line does in plain language."
-  rules_remove: []
 ---
 
 ::: {.learning}
@@ -158,15 +150,13 @@ The problem isn't the assistant. It answered the question it was given. The prob
 A **learner profile** is a short message you send at the start of every new chat. It tells the assistant what you're doing, what you already know, and how you'd like code written. Here is your first one:
 
 ::: {.ai-profile lesson="ai-assistant"}
-> I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm running JavaScript in an online editor that shows console.log output. I don't know any programming concepts yet.
->
-> When you write code for me:
->
-> - Use only the concepts listed below under "What I know so far." If a task needs something I haven't learned, tell me what it is instead of using it.
-> - Don't use semicolons at the ends of lines.
-> - Keep the code short and simple, and explain what each line does in plain language.
->
-> What I know so far: nothing yet.
+Environment: I'm running JavaScript in an online editor that shows console.log output.
+
+Add rules:
+
+- Use only the concepts listed below under "What I know so far." If a task needs something I haven't learned, tell me what it is instead of using it.
+- Don't use semicolons at the ends of lines.
+- Keep the code short and simple, and explain what each line does in plain language.
 :::
 
 Each part has a job:

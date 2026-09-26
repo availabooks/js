@@ -1,0 +1,81 @@
+{
+  "title": "Your First Lines of Code",
+  "lesson": "first-code",
+  "text": "These questions check your understanding of expressions, statements, console.log, comments, named values and error messages.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "You run a code editor containing only the line 4 * 6 and nothing appears. Why?",
+      "choices": [
+        "JavaScript can't multiply numbers.",
+        "4 * 6 is an expression. It produces a value, but nothing tells the computer to display it.",
+        "The line needs a semicolon at the end.",
+        "The editor only shows text in quote marks."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What does console.log(\"total\", 2 + 3) display?",
+      "choices": ["total 2 + 3", "\"total\" 5", "total 5", "total5"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "After let city = \"Denver\", what is the difference between console.log(city) and console.log(\"city\")?",
+      "choices": [
+        "There is no difference; both display Denver.",
+        "The first displays Denver, the value stored under the name city; the second displays the word city.",
+        "The first causes an error because city needs quote marks.",
+        "The second displays Denver, and the first displays city."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Your code runs without any error message, but the number it displays is wrong. What kind of error is this most likely to be?",
+      "choices": ["A syntax error", "A reference error", "A logic error", "There is no error, because nothing was reported."],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain what this error message tells you, and what you would look for in the code: ReferenceError: totl is not defined",
+      "answer": "It's a reference error: the code uses a name, totl, that JavaScript doesn't recognize, because it was never created. Most likely a typo for a variable named total, so look for where total was created and where totl is used, and make the spellings match.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Give two reasons this book leaves semicolons out of its JavaScript, and say whether code that includes them still works.",
+      "answer": "Reasons: one less thing to remember, so you can focus on what each line does; less punctuation makes the code easier to read. Code with semicolons works exactly the same; they're only required between two statements on the same line.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write code that creates a variable named hours holding the number 24, then displays the label Hours in a week: followed by the number of hours in a week, calculated from hours. Include a comment explaining the calculation.",
+      "start": "",
+      "key": ["let hours = 24\n// a week has 7 days, each with 24 hours\nconsole.log(\"Hours in a week:\", hours * 7)"],
+      "expectedOutput": "Hours in a week: 168",
+      "lines": 5,
+      "points": 6
+    },
+    {
+      "type": "code",
+      "text": "This code has two errors. Fix them so it displays: My club has 12 members",
+      "start": "let members = 12\nconsole.log(\"My club has\", member, \"members\"",
+      "key": ["let members = 12\nconsole.log(\"My club has\", members, \"members\")"],
+      "expectedOutput": "My club has 12 members",
+      "lines": 3,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat and paste the learner profile from the end of this lesson. Then run this line in one of the lesson's editors, copy the exact error message you get, and ask your assistant what it means (not to fix it): console.log(\"Hello, \" + nme)  (1) Paste the error message and the assistant's explanation. (2) In your own words, say what caused the error. (3) Fix the code yourself so it displays a greeting, and explain your fix.",
+      "answer": "Full credit: the actual error (a ReferenceError saying nme is not defined); an explanation from the assistant that isn't just a fixed version; the student's own correct account of the cause (a name that was never created); a working fix with a reason. Accept either creating the variable first (let nme = \"...\") or renaming it consistently; a strong answer notes that a clear name such as name is better than creating a misspelled one.",
+      "points": 10
+    }
+  ]
+}

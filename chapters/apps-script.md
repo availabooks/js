@@ -1,107 +1,300 @@
 ---
-_junk: morano
+_$_import: monaco, appsscript
 ---
 
-## Welcome to Google Sheets as a Programming Environment
+::: {.learning}
+Learning Objectives
 
-Google Sheets might not look like a programming environment at first glance. It’s familiar, friendly, and built for everyday tasks like tracking budgets or organizing lists. But beneath its grid of rows and columns lies a surprisingly powerful platform for learning applied programming. When paired with Google Apps Script, Sheets becomes an interactive playground where your code can manipulate real data, automate repetitive work, and build tools that feel instantly useful.
+::: {.objectives}
+1. Explain what Google Apps Script is and what it can do in Google Sheets.
+2. Open the Apps Script editor for a spreadsheet and find your way around it.
+3. Describe what a function is and why Apps Script code goes inside one.
+4. Run a function and read its output in the Execution log.
+5. Decide whether to approve the permissions a script asks for.
+:::
+:::
 
-### Why Google Sheets Is a Great Place to Learn Applied Programming
+## From the Browser to Google Sheets
 
-Learning to program is easier when you can _see_ the results of your code. Google Sheets gives you that visual feedback. Instead of abstract exercises, you’re working with concrete information—cells, formulas, tables, and charts. When your script writes a value, formats a range, or reorganizes data, the change appears right in front of you.
+So far, your code has run in this book's editors, where all it could do was display things. That's a good way to learn, but most real work involves data: lists of people, schedules, budgets, inventories. A lot of that data lives in spreadsheets.
 
-Sheets also provides structure. You don’t have to design a user interface or build a data model from scratch. The spreadsheet _is_ your interface and your data model. That means you can focus on learning how to think like a programmer without getting bogged down in complexity.
+**Google Apps Script** lets JavaScript work with that data. It's JavaScript, running on Google's servers, with extra tools for working with Google's apps: Sheets, Gmail, Calendar, Docs and Drive. Everything you've learned still applies. What's new is that your code can reach into a spreadsheet, read what's there, and change it.
 
-### How Apps Script Extends the Power of Spreadsheets
+::: {.term}
+> **Google Apps Script** — A version of JavaScript, provided free by Google, that can read and change Google Sheets, send Gmail, create Calendar events and work with other Google apps.
+:::
 
-Apps Script is a JavaScript‑based language that lives inside Google Workspace. When you use it with Sheets, you gain the ability to:
+Google Sheets is a good place to learn to program, for three reasons:
 
-- Read and write cell values programmatically
-- Loop through rows of data
-- Create custom menus and buttons
-- Automate formatting, calculations, and data cleanup
-- Connect your spreadsheet to Gmail, Drive, Calendar, and external APIs
+- **You can see the results.** When your code writes a value or changes a format, the change appears in the sheet in front of you.
+- **The structure is already there.** Rows, columns and cells give your data a shape, so you don't have to design one.
+- **Everything is free.** You need only a Google account, and nothing to install.
 
-In other words, Apps Script turns Sheets into a programmable application. You’re no longer limited to formulas—you can write full scripts that perform multi‑step operations, respond to user actions, or run automatically on a schedule.
+Here are a few of the things people build with Apps Script and Sheets. You'll build versions of several of them in this book:
 
-### What You Can Automate or Build Inside Sheets
-
-Once you start combining JavaScript with spreadsheet data, the possibilities expand quickly. You can build:
-
-- **Data‑cleaning tools** that standardize names, dates, or formats
-- **Custom reports** that generate summaries or charts with one click
-- **Email automations** that send messages based on spreadsheet content
-- **Importers and exporters** that move data between Sheets and other services
-- **Interactive tools** like dashboards, calculators, or simple apps
-- **Workflow systems** that track tasks, approvals, or inventory
-
-These aren’t hypothetical examples—they’re the kinds of tools people build every day to save time and reduce errors.
-
-### What This Chapter Will Accomplish
-
-Before we dive into writing full scripts that read and modify spreadsheet data, we’re going to take one important step: learning how **variables and data** work inside the Apps Script environment. Even though Apps Script is a variant of JavaScript, the core ideas—how you store information, how you work with numbers and text, how you organize data—are the same across every JavaScript‑based platform you’ll encounter later in this book.
-
-In this chapter, you will:
-
-- Learn how variables work in Apps Script and why they matter
-- Explore the basic data types you’ll use in all JavaScript environments
-- Practice writing simple scripts directly inside Google Sheets
-- Run your code and see how it behaves in a real spreadsheet
-- Build confidence with the foundational concepts that power every script you’ll write
-
-By the end of the chapter, you won’t just know how to open the Apps Script editor—you’ll understand the essential building blocks of JavaScript as they appear inside Google Sheets. This foundation will make it much easier to write scripts that interact with real data in the chapters that follow.
+- Tools that clean up data, such as standardizing names or dates
+- Reports that summarize a sheet with one click
+- Emails sent automatically, based on what's in a sheet
+- Custom menus and buttons inside a spreadsheet
+- Scripts that run on a schedule, or whenever a form is submitted
 
 ## Opening the Apps Script Editor
 
-Before you can write any code that interacts with a spreadsheet, you need to know where that code goes and how to access the environment that runs it. Google Sheets makes this surprisingly simple. Every spreadsheet can have its own Apps Script project attached to it, and opening the editor takes only a few clicks.
+Every Google Sheet can have its own Apps Script project attached to it. To open one:
 
-### Creating a Google Sheet
+1. Create a new spreadsheet by going to **sheets.new** in your browser. (You need to be signed in to a Google account.)
+2. In the menu bar, click **Extensions**, then **Apps Script**.
 
-Start by creating a new spreadsheet by visiting **https://sheets.new** in your browser. Once the sheet is open, you’re ready to access the scripting tools that live behind the scenes.
+![The Extensions menu in Google Sheets, with Apps Script highlighted.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3j_ZQ5HXTAbC-DQiRbQOngEJNc3rQ-OHiKKCTnsovgeU16k4zbgiuLsrmReTfJSmFhBOMVNyUiVv4rMuF9kES2x3O7TkNbn7s1UqLZxURDNscVa79jioBfRWZrp_OCqShjwpMeK_0Ayr6yTFGs8OJJjcr1W6EUwWiYhtSRSOtbL1VpbxMEM-xkaFaLa0/s1600/84cd1741.png)
 
-### Navigating to Extensions → Apps Script
+The Apps Script editor opens in a new browser tab.
 
-At the top of the Google Sheets window, you’ll see a menu bar. To reach the scripting environment:
+You could also have asked your AI assistant how to get there. Here's what happened when this question was sent in a new chat that started with the learner profile from [Your First Lines of Code](first-code){.book-link}:
 
-1. Click **Extensions**
-2. Select **Apps Script**
+::: {.ai-conversation prompt="How do I open the Apps Script editor for my Google Sheet?" assistant="Gemini" model="Gemini 3.6 Thinking (Gemini app)" captured="2026-09-26" profile="first-code" transcript="apps-script/open-editor"}
+> To open the Apps Script editor from a Google Sheet:
+>
+> 1. Open your Google Sheet.
+> 2. Click **Extensions** in the top menu bar.
+> 3. Click **Apps Script**.
+>
+> This will open the script editor in a new browser tab linked directly to your spreadsheet.
+>
+> Are you planning to run JavaScript inside Google Sheets for a textbook exercise, or working on a specific task?
+:::
 
-This opens a new tab containing the Apps Script editor. Think of this as the “backstage” area of your spreadsheet—the place where you can write code that controls what happens on the sheet.
+These steps match the screen exactly. That won't always be true of instructions for using an app, whether they come from an assistant or from a web page. Google, Microsoft and other companies rearrange their menus from time to time, while older instructions stay online. Before the current menus, for example, the editor was under **Tools**, then **Script editor**, and you'll still find instructions that say so. An assistant can learn from those older pages too. So when an assistant tells you where to click, check each step against what's on your screen. If they don't match, tell the assistant what you actually see.
 
-### Understanding the Apps Script Project Window
+Look at the assistant's closing question, too: it asked whether you plan to run JavaScript inside Google Sheets. It had a reason to wonder. The learner profile says your code runs in "an online editor that shows console.log output," and now you're asking about Sheets. You'll update the profile to match at the end of this lesson.
 
-When the editor opens, you’ll see a clean, browser‑based development environment. It typically includes:
+## A Tour of the Editor
 
-- A **file list** on the left
-- A **code editor** in the center
-- A **toolbar** with run buttons and settings
-- Tabs for **Executions**, **Triggers**, and **Services**
+When the editor opens, it looks like this:
 
-Each spreadsheet gets its own Apps Script project by default. That means the code you write here is directly linked to the sheet you opened.
+![The Apps Script editor for a new project, showing the Code.gs file with an empty function called myFunction.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8B09kVhscTTl6lJyGzklWN2kqMt7ZSY4Aa-vct7HmHR6GjRXVmIfFPC8G_DM0WaOMikBZMn784e6vapHIWLVVCf3jdXQsRuuzjKIO2zKTwFO8a6xq5130b4_q2-Q40qMQTPnDO4834vEnHiJMsqLMTnd-1gXK5yhiSH0ycr2Dw6XELt-zbi7OwtGjLl8/s1600/d467b986.png)
 
-### The Code Editor, Project Files, and Execution Log
+The main parts are:
 
-The **code editor** is where you’ll write your functions. Apps Script automatically creates a file called `Code.gs` for you, which is where your first scripts will live. You can add more files later as your projects grow.
+- **Files,** on the left. A new project has one file, `Code.gs`, where your code goes. (`.gs` stands for Google Script.) Larger projects can have several files.
+- **The code editor,** in the middle, where you write code.
+- **The toolbar,** above the code, with a **Run** button, a **Debug** button, and a menu that shows the name of a function (here, `myFunction`).
+- **The Execution log,** which opens below the code when you run something. It shows what your code displayed with `console.log`, and any errors.
 
-A few key parts of the interface:
+The project is attached to the spreadsheet you opened it from. That's what lets its code read and change that sheet. The project is saved automatically, and you can get back to it any time through **Extensions**, then **Apps Script**.
 
-- **Code Editor**: Write and edit your JavaScript‑based Apps Script code
-- **Project Files**: Organize your scripts into multiple `.gs` or `.html` files
-- **Execution Log**: View the history of your script runs, including errors, runtime, and logs
+## A First Look at Functions
 
-The execution log is especially helpful when you’re learning. It shows whether your script ran successfully and provides details if something went wrong.
+Notice that the new project isn't empty. It already contains this:
 
-### Where Your Code “Lives” and How It Connects to the Spreadsheet
+<pre class="code" data-environment="appsscriptsheets">
+function myFunction() {
 
-Every Apps Script project is attached to a specific Google Sheet. That means:
+}
+</pre>
 
-- Your code can read and write cell values
-- It can modify formatting, create sheets, or delete data
-- It can add custom menus to the spreadsheet interface
-- It can run automatically when the sheet opens or changes
+This is a **function**: a named group of steps. Apps Script needs functions because it doesn't run loose lines of code the way this book's editors do. Instead, you choose a function by name, from the menu in the toolbar, and click **Run**. Apps Script then runs the steps inside that function, from top to bottom.
 
-Behind the scenes, Apps Script gives you access to the spreadsheet through the `SpreadsheetApp` service. You’ll learn how to use it soon, but for now, it’s enough to know that your code is tightly connected to the sheet you opened.
+::: {.term}
+> **Function** — A named group of steps. In Apps Script, you run code by choosing a function and clicking Run.
+:::
 
----
+Here are the parts of a function:
 
-By the time you finish this section, you’ll know exactly where to write your code and how to access the tools that make Apps Script such a powerful extension of Google Sheets. Next, we’ll begin exploring variables and data—the building blocks you’ll use to create your first real spreadsheet‑powered scripts.
+- **`function`** is a keyword that tells JavaScript a function is starting.
+- **`myFunction`** is the function's name. It's what appears in the toolbar's menu.
+- **`( )`** is a pair of parentheses. They're empty for now. You'll see what can go in them in a later lesson.
+- **`{ }`** is a pair of curly braces. The steps of the function go between them, one per line.
+
+You've already been using functions without knowing it. `console.log` is a function, and each time you wrote `console.log("Hello")`, you *called* it. You told it to run, and the parentheses carried the value it should display. Writing your own function is the other half of the story: you define the steps, and Apps Script calls it when you click Run.
+
+A file can hold several functions. The menu in the toolbar lists them all, and **Run** runs whichever one is selected. That's handy, and it's also a common source of confusion: if you click Run and nothing seems to happen, check which function is selected.
+
+Give your functions names that say what they do, such as `writeGreeting` or `listUnpaidMembers`, not `myFunction`. Like the names of values, function names can't contain spaces, so this book uses *camelCase*: the first word in lowercase, and each word after it starting with a capital letter.
+
+## Running Your First Script
+
+Try it. Replace the empty function with this code:
+
+<pre class="code" data-environment="appsscriptsheets">
+function myFunction() {
+  let count = 10
+  console.log(count)
+}
+</pre>
+
+![The same function in the editor, with two lines added between the braces.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQH1PqnDqi-QXT6DoByjraPWqGCbkdbNc8dJHFaY2fUd9befeIjBFcLDATgGGPTERA47c_XO5i9ALj9tRj2ESXQiyfH_BDugG0TvpDIt2YagNWtP-XD5nXRlddIS6WRwnnDFmMPCL5kEabRe7ohn_JG3t2JGzScvkwV5dSCb5APZKCqzKAlQID0kx5XZM/s1600/1637cacb.png)
+
+The lines inside the braces are indented by two spaces. JavaScript doesn't require that, but indenting the steps inside a function makes it easy to see where the function starts and ends.
+
+Make sure `myFunction` is selected in the toolbar's menu, then click **Run**:
+
+![The toolbar with the Run button circled.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhmFx67OG_2-F0Or2T_2_nUhmnNcYMEpW-6mXcqTI8YP5BEyazIg8w56aMMiD8co-Gv_RLapr3CCQ9cw6Jh5OQ-rrPH73Uj1Xnp0kXvD0XDdH_wCb4Vtig4t7JQZ3gcT_axtXVrwRCQydhAH1yofuQ7yK1xCJI96CHLdPsEWWWlSx9_AovzmVfnHOnFTl4/s1600/8029f1d6.png)
+
+The Execution log opens below the code:
+
+![The Execution log, showing Execution started, then the value 10, then Execution completed.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjP3hh-YYHn0EgM_VPlCLHqfmQ-CtJbjkncf_Ylaf5caooCSraRp5jF2c-wxQArAEuzWiu0NbzIjnrrJHmrfGfy_wbcvOs8EEB926WDeOrZMNPdbE1J7P7vwk6whzUGGxCYR1a-MSpgTA6spM2uWhofYUpNdMT6Vucm__o9vaI3bCdmslDaatH4Mew0qTw/s1600/9109882d.png)
+
+It has three entries. The first and last are notices from Apps Script saying when the function started and finished. The middle entry, marked *Info*, is the output of `console.log(count)`: the value 10.
+
+::: {.note}
+> **The screenshots show semicolons.** The code in these screenshots ends its lines with semicolons. As you saw in [Your First Lines of Code](first-code){.book-link}, they're optional, and the code works the same either way.
+:::
+
+## Writing to Your Sheet
+
+Displaying a value in the log works just like it did in this book's editors. The new part is changing the spreadsheet itself. Here's a request for that, sent with the learner profile from the previous lesson:
+
+::: {.ai-conversation prompt="Write an Apps Script function that writes Hello into cell A1 of my Google Sheet." assistant="Gemini" model="Gemini 3.5 Flash-Lite (Gemini app)" captured="2026-09-26" profile="first-code" transcript="apps-script/write-hello"}
+> Writing an Apps Script function to write "Hello" into cell A1 requires concepts (like Google Apps Script services, `SpreadsheetApp`, methods, and object dot notation) that you haven't learned yet in your JavaScript textbook!
+>
+> Here is what you would need to learn next to do that:
+>
+> * **Objects and Methods**: JavaScript uses containers (objects) that have built-in actions (methods) you can trigger using a dot (`.`), like `SpreadsheetApp.getActiveSpreadsheet()`
+> * **Getting Ranges and Values**: You need to specify a sheet, get a specific cell range like `"A1"`, and then use a method like `.setValue("Hello")` to write text into it
+>
+> Since you are practicing basic JavaScript right now, here is what a simple variable assignment and logging looks like using *only* what you know:
+>
+> ```javascript
+> // Store the word Hello in a name
+> let greeting = "Hello"
+>
+> // Display the value in the console
+> console.log(greeting)
+>
+> ```
+>
+> * `// Store the word Hello in a name`: A comment explaining the line
+> * `let greeting = "Hello"`: Gives the text `"Hello"` the name `greeting`
+> * `console.log(greeting)`: Displays whatever is stored inside `greeting` in your console editor
+>
+> Let me know if you want to practice more with variables, numbers, strings, or error messages from your textbook!
+:::
+
+The assistant didn't write the code, and that's the learner profile doing its job. The profile says to tell you when a task needs something you haven't learned, instead of using it. Writing to a sheet does need something new, so the assistant said what it was and offered practice with what you already know.
+
+This shows the other side of a learner profile: it has to keep up with you. The profile still says your code runs in "an online editor" and lists nothing about Apps Script, so the assistant is right to hold back. At the end of this lesson you'll update the profile, and after that, requests like this one will get code.
+
+First, though, here's the missing piece. This is the line the assistant was describing:
+
+<pre class="code" data-environment="none">
+SpreadsheetApp.getActiveSheet().getRange("A1").setValue("Hello")
+</pre>
+
+It's long, but it reads left to right, one step at a time. Each dot (`.`) means "and then, from what we have so far":
+
+- **`SpreadsheetApp`** is Apps Script's tool for working with Google Sheets.
+- **`.getActiveSheet()`** gets the sheet you're looking at, the one tab that's showing in the spreadsheet.
+- **`.getRange("A1")`** gets cell A1 on that sheet. A *range* is one cell or a block of cells.
+- **`.setValue("Hello")`** writes the value "Hello" into that cell.
+
+Each of these steps is a **method**, an action that belongs to something, such as the spreadsheet tool, a sheet or a cell. You use a method by writing a dot after the thing it belongs to, then the method's name and parentheses. The parentheses work just as they do with `console.log`: they carry any values the method needs, such as which cell to get or what to write.
+
+::: {.term}
+> **Method** — An action that belongs to something, used with a dot: `getRange("A1")` is a method of a sheet, and `setValue("Hello")` is a method of a range.
+:::
+
+You don't need to memorize these. What matters is that you can read a line like this one and say what each part does. In the next lesson, you'll write the same steps on separate lines, which makes them easier to follow and check.
+
+You can try the code right here. Below is a small practice sheet, and the editor under it can run Apps Script code against it, much as the real Apps Script editor runs code against your spreadsheet. Click **Run**, and watch cell A1:
+
+<pre class="spreadsheet">
+{"sheetName": "Practice", "rows": 5, "columns": 4, "data": [], "formats": []}
+</pre>
+
+<pre class="code">
+function writeHello() {
+  SpreadsheetApp.getActiveSheet().getRange("A1").setValue("Hello")
+}
+</pre>
+
+Now change `"A1"` to `"B3"`, or change the message, and run it again.
+
+To run it for real, paste the same function into your spreadsheet's Apps Script editor, choose `writeHello` in the toolbar's menu, and click **Run**. The first time, Apps Script asks for permission, as the next section describes.
+
+## Giving Permission
+
+The first time you run code that works with your spreadsheet, Apps Script stops and asks for permission. That's a safety feature. Code can read, change and delete data, and someone could try to trick you into running code that does harm. So Google asks you to approve what a script can do before it runs.
+
+Here's what you'll see. First, a message that the script needs authorization. Click **Review permissions**:
+
+![A dialog titled Authorization required, with Cancel and Review permissions buttons.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhR8c6fPDH044_XrWrpK4wNhadf7g3a_6jL0SvBarMFDmauJCJK9nMXmidDn_QPVMfYATAiNRJZPjLxHY82IiPByc5L2GlOET3YFM3JNkrluHjTR-Tnr2i3dYdLjR0DAkdpCwjGo39YQIBc97Txre9joxgtHEwZvx2xj76c8FzjIPYO8v4NSKYCAK4aiX8/s1600/a67405fb.png)
+
+After you choose your Google account, you'll see a warning that "Google hasn't verified this app":
+
+![A warning page saying Google hasn't verified this app, with an Advanced link and a Back to safety button.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgnxOFlrt_7D-HUUfe371b6D-5lAUk2VGIXmqoTf7arbM83PKfu0f1dkRzBPOkIhzWKdrRIQwV_0vcVUK0hHgD8D99ds6NGHhqF4w3YvwNPe2i0AcZjiLRAt7gmfRYjbyAc5mbj3xxF7FnTcxVuAdMVC1Hxzc-BJsC61OEJvROQxLZjr0UvpkJnaIc-Xyw/s1600/75d1cb3b.png)
+
+This warning looks alarming, so read it carefully. It says the app hasn't been verified by Google "until the developer" verifies it, and it names the developer's email address. **The developer is you.** You wrote the script, so the address shown is your own. Google shows this warning for any script that hasn't been through its review process, which is meant for apps shared with the public, not for code you wrote for yourself.
+
+If the address shown *isn't* yours, stop. That means you're running someone else's script, and you should only continue if you know and trust them and understand what the code does.
+
+To continue with your own script, click **Advanced**, then the link that says **Go to Untitled project (unsafe)**. (The name changes if you've renamed your project.)
+
+![The same warning with the Advanced section open, showing a link to go to Untitled project (unsafe).](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi58vQBbnMxMiEuu3Fbfq2KVOILoBL-5WgYlZF_x0NASyET16xoFQkQ2iDVYqVXes8bO8-nD0OOExPaiJqEio7jnpal__gF44BPM8gnbP-DWdH_UpMOMB8fYPsGGOSWcsp9tMVIRIhT53JgNZNcJAjLR9GPTvqVZTz0ephw6goSO-H7k3ZE-0Be_kKrpHw/s1600/6c44db2e.png)
+
+Finally, Google lists what the script will be allowed to do:
+
+![A consent page saying Untitled project wants access to your Google Account, and listing the permission See, edit, create, and delete all your Google Sheets spreadsheets.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBrKg0BwVK7EM8Q8m6iHwrRpKM2nphUPb4Bg-lrQdHbKupzeJv7J0sjCVZr-EsSbjDTYRBykxamPYuOG0IMQv-Oi85qp9SjN2Qw-vdo10CxeQm_c_yuQDpx885SKC7A89OmetQDn0cIFtsz8RCl7xoWh0Ag_0P0Rrv9BX3iUXOi5wvhKbqwdUFgKl-I18/s1600/13fac37e.png)
+
+This is the screen that matters. Read the list and ask: *does this match what I expect the code to do?* Code that writes "Hello" into a cell needs to change a spreadsheet, so a permission to edit spreadsheets makes sense. A permission to send email or delete files from your Drive would not, and would be a reason to stop and find out why.
+
+If the list matches what you expect, click **Continue**. Apps Script remembers your approval for this project, so you won't be asked again unless you add code that needs a different permission. Sometimes the script runs right after you approve it, and sometimes it doesn't. If you don't see the result, click **Run** again.
+
+When you're not sure why code needs a permission, ask your assistant. This question was a follow-up in the same chat as the request above:
+
+::: {.ai-conversation prompt="What permissions will this code need when I run it, and why?" assistant="Gemini" model="Gemini 3.5 Flash-Lite (Gemini app)" captured="2026-09-26" profile="first-code" transcript="apps-script/write-hello"}
+> That code would need a **permission scope** to edit your Google Spreadsheets (specifically, permission to see, edit, create, and delete your spreadsheets).
+>
+> ### Why it needs this permission:
+>
+> * **Protecting private data:** Google Sheets files contain private user data, so Google blocks external code from modifying your cells by default.
+> * **Proving authorization:** When you try to run a script that touches a Google Sheet, Google steps in with a popup window asking you to "Authorize" the script. This safety check ensures you are consciously allowing the code to make changes to your files.
+>
+> Even though the code itself is tiny, the environment needs to know it has your green light to open and write to your sheet!
+:::
+
+The answer matches the permission screen: "see, edit, create, and delete" your spreadsheets. Its reasons are sound too. Spreadsheets hold private data, and the approval step makes sure you're choosing to let the code change them.
+
+Notice what it doesn't say, though: that permission covers *all* of your spreadsheets, not just the one this code writes to. Even a good answer can leave out a detail that matters, which is why you read the permission screen yourself.
+
+::: {.tip}
+> **Limit a script to one spreadsheet.** The permission above covers *all* of your spreadsheets, not just this one. For a script that only works with the spreadsheet it's attached to, you can narrow that. Put this comment at the very top of `Code.gs`:
+>
+> ```
+> /** @OnlyCurrentDoc */
+> ```
+>
+> Apps Script then asks only for access to the current spreadsheet. It's a good habit for scripts you write for a single sheet.
+:::
+
+::: {.caution}
+> **Approve only what you understand.** The permission screen is your last chance to catch code that does more than it should. Never approve permissions for code you can't explain, or for a script someone else sent you that you haven't read.
+:::
+
+## Your Learner Profile
+
+Your code now runs in a different place, so your learner profile needs to say so. You've also learned what a function is, and there's one new rule:
+
+::: {.ai-profile lesson="apps-script"}
+Environment: I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.
+
+Add rules:
+
+- Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.
+
+Add to "What I know so far":
+
+- what a function is: a named group of steps written as function name() { }
+- choosing which function to run in the Apps Script editor
+- reading output in the Execution log
+- methods, used with a dot, such as SpreadsheetApp.getActiveSheet().getRange("A1").setValue("Hello") to write into a cell
+:::
+
+Here's what changed:
+
+- **Where your code runs.** The first paragraph now says you're writing Apps Script in the editor attached to a Google Sheet. That tells the assistant which tools your code can use, such as `SpreadsheetApp`, and where to look for output.
+- **A new rule about functions.** You know what a function is, but not yet how functions pass values to each other. Assistants sometimes split even a small task into several functions that hand values back and forth, which is harder to follow. This rule keeps all the code in one function you can run from the menu. You'll learn the rest in the lesson on functions, and that lesson will remove this rule.
+- **Four new items** under "What I know so far," including reading a line of Apps Script like the one that writes Hello into cell A1. With this profile, the request for that code should now get an answer.
+
+## Summary
+
+Google Apps Script is JavaScript with tools for working with Google's apps, and in this book you'll use it mostly with Google Sheets. Each spreadsheet can have an Apps Script project, which you open through **Extensions**, then **Apps Script**. Code in Apps Script goes inside functions, which are named groups of steps written as `function name() { }`. You run one by choosing it in the toolbar's menu and clicking **Run**, and its `console.log` output appears in the Execution log. The first time a script works with your data, Google asks you to approve its permissions. The "unverified app" warning names you as the developer, because you wrote the script. Approve permissions only when they match what you expect the code to do.

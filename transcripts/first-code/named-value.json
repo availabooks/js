@@ -1,0 +1,28 @@
+{
+  "lesson": "first-code",
+  "name": "named-value",
+  "assistant": "Gemini",
+  "attempts": [
+    {
+      "profile": "ai-assistant",
+      "model": "Gemini 3.6 Thinking (Gemini app)",
+      "captured": "2026-09-26",
+      "source": "Gemini app (gemini.google.com), captured by the author and pasted in; the profile reply was not recorded",
+      "messages": [
+        {
+          "role": "user",
+          "text": "I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm running JavaScript in an online editor that shows console.log output. I don't know any programming concepts yet.\n\nWhen you write code for me:\n- Use only the concepts listed below under \"What I know so far.\" If a task needs something I haven't learned, tell me what it is instead of using it.\n- Don't use semicolons at the ends of lines.\n- Keep the code short and simple, and explain what each line does in plain language.\n\nWhat I know so far: nothing yet.",
+          "isProfile": true
+        },
+        {
+          "role": "user",
+          "text": "Write JavaScript that stores my name, Ava, and then prints a greeting that uses it."
+        },
+        {
+          "role": "model",
+          "text": "To store a name and use it in a greeting, this task requires two new concepts: **variables** (used to store information) and **text combination** using the `+` operator.\n\n```javascript\nlet name = \"Ava\"\nconsole.log(\"Hello, \" + name)\n\n```\n\n* `let` tells JavaScript to create a variable, which acts like a labeled box for storing data.\n* `name` is the label given to this box.\n* `=` places the text `\"Ava\"` inside the `name` box.\n* `+` glues the text `\"Hello, \"` together with the stored value inside `name`.\n* `console.log(...)` displays the final combined message (`Hello, Ava`).\n\nWould you like to try adding a second variable, such as your favorite color or city, to expand the greeting?"
+        }
+      ]
+    }
+  ]
+}

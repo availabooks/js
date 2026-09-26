@@ -22,29 +22,17 @@ This file, `outline.md`, `reference/` and `private/` are not published. The buil
 
 ## Front matter
 
-Every lesson starts with a YAML block. The build reads keys that begin with `_$_`.
+A lesson with code starts with a YAML block listing the page modules it needs. The build reads keys that begin with `_$_`.
 
 ```yaml
 ---
 _$_import: monaco, appsscript
-_$_profile:
-  environment: "Apps Script in Google Sheets"
-  knows:
-    - "let, and giving a variable a new value"
-    - "strings, numbers and booleans"
-  rules_add:
-    - "Use let for every variable. Don't use const."
-  rules_remove: []
 ---
 ```
 
-- **`_$_import`** lists the page modules the lesson needs. `monaco` gives runnable code editors; `appsscript` adds on-page spreadsheets with a stand-in `SpreadsheetApp` (see "Spreadsheets on the page"). A lesson with no code uses `_junk: morano`, as the existing lessons do.
-- **`_$_profile`** declares what this lesson adds to the learner profile (outline §4):
-  - `environment`: set only when the lesson changes where code runs.
-  - `knows`: concepts the reader has after this lesson, in plain words an AI will understand.
-  - `rules_add` / `rules_remove`: profile rules this lesson adds or removes, worded exactly as they should appear in the profile. A rule is removed by repeating its exact wording.
-
-  The profile button (not built yet) will combine these, in the order of the reader's version in `config.json`.
+- **`_$_import`**: `monaco` gives runnable code editors; `appsscript` adds on-page spreadsheets with a stand-in `SpreadsheetApp` (see "Spreadsheets on the page").
+- A lesson with no code needs no front matter at all.
+- Learner-profile changes don't go here. They go in the lesson body (see "Showing the profile").
 
 ---
 
@@ -64,7 +52,7 @@ _$_profile:
    ```
 
 2. **Sections (`##`)**. Most follow the workflow from outline §2: Plan, then Ask (an AI exchange), then Read (a line-by-line walkthrough), then Run and Revise.
-3. **A "Your Learner Profile" section** in any lesson whose `_$_profile` changes something. It shows the profile and explains what changed (see "Showing the profile").
+3. **A "Your Learner Profile" section** in any lesson that changes the profile. It holds the lesson's `ai-profile` block and explains what changed (see "Showing the profile").
 4. **`## Summary`**: a short paragraph or two.
 5. **The assessment** is a separate draft file (see "Assessments").
 
@@ -145,7 +133,7 @@ Every reply is **real output captured from the Gemini API** while the lesson is 
 
 | Attribute | Meaning |
 |---|---|
-| `prompt` | What the reader types. The platform turns it into a "send to AI" button. |
+| `prompt` | What the reader types. The build shows it above the reply with a copy button (a paper-airplane icon) that copies the prompt, so readers can paste it into their own assistant. It does not send anything itself. |
 | `assistant`, `model` | Where the reply came from. |
 | `captured` | The date it was captured, so old replies can be found and re-captured. |
 | `profile` | Which learner profile was used: `none`, or the id of the lesson whose profile it was (for example `variables`). |
@@ -163,23 +151,46 @@ Every reply is **real output captured from the Gemini API** while the lesson is 
 - The learner profile is sent as the conversation's **first message**, the way a reader would paste it, and the reply to it is saved but not shown in the book.
 - Follow-up turns include the conversation so far.
 - The API's replies are close to, but not identical to, the Gemini app's.
+- **Replies from the Gemini app** are also fine, and closer to what readers see. The author sends the prompt in a new chat that starts with the right learner profile and pastes the reply back. The transcript records `"source": "Gemini app ... pasted in"`. Leave out the `model` attribute unless the model picker's label is known.
 - **Model:** captures use `gemini-3.8-flash` (the script's `DEFAULT_MODEL`), pinned so every reply in the book comes from the same model. Flash is the model family the free Gemini app typically uses. Change the model only for a deliberate re-capture of the whole book.
 
 ---
 
 ## Showing the profile
 
-A lesson that changes the profile shows it in full, with a short note on each change:
+A lesson that changes the learner profile says how, in an `ai-profile` block in its "Your Learner Profile" section:
 
 ```markdown
-::: {.ai-profile lesson="variables"}
-> I'm learning JavaScript with Google Apps Script in Google Sheets. ...
->
-> What I know so far: ...
+::: {.ai-profile lesson="apps-script"}
+Environment: I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.
+
+Add rules:
+
+- Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.
+
+Remove rules:
+
+- Use let for every variable. Don't use const.
+
+Add to "What I know so far":
+
+- what a function is: a named group of steps written as function name() { }
 :::
 ```
 
-Follow the block with a short explanation of what's new and why. For a removed rule, say why the reader no longer needs it. (Rendering and the copy button are future tooling. The block is written out in full so the lesson reads correctly without them.)
+- **Every part is optional.** "Environment" is a whole sentence, because the wording differs between platforms, and it replaces the previous one. Rules and "What I know so far" items are added in order. A rule is removed by repeating its exact wording.
+- **Profile changes go at the end of a lesson,** where the lesson explains them. A lesson has one profile before it and one after.
+- **The build generates the full profile** (`tools/author-tools/learnerProfile.js`) from these blocks and the `learnerProfile` template in `config.json`. A lesson's profile is everything the lessons *before* it added, in the order of the version being built, so a course track that skips lessons gets the right profile automatically.
+
+On each page, the build adds:
+
+- **After the Learning Objectives box** (or at the top, if a lesson has none): "Copy learner profile for this lesson", which copies the profile readers should use while working through the lesson (the one its examples were captured with), with a "Show the profile" toggle. It's omitted when no profile exists yet.
+- **In place of each `ai-profile` block:** the complete updated profile, with this lesson's changes highlighted, and a copy button.
+- **At the bottom:** "Copy updated learner profile", but only when the lesson has an `ai-profile` block.
+
+Follow the block with a short explanation of what's new and why. For a removed rule, say why the reader no longer needs it.
+
+**After changing any `ai-profile` block,** run `node tools/build-profiles.mjs` to regenerate `reference/profiles/*.txt`, the files `capture.mjs` sends, so captures use exactly the profile readers see.
 
 ---
 

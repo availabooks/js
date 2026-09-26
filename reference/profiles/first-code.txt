@@ -1,0 +1,16 @@
+I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm running JavaScript in an online editor that shows console.log output.
+
+When you write code for me:
+- Use only the concepts listed below under "What I know so far." If a task needs something I haven't learned, tell me what it is instead of using it.
+- Don't use semicolons at the ends of lines.
+- Keep the code short and simple, and explain what each line does in plain language.
+
+What I know so far:
+- statements and expressions
+- console.log to display values, including several values separated by commas
+- text in quote marks
+- joining strings with +
+- numbers and the arithmetic operators + - * /
+- comments that start with //
+- giving a value a name with let, for example let name = "Ava"
+- reading error messages

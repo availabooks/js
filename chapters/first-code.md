@@ -2,374 +2,375 @@
 _$_import: monaco
 ---
 
-## Writing and Running Simple Statements
+::: {.learning}
+Learning Objectives
 
-Before you can build programs that make decisions, loop through data, or interact with the world, you need to get comfortable with one of the most fundamental building blocks of all: the **expression**. An expression is any piece of code that the computer evaluates to produce a specific value. It might be a simple number, a piece of text, or a complex calculation. Think of expressions as the meaningful phrases or ingredients that provide the "data" for your code.
+::: {.objectives}
+1. Run JavaScript in this book's code editors.
+2. Tell the difference between an expression and a statement.
+3. Use `console.log` to display text, numbers and the results of calculations.
+4. Give a value a name with `let`, and use the name later.
+5. Read an error message and ask an AI assistant to explain it.
+6. Explain why this book leaves semicolons out of JavaScript code.
+:::
+:::
 
-In JavaScript, expressions are everywhere:
+## Where You'll Run Code
 
-- A simple number like `25` is an expression.
-
-- A calculation like `5 + 7` is an expression that evaluates to `12`.
-
-- A piece of text in quotes, like `"Hello, world!"`, is an expression.
-
-While expressions represent values, they need to be wrapped into **statements**—the full "sentences" or instructions that tell the computer to take an action with those values.
-
-### From Value to Action
-
-An expression on its own is like a thought that hasn't been spoken aloud. For example, the text `"Hello, world!"` is an expression; it represents a specific piece of data. However, just writing that text doesn't tell the computer what to do with it.
-
-To make it an instruction, you use a statement like `console.log()`.
-
-In this line, `"Hello, world!"` is the **expression** (the value), and the entire line is the **statement** (the instruction to print that value). The statement takes the "ingredient" and carries out a clear command.
-
-In JavaScript, a simple statement might look like this:
-
-<!-- <pre class="code" data-environment="html">
-&lt;h1&gt;Hello world&lt;/h1&gt;
-</pre> -->
+Code editors like the one below appear throughout this book. Each one has a Run button (▶). Click it, and the code runs right here in the page, with any output shown underneath. You can change the code and run it again as often as you like.
 
 <pre class="code">
-console.log("Hello, world!") 
+console.log("Hello from JavaScript")
 </pre>
+
+You'll also see editors that show code without a Run button. That code is meant to run somewhere else, such as a Google Sheet, and the lesson explains where.
+
+::: {.note}
+> **Your browser has a console too.** Every modern browser (Chrome, Edge, Firefox and Safari) includes developer tools with a *console*, a panel where you can type JavaScript and see the result. You don't need it yet, because this book's editors work the same way. You'll use the browser's console later, when you work with web pages.
+:::
+
+This is the environment your learner profile describes: "an online editor that shows console.log output." When you ask your AI assistant for code in this lesson, you can paste its code into any editor on this page to run it.
+
+## Expressions and Statements
+
+Two ideas sit underneath every line of JavaScript: expressions and statements.
+
+An **expression** is a piece of code that produces a value. `25` is an expression whose value is the number 25. `5 + 7` is an expression whose value is 12. `"Hello"` is an expression whose value is the text *Hello*.
+
+A **statement** is an instruction: it tells the computer to *do* something. A statement often contains expressions, the way a sentence contains words.
+
+::: {.term}
+> **Expression** — Code that produces a value, such as `5 + 7` or `"Hello"`.
+:::
+
+::: {.term}
+> **Statement** — A complete instruction that tells the computer to do something, such as display a value.
+:::
+
+Run this editor. Nothing appears:
 
 <pre class="code">
-console.log("Hello, world!") //this is a statement
-//“Hello, world!”  is just the expression
+5 + 7
 </pre>
 
-This line tells the computer to print a message. That’s it. One instruction, one action. But this tiny example captures the essence of programming: you write a clear command, and the computer carries it out exactly.
-
-### What Makes a Statement “Simple”
-
-A simple statement usually does one thing:
-
-- Display a value
-- Assign a variable
-- Call a function
-
-For example:
+The computer did calculate `5 + 7`, but nothing told it to do anything with the result, so the result was thrown away. Now wrap the expression in `console.log( )`, and it becomes a statement that displays the value:
 
 <pre class="code">
-console.log(5 + 7) // “5+7” is the expression
-                   // “console.log()” is added around it to 
-			             //turn it into a statement that displays the sum of 5+7
+console.log(5 + 7)
 </pre>
 
-This calculates a number, though it doesn’t show the result anywhere. Or:
+This time you see `12`. The expression `5 + 7` is the value, and `console.log(...)` is the instruction that displays it.
 
-<pre class="code" >
-let name = "Ava"
-</pre>
-
-This stores a piece of information for later use. Each of these lines is a complete thought, expressed in code.
-
-### Running Your First Statements
-
-You can run simple statements in several environments, but the easiest place to start is the **browser console**. Open your browser’s developer tools, switch to the Console tab, and type:\<-(Note: the console in browser will echo expressions back to you, so sometimes you can see an expression.)
-
-Run these code blocks below, the first two won’t show anything because they are both just expressions. But you can turn them into statements by wrapping them in console.log()
+Text works the same way. In JavaScript, text goes inside quote marks, so the computer can tell the words you want to display from the words that are part of the code:
 
 <pre class="code">
-2 + 3
+console.log("JavaScript is fun!")
 </pre>
 
+::: {.term}
+> **String** — A piece of text in a program, written inside quote marks, such as `"Hello"`. The name comes from the idea of a string of characters.
+:::
+
+## Asking for Your First Line of Code
+
+Time to use the five-step workflow on something small.
+
+**Plan.** You want one line of code that displays a greeting. Nothing needs to go in. The output is a greeting in the console, and you'll know it worked if the greeting appears under the editor.
+
+**Ask.** Start a new chat, paste your learner profile from [Working with an AI Assistant](ai-assistant){.book-link}, and send this prompt:
+
+::: {.ai-conversation prompt="Write one line of JavaScript that prints a greeting to the console." assistant="Gemini" model="gemini-3.8-flash" captured="2026-09-26" profile="ai-assistant" transcript="first-code/greeting"}
+> ```javascript
+> console.log("Hi there!")
+> ```
+>
+> ### What this line does:
+> * `console.log(...)` tells the computer to display something on the screen.
+> * `"Hi there!"` is the greeting text you want to print, wrapped in quotation marks.
+:::
+
+**Read.** The reply is short because the learner profile asked for short, simple code. Go through it using what you've just learned:
+
+- `"Hi there!"` is an expression. It's a string, so it's in quote marks.
+- `console.log( )` makes the line a statement that displays the value in its parentheses.
+- There's no semicolon at the end, because the profile asked for none.
+
+It doesn't change or delete anything, and it matches the plan. You can explain every part of it.
+
+**Run.** Paste the code into the editor below, or type it, and run it:
+
 <pre class="code">
-"JavaScript is fun!"
+console.log("Hi there!")
 </pre>
 
-This is a true, simple statement:
+**Revise.** If your greeting appeared, there's nothing to revise. If your assistant's reply was different, run its version instead. Any line that puts a string inside `console.log( )` does the same job.
+
+## More About console.log
+
+`console.log` is how your code shows you what it's doing, and you'll use it constantly: to see results, to check a value, and to find out which parts of your code actually ran.
+
+It can display numbers, text, and the results of calculations:
 
 <pre class="code">
+console.log(42)
+console.log("Learning JavaScript")
 console.log(10 * 10)
+console.log(100 / 4 - 5)
 </pre>
+
+JavaScript uses `+` and `-` for adding and subtracting, `*` for multiplying and `/` for dividing. As in ordinary math, multiplying and dividing happen before adding and subtracting, and parentheses change the order: `(2 + 3) * 4` is 20, while `2 + 3 * 4` is 14.
+
+You can display several values at once by separating them with commas. `console.log` puts a space between them:
 
 <pre class="code">
-let x = 42
-x
+console.log("The total is", 5 + 7)
+console.log("Two times three is", 2 * 3, "and ten minus four is", 10 - 4)
 </pre>
 
-Line one is a simple statement, it is telling the computer to assign the value 42 to the variable x, but line two is just an expression of the variable x. When the computer processes that line it can tell that x is 42, but the computer doesn’t know what to do with the information.
+Labeling a value this way makes output much easier to understand, especially once a program displays more than one thing.
 
-You can tell the computer what to do with the expression by turning line 2 into a statement.
+## Comments
+
+Anything after two forward slashes (`//`) on a line is a **comment**: a note for people, which the computer ignores.
 
 <pre class="code">
-let x = 42
-console.log(x)
+// This line displays the number of days in a week
+console.log(7)
+
+console.log(24 * 7) // the number of hours in a week
 </pre>
 
-Each statement runs immediately, giving you instant feedback. This rapid loop—write, run, observe—is one of the best ways to learn.
+::: {.term}
+> **Comment** — A note in the code, starting with `//`, that the computer ignores. Comments explain code to the people who read it.
+:::
 
-### Ending Statements
+Comments have three common uses:
 
-Most JavaScript statements end with a semicolon. Technically, JavaScript can often figure out where a statement ends even if you leave the semicolon out, but using them consistently makes your code clearer and avoids subtle bugs. Think of semicolons as punctuation that helps the computer read your instructions cleanly.
+- **Explaining what code does,** so you (or someone else) can understand it later.
+- **Recording why you did something a particular way,** which the code alone can't show.
+- **Turning off a line temporarily.** Put `//` in front of a line to stop it from running without deleting it. This is handy when you're hunting for a problem.
 
-If you look at JavaScript code online, you will often see a semicolon (`;`) at the end of every line. In this book, however, we will **not** be using them.
+AI assistants often add comments to the code they write. They're worth reading. A comment tells you what the code is *supposed* to do, which makes it easier to check whether it actually does.
 
-Modern JavaScript has a feature called **Automatic Semicolon Insertion**. This means the computer is smart enough to see your line breaks and understand where one instruction ends, and the next begins without needing a piece of punctuation to tell it so.
+## Giving a Value a Name
 
-We are skipping semicolons for two main reasons:
-
-- **Reducing Mental Strain**: Learning to program involves keeping track of many new rules. Forcing yourself to remember a semicolon at the end of every line adds an extra layer of "mental overhead" that doesn't actually help you learn the logic of the code.
-- **Cleaner Look**: Many modern developers prefer the clean, minimalist look of code without semicolons. It allows you to focus on the action—the words and symbols—rather than the punctuation.
-
-While you may eventually work on projects where semicolons are the established norm, for your journey through this book, we will keep things simple and focus on the instructions themselves.
-
-### Why Simple Statements Matter
-
-It’s tempting to rush ahead to bigger, more exciting programs, but mastering simple statements is essential. They’re the foundation for everything else you’ll write. Even the most complex applications are built from thousands of small, clear instructions just like these.
-
-As you continue through this book, you’ll combine simple statements into larger structures—functions, loops, conditionals, and full programs. But it all starts here: one line of code, one action, one step toward thinking like a programmer.
-
-## `console.log()` and Basic Output
-
-Before you can build anything meaningful in JavaScript, you need a way to _see_ what your code is doing. That’s where `console.log()` comes in. It’s one of the simplest tools in the language, yet you’ll use it constantly—whether you’re just starting out or working on complex applications years from now.
-
-`console.log()` sends a message to the console, a built‑in panel in your browser or development environment where JavaScript can display information. Think of it as your program’s voice. Whenever you want to check a value, confirm that a piece of code is running, or understand what’s happening inside your program, you log it.
-
-A basic example looks like this:
+Programs constantly need to remember values and use them again. You can give a value a name with `let`:
 
 <pre class="code">
-console.log("Hello, JavaScript!")
+let name = "Ava"
+console.log("Hello,", name)
 </pre>
 
-When you run this line, the message appears in the console. It’s simple, but it’s the foundation of how you’ll observe and understand your code.
+The first line says: *create a name, `name`, and store the string "Ava" under it.* After that, whenever the code uses `name`, JavaScript uses the value stored there. Notice that `name` in the second line has no quote marks. Without quotes, it refers to the stored value. With quotes, `"name"` would just be the four letters n-a-m-e.
 
-### Why `console.log()` Matters
+A named value like this is called a **variable**. You'll learn much more about variables later, including how to change what they hold. For now, it's enough to recognize the pattern, because you'll see it in almost every piece of code an AI assistant writes for you.
 
-At first glance, logging might seem trivial, but it plays several important roles:
+::: {.term}
+> **Variable** — A name that refers to a stored value. `let name = "Ava"` creates a variable called `name` that holds the string "Ava."
+:::
 
-- **Seeing results**: You can display numbers, text, variables, or calculations.
-- **Debugging**: When something isn’t working, logging helps you trace the problem.
-- **Understanding flow**: You can log messages to see which parts of your program run and in what order.
-- **Learning**: As a beginner, logging is your window into how JavaScript behaves.
+Here's how an assistant handles a request that needs a variable:
 
-It’s not an exaggeration to say that `console.log()` is one of the most important tools you’ll use while learning.
+::: {.ai-conversation prompt="Write JavaScript that stores my name, Ava, and then prints a greeting that uses it." assistant="Gemini" model="Gemini 3.6 Thinking (Gemini app)" captured="2026-09-26" profile="ai-assistant" transcript="first-code/named-value"}
+> To store a name and use it in a greeting, this task requires two new concepts: **variables** (used to store information) and **text combination** using the `+` operator.
+>
+> ```javascript
+> let name = "Ava"
+> console.log("Hello, " + name)
+>
+> ```
+>
+> * `let` tells JavaScript to create a variable, which acts like a labeled box for storing data.
+> * `name` is the label given to this box.
+> * `=` places the text `"Ava"` inside the `name` box.
+> * `+` glues the text `"Hello, "` together with the stored value inside `name`.
+> * `console.log(...)` displays the final combined message (`Hello, Ava`).
+>
+> Would you like to try adding a second variable, such as your favorite color or city, to expand the greeting?
+:::
 
-### Logging Different Kinds of Values
+**Read.** This reply was sent with the learner profile from the previous lesson, which says you know nothing yet, and the assistant handled that sensibly. It started by naming the two concepts the task needs, *variables* and *text combination*, and then explained each piece of the code as it used it. That's close to what the profile asks for, though not exactly: the profile asks the assistant to *tell you* what a task needs instead of using it. When an assistant goes ahead anyway, as it did here, the explanation is what lets you keep up.
 
-You can log almost anything:
+You can now read every line:
+
+- `let name = "Ava"` creates a variable called `name` holding the string "Ava", just like the example above.
+- `console.log("Hello, " + name)` uses `+` in a new way. With numbers, `+` adds. With strings, it joins them end to end, so `"Hello, " + name` becomes the single string "Hello, Ava".
+
+Compare it with the version earlier in this section, `console.log("Hello,", name)`. Both display *Hello, Ava*, but they get there differently:
+
+- **With a comma,** `console.log` receives two separate values and puts a space between them for you.
+- **With `+`,** you build one string yourself, so you control the spacing. That's why the assistant's version has a space inside the quotes: `"Hello, "`. Leave it out and you'd get *Hello,Ava*.
+
+**Run.** Try both versions, then take out the space inside the quotes in the second one and run it again to see the difference:
 
 <pre class="code">
-console.log(42) // numbers
-console.log("Learning JS") // strings
-console.log(true) // booleans
-console.log(5 + 7) // expressions
+let name = "Ava"
+console.log("Hello,", name)
+console.log("Hello, " + name)
 </pre>
 
-Note: Any text following a “//” will be completely ignored by the Apps Script interpreter, this text is called a comment. You can use a comment to make a note of what a specific line of code does, record your thought process, or even disable sections of code that you don’t want to run but also don’t want to delete.
+You'll learn more about joining strings with `+` in the lesson on variables and data. The assistant's closing question, about adding a second variable, is a good one to try on your own.
 
-You can also log multiple values at once:
+## Why This Book Leaves Out Semicolons
+
+Look back at the reply in [Welcome to Programming](welcome){.book-link}, where an assistant was asked for a program that says hello. Its code looked like this:
+
+<pre class="code" data-environment="none">
+console.log("Hello, World!");
+</pre>
+
+That semicolon (`;`) at the end is optional. JavaScript treats the end of a line as the end of a statement, so these two lines do exactly the same thing:
 
 <pre class="code">
-console.log("The total is:", 5 + 7)
+console.log("with a semicolon");
+console.log("without a semicolon")
 </pre>
 
-The console will print both the text and the result, making it easy to understand what’s happening.
+You only *need* a semicolon if you put two statements on the same line: `console.log(1); console.log(2)`.
 
-### Using the Console in Your Browser
+Much of the JavaScript you'll find online, and much of what AI assistants write, uses semicolons anyway. Many other programming languages require them, and plenty of programmers are used to them. This book leaves them out, for two reasons:
 
-To try this out:
+- **There's one less thing to remember.** You can focus on what each line does instead of on punctuation.
+- **The code is easier to read.** With less punctuation, the instructions themselves stand out.
 
-1. Open your browser.
-2. Right‑click anywhere and choose **Inspect** or **Developer Tools**.
-3. Click the **Console** tab.
-4. Type a line like:
+Code with semicolons works just as well, so there's no need to remove them from code you find. Your learner profile asks your assistant to leave them out so its code matches this book.
 
-<pre class="code">
-console.log("Testing output")
-</pre>
+## When Things Go Wrong: Errors
 
-5. Press Enter.
+Every programmer, at every level, runs into errors constantly. An error isn't a sign you've failed. It's the computer telling you, as precisely as it can, that it tried to follow your instructions and couldn't.
 
-You’ll see the message appear immediately. This instant feedback loop is one of the best ways to experiment and build confidence.
-
-### Output Isn’t Just for Beginners
-
-Even experienced developers rely on logging. It’s a quick, flexible way to understand what your code is doing without setting up complex tools. As your programs grow, you’ll learn more advanced debugging techniques, but `console.log()` will always remain part of your toolkit.
-
-For now, think of it as your first and most reliable way to communicate with your program. Every time you wonder “What’s going on here?”, a well‑placed `console.log()` can give you the answer.
-
-## Understanding Errors and Debugging Early
-
-Every programmer—beginner or expert—runs into errors. In fact, encountering errors is not a sign that you’re doing something wrong; it’s a sign that you’re _programming_. Errors are simply the computer’s way of telling you, “I tried to follow your instructions, but something didn’t quite make sense.” Learning to understand and fix these messages early on will make you a far more confident and capable coder.
-
-### Errors Are Part of the Process
-
-When you’re learning a new language, you expect to stumble over grammar or vocabulary. Learning a programming language is no different. You’ll misspell a variable name, forget a parenthesis, or use a feature incorrectly. Instead of getting frustrated, treat errors as feedback. They point you directly to what needs attention.
-
-A typical JavaScript error might look like this:
-
-<pre class="code" data-environment="message">
-Uncaught ReferenceError: myVariable is not defined
-</pre>
-
-It may seem intimidating at first, but with practice you’ll learn to read these messages like clues in a puzzle.
-
-### Types of Errors You’ll See
-
-Most beginner errors fall into a few categories:
-
-- **Syntax errors**: You wrote something the computer can’t parse—missing brackets, stray characters, or incorrect punctuation.
-- **Reference errors**: You tried to use a variable or function that doesn’t exist (or isn’t spelled the way you think).
-- **Type errors**: You attempted an operation that doesn’t make sense, like calling something that isn’t a function.
-- **Logic errors**: The code runs, but it doesn’t do what you intended. These are trickier because the computer doesn’t complain—you just get the wrong result.
-
-Understanding which category you’re dealing with helps you narrow down the fix.
-
-### Reading Error Messages
-
-Error messages often feel cryptic at first, but they’re surprisingly helpful once you know how to interpret them. They usually tell you:
-
-- **What went wrong**
-- **Where it happened** (a line number or file)
-- **Why the computer couldn’t continue**
-
-For example:
-
-<pre class="code" data-environment="message">
-Uncaught SyntaxError: Unexpected token '}'
-</pre>
-
-This tells you the computer found a closing brace it wasn’t expecting—usually a sign that something earlier in the code is missing.
-
-### Debugging: Your First Toolkit
-
-Debugging is the process of finding and fixing problems in your code. Early on, you’ll rely on a few simple but powerful techniques:
-
-- **Use `console.log()`** to check values and confirm your code is running where you expect.
-- **Read error messages slowly**, one piece at a time.
-- **Check for typos**, especially in variable names.
-- **Comment out sections of code** to isolate the problem.
-- **Test small pieces** before combining them into something bigger.
-
-These habits will save you hours of frustration and help you build a strong foundation.
-
-### Debugging Builds Understanding
-
-Fixing errors isn’t just about making your code work—it’s how you learn. Each time you track down a bug, you deepen your understanding of how JavaScript behaves. You start to anticipate problems before they happen, and you become more deliberate in how you write code.
-
-By embracing errors early, you’ll develop the mindset of a programmer: curious, patient, and unafraid to experiment. Debugging isn’t a chore—it’s a skill, and one of the most valuable ones you’ll gain on your programming journey.
-
-## The Idea of Syntax and Structure
-
-Every language—spoken or written—has rules that determine how words fit together to form meaningful sentences. Programming languages are no different. **Syntax** is the set of rules that defines how you must write your code so the computer can understand it. **Structure** is how those rules fit together to form larger, coherent programs.
-
-If syntax is the grammar, structure is the organization.
-
-### Why Syntax Matters
-
-Computers are incredibly literal. They don’t interpret tone, guess your intent, or fill in missing pieces. If you forget a parenthesis, misspell a keyword, or place something in the wrong order, the computer can’t proceed. It stops and reports an error because the instruction no longer fits the expected pattern.
-
-For example, this is valid JavaScript:
-
-<pre class="code">
-console.log("Hello")
-</pre>
-
-But remove one character:
+Run this line. It's missing its closing parenthesis:
 
 <pre class="code">
 console.log("Hello"
 </pre>
 
-Suddenly the computer has no idea where the statement ends. A human might overlook the missing parenthesis, but the computer cannot.
+Instead of output, you get an error message. In Chrome and Edge it reads:
 
-Syntax rules ensure clarity. They create a predictable structure that both you and the machine can rely on.
-
-### The Building Blocks of JavaScript Syntax
-
-As you learn JavaScript, you’ll encounter several recurring elements:
-
-- **Keywords** like `let`, `if`, `function`
-- **Symbols** like `{}`, `()`, `[]`, `;`
-- **Operators** like `+`, `-`, `===`
-- **Comments** `//`
-- **Values** like numbers, strings, and booleans
-- **Identifiers** (names you create for variables and functions)
-
-Each of these has a specific role and must appear in the right place for your code to make sense.
-
-### Structure: How Code Fits Together
-
-While syntax governs the details, structure governs the big picture. Structure is how you organize your code so it’s readable, logical, and easy to maintain.
-
-For example, JavaScript uses **curly braces** to group related statements:
-
-<pre class="code">
-if (score > 10) {
-  console.log("You win!")
-  console.log("Great Work!")
-}
+<pre class="code" data-environment="message">
+SyntaxError: missing ) after argument list
 </pre>
 
-The braces show that both console.log statements belong to the `if` condition. Without them, the computer would only execute the first one based on the condition. The second would execute every time regardless of the value of the “score” variable. So, the braces tell the computer to handle the two (or more) statements together. They will either both execute or neither will.
+The editor adds the line number where it found the problem, and the message may start with the word *Uncaught*, which just means nothing in the code handled the error. Other browsers word the message a little differently.
 
-Structure also includes:
-
-- Indentation to show hierarchy
-- Grouping related code into functions
-- Keeping variable names meaningful
-- Writing code in a logical order
-
-Good structure makes your programs easier to understand—not just for the computer, but for you and anyone else who reads your code later.
-
-### Syntax \+ Structure \= Clear Communication
-
-Programming is ultimately about communication. You’re expressing ideas in a form the computer can execute. Syntax ensures your message is valid; structure ensures it’s understandable.
-
-As you continue through this book, you’ll see how these two concepts work together. You’ll learn the rules, but you’ll also learn how to write code that feels clean, organized, and intentional. Mastering syntax and structure early will make everything else in programming feel more natural.
-
-An easy way for your code to communicate clearly is to use comments. It is wise to add comments throughout your code to give an explanation about any complicated parts. If you clearly explain what each section of your code does in comments it will be much easier for you to understand what you have written when you refer to it months later.
-
-Example of comments:
+Here's a different kind of error. The name is misspelled on the second line:
 
 <pre class="code">
-//This section of code will print "You win!"
-//and "Great work!" if the score is above 10
-if (score > 10) {
-  console.log("You win!")
-  console.log("Great Work!")
-}
+let name = "Ava"
+console.log(nmae)
 </pre>
 
-## Transitioning to Google Apps Script in Google Sheets
+<pre class="code" data-environment="message">
+ReferenceError: nmae is not defined
+</pre>
 
-Up to this point, you’ve been learning JavaScript in its simplest form—writing small statements, experimenting in the console, and getting comfortable with the language’s basic building blocks. Now it’s time to take those skills somewhere more practical, somewhere you can see your code interact with real data and real tools you already use every day.
+### Kinds of errors
 
-For the next part of this book, we’ll shift our focus to **Google Apps Script**, a JavaScript‑based environment that runs inside Google Workspace. We’ll anchor our learning inside **Google Sheets**, one of the most flexible and useful tools available.
+Most errors a beginner meets fall into four groups:
 
-### Why Move to Google Apps Script Now
+- **Syntax errors.** The code breaks the rules of how JavaScript must be written, such as a missing parenthesis or quote mark. The computer can't even start running it.
+- **Reference errors.** The code uses a name that doesn't exist, usually because of a typo or because the name was never created.
+- **Type errors.** The code tries to do something with a value that doesn't make sense for that kind of value. You'll meet these later.
+- **Logic errors.** The code runs without complaint but does the wrong thing, such as adding when it should subtract. These are the hardest to find, because nothing tells you they're there. You find them by checking results against your plan.
 
-Google Apps Script is a natural next step because it lets you apply your new programming skills to tasks that matter—automating spreadsheets, generating reports, cleaning data, sending emails, and building custom tools that live right inside your Google account. It’s JavaScript with superpowers, connected directly to your documents, your Drive, and your workflows.
+::: {.term}
+> **Syntax** — The rules for how code in a language must be written, such as which punctuation goes where. A syntax error means the code breaks those rules.
+:::
 
-This environment is ideal for beginners because:
+### Reading an error message
 
-- You don’t need to install anything.
-- You can write code directly in your browser.
-- You get immediate, visible results in a spreadsheet.
-- The scripting language is close to the JavaScript you’ve already learned.
-- You can build genuinely useful tools with just a few lines of code.
+Error messages look intimidating, but they're usually telling you three useful things: *what kind* of error it is, *what went wrong*, and *where* (the line number). "ReferenceError: nmae is not defined" says the problem is a name (`nmae`) that JavaScript doesn't recognize. Once you know that, the typo is easy to spot.
 
-### What You’ll Learn in Google Sheets
+When a message doesn't make sense, your AI assistant can help, but how you ask matters. Here's one way to ask about the first error, in a new chat that starts with your learner profile:
 
-As we move into Apps Script, you’ll learn how to:
+::: {.ai-conversation prompt="I ran this line: console.log(&quot;Hello&quot; and got this error: SyntaxError: missing ) after argument list. What does this error mean? Explain it, but don't fix it yet." assistant="Gemini" model="Gemini 3.6 Thinking (Gemini app)" captured="2026-09-26" profile="ai-assistant" transcript="first-code/explain-error"}
+> A **SyntaxError** means JavaScript couldn't run your code because it broke a basic grammar rule of the language.
+>
+> Specifically, **"missing ) after argument list"** happens because of how opening and closing punctuation work:
+>
+> * The opening parenthesis `(` tells JavaScript: *"Start looking at the item I want to display."*
+> * JavaScript reads `"Hello"`.
+> * It expects a matching closing parenthesis `)` right after that to finish the instruction, but it reached the end of the line without finding one.
+>
+> Because JavaScript never saw that closing symbol, it got stuck waiting for the instruction to end and flagged the mistake.
+>
+> Would you like to try fixing the code yourself now, or move on to your next textbook exercise?
+:::
 
-- Write functions that read and modify spreadsheet data
-- Create custom menus and buttons
-- Automate repetitive tasks
-- Build small applications that live inside Sheets
-- Connect your spreadsheet to other Google services like Gmail or Drive
+This reply teaches something you can use again. Parentheses come in pairs, and when JavaScript finds an opening `(` it keeps reading until it finds the matching `)`. Here it ran out of line first. The next time you see "missing )", you'll know to count your parentheses.
 
-This is where programming starts to feel powerful. Instead of writing code in isolation, you’ll be shaping tools that interact with real information.
+The explanation also answers a question the message raises without spelling it out: the "argument list" is whatever sits inside the parentheses, here `"Hello"`. A value you hand to `console.log` (or any other command) this way is called an **argument**. If a word in an explanation is new to you, you can always ask the assistant what it means.
 
-### How This Transition Works
+Notice what the assistant *didn't* do: it didn't hand you the corrected line. It left the fix to you, as you asked. Try it now. Add the missing parenthesis and run the code:
 
-Don’t worry—you’re not leaving JavaScript behind. Apps Script _is_ JavaScript, just running in a different environment with additional features. Everything you’ve learned so far still applies. You’ll simply be adding new abilities, like accessing spreadsheet cells or responding to user actions.
+<pre class="code">
+console.log("Hello"
+</pre>
 
-Think of this as moving from practicing chords to playing your first song. The fundamentals stay the same, but now you get to create something meaningful.
+For comparison, here's the other way to ask, sent in a new chat with the same learner profile:
 
----
+::: {.ai-conversation prompt="I ran this line: console.log(&quot;Hello&quot; and got this error: SyntaxError: missing ) after argument list. Fix it." assistant="Gemini" model="Gemini 3.6 Thinking (Gemini app)" captured="2026-09-26" profile="ai-assistant" transcript="first-code/fix-error"}
+> ```javascript
+> console.log("Hello")
+>
+> ```
+>
+> * `console.log(...)` tells JavaScript to display the text inside the parentheses.
+> * `"Hello"` is the text to display.
+> * `)` closes the argument list so JavaScript knows the instruction is complete.
+:::
 
-With that foundation in place, the next chapter will guide you into Google Sheets, show you how to open the Apps Script editor, and help you write your first script that interacts with real spreadsheet data.
+This reply is correct, and because of your learner profile it even explains each part. But look at what it leaves out. It never says what went wrong or why JavaScript complained. It just hands you the working line. You'd be able to run it, but the next time you forget a parenthesis you'd have to ask again.
+
+The first reply took you one step further. It explained the rule behind the error and left the fix to you, so the next time you see "missing )" you can fix it yourself, without asking.
+
+Both kinds of question have their place. Once you understand an error, asking for a fix is a fine way to save time. While you're learning, though, ask for the explanation first.
+
+### Debugging habits
+
+Finding and fixing problems in code is called **debugging**. These habits will save you time from the start:
+
+- **Read the error message slowly,** one piece at a time.
+- **Check for typos,** especially in names and punctuation.
+- **Use `console.log`** to check values while the code runs.
+- **Turn off lines with `//`** to narrow down which one causes a problem.
+- **Make small changes and test each one,** instead of changing many things at once.
+- **Ask your assistant to explain before you ask it to fix.** An explanation helps you next time too.
+
+## Syntax and Structure
+
+Every language has rules for how words fit together. JavaScript's rules are strict: a missing parenthesis or quote mark stops the code from running at all. That's why a human reader might not notice a problem that the computer refuses to accept.
+
+As you learn JavaScript, you'll meet a handful of building blocks over and over:
+
+- **Keywords,** words with special meaning to JavaScript, such as `let`.
+- **Values,** such as numbers and strings.
+- **Names** you choose for your own values, such as `name`.
+- **Operators,** such as `+`, `-`, `*` and `/`.
+- **Punctuation,** such as parentheses `( )`, quote marks, and the curly braces `{ }` you'll soon use to group lines together.
+- **Comments,** starting with `//`.
+
+Syntax is about whether code is *valid*. **Structure** is about whether it's *understandable*: lines in a sensible order, consistent indentation, meaningful names, and comments where they help. The computer doesn't care about structure, but you will, and so will anyone else who reads your code later. Well-structured code is also easier to check, which matters when an AI assistant wrote it.
+
+## Your Learner Profile
+
+You've learned enough to update your learner profile. Use this version at the start of every new chat from now on:
+
+::: {.ai-profile lesson="first-code"}
+Add to "What I know so far":
+
+- statements and expressions
+- console.log to display values, including several values separated by commas
+- text in quote marks
+- joining strings with +
+- numbers and the arithmetic operators + - * /
+- comments that start with //
+- giving a value a name with let, for example let name = "Ava"
+- reading error messages
+:::
+
+Two things changed. The sentence "I don't know any programming concepts yet" is gone, and "What I know so far" now lists what you learned in this lesson. The rules stay the same. With this profile, an assistant can use `console.log`, arithmetic, strings, comments and `let` in its code, and should tell you when a task needs anything else.
+
+## Summary
+
+This book's code editors run JavaScript right in the page. An expression produces a value, and a statement tells the computer to do something with it. `console.log` displays values: text in quote marks, numbers, calculations, or several values separated by commas. Comments start with `//` and are ignored by the computer. `let` gives a value a name, called a variable, so you can use it again. Semicolons are optional in JavaScript, and this book leaves them out. Errors are normal. They tell you what kind of problem the computer found, what it was, and where. When a message is unclear, ask your assistant to explain it before you ask it to fix the code.
