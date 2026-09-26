@@ -1,5 +1,5 @@
 ---
-_junk: morano
+_$_import: monaco
 _$_profile:
   environment: "an online editor that shows console.log output"
   knows: []
@@ -171,7 +171,7 @@ A **learner profile** is a short message you send at the start of every new chat
 
 Each part has a job:
 
-- **The first paragraph** says who you are and where your code runs. "An online editor that shows console.log output" describes the code editors in this book's pages, which you'll start using in the next lesson. Without this, the assistant has to guess where you'll run the code, as it did with the three ways to say hello in [Welcome to Programming](welcome){.book-link}.
+- **The first paragraph** says who you are and where your code runs. "An online editor that shows console.log output" describes the code editors in this book's pages. You'll use one later in this lesson. Without this, the assistant has to guess where you'll run the code, as it did with the three ways to say hello in [Welcome to Programming](welcome){.book-link}.
 - **"Use only the concepts listed below"** is the most important rule. It asks the assistant to stay within what you know, and to *say so* when a task needs something new, instead of quietly using it.
 - **"Don't use semicolons"** matches the style of this book, so the assistant's code looks like the code you'll read here. (You'll learn why semicolons are optional in the next lesson.)
 - **"Keep the code short and simple, and explain what each line does"** asks for explanations as part of every answer, pitched at a beginner.
@@ -204,7 +204,15 @@ To use the profile, paste it as the first message of every new chat, before your
 > Once you try that, let me know! What would you like to learn next, or what is the first topic in your textbook?
 :::
 
-The assistant has changed how it behaves. Its code has no semicolon, it explains each part of the line in plain words, and it offers to go at your pace. You'll try that line of code yourself in the next lesson.
+The assistant has changed how it behaves. Its code has no semicolon, it explains each part of the line in plain words, and it offers to go at your pace.
+
+Because the assistant explained the line, you can say what it does: it displays the text `Hello, world!`. That means it passes the test of "don't run code you can't explain," so go ahead and run it. Click the Run button (▶) on the editor below, and the output appears underneath.
+
+<pre class="code">
+console.log("Hello, world!")
+</pre>
+
+Try changing the message between the quote marks, then run it again. You'll learn more about `console.log` and the other parts of this line in the next lesson.
 
 Now the same request as before, in the same chat:
 

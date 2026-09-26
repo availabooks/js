@@ -74,29 +74,24 @@
           "filename": "1.html"
         },
         {
-          "id": "ai-assistant",
-          "title": "Working with an AI Assistant",
-          "filename": "2.html"
-        },
-        {
           "id": "first-code",
           "title": "Your First Lines of Code",
-          "filename": "3.html"
+          "filename": "2.html"
         },
         {
           "id": "apps-script",
           "title": "Getting Started with Google Apps Script in Google Sheets",
-          "filename": "4.html"
-        },
-        {
-          "id": "variables",
-          "title": "Variables and Data",
-          "filename": "5.html"
+          "filename": "3.html"
         },
         {
           "id": "decisions",
           "title": "Making Decisions",
-          "filename": "6.html"
+          "filename": "5.html"
+        },
+        {
+          "id": "variables",
+          "title": "Variables and Data",
+          "filename": "4.html"
         }
       ]
     }

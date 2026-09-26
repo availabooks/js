@@ -152,7 +152,7 @@ Every reply is **real output captured from the Gemini API** while the lesson is 
 | `transcript` | Path under `transcripts/` to the saved raw exchange (without `.json`). |
 
 - **Follow-up turns** ("Try again. Use only what I know.") are separate blocks, as in the SQL book.
-- **Captions.** Readers will see a short caption built from these attributes, such as *"Reply from Gemini, October 2026."* (Not built yet; the attributes are enough.)
+- **Captions.** The build adds a caption at the end of each reply from these attributes: *"Reply from Gemini, captured September 26, 2026"*, with the model shown on hover. A block with `status="pending"` shows *"Reply not captured yet"* instead. (Built into `tools/author-tools/html.js`, styled by `div.ai-source` in the system CSS.)
 - **Placeholders.** If a reply couldn't be captured yet, write the block with `status="pending"` and describe what the example needs in place of the reply. Never write a stand-in reply.
 - **Re-runs.** A capture may be re-run a few times (about three at most) when an example needs a particular mistake. If the mistake doesn't appear, change the example; readers would be unlikely to see it themselves. The transcript file records how many attempts there were.
 - **After each exchange**, the lesson walks through the code line by line (the Read step) before anyone runs it.

@@ -1,7 +1,3 @@
----
-_junk: morano
----
-
 ::: {.learning}
 Learning Objectives
 
@@ -139,7 +135,7 @@ Every example in this book follows the same five steps:
 
 The third step is the one this book cares about most. A rule you'll see again and again: **don't run code you can't explain.**
 
-Each AI conversation in the book has a button that sends its request to an AI assistant, so you can try it yourself. Before you do, you'll set up your assistant with a **learner profile**: a short message that tells it what you're working on and which programming ideas you know so far. The profile keeps the assistant from answering with code you haven't learned to read yet. You'll write your first one in the next lesson, [Working with an AI Assistant](ai-assistant){.book-link}, and add to it as you learn.
+Each AI conversation in the book has a button that copies the prompt so you can try it out with your own AI assistant. It's the one that looks like a paper airplane just to the right of the prompt. Before you send an example prompt to your own AI assistant, you'll give your assistant a **learner profile**: a short message that tells it what you're working on and which programming ideas you know so far. The profile keeps the assistant from answering with code you haven't learned to read yet. You'll write your first one in the next lesson, [Working with an AI Assistant](ai-assistant){.book-link}, and add to it as you learn.
 
 ## Summary
 
