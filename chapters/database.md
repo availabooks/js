@@ -1,5 +1,5 @@
 ---
-_$_import: monaco
+_$_import: monaco, websql
 ---
 
 ::: {.learning}
@@ -34,7 +34,78 @@ npm install @electric-sql/pglite
 
 ## SQL in Brief
 
-A SQL database holds **tables**, like sheets, with **rows** and named **columns**, each with a type. Here's a short tour, which you can run with Node:
+A SQL database holds **tables**, like sheets, with **rows** and named **columns**, each with a type. You don't need JavaScript to try it. Each box below is a query box, like the ones in the SQL book, running Postgres right in your browser: edit the SQL, then press **Run** or Ctrl+Enter (Cmd+Enter on a Mac). The boxes on this page share one database, and your browser keeps it, so a table you make in one box is there in the next, even after you reload the page.
+
+Start by making a table and putting a few harvests in it. Run this box first:
+
+```sql {.websql}
+DROP TABLE IF EXISTS harvests;
+
+CREATE TABLE harvests (
+    id   INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    bed  TEXT NOT NULL,
+    crop TEXT NOT NULL,
+    kg   REAL NOT NULL
+);
+
+INSERT INTO harvests (bed, crop, kg)
+VALUES ('B2', 'Radish', 1.2),
+       ('B4', 'Spinach', 2.4),
+       ('B2', 'Lettuce', 3.9),
+       ('B2', 'Lettuce', 2.5);
+```
+
+- **`CREATE TABLE`** names a table and lists its columns, each with a type: `TEXT` for text and `REAL` for numbers with decimals. `NOT NULL` means every row must have a value there.
+- **`INTEGER GENERATED ALWAYS AS IDENTITY`** asks the database to number the rows itself: 1, 2, 3 and so on. **`PRIMARY KEY`** makes `id` the column that identifies each row, so no two rows can share one.
+- **`INSERT INTO`** adds rows, listing the columns to fill and then the values for each row. Text values go in single quotes.
+- **`DROP TABLE IF EXISTS`** deletes the table if it's already there, so you can run the box again whenever you want to start fresh.
+- Each statement ends with a semicolon, which is how SQL tells where one statement stops and the next begins.
+
+Now ask questions of it. `SELECT` chooses the columns to show and `FROM` names the table; `*` means every column:
+
+```sql {.websql}
+SELECT *
+FROM   harvests;
+```
+
+You'll see all four rows, with the `id` numbers the database added. **`WHERE`** keeps only the rows that pass a test, here the harvests from bed B2:
+
+```sql {.websql}
+SELECT crop, kg
+FROM   harvests
+WHERE  bed = 'B2';
+```
+
+Try changing `'B2'` to `'B4'` and running it again. **`GROUP BY`** puts rows with the same value together, so you can count or total each group, the same as `groupby` and `rollup` in [Analyzing and Charting Data](charts){.book-link}:
+
+```sql {.websql}
+SELECT   crop, COUNT(*) AS harvests, SUM(kg) AS total_kg
+FROM     harvests
+GROUP BY crop
+ORDER BY total_kg DESC;
+```
+
+`COUNT(*)` counts the rows in each group and `SUM(kg)` adds up their kilograms. **`AS`** names the new columns, and **`ORDER BY`** sorts the results, with `DESC` for largest first, so Lettuce comes first, with two harvests and 6.4 kg.
+
+**`DELETE`** removes the rows that pass a `WHERE` test. This one removes the radish harvest, then shows what's left:
+
+```sql {.websql}
+DELETE FROM harvests
+WHERE  crop = 'Radish';
+
+SELECT *
+FROM   harvests;
+```
+
+Be careful with `DELETE`: without a `WHERE`, it removes every row in the table. If you delete more than you meant to, run the first box again.
+
+SQL doesn't care whether keywords are in capitals, so `select` works as well as `SELECT`; the capitals just make them easy to spot. Nor does it care about line breaks and spaces, which are only there to make each part of a query easy to find.
+
+Notice the name `total_kg`, where you might have expected `totalKg`. Postgres turns names in SQL into lowercase unless they're in double quotes, so `AS totalKg` would come back as `totalkg`. That's why SQL names are usually written in **snake_case**, with underscores between the words.
+
+## SQL from Node
+
+Here's the same table and the same questions, run from Node with PGlite:
 
 ```{.code environment="nodejs"}
 import { PGlite } from "@electric-sql/pglite"
@@ -70,9 +141,9 @@ console.log(totals.rows)
 ```
 
 - **`new PGlite()`**, with no folder name, opens a database that exists only while the script runs, which is handy for trying things. A folder name, such as `new PGlite("garden-data")`, opens the database stored in that folder, creating it the first time.
-- **`db.exec(sql)`** runs SQL whose results you don't need, such as `CREATE TABLE`, which defines a table's columns and their types. `INTEGER GENERATED ALWAYS AS IDENTITY` asks the database to number the rows itself: 1, 2, 3 and so on.
+- **`db.exec(sql)`** runs SQL whose results you don't need, such as `CREATE TABLE`.
 - **`db.query(sql, values)`** runs one SQL statement and gives back a result whose **`rows`** property is an array of objects, one per row.
-- Each **`$1`**, **`$2`** and so on in the SQL is a placeholder, filled with the values in the array, in order. You'll see why that matters shortly.
+- Each **`$1`**, **`$2`** and so on in the SQL is a placeholder, filled with the values in the array, in order. It takes the place of the quoted values you typed in the query boxes. You'll see why that matters shortly.
 - Both return promises, so each call is `await`ed, as with `fetch` in [Asynchronous JavaScript](async){.book-link}.
 
 Here's what it prints:
@@ -96,9 +167,7 @@ Here's what it prints:
 ]
 ```
 
-The three queries show the core of `SELECT`: every row, rows chosen with `WHERE`, and rows grouped with `GROUP BY` and totaled with `SUM`, the same as `groupby` and `rollup` in [Analyzing and Charting Data](charts){.book-link}. SQL doesn't care whether keywords are in capitals; the capitals just make them easy to spot.
-
-Notice the name `total_kg`, where you might have expected `totalKg`. Postgres turns names in SQL into lowercase unless they're in double quotes, so `AS totalKg` would come back as `totalkg`. That's why SQL names are usually written in **snake_case**, with underscores between the words. You'll see how the assistant deals with this next.
+Each row comes back as an object whose property names are the column names, so the snake_case `total_kg` shows up in your JavaScript too. You'll see how the assistant deals with this next.
 
 ## Moving the Sign-Ups into PGlite
 
