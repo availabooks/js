@@ -106,7 +106,7 @@ The `: ExcelScript.Workbook` in the reply is also a clue. It's **TypeScript**, J
 
 Now a request that uses more of JADE: a small panel in the task pane with a button. First, the build function for the Supplies sheet, to run in JADE:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 async function buildSuppliesSheet(excel) {
   const data = [
     ["Item", "Quantity", "Unit", "Reorder At"],
@@ -126,7 +126,7 @@ async function buildSuppliesSheet(excel) {
   Jade.print("Added the Supplies sheet", "Setup")
   Jade.open_output()
 }
-</pre>
+```
 
 Here's the request, in a new chat with your learner profile from [Excel's JavaScript API, with JADE](jade){.book-link}, which says you're using JADE, but nothing about how JADE works:
 
@@ -230,7 +230,7 @@ A good platform profile covers:
 
 Here's a platform profile for JADE. It's short enough to paste into any chat:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 About JADE, the Excel add-in I'm using:
 
 - JADE is a free Excel add-in. My code lives in code modules in JADE's task pane and is saved in the workbook. It uses the Office JavaScript API (Office.js). It is not Office Scripts, VBA or Google Apps Script, so don't use ExcelScript, function main(workbook), VBA, or SpreadsheetApp.
@@ -244,7 +244,7 @@ About JADE, the Excel add-in I'm using:
 - To list a function in JADE's List Automations panel, put a comment inside the function: /*Jade.listing:{"name":"Short name","description":"What it does"}*/. The text after the colon must be valid JSON.
 - Jade.save_object_to_workbook(object, key) and await Jade.read_object_from_workbook(key) store data in the workbook. Don't use the key jade or keys starting with gist:.
 - Write in the style of my textbook: camelCase names.
-</pre>
+```
 
 Read it against the documentation, and against this part of the book: every line either describes how JADE works or heads off a specific mistake. The line about `console.log` comes from the last lesson. The line about `prompt()` and `confirm()` comes from how Office task panes work: they're blocked there, and assistants reach for them whenever code needs input. The line about `toHtmlEntities` comes from the rule you learned in [A Web App with Apps Script](web-app){.book-link}: text inserted into HTML is read as HTML.
 
@@ -352,9 +352,9 @@ The difference is large. The panel is built with `Jade.open_canvas`, the button 
 
 The last mistake is exactly the kind a platform profile should prevent next time. So add a line to it:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 - In Office.js, sheet.getRange() takes an address such as "A2:D2". For row and column numbers, use getRangeByIndexes(row, column, rowCount, columnCount), which counts from 0. Don't use Apps Script's getRange(row, column, numRows, numColumns).
-</pre>
+```
 
 A platform profile is never finished. Each time an assistant makes a mistake the profile could have prevented, add a line. Over time, it becomes a record of everything that's tricky about the platform, which is useful to *you*, not just the assistant.
 
@@ -362,13 +362,13 @@ A platform profile is never finished. Each time an assistant makes a mistake the
 
 Here's the panel in the book's style, with the three fixes. Paste it into a JADE code module, choose `showReorderPanel`, and run it, then click the button:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 function showReorderPanel() {
   /*Jade.listing:{"name":"Reorder check","description":"Highlights supplies that need reordering"}*/
   const html = `
-    &lt;h2>Check Supplies&lt;/h2>
-    &lt;p>Highlights every item at or below its reorder level.&lt;/p>
-    &lt;button id="checkButton">Highlight items to reorder&lt;/button>
+    <h2>Check Supplies</h2>
+    <p>Highlights every item at or below its reorder level.</p>
+    <button id="checkButton">Highlight items to reorder</button>
   `
   Jade.open_canvas("reorderCheck", html)
   const checkButton = tag("checkButton")
@@ -399,7 +399,7 @@ async function highlightReorderItems(excel) {
   Jade.print(`Items to reorder: ${reorderCount}`, "Reorder check")
   Jade.open_output()
 }
-</pre>
+```
 
 This version passes `highlightReorderItems`, a named function, to `Jade.automate`, instead of writing the handler in place. Because it's written as `async function name(excel)`, it also appears in JADE's function drop-down, so you can run and test it without the button. For the club's supplies, three rows turn yellow: Compost, Garden gloves and Twine.
 

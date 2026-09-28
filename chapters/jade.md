@@ -55,7 +55,7 @@ In JADE, you write code in **code modules**, each with its own tab in the editor
 
 For the examples in this part, the workbook needs the club's Harvests sheet. In the book's Google Sheets examples, each sheet had a copy button. You could copy its data and paste it into Excel. Or you can let JADE build it: paste this function into a code module, choose `buildHarvestsSheet` in the drop-down, and click **Run**.
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 async function buildHarvestsSheet(excel) {
   const data = [
     ["Date", "Bed ID", "Crop", "Kilograms", "Logged By"],
@@ -107,7 +107,7 @@ async function buildHarvestsSheet(excel) {
   Jade.print("Added the Harvests sheet", "Setup")
   Jade.open_output()
 }
-</pre>
+```
 
 It's your first Office.js code, and it's worth reading before you run it, as always. You can follow most of it already: an array of arrays with the data, a new worksheet named Harvests, a loop building an array of number formats, and two ranges. The parts that are new are what this lesson explains.
 
@@ -115,7 +115,7 @@ It's your first Office.js code, and it's worth reading before you run it, as alw
 
 Here's a small function that reads a cell and writes to another, in the form JADE expects:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 async function copyFirstCrop(excel) {
   const sheet = excel.workbook.worksheets.getItem("Harvests")
   const cropCell = sheet.getRange("C2")
@@ -131,7 +131,7 @@ async function copyFirstCrop(excel) {
   Jade.print(`The first crop harvested was ${firstCrop}`, "First crop")
   Jade.open_output()
 }
-</pre>
+```
 
 Most of it will look familiar from Apps Script, with different names: `worksheets.getItem("Harvests")` is `getSheetByName`, and a range's `values` property is like `getValues` and `setValues`, always an array of arrays, even for one cell. Three things are different, and they're the heart of Office.js.
 
@@ -222,7 +222,7 @@ Two things don't fit, though:
 
 `(context) => { ... }` is an **arrow function**, a shorter way to write an anonymous function, like the event handlers in [Events and Interactivity](events){.book-link}. These two do the same thing:
 
-<pre class="code">
+```{.code}
 function compareFunctions() {
   const double = function(number) {
     return number * 2
@@ -232,7 +232,7 @@ function compareFunctions() {
   }
   console.log(double(4), doubleArrow(4))
 }
-</pre>
+```
 
 The parameters go in the parentheses, then `=>`, then the body. Office.js documentation and examples use arrow functions everywhere, so it's worth being able to read them, even though this book doesn't write them. (There are shorter forms still, such as `number => number * 2`, with no parentheses, braces or `return`. When you see one, read it as "take `number`, give back `number * 2`.")
 
@@ -340,7 +340,7 @@ This one is wrong, and confidently so. In JADE, `console.log` doesn't write to t
 
 The right way is `Jade.print`, followed by `Jade.open_output()` to show the panel. There's also a surprise waiting in the result. Run it, and the Output panel shows *Total kilograms: 70.90000000000002*, the floating-point tail from [College Community Garden: Case Setup](case){.book-link}. Here's the function with both fixed:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 async function writeHarvestTotal(excel) {
   const sheet = excel.workbook.worksheets.getItem("Harvests")
   const usedRange = sheet.getUsedRange()
@@ -362,7 +362,7 @@ async function writeHarvestTotal(excel) {
   Jade.print(`Total kilograms harvested: ${roundedTotal}`, "Harvest total")
   Jade.open_output()
 }
-</pre>
+```
 
 The total is 70.9 kilograms. This version rounds with `Math.round`, rather than `toFixed`, so the cell gets a number the sustainability office can calculate with.
 

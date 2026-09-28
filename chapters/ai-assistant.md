@@ -211,9 +211,9 @@ The assistant has changed how it behaves. Its code has no semicolon, it explains
 
 Because the assistant explained the line, you can say what it does: it displays the word `Hello`. That means it passes the test of "don't run code you can't explain," so go ahead and run it. Click the Run button (▶) on the editor below, and the output appears underneath.
 
-<pre class="code">
+```{.code}
 console.log("Hello")
-</pre>
+```
 
 Try changing the word between the quote marks, then run it again. You'll learn more about `console.log` and the other parts of this line in the next lesson.
 
@@ -244,9 +244,9 @@ Look closely and you'll see the assistant bent one rule. Your profile says you k
 
 The reply also mentions loops and variables, which are exactly the topics of the next several lessons. When you've worked through them, come back to Method 1 in the first reply. You'll be able to read every line.
 
-<pre class="code">
+```{.code}
 console.log(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10)
-</pre>
+```
 
 ::: {.tip}
 > **When the assistant ignores your profile.** In a long chat, an assistant can drift back to its usual habits, such as adding semicolons or using features you haven't learned. Remind it ("Please follow my learner profile: use only what I know"), or start a new chat and paste the profile again.

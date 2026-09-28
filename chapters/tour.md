@@ -243,34 +243,34 @@ And one thing to catch: the twelve volunteers are made up. None of them is in th
 
 In [Automation Workflows with n8n](n8n){.book-link}, you built workflows on your own computer. **Zapier** and **Make** are the best-known online services for the same idea: connect a trigger in one app to actions in others, with no computer of your own to keep running. Both have free plans with limits on how many tasks run each month, and both have steps that run JavaScript, though which plans include them changes, so check the current terms.
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 I use n8n on my computer. I'm considering Zapier or Make instead,
 so that our club's automations keep running when my laptop is off.
 Compare them with n8n for a small club: what's free, what isn't,
 and how their code steps differ from n8n's Code node.
-</pre>
+```
 
 ## Scripting a Mac: JavaScript for Automation
 
 On a Mac, **JavaScript for Automation**, or JXA, can control apps such as Finder, Mail, Calendar and Music, using the same system as the older AppleScript. It's built in and free, but it's Mac-only and not much used, so assistants' knowledge of it is thin and often out of date: a good candidate for a careful platform profile.
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 I'd like to try JavaScript for Automation (JXA) on my Mac, in the
 Script Editor app. Show me a script that lists today's events from
 the Calendar app. Tell me which parts are JXA-specific, and anything
 you're unsure about, since JXA is less documented than most JavaScript.
-</pre>
+```
 
 ## Other Runtimes: Deno and Bun
 
 **Deno** and **Bun** are alternatives to Node: they run JavaScript on your computer and on servers, like Node, with different priorities. Deno is careful about permissions: a script can't read files or use the network unless you allow it when you run it, which is an interesting answer to the trust questions this book keeps asking. Bun is built for speed, and includes its own package manager and test runner. Both run TypeScript directly, and both run most Node code. Deno is also what powers the JavaScript notebooks mentioned in [Analyzing and Charting Data](charts){.book-link}.
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 I know Node.js. Explain what's different about Deno, especially its
 permissions. Rewrite my Node script that reads harvests.json and prints
 totals by crop so it runs with Deno, and show the command to run it
 with only the permissions it needs.
-</pre>
+```
 
 ## Apps: Desktop and Mobile
 
@@ -281,37 +281,37 @@ The HTML, CSS and JavaScript from Part III can become real applications:
 
 These are big frameworks, and most apps built with them use a front-end library such as **React**, which is worth learning first. It's a natural next step after Part III.
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 I've built web pages with HTML, CSS and JavaScript, using the DOM
 directly. I'd like to learn React, then build a small mobile app with
 Expo that shows our garden club's upcoming shifts from our API. Suggest
 a learning path in small steps, and tell me which step needs which new
 concepts.
-</pre>
+```
 
 ## Creative Coding: p5.js
 
 **p5.js** is a free library for drawing, animation and interactive art in the browser, with a friendly online editor at editor.p5js.org, built for artists, designers and beginners. It's a very different use of the same language, and a fun one: a garden that grows on screen as the harvest totals come in, for example.
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 Using p5.js in the online editor, draw eight raised garden beds as
 rectangles, and grow a plant in each one whose height matches that
 bed's harvest total. The totals are: B1 9.5, B2 10, B3 14.4, B4 7.6,
 B5 6, B6 1.3, B7 8.5, B8 13.6 kilograms. Explain what setup() and
 draw() are for.
-</pre>
+```
 
 ## TypeScript, Everywhere
 
 You met **TypeScript** in [Office Scripts and TypeScript](office-scripts){.book-link}, if you took that lesson, and several stops on this tour use it: Figma plugins, Deno, Bun, and much of the professional JavaScript world. If you plan to keep programming, it's the most useful next language, because it *is* JavaScript, with types that catch mistakes before your code runs. Everything you know carries over.
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 I know JavaScript well, including functions, objects, arrays, async and
 modules, but not TypeScript. Teach me TypeScript by converting one of my
 own scripts, step by step. Start with type annotations for function
 parameters, then interfaces for objects, and explain each error the
 TypeScript checker reports.
-</pre>
+```
 
 ## Using the Starter Prompts
 

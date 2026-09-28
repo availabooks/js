@@ -231,9 +231,9 @@ Slash commands are registered once, by a small script you run on your own comput
 
 Here's the order that works: deploy the Worker, set its `/discord` address as the Interactions Endpoint URL in the portal, register the command, then type `/nextshift` in the club's server. For the club's data, the code builds this reply, which Discord shows as a message from the bot:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 Next open shift: harvesting on 2027-06-05, 09:00–11:00 (1/3 filled)
-</pre>
+```
 
 ## Other Chat Platforms
 

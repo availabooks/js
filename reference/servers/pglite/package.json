@@ -1,0 +1,10 @@
+{
+  "name": "garden-signups-pglite",
+  "private": true,
+  "type": "module",
+  "description": "The Storing Data lesson's tested server. Copy club-data.json, public/ and test-api.js from ../express, then npm install and node restart-test.mjs.",
+  "dependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "express": "^5.2.1"
+  }
+}

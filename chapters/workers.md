@@ -26,13 +26,13 @@ One way is to rent a server and keep it running. Another is **serverless**: you 
 
 A Worker is simpler than an Express server in one way: there's no `app.listen`, because Cloudflare does the listening. Your code is a function that receives a request and returns a response:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 export default {
   async fetch(request, env) {
     return new Response("Hello from the College Community Garden!")
   }
 }
-</pre>
+```
 
 `request` is a standard **Request** object, the same kind `fetch` sends, and the function returns a standard **Response**, the same kind `fetch` receives. So everything you learned about requests and responses in [How the Web Works](http){.book-link} applies directly. `env` holds the Worker's **bindings**: connections to other Cloudflare services, such as a D1 database.
 
@@ -370,7 +370,7 @@ The second is a real limitation, which a login system would fix, and is beyond t
 
 Here's the Worker with everything restored and protected: the member check, the original field names, a `cancelCode` column, and a cancellation that requires it. The configuration file is `wrangler.jsonc`:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 {
   "name": "garden-signups",
   "main": "src/index.js",
@@ -383,11 +383,11 @@ Here's the Worker with everything restored and protected: the member check, the 
     }
   ]
 }
-</pre>
+```
 
 `schema.sql` creates the tables, with a `cancelCode` column added:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 CREATE TABLE IF NOT EXISTS members (
   email TEXT PRIMARY KEY,
   firstName TEXT NOT NULL,
@@ -408,11 +408,11 @@ CREATE TABLE IF NOT EXISTS slotSignups (
   cancelCode TEXT NOT NULL,
   UNIQUE (slotId, memberEmail)
 );
-</pre>
+```
 
 `seed.sql` loads the club's data, generated from `club-data.json`. For the sign-ups that already exist, SQLite makes random cancel codes itself, with `lower(hex(randomblob(16)))`. Here are its first lines:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 -- the club data at the start of the season
 INSERT INTO members (email, firstName, lastName) VALUES ('maya.thompson@example.com', 'Maya', 'Thompson');
 INSERT INTO members (email, firstName, lastName) VALUES ('ava.lopez@example.com', 'Ava', 'Lopez');
@@ -420,11 +420,11 @@ INSERT INTO members (email, firstName, lastName) VALUES ('ava.lopez@example.com'
 INSERT INTO slots (id, date, task, start, end, capacity) VALUES (1, '2027-06-05', 'watering', '08:00', '09:00', 2);
 ...
 INSERT INTO slotSignups (id, slotId, memberEmail, cancelCode) VALUES (1, 1, 'maya.thompson@example.com', lower(hex(randomblob(16))));
-</pre>
+```
 
 And `src/index.js`, the Worker:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 // The garden's shift sign-up API, as a Cloudflare Worker with a D1 database.
 
 // sends data as JSON with a status code
@@ -522,7 +522,7 @@ async function cancel(request, env, id) {
   }
   return new Response(null, { status: 204 })
 }
-</pre>
+```
 
 Two small new pieces: `request.json().catch(() => ({}))` reads the body as JSON, or gives an empty object if the body isn't valid JSON, so the checks that follow report "Email is required" instead of crashing. And `SHIFT_QUERY` holds the part of the query both GET routes share, with each adding its own ending, the same select-only-what's-public query as before.
 
@@ -530,23 +530,23 @@ Two small new pieces: `request.json().catch(() => ({}))` reads the body as JSON,
 
 In a new folder, with the four files above:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 npm install --save-dev wrangler
 npx wrangler login
 npx wrangler d1 create garden-signups
-</pre>
+```
 
 Copy the `database_id` that `d1 create` prints into `wrangler.jsonc`. Then set up the local database and run the Worker on your computer:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 npx wrangler d1 execute garden-signups --local --file=./schema.sql
 npx wrangler d1 execute garden-signups --local --file=./seed.sql
 npx wrangler dev
-</pre>
+```
 
 `wrangler dev` runs the Worker at `http://127.0.0.1:8787`. A test script like the one from [A Server with Node and Express](express){.book-link}, with the new cancel codes, printed this:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 GET /shifts/6 -> 200 {"id":6,"date":"2027-06-19","task":"planting","start":"09:00","end":"11:00","capacity":3,"spotsFilled":0}
 POST /shifts/6/signups -> 201 {"id":13,"slotId":6,"cancelCode":"(a random code)"}
 POST /shifts/6/signups -> 409 {"error":"You're already signed up for this shift"}
@@ -555,7 +555,7 @@ POST /shifts/2/signups -> 400 {"error":"That email doesn't belong to a club memb
 DELETE /signups/13 -> 404 {"error":"Sign-up not found, or the cancel code is wrong"}
 DELETE /signups/13 -> 204
 GET /shifts/6 -> 200 {"id":6,"date":"2027-06-19","task":"planting","start":"09:00","end":"11:00","capacity":3,"spotsFilled":0}
-</pre>
+```
 
 A guessed code is refused, and the right one cancels. When it all works locally, run the same two `d1 execute` commands with `--remote` instead of `--local`, then `npx wrangler deploy`. Wrangler prints the Worker's public address, ending in `workers.dev`, and the club's API is online.
 

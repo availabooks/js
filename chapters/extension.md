@@ -390,7 +390,7 @@ Now read the two halves *together*, which is a different skill from reading each
 
 The fix is for the popup to read the reply and check its `status`:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 async function sendShift(email, date, task, hours) {
   const shift = {
     email: email,
@@ -412,7 +412,7 @@ async function sendShift(email, date, task, hours) {
     throw new Error(reply.message)
   }
 }
-</pre>
+```
 
 Now `handleLogClick`'s `catch` shows the server's own message, such as "Task is not one of the allowed values." Whenever you connect two pieces of code, check that what one sends is what the other expects, and that errors travel all the way back to the person.
 
@@ -420,7 +420,7 @@ Now `handleLogClick`'s `catch` shows the server's own message, such as "Task is 
 
 The checks in `doPost` are easier to test if they're in a function of their own, one that takes the shift and returns an error message, or an empty string when the shift is fine. Here's that function, in the book's style, handling the missing-field gap, with tests for good and bad shifts:
 
-<pre class="code">
+```{.code}
 function testCheckShift() {
   console.log(checkShift({ email: "ava.lopez@example.com", date: "2027-05-01", task: "watering", hours: 1.5 }))
   console.log(checkShift({ email: "ava.lopez@example.com", date: "2027-05-01", task: "sleeping", hours: 1.5 }))
@@ -456,7 +456,7 @@ function checkShift(shift) {
   }
   return ""
 }
-</pre>
+```
 
 The first test prints an empty line, because a good shift gets `""`. Each of the others names its problem. The last check, hours between 0 and 12, is new: without it, anyone could log 1,000 hours. Deciding what values make sense is part of the Plan step, as in [Events and Interactivity](events){.book-link}.
 

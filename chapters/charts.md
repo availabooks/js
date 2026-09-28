@@ -29,11 +29,11 @@ This lesson uses them in a web page, with the page's HTML editor, so there's not
 
 In [Sharing and Reusing Code](sharing-code){.book-link}, you loaded Chart.js with a `<script>` tag, which created a global named `Chart`. Modern libraries are usually loaded as ES modules instead, the kind of module you learned in [Modules and Packages](node-modules){.book-link}. In a web page, that means a `<script type="module">`, which can use `import` with a full web address:
 
-<pre class="code" data-environment="none">
-&lt;script type="module"&gt;
+```{.code environment="none"}
+<script type="module">
   import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/+esm"
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 `import * as Plot` puts everything the library exports into one object named `Plot`. The address comes from **jsDelivr**, a service that serves npm packages to web pages; `@0.6.17` pins the version, as your profile asks, and `/+esm` asks for the ES module form.
 
@@ -135,11 +135,11 @@ It's the counting-by-name pattern from [Objects and JSON](objects){.book-link}, 
 
 The example data is invented, including a volunteer named Sam Chen who isn't in the club; the assistant said so and told you to replace it. Here's the page with the club's real harvests. Run it:
 
-<pre class="code" data-environment="html">
-&lt;h2&gt;Kilograms harvested by crop, 2027 season&lt;/h2&gt;
-&lt;div id="chart"&gt;&lt;/div&gt;
+```{.code environment="html"}
+<h2>Kilograms harvested by crop, 2027 season</h2>
+<div id="chart"></div>
 
-&lt;script type="module"&gt;
+<script type="module">
   import * as aq from "https://cdn.jsdelivr.net/npm/arquero@8.0.3/+esm"
   import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/+esm"
 
@@ -190,7 +190,7 @@ The example data is invented, including a volunteer named Sam Chen who isn't in 
 
   const totals = aq.from(harvests)
     .groupby("crop")
-    .rollup({ totalKg: d =&gt; aq.op.sum(d.kg) })
+    .rollup({ totalKg: d => aq.op.sum(d.kg) })
     .orderby(aq.desc("totalKg"))
     .objects()
 
@@ -199,7 +199,7 @@ The example data is invented, including a volunteer named Sam Chen who isn't in 
 
   const chart = Plot.plot({
     marginLeft: 50,
-    x: { label: null, domain: totals.map(d =&gt; d.crop), tickRotate: -30 },
+    x: { label: null, domain: totals.map(d => d.crop), tickRotate: -30 },
     y: { label: "Kilograms", grid: true },
     marks: [
       Plot.barY(totals, { x: "crop", y: "totalKg", fill: "#2e7d32" }),
@@ -207,8 +207,8 @@ The example data is invented, including a volunteer named Sam Chen who isn't in 
     ]
   })
   document.querySelector("#chart").append(chart)
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 Tomatoes and beans lead, each with just over 10 kilograms, followed closely by cucumbers, lettuce and mint. The console line is your rule from the last lesson: counts you can check. Thirteen crops and 32 harvests match the data you've worked with.
 
@@ -236,12 +236,12 @@ That's the Plan step applied to charts, and the reasoning is excellent. Two bars
 
 Here's the dot plot. It combines the two arrays, which is new: for each bed, it looks up the bed's total kilograms, divides by its size, and keeps its sun. Run it:
 
-<pre class="code" data-environment="html">
-&lt;h2&gt;Kilograms per square foot, by bed&lt;/h2&gt;
-&lt;div id="chart"&gt;&lt;/div&gt;
-&lt;p id="averages"&gt;&lt;/p&gt;
+```{.code environment="html"}
+<h2>Kilograms per square foot, by bed</h2>
+<div id="chart"></div>
+<p id="averages"></p>
 
-&lt;script type="module"&gt;
+<script type="module">
   import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6.17/+esm"
 
     const harvests = [
@@ -296,7 +296,7 @@ Here's the dot plot. It combines the two arrays, which is new: for each bed, it 
   }
 
   // one object per bed, with its yield per square foot
-  const yields = beds.map(bed =&gt; ({
+  const yields = beds.map(bed => ({
     bed: bed.id,
     sun: bed.sun,
     kgPerSqFt: kgByBed[bed.id] / bed.sizeSqFt
@@ -313,14 +313,14 @@ Here's the dot plot. It combines the two arrays, which is new: for each bed, it 
   })
   document.querySelector("#chart").append(chart)
 
-  const average = sun =&gt; {
-    const group = yields.filter(y =&gt; y.sun === sun)
-    return group.reduce((sum, y) =&gt; sum + y.kgPerSqFt, 0) / group.length
+  const average = sun => {
+    const group = yields.filter(y => y.sun === sun)
+    return group.reduce((sum, y) => sum + y.kgPerSqFt, 0) / group.length
   }
   document.querySelector("#averages").textContent =
     `Average: full sun ${average("full").toFixed(2)}, partial sun ${average("partial").toFixed(2)} kg per square foot`
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 Two pieces of syntax are new. `(kgByBed[harvest.bed] || 0)` uses `||` the way you saw in [Loops and Repetition](loops){.book-link}: if the bed has no total yet, `undefined || 0` gives 0. And `bed => ({ ... })` is an arrow function that returns an object; the parentheses around the braces tell JavaScript the braces are an object, not the function's body.
 

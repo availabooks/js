@@ -107,7 +107,7 @@ The Apps Script Executions page showing a failed onOpen run, with the error "add
 
 Here's the working menu, written one step per line. `createMenu` returns a menu, and you can call `addItem` on it as many times as you like before adding it to the screen:
 
-<pre class="code" data-environment="appsscriptsheets">
+```{.code environment="appsscriptsheets"}
 function onOpen() {
   const ui = SpreadsheetApp.getUi()
   const menu = ui.createMenu("Garden Tools")
@@ -115,7 +115,7 @@ function onOpen() {
   menu.addItem("Label volunteer hours", "labelAllMembers")
   menu.addToUi()
 }
-</pre>
+```
 
 Each item's function must exist in the project, so this assumes `writeInterestCounts` from [Objects and JSON](objects){.book-link} and `labelAllMembers` from [Functions](functions){.book-link} are in your Code.gs file. After saving, reload the spreadsheet. The menu appears after a few seconds. The first time you choose an item, Apps Script asks for permission, as it did for your first script.
 
@@ -240,7 +240,7 @@ Second, it said you "haven't learned" to use the contents of `e`. But `e` is an 
 
 The assistant's explanation of the risk is right: if two people submit the form at nearly the same moment, reading "the last row" could pick up the wrong response. But its last paragraph misses that the same risk applies to the Members sheet. If two submissions run at once, both functions could find the same "next empty row," and one new member would overwrite the other. There's a method made for adding a row safely: `appendRow`. It adds a row after the last one in a single step, so two runs can't collide:
 
-<pre class="code" data-environment="appsscriptsheets">
+```{.code environment="appsscriptsheets"}
 function addMemberFromSignUp(e) {
   // each answer is an array, because a question can have several answers
   const answers = e.namedValues
@@ -253,7 +253,7 @@ function addMemberFromSignUp(e) {
   // appendRow adds the row after the last one in a single step
   membersSheet.appendRow([firstName, lastName, email, false, 0])
 }
-</pre>
+```
 
 `appendRow` takes one row as a plain array, not an array of arrays. A new row written this way shows `FALSE` in the Dues Paid column, not a checkbox, unless the column is already formatted with checkboxes. To format it, select column D in the Members sheet, then click **Insert**, then **Checkbox**. Empty cells in the column stay blank until something is written to them.
 
@@ -263,11 +263,11 @@ How do you know `addMemberFromSignUp` works before a real person submits the for
 
 The code below does exactly that. `testAddMemberFromSignUp` builds an object with a `namedValues` property, just like the one Apps Script would pass, and hands it to `addMemberFromSignUp`. The test function comes first, so it's the one selected in the menu. Run it, and watch the bottom of the Members sheet:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 8, "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}], "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
+```
 
-<pre class="code">
+```{.code}
 function testAddMemberFromSignUp() {
   // a made-up event, shaped like the one a real form submission passes in
   const fakeEvent = {
@@ -292,7 +292,7 @@ function addMemberFromSignUp(e) {
   // appendRow adds the row after the last one in a single step
   membersSheet.appendRow([firstName, lastName, email, false, 0])
 }
-</pre>
+```
 
 A new row appears after Keisha Brown. Run it again and you get a second one, which is exactly what would happen if the same person submitted the form twice. (Handling duplicates is a good follow-up question for your assistant.)
 

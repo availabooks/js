@@ -74,7 +74,7 @@ First, the new idea.
 
 An **`if` statement** runs some code only when a condition is true:
 
-<pre class="code">
+```{.code}
 let hours = 24
 
 if (hours >= 15) {
@@ -82,7 +82,7 @@ if (hours >= 15) {
 }
 
 console.log("Done")
-</pre>
+```
 
 It has three parts:
 
@@ -98,7 +98,7 @@ Run the code, then change `hours` to 4 and run it again. "Done" appears both tim
 
 To do one thing when the condition is true and something else when it's false, add **`else`**:
 
-<pre class="code">
+```{.code}
 let hours = 4
 
 if (hours >= 15) {
@@ -106,13 +106,13 @@ if (hours >= 15) {
 } else {
   console.log("Not high")
 }
-</pre>
+```
 
 Exactly one of the two blocks runs, every time.
 
 For more than two possibilities, add **`else if`**. JavaScript checks each condition in order, from the top, and runs the block of the *first* one that's true. It skips everything after that:
 
-<pre class="code">
+```{.code}
 let hours = 9.5
 
 if (hours >= 15) {
@@ -122,7 +122,7 @@ if (hours >= 15) {
 } else {
   console.log("Low")
 }
-</pre>
+```
 
 With 9.5 hours, the first condition is false, so JavaScript checks the second. `9.5 >= 5` is true, so it displays "Medium" and skips the `else`. Try 24, 5 and 2.
 
@@ -145,12 +145,12 @@ These are the operators for comparing two values. Each one produces `true` or `f
 
 You can try any of them with `console.log`:
 
-<pre class="code">
+```{.code}
 console.log(15 >= 15)
 console.log("Ava" === "Ava")
 console.log("Ava" === "ava")
 console.log("12" === 12)
-</pre>
+```
 
 Two of these results are worth a second look. `"Ava" === "ava"` is false, because comparing strings is exact, and capital letters count. And `"12" === 12` is false, because one is a string and the other is a number. `===` only says two values are equal if they're the same type *and* the same value.
 
@@ -158,10 +158,10 @@ Two of these results are worth a second look. `"Ava" === "ava"` is false, becaus
 
 You'll often see a shorter operator, `==`, in code you find. It also compares values, but first it tries to convert them to the same type. So `"12" == 12` is true, because `==` turns the string into a number before comparing:
 
-<pre class="code">
+```{.code}
 console.log("12" == 12)
 console.log("12" === 12)
-</pre>
+```
 
 That sounds convenient, but the conversions follow rules that can surprise you, and you'll see one shortly. This book always uses `===` and its partner `!==`, and your learner profile will ask your assistant to do the same.
 
@@ -459,13 +459,13 @@ The code checks for an empty cell with `rawHours === ""`. Why not `==`? That que
 
 This isn't a made-up problem. Look at the Members sheet below: Jordan Lee, in row 12, has 0 volunteer hours. The code below checks Jordan's hours both ways. Run it:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 8,
  "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}],
  "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
+```
 
-<pre class="code">
+```{.code}
 function checkJordan() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let hoursCell = sheet.getRange("E12")
@@ -473,13 +473,13 @@ function checkJordan() {
   console.log("With ==, is it empty?", rawHours == "")
   console.log("With ===, is it empty?", rawHours === "")
 }
-</pre>
+```
 
 With `==`, Jordan's 0 counts as empty, and the code would write "No data" instead of "Low." With `===`, the check is only true for a real empty string.
 
 Here's the finished function in the book's style, with the club's own thresholds from the Plan step. It labels Ava's hours in row 3. Run it, then change it to label other rows, including Jordan's:
 
-<pre class="code">
+```{.code}
 function labelVolunteerHours() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let hoursCell = sheet.getRange("E3")
@@ -503,7 +503,7 @@ function labelVolunteerHours() {
   let labelCell = sheet.getRange("F3")
   labelCell.setValue(label)
 }
-</pre>
+```
 
 To test the empty case, delete the value in E3 and run it again.
 
@@ -517,31 +517,31 @@ Sometimes one comparison isn't enough. Three **logical operators** combine or re
 
 Suppose the club wants to thank members who have paid their dues *and* volunteered at least 10 hours. Dues Paid is a checkbox, so its value is already a boolean, `true` or `false`:
 
-<pre class="code">
+```{.code}
 let duesPaid = true
 let hours = 12
 
 if (duesPaid === true && hours >= 10) {
   console.log("Thank you for your support!")
 }
-</pre>
+```
 
 Try setting `duesPaid` to `false`, or `hours` to 4. The message disappears, because `&&` needs both conditions to be true.
 
 With `||`, either condition is enough. This finds members who need a reminder, because they haven't paid *or* they haven't volunteered:
 
-<pre class="code">
+```{.code}
 let duesPaid = true
 let hours = 0
 
 if (duesPaid === false || hours === 0) {
   console.log("Send a reminder")
 }
-</pre>
+```
 
 `!` reverses a boolean, so `!duesPaid` is true when `duesPaid` is false. These two conditions mean the same thing:
 
-<pre class="code">
+```{.code}
 let duesPaid = false
 
 if (duesPaid === false) {
@@ -551,7 +551,7 @@ if (duesPaid === false) {
 if (!duesPaid) {
   console.log("Dues not paid")
 }
-</pre>
+```
 
 You'll see `!` often in AI code, especially with booleans. It's short, but when you're reading carefully, `=== false` is harder to misread. Either is fine.
 

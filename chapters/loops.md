@@ -19,11 +19,11 @@ Learning Objectives
 
 Here's the club's Members sheet, which you'll use throughout this lesson:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 8,
  "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}],
  "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
+```
 
 Suppose you want to log every member's name. Here's that request, in a new chat with your learner profile from [Arrays](arrays){.book-link} and the sheet description you wrote in that lesson:
 
@@ -83,14 +83,14 @@ A **loop** repeats a block of code, so you write the steps once and let the comp
 
 A `while` loop repeats its block as long as a condition is true. It looks like an `if` statement, but instead of running the block once, it goes back and checks the condition again after each time through:
 
-<pre class="code">
+```{.code}
 let count = 1
 while (count <= 5) {
   console.log(count)
   count = count + 1
 }
 console.log("The loop is done.")
-</pre>
+```
 
 Follow it the way the computer does:
 
@@ -106,10 +106,10 @@ The line `count = count + 1` is what makes the loop end. Each time through, it m
 
 Adding 1 to a variable is so common that JavaScript has a shortcut for it, the **increment operator**, `++`. These two lines do the same thing:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 count = count + 1
 count++
-</pre>
+```
 
 `--`, the **decrement operator**, subtracts 1 in the same way. There's also a shortcut for adding any amount: `total += 5` means `total = total + 5`. You'll see all three in code from an assistant, so it's worth recognizing them.
 
@@ -119,7 +119,7 @@ You may also see `++count`, with the `++` in front. On a line by itself it does 
 
 Now to the members. Here's code that reads the sheet and logs the first few rows, one line per row:
 
-<pre class="code">
+```{.code}
 function logMembers() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let range = sheet.getDataRange()
@@ -128,11 +128,11 @@ function logMembers() {
   console.log(data[2])
   console.log(data[3])
 }
-</pre>
+```
 
 Each line is the same except for the index. That's the clue for turning it into a loop. Replace the index with a variable, and change the variable each time:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 function logMembers() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let range = sheet.getDataRange()
@@ -143,13 +143,13 @@ function logMembers() {
     rowIndex++
   }
 }
-</pre>
+```
 
 The condition here is just `true`, so this loop never stops. Don't run it. After the last member it would keep going, logging `undefined` for rows that don't exist, until you stopped it. It's here to show the part that changes: `rowIndex` starts at 1 and goes up by one each time, so `data[rowIndex]` is a different row on each pass.
 
 To stop at the last row, the condition should be true while there are rows left and false once they run out. `data.length` is the number of rows, and the last row's index is `data.length - 1`, so the condition is `rowIndex < data.length`:
 
-<pre class="code">
+```{.code}
 function logMembers() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let range = sheet.getDataRange()
@@ -160,13 +160,13 @@ function logMembers() {
     rowIndex++
   }
 }
-</pre>
+```
 
 Run it. `data.length` is 13, so `rowIndex` goes from 1 to 12, and every member is logged. When `rowIndex` reaches 13, `13 < 13` is false, and the loop ends. Starting at 1 instead of 0 skips the header row.
 
 Now changing what's logged means changing one line, not twelve. To log each member's name, pick items out of the row. Storing the row in its own variable makes that easier to read:
 
-<pre class="code">
+```{.code}
 function logMembers() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let range = sheet.getDataRange()
@@ -178,7 +178,7 @@ function logMembers() {
     rowIndex++
   }
 }
-</pre>
+```
 
 `row` holds one member's row at a time, so `row[0]` is always a first name and `row[1]` a last name, whichever member the loop is on.
 
@@ -192,7 +192,7 @@ Look at the three parts of that loop that control it:
 
 This pattern, a counter that starts somewhere, goes up by one, and stops at a limit, is so common that JavaScript has a loop built around it. Here's the same loop with two changes: the word `while` becomes `for`, and there's a semicolon on each side of the condition:
 
-<pre class="code">
+```{.code}
 function logMembers() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let range = sheet.getDataRange()
@@ -204,11 +204,11 @@ function logMembers() {
     rowIndex++
   }
 }
-</pre>
+```
 
 It looks odd, but it runs exactly the same. The semicolons mark out three slots in the `for` loop's parentheses: setup, condition, step. So far only the middle one is filled. Now move the setup into the first slot and the step into the third:
 
-<pre class="code">
+```{.code}
 function logMembers() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let range = sheet.getDataRange()
@@ -218,7 +218,7 @@ function logMembers() {
     console.log(row[0], row[1])
   }
 }
-</pre>
+```
 
 That's a standard **`for` loop**. It does exactly what the `while` loop did, in the same order:
 
@@ -349,7 +349,7 @@ This is a pattern you'll use constantly, called a **running total**. A variable 
 
 Here are both tasks in the book's style, in one function. Run it, and check the results against the sheet. The unpaid members should be Ben, Elena, Gabe and Jordan, and the total should be 123:
 
-<pre class="code">
+```{.code}
 function reportMembers() {
   let spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
   let sheet = spreadsheet.getSheetByName("Members")
@@ -372,7 +372,7 @@ function reportMembers() {
 
   console.log(`Total volunteer hours: ${totalHours}`)
 }
-</pre>
+```
 
 Try changing it: log the members with more than 10 hours, or count the unpaid members instead of listing them. (For a count, start a variable at 0 and add 1 to it inside the `if`.)
 
@@ -380,7 +380,7 @@ Try changing it: log the members with more than 10 hours, or count the unpaid me
 
 Sooner or later, you'll write a loop that never stops. Here's a typical one. Can you see the problem?
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 function logFirstNames() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let range = sheet.getDataRange()
@@ -391,7 +391,7 @@ function logFirstNames() {
     console.log(firstName)
   }
 }
-</pre>
+```
 
 When it runs in Apps Script, it logs "Maya" over and over, and never finishes. Here's what an assistant said when asked about it, in a new chat with the learner profile:
 
@@ -538,20 +538,20 @@ Two things deserve a closer look. The first is the hard-coded 12 in `getRange(2,
 
 The second is **`forEach`**, at the end:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 unpaidMembers.forEach(function(name) {
   Logger.log(name);
 });
-</pre>
+```
 
 `forEach` is a method that arrays have. It runs a function once for each item in the array, and hands the item to the function each time, here under the name `name`. So this does the same thing as:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 for (let i = 0; i < unpaidMembers.length; i++) {
   let name = unpaidMembers[i]
   Logger.log(name)
 }
-</pre>
+```
 
 `forEach` is shorter, and you'll see it often, along with another form, `for (let name of unpaidMembers)`, called *for...of*, which does the same. Both hide the counter, which is exactly why this book asks for the `for` loop with an index for now: you can see every step. You'll learn to use these shorter forms later in the book.
 

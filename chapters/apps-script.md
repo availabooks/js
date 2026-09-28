@@ -90,11 +90,11 @@ The project is attached to the spreadsheet you opened it from. That's what lets 
 
 Notice that the new project isn't empty. It already contains this:
 
-<pre class="code" data-environment="appsscriptsheets">
+```{.code environment="appsscriptsheets"}
 function myFunction() {
 
 }
-</pre>
+```
 
 This is a **function**: a named group of steps. Apps Script needs functions because it doesn't run loose lines of code the way this book's editors do. Instead, you choose a function by name, from the menu in the toolbar, and click **Run**. Apps Script then runs the steps inside that function, from top to bottom.
 
@@ -119,12 +119,12 @@ Give your functions names that say what they do, such as `writeGreeting` or `lis
 
 Try it. Replace the empty function with this code:
 
-<pre class="code" data-environment="appsscriptsheets">
+```{.code environment="appsscriptsheets"}
 function myFunction() {
   let count = 10
   console.log(count)
 }
-</pre>
+```
 
 ![The same function in the editor, with two lines added between the braces.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQH1PqnDqi-QXT6DoByjraPWqGCbkdbNc8dJHFaY2fUd9befeIjBFcLDATgGGPTERA47c_XO5i9ALj9tRj2ESXQiyfH_BDugG0TvpDIt2YagNWtP-XD5nXRlddIS6WRwnnDFmMPCL5kEabRe7ohn_JG3t2JGzScvkwV5dSCb5APZKCqzKAlQID0kx5XZM/s1600/1637cacb.png)
 
@@ -165,9 +165,9 @@ This shows the other side of a learner profile: it has to keep up with you. You'
 
 First, though, here's the missing piece. This is the kind of line the assistant was describing:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 SpreadsheetApp.getActiveSheet().getRange("A1").setValue("Hello")
-</pre>
+```
 
 It's long, but it reads left to right, one step at a time. Each dot (`.`) means "and then, from what we have so far":
 
@@ -186,15 +186,15 @@ You don't need to memorize these. What matters is that you can read a line like 
 
 You can try the code right here. Below is a small practice sheet, and the editor under it can run Apps Script code against it, much as the real Apps Script editor runs code against your spreadsheet. Click **Run**, and watch cell A1:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Practice", "rows": 5, "columns": 4, "data": [], "formats": []}
-</pre>
+```
 
-<pre class="code">
+```{.code}
 function writeHello() {
   SpreadsheetApp.getActiveSheet().getRange("A1").setValue("Hello")
 }
-</pre>
+```
 
 Now change `"A1"` to `"B3"`, or change the message, and run it again.
 

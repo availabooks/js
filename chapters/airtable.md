@@ -218,7 +218,7 @@ The club's base avoids part of the problem by design: its primary field is Email
 
 Here's the script for the club's base, in the book's style. Because the primary field is Email, the linked record's `name` is an email, so the script reads the Members table too, to show each member's full name:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 const membersTable = base.getTable("Members")
 const shiftsTable = base.getTable("Shifts")
 
@@ -254,7 +254,7 @@ for (let i = 0; i < membersQuery.records.length; i++) {
   })
 }
 output.table(rows)
-</pre>
+```
 
 This version passes `{ fields: [...] }` to `selectRecordsAsync`, so Airtable loads only the fields the script needs. Airtable's documentation recommends it, and on a big table it's much faster, the same idea as loading only `rowCount` in [Building an Application in Excel](excel-app){.book-link}. It also lists every member, including Jordan with 0 hours, because it goes through the Members table rather than only the members who appear in Shifts. The totals should match the Volunteer Hours you've seen all along: Maya 24, Ava 12, and so on.
 
@@ -383,14 +383,14 @@ This is where documentation earns its keep. Airtable's scripting documentation l
 
 The fix is one line:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 const newFields = {
   "Date": dateText,
   "Task": { name: task },
   "Member": [{ id: memberId }],
   "Hours": hours
 }
-</pre>
+```
 
 One more thing to consider: the email comparison is exact, so `Ava.Lopez@example.com` wouldn't match `ava.lopez@example.com`. Emails aren't case-sensitive in practice, so a friendlier script would compare them in lowercase, with `toLowerCase()` on both sides.
 

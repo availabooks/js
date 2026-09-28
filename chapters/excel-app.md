@@ -32,25 +32,25 @@ JADE can put exactly that in the task pane, beside the workbook, and because JAD
 
 A drop-down list in HTML is a **`<select>`** element, with an **`<option>`** for each choice. Each option's `value` is what code reads; the text between the tags is what people see:
 
-<pre class="code" data-environment="html">
-&lt;label for="bed"&gt;Bed&lt;/label&gt;
-&lt;select id="bed"&gt;
-  &lt;option value="B1"&gt;Bed 1&lt;/option&gt;
-  &lt;option value="B2"&gt;Bed 2&lt;/option&gt;
-  &lt;option value="B3"&gt;Bed 3&lt;/option&gt;
-&lt;/select&gt;
-&lt;button id="show"&gt;Show choice&lt;/button&gt;
-&lt;p id="choice"&gt;&lt;/p&gt;
+```{.code environment="html"}
+<label for="bed">Bed</label>
+<select id="bed">
+  <option value="B1">Bed 1</option>
+  <option value="B2">Bed 2</option>
+  <option value="B3">Bed 3</option>
+</select>
+<button id="show">Show choice</button>
+<p id="choice"></p>
 
-&lt;script&gt;
+<script>
   const bed = document.querySelector("#bed")
   const show = document.querySelector("#show")
   const choice = document.querySelector("#choice")
   show.addEventListener("click", function() {
     choice.textContent = `You chose ${bed.value}`
   })
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 The select's `value` is the `value` of whichever option is chosen, "B2" for the second option, even though the list shows "Bed 2."
 
@@ -238,22 +238,22 @@ This is a very good answer, and not because it knows the cause. It reasons from 
 
 You can also look it up. JADE's documentation says `read_object_from_workbook` returns `{}`, an empty object, when nothing has been saved under the key. An object has no `toHtmlEntities` method, hence the error. The fix is to check for what you actually want, a string, rather than for the things you think you might get:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 let lastEmail = await Jade.read_object_from_workbook("lastVolunteerEmail")
 // nothing saved yet gives {}, so use "" unless a string was saved
 if (typeof lastEmail !== "string") {
   lastEmail = ""
 }
-</pre>
+```
 
 Checking `typeof lastEmail !== "string"` handles `{}`, `null`, `undefined` and anything else unexpected, all at once.
 
 This is another mistake a platform profile should prevent, so the JADE profile gets two new lines, one for this and one for `auto_exec`:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 - await Jade.save_object_to_workbook(object, key) and await Jade.read_object_from_workbook(key) store data in the workbook. Both return promises, so await them. read_object_from_workbook returns {} (an empty object) when nothing has been saved under the key. Don't use the key jade or keys starting with gist:.
 - If a module has a function named auto_exec(), JADE runs it when the module loads, including when the workbook opens. auto_exec takes no parameters; to run a workbook function from it, call Jade.automate(functionName)().
-</pre>
+```
 
 The first replaces the profile's earlier line about storing data. Notice where the information came from: the documentation, prompted by a question an honest assistant asked.
 
@@ -261,19 +261,19 @@ The first replaces the profile's earlier line about storing data. Notice where t
 
 `auto_exec` has no parameters, and `showHarvestForm` needs `excel`. `Jade.automate` bridges the gap: `Jade.automate(showHarvestForm)` makes a new function that runs `showHarvestForm` inside `Excel.run`, and the `()` after it calls that new function straight away:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 function auto_exec() {
   Jade.automate(showHarvestForm)()
 }
-</pre>
+```
 
 Another option is to open JADE's list of automations, built from every function with a `Jade.listing` comment, so volunteers can choose what to run:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 function auto_exec() {
   Jade.open_automations()
 }
-</pre>
+```
 
 For an app with one job, opening the form directly is friendlier.
 
@@ -285,7 +285,7 @@ For an app with one job, opening the form directly is friendlier.
 
 Here's the app in the book's style, with the fixes: the first-run check, awaited saving, a panel name without spaces, labels connected to their inputs, and `auto_exec`. It also gives the panel a theme: the fourth argument to `Jade.open_canvas` is the name of one of JADE's built-in styles. Try `"water"`, `"mvp"` or `"sajura"`; `Jade.list_themes()` returns all of them.
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 const BED_IDS = ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"]
 
 function auto_exec() {
@@ -308,7 +308,7 @@ async function showHarvestForm(excel) {
 
   let bedOptions = ""
   for (let i = 0; i < BED_IDS.length; i++) {
-    bedOptions += `&lt;option value="${BED_IDS[i]}">${BED_IDS[i]}&lt;/option>`
+    bedOptions += `<option value="${BED_IDS[i]}">${BED_IDS[i]}</option>`
   }
 
   // the five most recent harvests, newest first (row 0 is the header)
@@ -316,32 +316,32 @@ async function showHarvestForm(excel) {
   let shown = 0
   for (let i = rows.length - 1; i >= 1 && shown < 5; i--) {
     const cells = rows[i]
-    recentRows += "&lt;tr>"
+    recentRows += "<tr>"
     for (let j = 0; j < 4; j++) {
-      recentRows += `&lt;td>${String(cells[j]).toHtmlEntities()}&lt;/td>`
+      recentRows += `<td>${String(cells[j]).toHtmlEntities()}</td>`
     }
-    recentRows += "&lt;/tr>"
+    recentRows += "</tr>"
     shown++
   }
 
   const html = `
-    &lt;h2>Add a harvest&lt;/h2>
-    &lt;label for="dateInput">Date (such as 2027-06-18)&lt;/label>
-    &lt;input type="text" id="dateInput">
-    &lt;label for="bedInput">Bed&lt;/label>
-    &lt;select id="bedInput">${bedOptions}&lt;/select>
-    &lt;label for="cropInput">Crop&lt;/label>
-    &lt;input type="text" id="cropInput">
-    &lt;label for="kgInput">Kilograms&lt;/label>
-    &lt;input type="number" id="kgInput">
-    &lt;label for="emailInput">Your email&lt;/label>
-    &lt;input type="text" id="emailInput" value="${lastEmail.toHtmlEntities()}">
-    &lt;p>&lt;button id="addButton">Add&lt;/button>&lt;/p>
-    &lt;h2>Recent harvests&lt;/h2>
-    &lt;table>
-      &lt;tr>&lt;th>Date&lt;/th>&lt;th>Bed&lt;/th>&lt;th>Crop&lt;/th>&lt;th>Kg&lt;/th>&lt;/tr>
+    <h2>Add a harvest</h2>
+    <label for="dateInput">Date (such as 2027-06-18)</label>
+    <input type="text" id="dateInput">
+    <label for="bedInput">Bed</label>
+    <select id="bedInput">${bedOptions}</select>
+    <label for="cropInput">Crop</label>
+    <input type="text" id="cropInput">
+    <label for="kgInput">Kilograms</label>
+    <input type="number" id="kgInput">
+    <label for="emailInput">Your email</label>
+    <input type="text" id="emailInput" value="${lastEmail.toHtmlEntities()}">
+    <p><button id="addButton">Add</button></p>
+    <h2>Recent harvests</h2>
+    <table>
+      <tr><th>Date</th><th>Bed</th><th>Crop</th><th>Kg</th></tr>
       ${recentRows}
-    &lt;/table>
+    </table>
   `
   Jade.open_canvas("harvestEntry", html, true, "water")
   const addButton = tag("addButton")
@@ -378,7 +378,7 @@ async function addHarvest(excel) {
   await Jade.save_object_to_workbook(email, "lastVolunteerEmail")
   await showHarvestForm(excel)
 }
-</pre>
+```
 
 Two small differences from the assistant's version are worth noticing. `addHarvest` loads `rowCount`, the number of rows in the used range, instead of all the values, because that's all it needs; Office.js is faster when you load only what you use. The check on kilograms has an upper limit, as the shift logger's did in [Building a Browser Extension](extension){.book-link}. And the recent-harvests table leaves out the Logged By column, so the panel doesn't show every volunteer's email address to whoever opens the workbook.
 

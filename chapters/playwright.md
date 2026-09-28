@@ -46,10 +46,10 @@ For learning, this lesson uses **books.toscrape.com**, a fake bookstore built sp
 
 Playwright is a package, and it needs a browser of its own to control. In a project folder with `"type": "module"` in `package.json`:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 npm install playwright
 npx playwright install chromium
-</pre>
+```
 
 **`npx`** runs a command that comes with a package, here Playwright's installer, which downloads a copy of Chromium, the open-source browser Chrome is built on. It's a large download, a few hundred megabytes, and only happens once.
 
@@ -217,7 +217,7 @@ Every point is right. The most important are pausing between pages, and followin
 
 Here's the script that follows every page, in the book's style:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import { chromium } from "playwright"
 
 const START_URL = "https://books.toscrape.com/"
@@ -267,7 +267,7 @@ console.log(`Most expensive: £${products[products.length - 1].price.toFixed(2)}
 if (failedPages.length > 0) {
   console.log(`Stopped early. Could not load: ${failedPages.join(", ")}`)
 }
-</pre>
+```
 
 A few pieces are new:
 
@@ -282,7 +282,7 @@ It takes about a minute, and it finishes by printing checkable numbers, as your 
 
 Playwright's original purpose is worth trying too, because it's one of the most useful things you can do with it. This script opens the club's website from [Publishing a Site for Free](publishing){.book-link} at a phone's screen size and saves a screenshot, so you can see what visitors on phones see:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import { chromium } from "playwright"
 
 // replace with your site's address
@@ -298,7 +298,7 @@ await page.screenshot({ path: "home-on-phone.png", fullPage: true })
 const heading = await page.locator("h1").textContent()
 console.log(`The page's heading is: ${heading}`)
 await browser.close()
-</pre>
+```
 
 `fullPage: true` captures the whole page, not just the part that fits on the screen. Checking the heading's text is a tiny version of an automated **test**: if a change to the site ever broke the page, this script would notice. Playwright includes a complete testing tool, **Playwright Test**, built around this idea, and it's a good thing to ask your assistant about if you keep building sites.
 

@@ -19,19 +19,19 @@ Learning Objectives
 
 In [Your First Lines of Code](first-code){.book-link} you gave a value a name with `let`:
 
-<pre class="code">
+```{.code}
 let name = "Ava"
 console.log("Hello,", name)
-</pre>
+```
 
 A named value like `name` is a **variable**. The name comes from the fact that its value can *vary*: once a variable exists, you can give it a new value whenever you like. Run this, and watch what the last line displays:
 
-<pre class="code">
+```{.code}
 let count = 10
 count = 20
 count = count + 1
 console.log(count)
-</pre>
+```
 
 Read it one line at a time, the way the computer does:
 
@@ -46,10 +46,10 @@ Read it one line at a time, the way the computer does:
 
 If you use `let` twice for the same name, JavaScript stops with an error, because the variable already exists. Try it:
 
-<pre class="code">
+```{.code}
 let count = 10
 let count = 20
-</pre>
+```
 
 The message says `count` "has already been declared." *Declaring* a variable means creating it, which is what `let` does.
 
@@ -73,12 +73,12 @@ Every value in JavaScript has a **type**, which tells JavaScript what kind of va
 
 You can ask JavaScript for any value's type with `typeof`:
 
-<pre class="code">
+```{.code}
 console.log(typeof "Ava")
 console.log(typeof 12)
 console.log(typeof "12")
 console.log(typeof true)
-</pre>
+```
 
 `typeof` is especially handy when a value doesn't behave the way you expect, because the problem is often that it's a different type than you thought. You'll see exactly that later in this lesson.
 
@@ -86,15 +86,15 @@ console.log(typeof true)
 
 When your code reads a cell, the type of value it gets depends on what's in the cell. Here's a club's member list, the kind of sheet you'll work with for the next several lessons. Column D holds checkboxes: checked means the member has paid dues for the year.
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 7,
  "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}],
  "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
+```
 
 The code below reads three cells from Ava's row, row 3, and displays each value with its type. It uses a new method, `getValue`, which reads what's in a cell, the way `setValue` writes to one.
 
-<pre class="code">
+```{.code}
 function showTypes() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let firstName = sheet.getRange("A3").getValue()
@@ -104,7 +104,7 @@ function showTypes() {
   console.log(duesPaid, typeof duesPaid)
   console.log(hours, typeof hours)
 }
-</pre>
+```
 
 Text comes back as a string and a number as a number. A checkbox comes back as a boolean: `true` if it's checked, `false` if it isn't. An empty cell comes back as an empty string, `""`. Try changing the code to read an empty cell, such as `G3`, and see what it displays.
 
@@ -210,11 +210,11 @@ Longer isn't worse. If the greeting came out wrong, you could add `console.log(n
 
 **Run.** Type a name into cell A1 of the practice sheet, then run the function:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Practice", "rows": 5, "columns": 4, "data": [{"range": "A1", "values": [["Ava"]]}], "formats": []}
-</pre>
+```
 
-<pre class="code">
+```{.code}
 function writeGreetingFromName() {
   // this gets the active sheet once and names it "sheet"
   let sheet = SpreadsheetApp.getActiveSheet()
@@ -237,7 +237,7 @@ function writeGreetingFromName() {
   // this writes the greeting into cell B1
   cellB1.setValue(greeting)
 }
-</pre>
+```
 
 **Revise.** Try a different name in A1, and run it again. What happens if A1 is empty? The greeting becomes *Hello, !*, because an empty cell reads as `""`. Deciding what to do in a case like that takes a new tool, which you'll meet in the next lesson.
 
@@ -275,12 +275,12 @@ The steps are familiar: get the sheet, read A1, build the greeting, write it to 
 
 `var` is JavaScript's original keyword for creating a variable. `let` arrived in 2015, along with a third keyword, `const`. They look like this:
 
-<pre class="code">
+```{.code}
 var greeting = "Hi"
 let team = "Blue"
 const daysInWeek = 7
 console.log(greeting, team, daysInWeek)
-</pre>
+```
 
 - **`let`** creates a variable whose value you can change. It's what this book uses.
 - **`const`** creates a variable whose value *can't* be changed. Try adding `daysInWeek = 8` to the code above and running it.
@@ -292,11 +292,11 @@ You'll see all three in code you find online and in AI replies. For now, your le
 
 Here's a problem you're likely to meet with real spreadsheets. Below is the Members sheet again, with one difference you can't see: the Volunteer Hours column is formatted as **plain text**. That happens more often than you'd think, for example when data is pasted in from another program, or when someone sets a column to plain text so that codes with leading zeros, like `007`, keep them.
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 7,
  "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, "24"], ["Ava", "Lopez", "ava.lopez@example.com", true, "12"], ["Ben", "Okafor", "ben.okafor@example.com", false, "4"], ["Cam", "Nguyen", "cam.nguyen@example.com", true, "9.5"], ["Dev", "Patel", "dev.patel@example.com", true, "15"], ["Elena", "Rossi", "elena.rossi@example.com", false, "6.5"], ["Farah", "Haddad", "farah.haddad@example.com", true, "11"], ["Gabe", "Martinez", "gabe.martinez@example.com", false, "2"], ["Hana", "Kim", "hana.kim@example.com", true, "18.5"], ["Isaac", "Cohen", "isaac.cohen@example.com", true, "7"], ["Jordan", "Lee", "jordan.lee@example.com", false, "0"], ["Keisha", "Brown", "keisha.brown@example.com", true, "13.5"]]}],
  "formats": [{"range": "A1:E1", "fontWeight": "bold"}, {"range": "E2:E13", "numberFormat": "@"}]}
-</pre>
+```
 
 Ava just worked a two-hour shift, so her hours in E3 should go from 12 to 14. Here's the request, in a new chat with your learner profile. It asks for one step per line, as you did above:
 
@@ -324,7 +324,7 @@ Ava just worked a two-hour shift, so her hours in E3 should go from 12 to 14. He
 
 The code looks right, and it would work on most sheets. Run it on this one:
 
-<pre class="code">
+```{.code}
 function addTwoToE3() {
   // this method gets the active sheet, picks cell E3, and reads its current value
   let currentValue = SpreadsheetApp.getActiveSheet().getRange("E3").getValue()
@@ -335,7 +335,7 @@ function addTwoToE3() {
   // this method gets the active sheet, picks cell E3 again, and writes the new value into it
   SpreadsheetApp.getActiveSheet().getRange("E3").setValue(newValue)
 }
-</pre>
+```
 
 Ava's hours are now 122. Before you read on, can you work out why? Here's what happened when that question went back to the assistant, in the same chat:
 
@@ -356,9 +356,9 @@ Ava's hours are now 122. Before you read on, can you work out why? Here's what h
 
 That's exactly right. `getValue` read the text `"12"`, not the number 12, and `+` with a string joins instead of adding. You could have confirmed it yourself with `typeof`:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 console.log(currentValue, typeof currentValue)
-</pre>
+```
 
 That line would display `12 string`. The number *looks* the same in the log either way. Its type is what gives it away.
 
@@ -403,7 +403,7 @@ The trick works, but it's the kind of code that puzzles readers later: why would
 
 `Number()` turns a value into a number. `String()` does the opposite:
 
-<pre class="code">
+```{.code}
 let hoursText = "12"
 let hours = Number(hoursText)
 console.log(hours + 2, typeof hours)
@@ -411,13 +411,13 @@ console.log(hours + 2, typeof hours)
 let total = 14
 let totalText = String(total)
 console.log(totalText + 2, typeof totalText)
-</pre>
+```
 
 If a string doesn't look like a number, such as `"twelve"`, `Number()` gives a special value called `NaN`, short for "not a number." If you see `NaN` in your output, some text that wasn't a number ended up in a calculation.
 
 Here's the function again, rewritten in the book's style with `Number()` and one step per line. Before you run it, set E3 back to 12 by typing into the cell.
 
-<pre class="code">
+```{.code}
 function addShiftHours() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let hoursCell = sheet.getRange("E3")
@@ -426,7 +426,7 @@ function addShiftHours() {
   let updatedHours = currentHours + 2
   hoursCell.setValue(updatedHours)
 }
-</pre>
+```
 
 Notice the rewrite needs only one `getRange` for E3. The cell is stored in `hoursCell`, and the code both reads from it and writes to it.
 
@@ -434,19 +434,19 @@ Notice the rewrite needs only one `getRange` for E3. The cell is stored in `hour
 
 Joining strings with `+` gets awkward when a message has several parts, and it's easy to forget a space:
 
-<pre class="code">
+```{.code}
 let firstName = "Ava"
 let hours = 14
 console.log("Thank you, " + firstName + "! You have " + hours + " volunteer hours.")
-</pre>
+```
 
 JavaScript has a neater way to build text, called a **template literal**. It's written between backticks (`` ` ``) instead of quote marks, and you drop a value into it with `${ }`:
 
-<pre class="code">
+```{.code}
 let firstName = "Ava"
 let hours = 14
 console.log(`Thank you, ${firstName}! You have ${hours} volunteer hours.`)
-</pre>
+```
 
 Both lines display the same message. The template literal reads like the finished sentence, with the spaces exactly where you see them. The backtick key is usually at the top left of the keyboard, next to the 1 key.
 

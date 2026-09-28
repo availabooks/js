@@ -346,7 +346,7 @@ One small thing to notice: `renderShiftsTable` fills each row with `innerHTML`. 
 
 The project folder now has everything:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 garden-signups/
   wrangler.jsonc
   schema.sql
@@ -357,7 +357,7 @@ garden-signups/
     index.html
     style.css
     script.js
-</pre>
+```
 
 `src/index.js`, `schema.sql` and `seed.sql` are the ones from [Serverless with Cloudflare Workers](workers){.book-link}; `wrangler.jsonc` and the three files in `public` are the ones in the reply. Run `npx wrangler dev`, and open `http://127.0.0.1:8787`: the page appears, with the shifts filled in from the database.
 
@@ -369,7 +369,7 @@ The garden sign-up app in a browser at 127.0.0.1:8787, showing the table of June
 
 The API test scripts from earlier lessons check the back end. To check the whole app, the page included, use the tool from [Automating the Web with Playwright](playwright){.book-link}: a script that opens the page, fills in the form and clicks the buttons, exactly as a volunteer would. Save this in a project where Playwright is installed, and run it while `wrangler dev` is running:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import { chromium } from "playwright"
 const browser = await chromium.launch()
 const page = await browser.newPage()
@@ -394,11 +394,11 @@ await page.waitForTimeout(500)
 console.log("non-member:", await page.locator("#signup-message").textContent())
 await page.screenshot({ path: "app.png", fullPage: true })
 await browser.close()
-</pre>
+```
 
 It printed this when this lesson was written:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 rows: 8
 message: Signed up. This browser will remember your cancel code.
 shift 6 row:
@@ -409,7 +409,7 @@ shift 6 row:
 my sign-ups: [ '2027-06-19 — planting (09:00–11:00) Cancel' ]
 after cancel: [ 'No sign-ups saved in this browser yet.' ]
 non-member: That email doesn't belong to a club member
-</pre>
+```
 
 Every layer checked at once: the page loaded eight shifts from the database; signing up with `Jordan.Lee@example.com`, in capitals, worked, because the API compares emails in lowercase; the shift's spots left dropped from 3 to 2; the sign-up appeared in "My sign-ups" from `localStorage`; the Cancel button removed it; and a non-member got the server's own error message.
 

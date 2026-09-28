@@ -142,7 +142,7 @@ Two pieces of syntax are new: **`Object.entries(totals)`** turns an object into 
 
 Here's the script in the book's style, with a current model name and two design changes that matter more than they look:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 // Drafts a newsletter paragraph from this week's harvest totals.
 // Run with: node --env-file=.env newsletter.js
 const MODEL = "claude-opus-5"
@@ -182,7 +182,7 @@ const data = await response.json()
 const text = data.content.filter(block => block.type === "text").map(block => block.text).join("")
 console.log(text)
 console.log(`\n(${data.usage.input_tokens} tokens in, ${data.usage.output_tokens} tokens out)`)
-</pre>
+```
 
 **The code does the arithmetic.** The total is calculated in JavaScript, with `reduce`, and given to the model as a fact, along with the instruction to use the numbers exactly and add no others. Language models are good at writing and unreliable at arithmetic. Anything that can be calculated should be calculated by code, which is never wrong about sums.
 
@@ -194,13 +194,13 @@ The model's name is in a constant at the top, where it's easy to change. Provide
 
 Here's what one run of this script printed, while this lesson was written:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 **This Week in the Garden**
 
 What a wonderful week at the plots! Our tomato vines came through with 3.1 kg of ripe fruit, while the bean rows and cucumber trellises each contributed a tidy 2.6 kg. Altogether, that's 8.3 kg of fresh produce headed to the campus pantry and to the hands of our volunteers. Thank you to everyone who watered, weeded, and picked. Come join us at the beds this weekend — there's always room for another pair of gloves!
 
 (116 tokens in, 263 tokens out)
-</pre>
+```
 
 It's pleasant, and every number is right. The `**` around the heading are Markdown for bold, which the model added by habit; you'd remove them, or ask for plain text.
 

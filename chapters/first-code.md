@@ -19,9 +19,9 @@ Learning Objectives
 
 Code editors like the one below appear throughout this book. Each one has a Run button (▶). Click it, and the code runs right here in the page, with any output shown underneath. You can change the code and run it again as often as you like.
 
-<pre class="code">
+```{.code}
 console.log("Hello from JavaScript")
-</pre>
+```
 
 You'll also see editors that show code without a Run button. That code is meant to run somewhere else, such as a Google Sheet, and the lesson explains where.
 
@@ -49,23 +49,23 @@ A **statement** is an instruction: it tells the computer to *do* something. A st
 
 Run this editor. Nothing appears:
 
-<pre class="code">
+```{.code}
 5 + 7
-</pre>
+```
 
 The computer did calculate `5 + 7`, but nothing told it to do anything with the result, so the result was thrown away. Now wrap the expression in `console.log( )`, and it becomes a statement that displays the value:
 
-<pre class="code">
+```{.code}
 console.log(5 + 7)
-</pre>
+```
 
 This time you see `12`. The expression `5 + 7` is the value, and `console.log(...)` is the instruction that displays it.
 
 Text works the same way. In JavaScript, text goes inside quote marks, so the computer can tell the words you want to display from the words that are part of the code:
 
-<pre class="code">
+```{.code}
 console.log("JavaScript is fun!")
-</pre>
+```
 
 ::: {.term}
 > **String** — A piece of text in a program, written inside quote marks, such as `"Hello"`. The name comes from the idea of a string of characters.
@@ -101,9 +101,9 @@ It doesn't change or delete anything, and it matches the plan. You can explain e
 
 **Run.** Paste the code into the editor below, or type it, and run it:
 
-<pre class="code">
+```{.code}
 console.log("Hi there!")
-</pre>
+```
 
 **Revise.** If your greeting appeared, there's nothing to revise. If your assistant's reply was different, run its version instead. Any line that puts a string inside `console.log( )` does the same job.
 
@@ -113,21 +113,21 @@ console.log("Hi there!")
 
 It can display numbers, text, and the results of calculations:
 
-<pre class="code">
+```{.code}
 console.log(42)
 console.log("Learning JavaScript")
 console.log(10 * 10)
 console.log(100 / 4 - 5)
-</pre>
+```
 
 JavaScript uses `+` and `-` for adding and subtracting, `*` for multiplying and `/` for dividing. As in ordinary math, multiplying and dividing happen before adding and subtracting, and parentheses change the order: `(2 + 3) * 4` is 20, while `2 + 3 * 4` is 14.
 
 You can display several values at once by separating them with commas. `console.log` puts a space between them:
 
-<pre class="code">
+```{.code}
 console.log("The total is", 5 + 7)
 console.log("Two times three is", 2 * 3, "and ten minus four is", 10 - 4)
-</pre>
+```
 
 Labeling a value this way makes output much easier to understand, especially once a program displays more than one thing.
 
@@ -135,12 +135,12 @@ Labeling a value this way makes output much easier to understand, especially onc
 
 Anything after two forward slashes (`//`) on a line is a **comment**: a note for people, which the computer ignores.
 
-<pre class="code">
+```{.code}
 // This line displays the number of days in a week
 console.log(7)
 
 console.log(24 * 7) // the number of hours in a week
-</pre>
+```
 
 ::: {.term}
 > **Comment** — A note in the code, starting with `//`, that the computer ignores. Comments explain code to the people who read it.
@@ -158,10 +158,10 @@ AI assistants often add comments to the code they write. They're worth reading. 
 
 Programs constantly need to remember values and use them again. You can give a value a name with `let`:
 
-<pre class="code">
+```{.code}
 let name = "Ava"
 console.log("Hello,", name)
-</pre>
+```
 
 The first line says: *create a name, `name`, and store the string "Ava" under it.* After that, whenever the code uses `name`, JavaScript uses the value stored there. Notice that `name` in the second line has no quote marks. Without quotes, it refers to the stored value. With quotes, `"name"` would just be the four letters n-a-m-e.
 
@@ -213,11 +213,11 @@ Compare it with the version earlier in this section, `console.log("Hello,", name
 
 **Run.** Try both versions, then take out the space inside the quotes in the second one and run it again to see the difference:
 
-<pre class="code">
+```{.code}
 let name = "Ava"
 console.log("Hello,", name)
 console.log("Hello, " + name)
-</pre>
+```
 
 You'll learn more about joining strings with `+` in the lesson on variables and data. The assistant's closing suggestion, changing the name or the greeting, is a good one to try on your own.
 
@@ -225,16 +225,16 @@ You'll learn more about joining strings with `+` in the lesson on variables and 
 
 Look back at the reply in [Welcome to Programming](welcome){.book-link}, where an assistant was asked for a program that says hello. Its code looked like this:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 console.log("Hello, World!");
-</pre>
+```
 
 That semicolon (`;`) at the end is optional. JavaScript treats the end of a line as the end of a statement, so these two lines do exactly the same thing:
 
-<pre class="code">
+```{.code}
 console.log("with a semicolon");
 console.log("without a semicolon")
-</pre>
+```
 
 You only *need* a semicolon if you put two statements on the same line: `console.log(1); console.log(2)`.
 
@@ -251,28 +251,28 @@ Every programmer, at every level, runs into errors constantly. An error isn't a 
 
 Run this line. It's missing its closing parenthesis:
 
-<pre class="code">
+```{.code}
 console.log("Hello"
-</pre>
+```
 
 Instead of output, you get an error message. In Chrome and Edge it reads:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 SyntaxError: missing ) after argument list
-</pre>
+```
 
 The editor adds the line number where it found the problem, and the message may start with the word *Uncaught*, which just means nothing in the code handled the error. Other browsers word the message a little differently.
 
 Here's a different kind of error. The name is misspelled on the second line:
 
-<pre class="code">
+```{.code}
 let name = "Ava"
 console.log(nmae)
-</pre>
+```
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 ReferenceError: nmae is not defined
-</pre>
+```
 
 ### Kinds of errors
 
@@ -317,9 +317,9 @@ It also explains a word in the message you may not have known. The "argument lis
 
 Notice what the assistant *didn't* do: it didn't hand you the corrected line. It left the fix to you, as you asked, and even suggested you find the missing piece yourself. Try it now. Add the missing parenthesis and run the code:
 
-<pre class="code">
+```{.code}
 console.log("Hello"
-</pre>
+```
 
 For comparison, here's the other way to ask, sent in a new chat with the same learner profile:
 

@@ -156,12 +156,12 @@ Here's a first script, in the same chat:
 
 **Read.** It's plain JavaScript, using the `Date` methods from [Email, Calendar, and Dates](email-calendar){.book-link}. The reasoning in the explanation is careful: `getDay()` is 0 to 6, so `6 - dayOfWeek` can't be negative, and on a Saturday the answer is 0. You can run the same code right here, since it doesn't use anything specific to Node:
 
-<pre class="code">
+```{.code}
 const today = new Date()
 const dayOfWeek = today.getDay()
 const daysUntilSaturday = 6 - dayOfWeek
 console.log(`Days until the next garden club workday: ${daysUntilSaturday}`)
-</pre>
+```
 
 Now run it with Node. Suppose you save it as `countdown.js` in your Documents folder, open a terminal from the Start menu, and type `node countdown.js`:
 
@@ -184,22 +184,22 @@ This is the most common problem people have when they start with Node. When Node
 
 When it works, the terminal shows the script's `console.log` output:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 Days until the next garden club workday: 3
-</pre>
+```
 
 ## Errors in Node
 
 When a script has an error, Node stops and prints it in the terminal, with more detail than you've seen elsewhere. Try it: add a typo, such as `today.getDya()`, and run the script again. You'll see something like:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 C:\Users\maya\Documents\garden-scripts\countdown.js:3
 const dayOfWeek = today.getDya()
                         ^
 
 TypeError: today.getDya is not a function
-    at Object.&lt;anonymous&gt; (C:\Users\maya\Documents\garden-scripts\countdown.js:3:25)
-</pre>
+    at Object.<anonymous> (C:\Users\maya\Documents\garden-scripts\countdown.js:3:25)
+```
 
 The first line gives the file and the line number, 3. Then it shows the line, with a `^` pointing at the problem, and the error itself, a TypeError you'd recognize from any platform. The lines starting with `at` are the **stack trace**, which lists where the error happened and what called it. For now, the first line of it, with your file's name, is the useful one.
 

@@ -30,9 +30,9 @@ In n8n, a workflow is made of **nodes**. The first is a **trigger**, which start
 
 With Node installed, run this in a terminal:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 npx n8n
-</pre>
+```
 
 `npx`, which you used in [Automating the Web with Playwright](playwright){.book-link}, downloads n8n the first time, which takes a few minutes, and starts it. When it's ready, it prints an address, `http://localhost:5678`. Open that in your browser. **localhost** means "this computer": n8n is running as a small web server on your own machine, and the browser is its screen. You'll build servers of your own in the next part of the book.
 
@@ -48,12 +48,12 @@ Two things follow from running n8n this way. Your workflows only run **while n8n
 
 Data moves between nodes as a list of **items**. Each item is an object with a `json` property, which holds the actual data:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 [
   { "json": { "date": "2027-06-12", "task": "watering", "memberEmail": "ava.lopez@example.com", "hours": 1.5 } },
   { "json": { "date": "2027-06-12", "task": "weeding", "memberEmail": "ben.okafor@example.com", "hours": 1 } }
 ]
-</pre>
+```
 
 A node usually runs once for each item it receives. In a node's settings, you can refer to the current item's data with an **expression** in double curly braces, such as `{{ $json.memberEmail }}`, which n8n replaces with the value. It's the same idea as `${ }` in a template literal.
 

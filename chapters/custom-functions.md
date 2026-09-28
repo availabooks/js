@@ -169,23 +169,23 @@ This version is also better in another way. It doesn't use `SpreadsheetApp` at a
 
 Here's a use for `HOURSFOR` beyond looking up one member. The Members sheet has a Volunteer Hours column that someone updates by hand, and the Shifts sheet has every shift. The two should agree. In your spreadsheet, you'd put this formula in F2 of the Members sheet, and fill it down to row 13:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 =HOURSFOR(C2, Shifts!A2:D)
-</pre>
+```
 
 `C2` is the member's email, and filling the formula down changes it to C3, C4 and so on, while `Shifts!A2:D` stays the same. Any row where F doesn't match E is a member whose hours need checking.
 
 The page can't run custom functions in cells, but you can do the same check in code, which is also how you'd test `HOURSFOR`. The test calls it for every member, with the same data the formula would pass, and compares:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Shifts", "rows": 87, "columns": 5, "data": [{"range": "A1:D84", "values": [["Date", "Task", "Member Email", "Hours"], ["2027-03-20", "composting", "ava.lopez@example.com", 1], ["2027-03-20", "planting", "cam.nguyen@example.com", 1], ["2027-03-20", "watering", "dev.patel@example.com", 1.5], ["2027-03-20", "composting", "isaac.cohen@example.com", 1], ["2027-03-20", "harvesting", "keisha.brown@example.com", 1.5], ["2027-03-20", "watering", "maya.thompson@example.com", 1], ["2027-04-03", "watering", "elena.rossi@example.com", 1], ["2027-04-03", "planting", "maya.thompson@example.com", 1], ["2027-04-10", "planting", "dev.patel@example.com", 1], ["2027-04-10", "watering", "farah.haddad@example.com", 1.5], ["2027-04-10", "watering", "hana.kim@example.com", 1.5], ["2027-04-17", "watering", "maya.thompson@example.com", 2], ["2027-04-24", "planting", "ava.lopez@example.com", 2], ["2027-04-24", "watering", "keisha.brown@example.com", 2], ["2027-05-01", "watering", "farah.haddad@example.com", 1], ["2027-05-01", "harvesting", "hana.kim@example.com", 2], ["2027-05-01", "weeding", "keisha.brown@example.com", 1], ["2027-05-01", "harvesting", "maya.thompson@example.com", 1.5], ["2027-05-01", "composting", "maya.thompson@example.com", 2], ["2027-05-08", "composting", "dev.patel@example.com", 1], ["2027-05-15", "watering", "dev.patel@example.com", 2], ["2027-05-15", "planting", "elena.rossi@example.com", 1], ["2027-05-15", "watering", "isaac.cohen@example.com", 1.5], ["2027-05-15", "weeding", "maya.thompson@example.com", 2], ["2027-05-22", "weeding", "dev.patel@example.com", 1], ["2027-05-22", "composting", "farah.haddad@example.com", 1], ["2027-05-22", "weeding", "farah.haddad@example.com", 1], ["2027-05-22", "weeding", "hana.kim@example.com", 1.5], ["2027-05-22", "watering", "hana.kim@example.com", 2], ["2027-05-22", "weeding", "keisha.brown@example.com", 1], ["2027-05-29", "harvesting", "dev.patel@example.com", 1.5], ["2027-05-29", "planting", "hana.kim@example.com", 1.5], ["2027-05-29", "weeding", "keisha.brown@example.com", 2], ["2027-06-05", "planting", "farah.haddad@example.com", 1], ["2027-06-05", "weeding", "hana.kim@example.com", 1.5], ["2027-06-05", "weeding", "hana.kim@example.com", 2], ["2027-06-12", "planting", "dev.patel@example.com", 1.5], ["2027-06-12", "harvesting", "maya.thompson@example.com", 1.5], ["2027-06-19", "planting", "cam.nguyen@example.com", 1.5], ["2027-06-19", "composting", "cam.nguyen@example.com", 1.5], ["2027-06-19", "watering", "hana.kim@example.com", 1], ["2027-06-19", "weeding", "keisha.brown@example.com", 2], ["2027-06-19", "watering", "maya.thompson@example.com", 1.5], ["2027-07-03", "weeding", "ava.lopez@example.com", 1], ["2027-07-03", "watering", "ava.lopez@example.com", 2], ["2027-07-03", "harvesting", "farah.haddad@example.com", 2], ["2027-07-10", "harvesting", "cam.nguyen@example.com", 1], ["2027-07-10", "weeding", "isaac.cohen@example.com", 1.5], ["2027-07-10", "watering", "maya.thompson@example.com", 2], ["2027-07-17", "harvesting", "farah.haddad@example.com", 1.5], ["2027-07-17", "watering", "hana.kim@example.com", 1.5], ["2027-07-24", "watering", "ava.lopez@example.com", 2], ["2027-07-24", "harvesting", "gabe.martinez@example.com", 2], ["2027-07-24", "weeding", "hana.kim@example.com", 1.5], ["2027-07-24", "composting", "maya.thompson@example.com", 2], ["2027-07-31", "watering", "ben.okafor@example.com", 2], ["2027-07-31", "planting", "cam.nguyen@example.com", 1.5], ["2027-07-31", "watering", "elena.rossi@example.com", 1.5], ["2027-08-07", "weeding", "ava.lopez@example.com", 2], ["2027-08-14", "watering", "ben.okafor@example.com", 2], ["2027-08-14", "planting", "cam.nguyen@example.com", 1.5], ["2027-08-14", "watering", "elena.rossi@example.com", 1.5], ["2027-08-21", "composting", "dev.patel@example.com", 1.5], ["2027-08-21", "composting", "hana.kim@example.com", 1.5], ["2027-08-28", "weeding", "cam.nguyen@example.com", 1.5], ["2027-08-28", "composting", "dev.patel@example.com", 1], ["2027-08-28", "composting", "hana.kim@example.com", 1], ["2027-09-04", "harvesting", "dev.patel@example.com", 1.5], ["2027-09-04", "weeding", "farah.haddad@example.com", 1], ["2027-09-04", "watering", "isaac.cohen@example.com", 1.5], ["2027-09-04", "planting", "keisha.brown@example.com", 1], ["2027-09-04", "planting", "maya.thompson@example.com", 1], ["2027-09-04", "planting", "maya.thompson@example.com", 2], ["2027-09-11", "composting", "isaac.cohen@example.com", 1.5], ["2027-09-11", "planting", "keisha.brown@example.com", 1.5], ["2027-09-18", "planting", "dev.patel@example.com", 1.5], ["2027-09-18", "composting", "farah.haddad@example.com", 1], ["2027-09-18", "planting", "maya.thompson@example.com", 2], ["2027-09-18", "watering", "maya.thompson@example.com", 1], ["2027-09-25", "weeding", "ava.lopez@example.com", 2], ["2027-09-25", "planting", "elena.rossi@example.com", 1.5], ["2027-09-25", "weeding", "keisha.brown@example.com", 1.5], ["2027-09-25", "composting", "maya.thompson@example.com", 1.5]]}], "formats": [{"range": "A1:D1", "fontWeight": "bold"}, {"range": "A2:A84", "numberFormat": "@"}]}
-</pre>
+```
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 8, "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}], "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
+```
 
-<pre class="code">
+```{.code}
 function checkHoursAgainstShifts() {
   const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
   const membersSheet = spreadsheet.getSheetByName("Members")
@@ -226,7 +226,7 @@ function HOURSFOR(email, shiftsData) {
   }
   return totalHours
 }
-</pre>
+```
 
 Every member should show OK. Now change one of the hours on the Shifts sheet above and run the check again. The mismatch shows up immediately.
 

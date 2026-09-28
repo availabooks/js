@@ -145,7 +145,7 @@ The second new part is **`as number`**, a *type assertion*. The assistant's expl
 
 That creates a trap you've met before. If the Kilograms column were formatted as text, as the Volunteer Hours column was in [Variables and Data](variables){.book-link}, then `values[i][3] as number` would still be a string, and `total + kilograms` would join instead of add. TypeScript's check can't catch it, because you told it to trust you. When values might be text, convert them for real:
 
-<pre class="code" data-environment="officescriptexcel">
+```{.code environment="officescriptexcel"}
 function main(workbook: ExcelScript.Workbook) {
   const sheet = workbook.getWorksheet("Harvests")
   const usedRange = sheet.getUsedRange()
@@ -164,7 +164,7 @@ function main(workbook: ExcelScript.Workbook) {
   totalCell.setValue(rounded)
   console.log(`Total kilograms harvested: ${rounded}`)
 }
-</pre>
+```
 
 `Number(...)` always returns a number, so TypeScript is satisfied without `as`, and the result is right even for text. In Office Scripts, `console.log` output appears below the editor, so there it's the right way to show output, unlike in JADE.
 
@@ -172,7 +172,7 @@ function main(workbook: ExcelScript.Workbook) {
 
 Here's the same job in JADE and in Office Scripts, reduced to the essentials:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 async function writeHarvestTotal(excel) {
   const sheet = excel.workbook.worksheets.getItem("Harvests")
   const usedRange = sheet.getUsedRange()
@@ -183,9 +183,9 @@ async function writeHarvestTotal(excel) {
   sheet.getRange("G1").values = [[rounded]]
   await excel.sync()
 }
-</pre>
+```
 
-<pre class="code" data-environment="officescriptexcel">
+```{.code environment="officescriptexcel"}
 function main(workbook: ExcelScript.Workbook) {
   const sheet = workbook.getWorksheet("Harvests")
   const usedRange = sheet.getUsedRange()
@@ -193,7 +193,7 @@ function main(workbook: ExcelScript.Workbook) {
   // ... add up data[i][3] ...
   sheet.getRange("G1").setValue(rounded)
 }
-</pre>
+```
 
 | | JADE (Office.js) | Office Scripts |
 |---|---|---|

@@ -20,30 +20,30 @@ The club's home page, with its forecast and its plant-spacing calculator, works 
 
 Until now, each page kept its CSS in a `<style>` tag and its JavaScript in a `<script>` tag. A real site usually puts them in files of their own:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 club-site/
   index.html
   style.css
   script.js
   garden.jpg
-</pre>
+```
 
 The page then *links* to them:
 
-<pre class="code" data-environment="none">
-&lt;!doctype html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;College Community Garden&lt;/title&gt;
-    &lt;link rel="stylesheet" href="style.css"&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;College Community Garden&lt;/h1&gt;
-    &lt;img src="garden.jpg" alt="Volunteers weeding the raised beds"&gt;
-    &lt;script src="script.js"&gt;&lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
+```{.code environment="none"}
+<!doctype html>
+<html>
+  <head>
+    <title>College Community Garden</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>College Community Garden</h1>
+    <img src="garden.jpg" alt="Volunteers weeding the raised beds">
+    <script src="script.js"></script>
+  </body>
+</html>
+```
 
 - **`<link rel="stylesheet" href="style.css">`** in the head loads the CSS from `style.css`. The CSS file holds exactly what used to go between the `<style>` tags.
 - **`<script src="script.js"></script>`** at the end of the body loads and runs the JavaScript from `script.js`. It still needs its closing tag, even though it's empty.
@@ -187,33 +187,33 @@ Here's the club's site as three files, bringing together the home page from [How
 
 **index.html**
 
-<pre class="code" data-environment="none">
-&lt;!doctype html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;College Community Garden&lt;/title&gt;
-    &lt;link rel="stylesheet" href="style.css"&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;College Community Garden&lt;/h1&gt;
-    &lt;p&gt;A student-run club where students and neighbors grow food together, share the harvest, and learn to garden sustainably. Everyone is welcome, and no experience is needed.&lt;/p&gt;
+```{.code environment="none"}
+<!doctype html>
+<html>
+  <head>
+    <title>College Community Garden</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>College Community Garden</h1>
+    <p>A student-run club where students and neighbors grow food together, share the harvest, and learn to garden sustainably. Everyone is welcome, and no experience is needed.</p>
 
-    &lt;h2&gt;Upcoming Workdays&lt;/h2&gt;
-    &lt;ul id="workdays"&gt;&lt;/ul&gt;
+    <h2>Upcoming Workdays</h2>
+    <ul id="workdays"></ul>
 
-    &lt;h2&gt;Rain in the Next Three Days&lt;/h2&gt;
-    &lt;ul id="forecast"&gt;
-      &lt;li&gt;Loading the forecast...&lt;/li&gt;
-    &lt;/ul&gt;
+    <h2>Rain in the Next Three Days</h2>
+    <ul id="forecast">
+      <li>Loading the forecast...</li>
+    </ul>
 
-    &lt;script src="script.js"&gt;&lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
+    <script src="script.js"></script>
+  </body>
+</html>
+```
 
 **style.css**
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f9f4;
@@ -231,11 +231,11 @@ ul {
 .error {
   color: darkred;
 }
-</pre>
+```
 
 **script.js**
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 const WORKDAYS = ["Saturday, May 1, 2027", "Saturday, May 15, 2027", "Saturday, May 29, 2027"]
 const FORECAST_URL = "https://api.open-meteo.com/v1/forecast?latitude=40.25&longitude=-111.65&daily=precipitation_sum&timezone=auto&forecast_days=3"
 const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
@@ -278,7 +278,7 @@ async function showForecast() {
 
 showWorkdays()
 showForecast()
-</pre>
+```
 
 This version builds the workday list with `createElement` and `textContent` instead of `innerHTML`, so nothing in the list could ever be read as HTML. Once it's online, send the address to a friend and ask them to open it on their phone. That's the test that matters: it works on a computer that isn't yours.
 

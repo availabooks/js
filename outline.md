@@ -140,8 +140,8 @@ Leave the Blogger functions (`getBloggerPost`, `incorporateBloggerModule`) and "
 |---|---|---|---|
 | 43 | How the Web Works | HTTP, requests and responses, status codes, REST | — |
 | 44 | A Server with Node and Express | routes, serving pages, a JSON API (run locally) | a volunteer sign-up API |
-| 45 | Storing Data | SQLite from Node; link to the SQL book | the member database |
-| 46 | Serverless with Cloudflare Workers | deploying a free API; D1 or KV storage | move the sign-up API online |
+| 45 | Storing Data | PostgreSQL from Node with PGlite (the SQL book's engine); link to the SQL book | the member database |
+| 46 | Serverless with Cloudflare Workers | deploying a free API; hosted Postgres (Neon), same SQL as Lesson 45 | move the sign-up API online |
 | 47 | A Full-Stack App | Part III front end + Worker API + database | a garden-plot reservation app |
 | 48 | A Chat Bot for the Club | Discord slash commands on Cloudflare Workers; the platform calling *your* code; verifying request signatures; protecting bot tokens | `/nextshift` reads the reader's own API (Lesson 47); `/harvest 3kg tomatoes` logs to Airtable |
 
@@ -182,6 +182,7 @@ Concepts are introduced on the platform where they're first needed.
 | Office Scripts (Lesson 31, optional) | **a Microsoft 365 work or school license** | ⚠ not available with free or personal Microsoft accounts (verify the current requirements). Many students have access through their school. |
 | Node.js, VS Code, Playwright | a computer they can install software on | free |
 | Cloudflare Workers | Cloudflare account (free tier) | free |
+| Neon (hosted Postgres) | Neon account (free plan) | free |
 | LLM API (Lesson 41) | an API key | the free tiers vary by provider and change often; Gemini has offered one. Make this lesson optional or provider-neutral. |
 
 ### Other areas worth considering
@@ -263,7 +264,7 @@ A standing rule, stated in Lesson 2 and repeated when it matters: **don't run co
 
 - The `prompt` becomes a "send to AI" button, so readers can send the same prompt to their own assistant.
 - Follow-up turns are separate blocks, the same as the SQL book's "Try again. The table is named museum."
-- After the exchange, the final code appears as a runnable `<pre class="code">` block. Apps Script code uses `data-environment="none"`.
+- After the exchange, the final code appears as a runnable ```` ```{.code} ```` block. Apps Script code uses `environment="none"`.
 
 ### Rules for capturing transcripts
 
@@ -359,7 +360,7 @@ Proposed columns (about 10 fictional members):
 - It supports natural decisions (*"has this member paid dues?"*, *"more than 10 hours?"*) and loops (*"total hours"*, *"list members who haven't paid"*).
 - **Leave out a Join Date column for now.** `getValue` returns a Date object for a date cell, which is a concept readers won't have. The current loops lesson works around this by formatting dates as plain text. Add dates in a later lesson.
 - How readers get the sheet: a shared template ("File → Make a copy") so they don't have to type it in. The script that generates the data can also stay for Lesson 8's "reading for danger" exercise.
-- **Running Apps Script code on the page: the `appsscript` module** (`tools/system-files/*/appsscript.js`; the original is at `theGove/tools/api/appsscript.js`). A `<pre class="spreadsheet">` block becomes an editable grid, and a mock `SpreadsheetApp` lets Apps Script code in Monaco blocks run against it. Its copy button produces either "Code to build sheet" (an Apps Script function that recreates the sheet in real Google Sheets) or the data to paste. Plan: define the Members sheet this way, so readers run the AI's code on the page first and then for real in Sheets. It needs the gaps in Q10 closed first.
+- **Running Apps Script code on the page: the `appsscript` module** (`tools/system-files/*/appsscript.js`; the original is at `theGove/tools/api/appsscript.js`). A ```` ```{.spreadsheet} ```` block becomes an editable grid, and a mock `SpreadsheetApp` lets Apps Script code in Monaco blocks run against it. Its copy button produces either "Code to build sheet" (an Apps Script function that recreates the sheet in real Google Sheets) or the data to paste. Plan: define the Members sheet this way, so readers run the AI's code on the page first and then for real in Sheets. It needs the gaps in Q10 closed first.
 
 ---
 

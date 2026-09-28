@@ -87,13 +87,28 @@ Use the platform's callout classes, with the text in a blockquote:
 
 ## Code
 
-- **Runnable JavaScript:** `<pre class="code">` ... `</pre>`, in lessons that import `monaco`. Readers can edit and run it, and `console.log` output appears below it.
-- **Other environments:** add `data-environment="..."`. The editor supports:
+Code blocks are pandoc fenced code blocks with a `.code` class. Pandoc turns them into the `<pre class="code">` that the page's editor looks for.
+
+````markdown
+```{.code}
+let count = 10
+console.log(count)
+```
+
+```{.code environment="nodejs"}
+import fs from "node:fs"
+```
+````
+
+- **Runnable JavaScript:** ```` ```{.code} ````, in lessons that import `monaco`. Readers can edit and run it, and `console.log` output appears below it.
+- **Other environments:** add `environment="..."` (pandoc writes it as `data-environment`). The editor supports:
   - `none`: shown but not runnable;
   - `message`: output or an error message;
   - `html`: rendered in a frame;
   - `appsscript`, `appsscriptsheets`, `nodejs`, `jade`, `officescriptexcel`: shown with a note on where to paste the code.
-- **Apps Script code that runs against an on-page spreadsheet** uses a plain `<pre class="code">` (no `data-environment`). The `appsscript` module makes `SpreadsheetApp` work on the page.
+- **Apps Script code that runs against an on-page spreadsheet** uses a plain ```` ```{.code} ```` (no `environment`). The `appsscript` module makes `SpreadsheetApp` work on the page.
+- **Don't add a language class** (such as ```` ```{.js .code} ````). It turns on pandoc's syntax highlighting, which wraps the block in a `div.sourceCode` and changes its classes, and the editor then treats it differently.
+- **Write code as-is.** Inside a fence, `<`, `>` and `&` need no escaping, so HTML examples are written as plain HTML.
 - **Book code style:** no semicolons; `let` (until the Functions lesson removes that rule); camelCase; comments where they help a beginner.
 - **Code from an AI reply isn't restyled.** It's shown exactly as captured. When the book's final version of that code appears as a runnable block, it follows the book's style.
 
@@ -101,13 +116,13 @@ Use the platform's callout classes, with the text in a blockquote:
 
 A lesson that imports `appsscript` can include a sheet:
 
-```markdown
-<pre class="spreadsheet">
+````markdown
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 8,
  "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ...]}],
  "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
 ```
+````
 
 - Code run in a Monaco block acts on the **nearest sheet above it**.
 - **Make the grid a few rows and columns bigger than the data.** AI code often writes to the next empty row or column, and a real sheet starts with 1000 rows and 26 columns.

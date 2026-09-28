@@ -142,7 +142,7 @@ You don't have to take the book's word for this either. The permission screen is
 
 Here's the welcome email in the book's style, with `MailApp` and a test function first:
 
-<pre class="code" data-environment="appsscriptsheets">
+```{.code environment="appsscriptsheets"}
 function testSendWelcomeEmail() {
   // use your own address, so the only email sent goes to you
   const fakeEvent = {
@@ -166,7 +166,7 @@ function sendWelcomeEmail(e) {
 
   MailApp.sendEmail(email, subject, body)
 }
-</pre>
+```
 
 Change the address in the test to your own before you run it. Once it arrives and looks right, set up an on-form-submit trigger for `sendWelcomeEmail`. A project can have several form-submit triggers, one for adding the member and one for the welcome email.
 
@@ -178,14 +178,14 @@ Change the address in the test to your own before you run it. Once it arrives an
 
 Reminders, calendars and schedules all need dates. JavaScript represents a moment in time with a **Date** object. `new Date()` with nothing in the parentheses creates one for right now:
 
-<pre class="code">
+```{.code}
 const now = new Date()
 console.log(now)
 console.log(now.getFullYear())
 console.log(now.getMonth())
 console.log(now.getDate())
 console.log(now.getDay())
-</pre>
+```
 
 The methods that read a date's parts have some surprises:
 
@@ -203,22 +203,22 @@ The methods that read a date's parts have some surprises:
 
 To create a particular date, give `new Date` the year, month, day and, optionally, hour and minute. The month counts from 0 here too:
 
-<pre class="code">
+```{.code}
 // May is month 4, because months count from 0
 const workday = new Date(2027, 4, 1, 9, 0)
 console.log(workday)
 console.log(workday.getDay())
-</pre>
+```
 
 `getDay()` gives 6, so May 1, 2027 is a Saturday.
 
 To move a date forward or back, change its day with `setDate`. JavaScript handles the ends of months for you:
 
-<pre class="code">
+```{.code}
 const day = new Date(2027, 4, 29)
 day.setDate(day.getDate() + 7)
 console.log(day.getMonth() + 1, day.getDate())
-</pre>
+```
 
 May 29 plus 7 days is June 5, and JavaScript rolled over into June by itself.
 
@@ -226,20 +226,20 @@ May 29 plus 7 days is June 5, and JavaScript rolled over into June by itself.
 
 The club's spreadsheet stores dates as text, like "2027-04-18", as you saw in [College Community Garden: Case Setup](case){.book-link}. Turning a date into text in that form means building it from its parts, with a leading zero for months and days below 10. Apps Script also has a tool that does it in one step, `Utilities.formatDate`:
 
-<pre class="code" data-environment="appsscriptsheets">
+```{.code environment="appsscriptsheets"}
 const today = new Date()
 const timeZone = Session.getScriptTimeZone()
 const dateText = Utilities.formatDate(today, timeZone, "yyyy-MM-dd")
-</pre>
+```
 
 The pattern `"yyyy-MM-dd"` means four-digit year, two-digit month, two-digit day. (Capital `MM` is month; lowercase `mm` is minutes.) The time zone matters because "today" depends on where you are: at 11 p.m. in California, it's already tomorrow in London. `Session.getScriptTimeZone()` uses the time zone in your project's settings.
 
 Going the other way, from text to a Date, has a trap:
 
-<pre class="code">
+```{.code}
 const date = new Date("2027-04-18")
 console.log(date.getDate())
-</pre>
+```
 
 If you're in the Americas, this probably displays 17, not 18. JavaScript reads a date written this way as midnight in *London* time (UTC, to be exact), and midnight in London is the previous evening in the Americas. Unless you need a Date object, the simplest way to compare text dates is to turn the date you have into the same text form, and compare the strings. That's what the next example does.
 
@@ -373,15 +373,15 @@ The approach to dates is also sound: instead of turning the sheet's text into Da
 
 Here's the test on this page, with the Shifts and Members sheets. The test function comes first, so it's the one selected. On April 10, 2027, three members had shifts: Dev, Farah and Hana.
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Shifts", "rows": 87, "columns": 5, "data": [{"range": "A1:D84", "values": [["Date", "Task", "Member Email", "Hours"], ["2027-03-20", "composting", "ava.lopez@example.com", 1], ["2027-03-20", "planting", "cam.nguyen@example.com", 1], ["2027-03-20", "watering", "dev.patel@example.com", 1.5], ["2027-03-20", "composting", "isaac.cohen@example.com", 1], ["2027-03-20", "harvesting", "keisha.brown@example.com", 1.5], ["2027-03-20", "watering", "maya.thompson@example.com", 1], ["2027-04-03", "watering", "elena.rossi@example.com", 1], ["2027-04-03", "planting", "maya.thompson@example.com", 1], ["2027-04-10", "planting", "dev.patel@example.com", 1], ["2027-04-10", "watering", "farah.haddad@example.com", 1.5], ["2027-04-10", "watering", "hana.kim@example.com", 1.5], ["2027-04-17", "watering", "maya.thompson@example.com", 2], ["2027-04-24", "planting", "ava.lopez@example.com", 2], ["2027-04-24", "watering", "keisha.brown@example.com", 2], ["2027-05-01", "watering", "farah.haddad@example.com", 1], ["2027-05-01", "harvesting", "hana.kim@example.com", 2], ["2027-05-01", "weeding", "keisha.brown@example.com", 1], ["2027-05-01", "harvesting", "maya.thompson@example.com", 1.5], ["2027-05-01", "composting", "maya.thompson@example.com", 2], ["2027-05-08", "composting", "dev.patel@example.com", 1], ["2027-05-15", "watering", "dev.patel@example.com", 2], ["2027-05-15", "planting", "elena.rossi@example.com", 1], ["2027-05-15", "watering", "isaac.cohen@example.com", 1.5], ["2027-05-15", "weeding", "maya.thompson@example.com", 2], ["2027-05-22", "weeding", "dev.patel@example.com", 1], ["2027-05-22", "composting", "farah.haddad@example.com", 1], ["2027-05-22", "weeding", "farah.haddad@example.com", 1], ["2027-05-22", "weeding", "hana.kim@example.com", 1.5], ["2027-05-22", "watering", "hana.kim@example.com", 2], ["2027-05-22", "weeding", "keisha.brown@example.com", 1], ["2027-05-29", "harvesting", "dev.patel@example.com", 1.5], ["2027-05-29", "planting", "hana.kim@example.com", 1.5], ["2027-05-29", "weeding", "keisha.brown@example.com", 2], ["2027-06-05", "planting", "farah.haddad@example.com", 1], ["2027-06-05", "weeding", "hana.kim@example.com", 1.5], ["2027-06-05", "weeding", "hana.kim@example.com", 2], ["2027-06-12", "planting", "dev.patel@example.com", 1.5], ["2027-06-12", "harvesting", "maya.thompson@example.com", 1.5], ["2027-06-19", "planting", "cam.nguyen@example.com", 1.5], ["2027-06-19", "composting", "cam.nguyen@example.com", 1.5], ["2027-06-19", "watering", "hana.kim@example.com", 1], ["2027-06-19", "weeding", "keisha.brown@example.com", 2], ["2027-06-19", "watering", "maya.thompson@example.com", 1.5], ["2027-07-03", "weeding", "ava.lopez@example.com", 1], ["2027-07-03", "watering", "ava.lopez@example.com", 2], ["2027-07-03", "harvesting", "farah.haddad@example.com", 2], ["2027-07-10", "harvesting", "cam.nguyen@example.com", 1], ["2027-07-10", "weeding", "isaac.cohen@example.com", 1.5], ["2027-07-10", "watering", "maya.thompson@example.com", 2], ["2027-07-17", "harvesting", "farah.haddad@example.com", 1.5], ["2027-07-17", "watering", "hana.kim@example.com", 1.5], ["2027-07-24", "watering", "ava.lopez@example.com", 2], ["2027-07-24", "harvesting", "gabe.martinez@example.com", 2], ["2027-07-24", "weeding", "hana.kim@example.com", 1.5], ["2027-07-24", "composting", "maya.thompson@example.com", 2], ["2027-07-31", "watering", "ben.okafor@example.com", 2], ["2027-07-31", "planting", "cam.nguyen@example.com", 1.5], ["2027-07-31", "watering", "elena.rossi@example.com", 1.5], ["2027-08-07", "weeding", "ava.lopez@example.com", 2], ["2027-08-14", "watering", "ben.okafor@example.com", 2], ["2027-08-14", "planting", "cam.nguyen@example.com", 1.5], ["2027-08-14", "watering", "elena.rossi@example.com", 1.5], ["2027-08-21", "composting", "dev.patel@example.com", 1.5], ["2027-08-21", "composting", "hana.kim@example.com", 1.5], ["2027-08-28", "weeding", "cam.nguyen@example.com", 1.5], ["2027-08-28", "composting", "dev.patel@example.com", 1], ["2027-08-28", "composting", "hana.kim@example.com", 1], ["2027-09-04", "harvesting", "dev.patel@example.com", 1.5], ["2027-09-04", "weeding", "farah.haddad@example.com", 1], ["2027-09-04", "watering", "isaac.cohen@example.com", 1.5], ["2027-09-04", "planting", "keisha.brown@example.com", 1], ["2027-09-04", "planting", "maya.thompson@example.com", 1], ["2027-09-04", "planting", "maya.thompson@example.com", 2], ["2027-09-11", "composting", "isaac.cohen@example.com", 1.5], ["2027-09-11", "planting", "keisha.brown@example.com", 1.5], ["2027-09-18", "planting", "dev.patel@example.com", 1.5], ["2027-09-18", "composting", "farah.haddad@example.com", 1], ["2027-09-18", "planting", "maya.thompson@example.com", 2], ["2027-09-18", "watering", "maya.thompson@example.com", 1], ["2027-09-25", "weeding", "ava.lopez@example.com", 2], ["2027-09-25", "planting", "elena.rossi@example.com", 1.5], ["2027-09-25", "weeding", "keisha.brown@example.com", 1.5], ["2027-09-25", "composting", "maya.thompson@example.com", 1.5]]}], "formats": [{"range": "A1:D1", "fontWeight": "bold"}, {"range": "A2:A84", "numberFormat": "@"}]}
-</pre>
+```
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 8, "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}], "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
+```
 
-<pre class="code">
+```{.code}
 function testLogShiftEmailsForDate() {
   logShiftEmailsForDate("2027-04-10")
 }
@@ -429,7 +429,7 @@ function logShiftEmailsForDate(dateText) {
     }
   }
 }
-</pre>
+```
 
 Read the logged emails as if you were the member receiving one. Farah's and Hana's say "for 1.5 hours," which reads fine. Dev's says "for 1 hours." Small details like this are exactly what a dry run is for: you see them before anyone else does. (Fixing it takes one `if`. Try it.)
 
@@ -492,14 +492,14 @@ The club's workdays are Saturday mornings, and members keep asking when the next
 
 Look at how it found the Saturdays: it worked them out itself and typed them into an array, `[1, 8, 15, 22, 29]`. That's a fact you should check, because an assistant can get a calendar calculation wrong as easily as a person. You can check it right here:
 
-<pre class="code">
+```{.code}
 const saturdays = [1, 8, 15, 22, 29]
 for (let i = 0; i < saturdays.length; i++) {
   const date = new Date(2027, 4, saturdays[i])
   // getDay() is 6 for Saturday
   console.log(saturdays[i], date.getDay())
 }
-</pre>
+```
 
 All five give 6, so the list is right. A version that finds the Saturdays itself, by starting at May 1 and adding 7 days until the month changes, would work for any month without anyone doing the calculation. It's a good exercise.
 

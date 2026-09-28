@@ -107,9 +107,9 @@ Every submission becomes a new row on the Form Responses 1 sheet. Google adds a 
 
 Here are the sign-ups from before the kickoff, one from each of the club's first twelve members:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Form Responses 1", "rows": 16, "columns": 8, "data": [{"range": "A1:F13", "values": [["Timestamp", "First Name", "Last Name", "Email", "Phone", "Interests"], ["2027-03-02 09:24", "Isaac", "Cohen", "isaac.cohen@example.com", "555-0119", "Nutrition & Wellness, Native Plant Restoration, Mushroom Cultivation, Medicinal Herbs"], ["2027-03-02 09:34", "Elena", "Rossi", "elena.rossi@example.com", "555-0115", "Sustainable Living, Vertical Gardening, Container Gardening, Garden Photography"], ["2027-03-03 14:39", "Ben", "Okafor", "ben.okafor@example.com", "555-0112", "Community Gardening"], ["2027-03-03 18:29", "Dev", "Patel", "dev.patel@example.com", "555-0114", "Home Food Growing, Organic Gardening, Medicinal Herbs"], ["2027-03-05 15:18", "Keisha", "Brown", "keisha.brown@example.com", "555-0121", "Hydroponics, Canning & Preservation, Therapeutic Horticulture"], ["2027-03-07 09:13", "Hana", "Kim", "hana.kim@example.com", "555-0118", "Nutrition & Wellness, Hydroponics, Microgreens & Sprouts, Pollinator Gardens"], ["2027-03-08 20:32", "Jordan", "Lee", "jordan.lee@example.com", "555-0120", "Heirloom Seeds, Farm-to-Table Cooking, Therapeutic Horticulture"], ["2027-03-09 08:55", "Ava", "Lopez", "ava.lopez@example.com", "555-0111", "Native Plant Restoration"], ["2027-03-09 20:46", "Maya", "Thompson", "maya.thompson@example.com", "555-0110", "Pollinator Gardens, Mushroom Cultivation"], ["2027-03-12 10:19", "Farah", "Haddad", "farah.haddad@example.com", "555-0116", "Teaching Through Gardening, Houseplant Care, Hydroponics, Vertical Gardening"], ["2027-03-12 11:34", "Gabe", "Martinez", "gabe.martinez@example.com", "555-0117", "Vertical Gardening, Native Plant Restoration, Therapeutic Horticulture"], ["2027-03-12 15:19", "Cam", "Nguyen", "cam.nguyen@example.com", "555-0113", "Houseplant Care, Pollinator Gardens"]]}], "formats": [{"range": "A1:F1", "fontWeight": "bold"}, {"range": "A2:A13", "numberFormat": "@"}]}
-</pre>
+```
 
 Look at the Interests column. A checkbox question can have several answers, but they all go into one cell, separated by a comma and a space: *Hydroponics, Pollinator Gardens*. That's convenient to read, and it's something code has to deal with.
 
@@ -182,13 +182,13 @@ Maya wants to know how many people are interested in hydroponics, to decide whet
 
 The assistant started by flagging something new: `split`. It's a string method that breaks text into an array, cutting it wherever it finds the separator you give it:
 
-<pre class="code">
+```{.code}
 const interestsText = "Hydroponics, Pollinator Gardens, Heirloom Seeds"
 const interestsList = interestsText.split(", ")
 console.log(interestsList)
 console.log(interestsList.length)
 console.log(interestsList[1])
-</pre>
+```
 
 The separator is removed, and each piece becomes an item. If the text has no separator in it, you get an array with one item, the whole string. Try splitting `"Community Gardening"`.
 
@@ -204,7 +204,7 @@ Why split at all, rather than checking whether the cell contains the word? Becau
 
 Run it. The answer should be 3: Keisha, Hana and Farah.
 
-<pre class="code">
+```{.code}
 function countHydroponicsSignUps() {
   // Get the sheet by its name
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Form Responses 1")
@@ -235,7 +235,7 @@ function countHydroponicsSignUps() {
   // Show the final count in the Execution log
   Logger.log(count)
 }
-</pre>
+```
 
 ## Counting Every Interest
 
@@ -350,11 +350,11 @@ Notice also what the output doesn't have: a header row. The table starts in A1 w
 
 Run it. Choose `countAllInterests` in the menu first:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Interest Counts", "rows": 25, "columns": 4, "data": [], "formats": []}
-</pre>
+```
 
-<pre class="code">
+```{.code}
 // Searches an array for a value and returns its index, or -1 if not found
 function findIndexOfInterest(interestNames, interestToFind) {
   for (let i = 0; i < interestNames.length; i++) {
@@ -417,7 +417,7 @@ function countAllInterests() {
   const numColumns = 2
   outputSheet.getRange(1, 1, numRows, numColumns).setValues(outputData)
 }
-</pre>
+```
 
 Twenty of the 23 interests were chosen at least once. Five are tied as the most popular, with 3 people each: Native Plant Restoration, Vertical Gardening, Hydroponics, Therapeutic Horticulture and Pollinator Gardens. Check a couple of the counts against the Form Responses 1 sheet yourself.
 

@@ -18,10 +18,10 @@ Learning Objectives
 
 A variable holds one value. Real data comes in lists: every member's name, every shift's hours, every row of a sheet. JavaScript holds a list in an **array**:
 
-<pre class="code">
+```{.code}
 let firstNames = ["Maya", "Ava", "Ben", "Cam"]
 console.log(firstNames)
-</pre>
+```
 
 An array is written in square brackets, with its items separated by commas. The items can be any type: strings, numbers, booleans, or a mix.
 
@@ -31,12 +31,12 @@ An array is written in square brackets, with its items separated by commas. The 
 
 To get one item, write the array's name followed by the item's position in square brackets. The position is called its **index**, and indexes start at **0**, not 1:
 
-<pre class="code">
+```{.code}
 let firstNames = ["Maya", "Ava", "Ben", "Cam"]
 console.log(firstNames[0])
 console.log(firstNames[1])
 console.log(firstNames[3])
-</pre>
+```
 
 So `firstNames[0]` is "Maya", the first item, and `firstNames[3]` is "Cam", the fourth. Starting at 0 feels strange at first, and it's the source of many "off by one" mistakes. When you read code with an index, count from zero.
 
@@ -48,7 +48,7 @@ Try `firstNames[4]`. There's no fifth item, so you get `undefined`, JavaScript's
 
 Three more things you'll use constantly:
 
-<pre class="code">
+```{.code}
 let firstNames = ["Maya", "Ava", "Ben"]
 
 // length is how many items the array has
@@ -61,7 +61,7 @@ console.log(firstNames, firstNames.length)
 // you can change an item by assigning to its index
 firstNames[0] = "Dev"
 console.log(firstNames)
-</pre>
+```
 
 Notice that `length` has no parentheses. It's a **property**, a value that belongs to the array, not a method that does something. `push("Cam")` is a method, so it has parentheses to carry the value to add.
 
@@ -71,7 +71,7 @@ Because indexes start at 0, the last item's index is always one less than the le
 
 An array's items can themselves be arrays. That's how JavaScript represents a table: an array of rows, where each row is an array of values:
 
-<pre class="code">
+```{.code}
 let members = [
   ["First Name", "Last Name", "Hours"],
   ["Maya", "Thompson", 24],
@@ -82,7 +82,7 @@ let members = [
 console.log(members[1])
 console.log(members[1][0])
 console.log(members[2][2])
-</pre>
+```
 
 Read `members[1][0]` from left to right: `members[1]` is the second row, `["Maya", "Thompson", 24]`, and `[0]` is the first item in that row, "Maya". So the first index picks the row and the second picks the column. `members[2][2]` is row index 2 (Ava's row), column index 2 (hours): 12.
 
@@ -96,15 +96,15 @@ Writing the array over several lines, one row per line, doesn't change it. JavaS
 
 Here's the club's Members sheet again:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 8,
  "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}],
  "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
+```
 
 `getValue` reads one cell. `getValues`, with an *s*, reads a whole range at once and gives you an array of arrays, one inner array per row:
 
-<pre class="code">
+```{.code}
 function readMembers() {
   let sheet = SpreadsheetApp.getActiveSheet()
   let range = sheet.getRange("A1:E13")
@@ -114,7 +114,7 @@ function readMembers() {
   console.log(data[1])
   console.log(data[1][2])
 }
-</pre>
+```
 
 Run it and compare the output with the sheet:
 
@@ -269,7 +269,7 @@ Here's a description of the Members sheet, sent in the same chat along with a sl
 
 That last change uses a method you haven't seen, `getSheetByName`. Everything else looks right. Run it:
 
-<pre class="code">
+```{.code}
 function logFirstMemberInfo() {
   // Get the sheet named "Members"
   let sheet = SpreadsheetApp.getSheetByName("Members")
@@ -302,7 +302,7 @@ function logFirstMemberInfo() {
     console.log(`${fullName} has not paid their dues`)
   }
 }
-</pre>
+```
 
 It stops on the first line inside the function, with a TypeError. The code came from the assistant, but the error is yours to understand, so paste it back and ask:
 
@@ -391,7 +391,7 @@ Notice what the reply doesn't say: that the mistake was its own. It explains wha
 
 Here's the corrected function. Run it now:
 
-<pre class="code">
+```{.code}
 function logFirstMemberInfo() {
   let spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
   let sheet = spreadsheet.getSheetByName("Members")
@@ -410,7 +410,7 @@ function logFirstMemberInfo() {
     console.log(`${fullName} has not paid their dues`)
   }
 }
-</pre>
+```
 
 Change `data[1]` to `data[3]` and run it again. Which member is that? Check your answer against the sheet.
 
@@ -453,7 +453,7 @@ A sheet description is worth saving somewhere you can copy it from, such as a no
 
 Run it, and watch column F:
 
-<pre class="code">
+```{.code}
 function writeVolunteerLabels() {
   // Get the spreadsheet you're currently working in
   let spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
@@ -470,7 +470,7 @@ function writeVolunteerLabels() {
   // Write all three labels into the range at once
   labelRange.setValues(labels)
 }
-</pre>
+```
 
 Now add a fourth label for Cam in row 5, by changing the `labels` line to `let labels = [["High"], ["Medium"], ["Low"], ["Medium"]]`, and run it again. You'll get an error. Here's what the assistant made of it:
 

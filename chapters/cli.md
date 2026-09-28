@@ -18,9 +18,9 @@ Learning Objectives
 
 Throughout the season, Maya has asked the same questions again and again: How many tomatoes so far? What did we harvest in June? Each time, someone opened a spreadsheet and added things up. A **command-line tool** answers in one line typed into a terminal:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 garden-report --crop Tomato --from 2027-06-01
-</pre>
+```
 
 The words after the command are **arguments**. Ones that start with `--`, such as `--crop`, are usually called **options**, and many take a value, such as `Tomato`. Almost every programming tool you've used so far, from `node` to `npm install`, works this way, and now you'll build one of your own.
 
@@ -165,14 +165,14 @@ Parsing a command line well is a common enough job that Node includes a tool for
 
 The assistant flagged uncertainty about when `parseArgs` became stable, which is honest. It was added in Node 18, and every current LTS version has it; the Node documentation for your version says whether it's marked stable. And it introduced **`??`**, the *nullish coalescing* operator: `values.crop ?? null` gives `values.crop` unless it's `null` or `undefined`, in which case it gives `null`. It's the right way to supply a default. The older `||`, which you saw in [Loops and Repetition](loops){.book-link}, also replaces `0` and `""`, which is sometimes wrong: `hours || 1` would turn a real 0 hours into 1, but `hours ?? 1` keeps it.
 
-<pre class="code">
+```{.code}
 const hours = 0
 console.log(hours || 1)
 console.log(hours ?? 1)
 
 let crop
 console.log(crop ?? "all crops")
-</pre>
+```
 
 ::: {.term}
 > **??** — The nullish coalescing operator: `a ?? b` is `a`, unless `a` is `null` or `undefined`, in which case it's `b`. Useful for defaults.
@@ -297,7 +297,7 @@ Run from a different folder, the tool now finds its data. For the club's harvest
 
 If Maya types `garden-report` with no options, maybe the tool should ask which crop she wants. Node's built-in **`readline`** module reads a line typed in the terminal:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import * as readline from "node:readline/promises"
 
 const terminal = readline.createInterface({ input: process.stdin, output: process.stdout })
@@ -306,7 +306,7 @@ terminal.close()
 
 const cropFilter = answer.trim() === "" ? null : answer.trim()
 console.log(cropFilter ?? "All crops")
-</pre>
+```
 
 `terminal.question` shows a question and waits, with `await`, until the person presses Enter. `process.stdin` and `process.stdout` are the terminal's input and output. Always `close` the interface when you're done, or the program keeps waiting for more.
 

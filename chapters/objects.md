@@ -59,7 +59,7 @@ The workaround helps, but objects are the real answer, so they're what this less
 
 An array holds values in order, and you get each one by its position. An **object** holds values by *name*:
 
-<pre class="code">
+```{.code}
 const member = {
   firstName: "Maya",
   lastName: "Thompson",
@@ -70,7 +70,7 @@ const member = {
 console.log(member.firstName)
 console.log(member.volunteerHours)
 console.log(member)
-</pre>
+```
 
 An object is written in curly braces. Inside, each value has a name, followed by a colon, and the name-value pairs are separated by commas. Each pair is called a **property**. The name is the property's **key**, and you read a property by writing the object, a dot and the key: `member.firstName`. That's called **dot notation**.
 
@@ -86,7 +86,7 @@ You've been using dot notation all along. `data.length` reads the `length` prope
 
 Properties can be changed and added:
 
-<pre class="code">
+```{.code}
 const member = {
   firstName: "Maya",
   volunteerHours: 24
@@ -102,7 +102,7 @@ console.log(member)
 
 // a property that doesn't exist is undefined
 console.log(member.phone)
-</pre>
+```
 
 Notice that `member` was declared with `const`, and its properties still changed. As with arrays, `const` stops the variable from being given a whole new object, but not the object from changing.
 
@@ -110,7 +110,7 @@ Notice that `member` was declared with `const`, and its properties still changed
 
 There's a second way to read a property: put the key in square brackets, as a string:
 
-<pre class="code">
+```{.code}
 const member = {
   firstName: "Maya",
   volunteerHours: 24
@@ -120,7 +120,7 @@ console.log(member["firstName"])
 
 const whichProperty = "volunteerHours"
 console.log(member[whichProperty])
-</pre>
+```
 
 `member["firstName"]` does the same thing as `member.firstName`. The difference is that the brackets can hold any expression, including a variable. In the last line, `member[whichProperty]` reads whichever property `whichProperty` names, here `volunteerHours`. Dot notation can't do that: `member.whichProperty` would look for a property literally named "whichProperty."
 
@@ -130,7 +130,7 @@ So use dot notation when you know the key as you write the code, and bracket not
 
 Objects become really useful in arrays. An array of objects is a list where each item has named parts, which is exactly what a sheet of records is:
 
-<pre class="code">
+```{.code}
 const members = [
   { firstName: "Maya", lastName: "Thompson", volunteerHours: 24 },
   { firstName: "Ava", lastName: "Lopez", volunteerHours: 12 },
@@ -141,7 +141,7 @@ for (let i = 0; i < members.length; i++) {
   const member = members[i]
   console.log(`${member.firstName} ${member.lastName}: ${member.volunteerHours} hours`)
 }
-</pre>
+```
 
 Compare `member.volunteerHours` with `data[i][4]`. They hold the same thing, but only one of them tells you what it is.
 
@@ -211,11 +211,11 @@ This split is worth copying. If the club ever adds a column to the Members sheet
 
 There's one catch when you run it. Both functions have no parameters, so the editor's menu lists both, and `getMembers` comes first. Running `getMembers` reads the sheet and returns the array, but displays nothing, because returning a value isn't the same as logging it. The function that does the job is `logUnpaidMembers`. Choose it in the menu, then run:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 8, "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}], "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
+```
 
-<pre class="code">
+```{.code}
 function getMembers() {
   // Get the sheet and read all its data
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Members")
@@ -253,7 +253,7 @@ function logUnpaidMembers() {
     }
   }
 }
-</pre>
+```
 
 ## Counting with an Object
 
@@ -333,12 +333,12 @@ In [Google Forms](google-forms){.book-link}, counting every interest took two pa
 
 **Read.** The heart of it is five lines:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 if (counts[interest] === undefined) {
   counts[interest] = 0
 }
 counts[interest] += 1
-</pre>
+```
 
 `counts` starts as an empty object, `{}`. For each interest, bracket notation looks up the property whose key is that interest's name. The first time an interest appears, there's no such property, so it's `undefined`, and the code creates it with the value 0. Then it adds 1. By the end, `counts` looks something like `{ "Nutrition & Wellness": 2, "Native Plant Restoration": 3, ... }`.
 
@@ -350,15 +350,15 @@ Compare this with the parallel arrays: no search function, no -1, and no way for
 
 Run it, with `writeInterestCounts` chosen in the menu:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Form Responses 1", "rows": 16, "columns": 8, "data": [{"range": "A1:F13", "values": [["Timestamp", "First Name", "Last Name", "Email", "Phone", "Interests"], ["2027-03-02 09:24", "Isaac", "Cohen", "isaac.cohen@example.com", "555-0119", "Nutrition & Wellness, Native Plant Restoration, Mushroom Cultivation, Medicinal Herbs"], ["2027-03-02 09:34", "Elena", "Rossi", "elena.rossi@example.com", "555-0115", "Sustainable Living, Vertical Gardening, Container Gardening, Garden Photography"], ["2027-03-03 14:39", "Ben", "Okafor", "ben.okafor@example.com", "555-0112", "Community Gardening"], ["2027-03-03 18:29", "Dev", "Patel", "dev.patel@example.com", "555-0114", "Home Food Growing, Organic Gardening, Medicinal Herbs"], ["2027-03-05 15:18", "Keisha", "Brown", "keisha.brown@example.com", "555-0121", "Hydroponics, Canning & Preservation, Therapeutic Horticulture"], ["2027-03-07 09:13", "Hana", "Kim", "hana.kim@example.com", "555-0118", "Nutrition & Wellness, Hydroponics, Microgreens & Sprouts, Pollinator Gardens"], ["2027-03-08 20:32", "Jordan", "Lee", "jordan.lee@example.com", "555-0120", "Heirloom Seeds, Farm-to-Table Cooking, Therapeutic Horticulture"], ["2027-03-09 08:55", "Ava", "Lopez", "ava.lopez@example.com", "555-0111", "Native Plant Restoration"], ["2027-03-09 20:46", "Maya", "Thompson", "maya.thompson@example.com", "555-0110", "Pollinator Gardens, Mushroom Cultivation"], ["2027-03-12 10:19", "Farah", "Haddad", "farah.haddad@example.com", "555-0116", "Teaching Through Gardening, Houseplant Care, Hydroponics, Vertical Gardening"], ["2027-03-12 11:34", "Gabe", "Martinez", "gabe.martinez@example.com", "555-0117", "Vertical Gardening, Native Plant Restoration, Therapeutic Horticulture"], ["2027-03-12 15:19", "Cam", "Nguyen", "cam.nguyen@example.com", "555-0113", "Houseplant Care, Pollinator Gardens"]]}], "formats": [{"range": "A1:F1", "fontWeight": "bold"}, {"range": "A2:A13", "numberFormat": "@"}]}
-</pre>
+```
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Interest Counts", "rows": 25, "columns": 4, "data": [], "formats": []}
-</pre>
+```
 
-<pre class="code">
+```{.code}
 function countInterests() {
   // Get the sheet and read all its data
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Form Responses 1")
@@ -415,7 +415,7 @@ function writeInterestCounts() {
   // Write all the rows at once, starting at row 1, column 1
   outputSheet.getRange(1, 1, rows.length, 2).setValues(rows)
 }
-</pre>
+```
 
 ::: {.tip}
 > **A pattern worth remembering.** "If the key isn't there yet, start it at 0; then add 1" is how you count anything by name: members per task, harvests per crop, shifts per day. You'll use it again and again.
@@ -485,7 +485,7 @@ That's a clear explanation. One small thing: the example member, Ava Chen, isn't
 
 Try it with a real member, and one extra trick:
 
-<pre class="code">
+```{.code}
 const member = {
   firstName: "Hana",
   lastName: "Kim",
@@ -501,7 +501,7 @@ console.log(JSON.stringify(member, null, 2))
 
 const copy = JSON.parse(text)
 console.log(copy.volunteerHours + 1)
-</pre>
+```
 
 JSON looks almost like the objects you write, with a few stricter rules:
 

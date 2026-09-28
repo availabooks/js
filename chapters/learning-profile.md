@@ -48,7 +48,7 @@ The profile has also become a problem. At 3,500 words, it's a lot to paste at th
 
 This is the natural end of the scaffolding idea: the profile was built to protect a beginner, and it succeeded. What you need now is shorter. Something like this:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 I've finished a textbook course in JavaScript, and I program for my own
 projects. I know modern JavaScript well: functions, objects, array
 methods, async/await, ES modules, the DOM, Node.js, and SQL. I've used it
@@ -61,7 +61,7 @@ When you write code for me:
 - Keep secrets out of code; check data where it's stored; dry-run anything
   that sends, changes or deletes; print counts I can check.
 - Don't use semicolons in JavaScript.
-</pre>
+```
 
 It keeps the habits that matter most, in fewer words, and replaces the list of what you know with a summary. You'll adjust it as you go. The point isn't this particular text; it's that a profile should be rewritten, not just added to, as you change.
 
@@ -132,7 +132,7 @@ Two other things are worth changing:
 
 Here's the draft with those changes, as a starting point:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 I'm learning Python for data analysis. I know JavaScript well (functions,
 objects, array methods, async/await, modules, SQL), but no Python yet.
 I run Python 3 scripts from VS Code's terminal on my own computer.
@@ -148,7 +148,7 @@ When you write code for me:
 - When you're not sure how something works, say so.
 
 What I know of Python so far: nothing yet.
-</pre>
+```
 
 Its first request would get the Python equivalent of `console.log("Hello")`: `print("Hello")`, with an explanation. And you'd be back at the start of a book you've already read, knowing how it ends.
 

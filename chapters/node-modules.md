@@ -79,7 +79,7 @@ Here's the question, in a new chat with your learner profile from [Installing No
 
 Try both here:
 
-<pre class="code">
+```{.code}
 const bed = "B3"
 const kilograms = 14.4
 // shorthand: the property names come from the variable names
@@ -90,7 +90,7 @@ console.log(result)
 const { bed: whichBed, kilograms: howMuch } = result
 const { kilograms: total } = result
 console.log(whichBed, howMuch, total)
-</pre>
+```
 
 (A colon inside destructuring gives the variable a different name from the property, as `bed: whichBed` does, so that this example doesn't clash with the `bed` variable above.)
 
@@ -177,7 +177,7 @@ When an assistant's reply has `require`, it's CommonJS, and it's worth asking fo
 
 `package.json` is a project's settings file, in JSON. You can write it by hand, as the reply did, or create it by running `npm init -y` in the project folder, which fills in some standard fields. A typical one looks like this:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 {
   "name": "garden-scripts",
   "version": "1.0.0",
@@ -189,7 +189,7 @@ When an assistant's reply has `require`, it's CommonJS, and it's worth asking fo
     "date-fns": "^4.4.0"
   }
 }
-</pre>
+```
 
 - **`type`** chooses the module system.
 - **`scripts`** gives commands short names: with this one, `npm run report` runs `node report.js`. For a project with several tools, it's a handy list of what the project can do.
@@ -234,7 +234,7 @@ This is good advice, and it's the first thing to know about packages: check whet
 
 But check the example before trusting it. The comment says the result is "Saturday, June 12," for June 12, 2025. Run it:
 
-<pre class="code">
+```{.code}
 const formatter = new Intl.DateTimeFormat("en-US", {
   weekday: "long",
   month: "long",
@@ -242,7 +242,7 @@ const formatter = new Intl.DateTimeFormat("en-US", {
 })
 console.log(formatter.format(new Date(2025, 5, 12)))
 console.log(formatter.format(new Date(2027, 5, 12)))
-</pre>
+```
 
 June 12, 2025 was a Thursday. The assistant wrote the output it expected, from your request, instead of the output the code produces. (June 12, 2027, in the club's season, is the Saturday.) A comment that shows a result is a claim, and running the code is how you check it.
 
@@ -250,9 +250,9 @@ June 12, 2025 was a Thursday. The assistant wrote the output it expected, from y
 
 Built-in features won't always be enough. When you need a package, installing one looks like this, run in the project folder:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 npm install date-fns
-</pre>
+```
 
 Three things happen:
 
@@ -262,11 +262,11 @@ Three things happen:
 
 Then you import it by name, without `./`, and use it according to its documentation:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import { format } from "date-fns"
 
 console.log(format(new Date(2027, 5, 12), "EEEE, MMMM d"))
-</pre>
+```
 
 That prints *Saturday, June 12*. The `"EEEE, MMMM d"` is a pattern from date-fns's documentation: `EEEE` is the weekday's full name, `MMMM` the month's, and `d` the day. The assistant said it would rather point you to the documentation than guess this syntax from memory, which, as you know by now, is a sign of a good answer.
 

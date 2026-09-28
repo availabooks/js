@@ -20,7 +20,7 @@ Every program you've written so far ran from start to finish and stopped. A serv
 
 Here's the smallest useful Express server:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import express from "express"
 
 const app = express()
@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 app.listen(3000, "127.0.0.1", () => {
   console.log("Listening at http://localhost:3000")
 })
-</pre>
+```
 
 In a project folder with `"type": "module"`, run `npm install express`, then run this with Node. It prints its message and keeps running. Open `http://localhost:3000` in a browser, and you see the greeting. Stop it with **Ctrl+C**.
 
@@ -52,7 +52,7 @@ In a project folder with `"type": "module"`, run `npm install express`, then run
 
 In [How the Web Works](http){.book-link}, you designed the club's shift sign-up API. Now build it. The data starts in a file, `club-data.json`, made from the club's data: the members, the eight shift slots in June 2027, and the sign-ups so far. Save it next to the server:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 {
   "members": [
     {"firstName":"Maya","lastName":"Thompson","email":"maya.thompson@example.com"},
@@ -93,7 +93,7 @@ In [How the Web Works](http){.book-link}, you designed the club's shift sign-up 
     {"id":12,"slotId":8,"memberEmail":"gabe.martinez@example.com"}
   ]
 }
-</pre>
+```
 
 Here's the request, in a new chat with your learner profile from [How the Web Works](http){.book-link}. It describes the data and spells out the design, including the club's answers to the assistant's questions:
 
@@ -279,7 +279,7 @@ A few details to check:
 
 The reply suggests testing with curl, which is a good way to see exactly what goes over the network. But typing JSON into a terminal is awkward, especially on Windows, where Command Prompt and PowerShell each have their own rules for quotes. A small Node script that sends test requests is easier to run, and to run again after every change:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 // Sends test requests to the sign-up API and prints what comes back.
 // Start the server first, in another terminal.
 const BASE = "http://localhost:3000"
@@ -303,11 +303,11 @@ await show("POST", "/shifts/2/signups", {})
 await show("POST", "/shifts/99/signups", { email: "ava.lopez@example.com" })
 await show("DELETE", "/signups/13")
 await show("DELETE", "/signups/13")
-</pre>
+```
 
 With the server running in one terminal, run this in another. Here's what it printed, against the book's version of the server shown below:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 GET /shifts/6 -> 200 {"id":6,"date":"2027-06-19","task":"planting","start":"09:00","end":"11:00","capacity":3,"spotsFilled":0}
 POST /shifts/6/signups -> 201 {"id":13,"slotId":6,"memberEmail":"ava.lopez@example.com"}
 POST /shifts/6/signups -> 409 {"error":"You're already signed up for this shift"}
@@ -317,7 +317,7 @@ POST /shifts/2/signups -> 400 {"error":"Email is required"}
 POST /shifts/99/signups -> 404 {"error":"Shift not found"}
 DELETE /signups/13 -> 204
 DELETE /signups/13 -> 404 {"error":"Sign-up not found"}
-</pre>
+```
 
 Every rule in the design gets a test: a good sign-up, a duplicate, a full shift, a non-member, a missing email, an unknown shift, a cancellation, and cancelling again. That's the edge-case testing from [Making Decisions](decisions){.book-link}, applied to a server.
 
@@ -355,7 +355,7 @@ An API is for programs. Volunteers need a page. Express can serve that too: **`e
 
 Here's the server in the book's style, with the fixes: the current Express, careful email comparison, the page served from `public`, and `127.0.0.1`:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import express from "express"
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
@@ -429,29 +429,29 @@ app.delete("/signups/:id", (req, res) => {
 app.listen(3000, "127.0.0.1", () => {
   console.log("Sign-up API running at http://localhost:3000")
 })
-</pre>
+```
 
 And the page, saved as `public/index.html`:
 
-<pre class="code" data-environment="none">
-&lt;!doctype html>
-&lt;html>
-  &lt;head>
-    &lt;title>Volunteer Sign-Up&lt;/title>
-    &lt;style>
+```{.code environment="none"}
+<!doctype html>
+<html>
+  <head>
+    <title>Volunteer Sign-Up</title>
+    <style>
       body { font-family: Arial, sans-serif; margin: 20px; max-width: 600px; }
       li { margin-bottom: 8px; }
       #message { font-weight: bold; }
-    &lt;/style>
-  &lt;/head>
-  &lt;body>
-    &lt;h1>Sign up for a shift&lt;/h1>
-    &lt;label for="email">Your club email&lt;/label>
-    &lt;input type="email" id="email">
-    &lt;ul id="shifts">&lt;/ul>
-    &lt;p id="message">&lt;/p>
+    </style>
+  </head>
+  <body>
+    <h1>Sign up for a shift</h1>
+    <label for="email">Your club email</label>
+    <input type="email" id="email">
+    <ul id="shifts"></ul>
+    <p id="message"></p>
 
-    &lt;script>
+    <script>
       const shiftList = document.querySelector("#shifts")
       const message = document.querySelector("#message")
 
@@ -490,10 +490,10 @@ And the page, saved as `public/index.html`:
       }
 
       showShifts()
-    &lt;/script>
-  &lt;/body>
-&lt;/html>
-</pre>
+    </script>
+  </body>
+</html>
+```
 
 The page lists the shifts with the spots left, disables the button for full shifts, and when a sign-up fails, it shows the server's own error message, such as "This shift is full." That's the two halves agreeing, the lesson from [Building a Browser Extension](extension){.book-link}: the server decides what's allowed, and the page reports what the server said. The checks are all in the server, where the data is stored, so they can't be skipped by sending requests directly.
 

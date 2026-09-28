@@ -28,9 +28,9 @@ The club's problem is watering. In dry weather, someone has to water the beds; w
 
 An API request is a web address with the question built into it. Here's one for Open-Meteo:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 https://api.open-meteo.com/v1/forecast?latitude=40.25&longitude=-111.65&daily=precipitation_sum&timezone=auto
-</pre>
+```
 
 Read it in two parts:
 
@@ -41,9 +41,9 @@ The names, like `daily` and `precipitation_sum`, come from the service's documen
 
 Open that address in your browser, and you'll see the reply: JSON. Here's a real one, captured while this lesson was written:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 {"latitude":40.256767,"longitude":-111.66114,"generationtime_ms":0.05125999450683594,"utc_offset_seconds":-21600,"timezone":"America/Denver","timezone_abbreviation":"GMT-6","elevation":1427.0,"daily_units":{"time":"iso8601","precipitation_sum":"mm"},"daily":{"time":["2026-09-26","2026-09-27","2026-09-28"],"precipitation_sum":[0.00,0.00,1.70]}}
-</pre>
+```
 
 (That reply asked for three days, with `&forecast_days=3` added to the address. Without it, you get seven.) The part you need is `daily`: an object with two arrays, `time` with the dates and `precipitation_sum` with the rain in millimeters. They're parallel arrays, like the ones in [Google Forms](google-forms){.book-link}: the rain for `time[1]` is `precipitation_sum[1]`.
 
@@ -130,7 +130,7 @@ The assistant pointed out that the first run asks for permission. At the time of
 
 This page can't make web requests from Apps Script, but it can run everything that happens after the reply arrives. The code below uses the real reply from above, as text, and finds the rain for September 28, 2026. Run it:
 
-<pre class="code">
+```{.code}
 function testReadForecast() {
   const responseText = '{"latitude":40.256767,"longitude":-111.66114,"generationtime_ms":0.05125999450683594,"utc_offset_seconds":-21600,"timezone":"America/Denver","timezone_abbreviation":"GMT-6","elevation":1427.0,"daily_units":{"time":"iso8601","precipitation_sum":"mm"},"daily":{"time":["2026-09-26","2026-09-27","2026-09-28"],"precipitation_sum":[0.00,0.00,1.70]}}'
   const rain = rainForDate(responseText, "2026-09-28")
@@ -150,7 +150,7 @@ function rainForDate(responseText, dateText) {
   }
   return -1
 }
-</pre>
+```
 
 The string is in single quotes, `'...'`, because the JSON inside it is full of double quotes. Either kind of quote can start a string, as long as the same kind ends it. Try other dates, including one that isn't in the reply.
 
@@ -245,7 +245,7 @@ Code that depends on another computer can fail for reasons that have nothing to 
 
 **`try` and `catch`** are the new idea. JavaScript runs the code in the `try` block. If any line there causes an error, it stops that block immediately and runs the `catch` block instead, with the error in the variable named in the parentheses. Try it:
 
-<pre class="code">
+```{.code}
 try {
   console.log("Before the problem")
   const data = JSON.parse("this is not JSON")
@@ -254,7 +254,7 @@ try {
   console.log(`Something went wrong: ${error}`)
 }
 console.log("The program carries on")
-</pre>
+```
 
 ::: {.term}
 > **try...catch** — A statement that runs the code in its `try` block, and if an error happens there, runs the `catch` block instead of stopping the whole program.
@@ -264,7 +264,7 @@ The assistant's explanation of *what* can fail is good: an unreachable service, 
 
 Catching an error is only useful if you *do* something with it: tell someone, try again, or use a sensible fallback. The assistant's closing offer, to email you when the fetch fails, is the right idea. Another option is to log the error and then let it continue to the Executions page, with `throw error` at the end of the `catch` block. `throw` raises an error on purpose, so the run is marked as failed and, if you asked for failure notifications when you set up the trigger, Google emails you.
 
-<pre class="code">
+```{.code}
 function checkForecast() {
   try {
     const data = JSON.parse("this is not JSON")
@@ -274,7 +274,7 @@ function checkForecast() {
     throw error
   }
 }
-</pre>
+```
 
 A good way to test error handling: break the address on purpose, for example by misspelling `open-meteo`, and run the script. Then put it back.
 

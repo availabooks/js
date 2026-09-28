@@ -7,10 +7,10 @@ Learning Objectives
 
 ::: {.objectives}
 1. Explain why a server stores data in a database rather than in memory or a JSON file.
-2. Use SQLite from Node with the built-in `node:sqlite` module: create tables, insert rows and query them.
+2. Use PostgreSQL from Node with PGlite: create tables, insert rows and query them.
 3. Read basic SQL: `CREATE TABLE`, `INSERT`, `SELECT` with `WHERE`, `COUNT`, `GROUP BY`, `JOIN` and `DELETE`.
 4. Explain SQL injection, and always pass values with placeholders.
-5. Let the database enforce rules, with constraints such as `UNIQUE`.
+5. Let the database enforce rules, with constraints such as `UNIQUE`, and keep setup safe with a transaction.
 :::
 :::
 
@@ -20,7 +20,13 @@ The sign-up server from [A Server with Node and Express](express){.book-link} fo
 
 A **database** is software built for exactly this job: storing data safely, letting many requests read and change it at once, and answering questions about it quickly. The language for talking to most databases is **SQL**. If you've used this book's companion on SQL, you know it already; if not, this lesson covers the parts the club needs.
 
-**SQLite** is a database that lives in a single file, with no separate database server to install or run. It's free, very reliable, and built into more software than any other database, including every smartphone. Recent versions of Node include it, as the module **`node:sqlite`**, so there's nothing to install. (It's newer than most of Node, so check the documentation for your version; the widely used `better-sqlite3` package works in much the same way if you need an alternative.)
+**PostgreSQL**, usually called Postgres, is one of the most widely used databases in the world. It's free, and it runs everything from class projects to large companies' systems. Normally it's a separate server program you install and keep running. **PGlite** is Postgres packaged so it runs inside your own Node program, with nothing else to install, keeping its data in a folder next to your code. It's the same database the SQL book runs in your browser, so the SQL you learned there works here unchanged. And because it's real Postgres, moving to a Postgres server online later, as the next lesson does, means changing how you connect, not rewriting your SQL.
+
+PGlite is a package, so install it in the server's folder, as you learned in [Modules and Packages](node-modules){.book-link}:
+
+```{.code environment="none"}
+npm install @electric-sql/pglite
+```
 
 ::: {.term}
 > **Database** — Software that stores data and answers questions about it, safely handling many readers and writers at once. **SQL** is the language most databases use.
@@ -30,117 +36,156 @@ A **database** is software built for exactly this job: storing data safely, lett
 
 A SQL database holds **tables**, like sheets, with **rows** and named **columns**, each with a type. Here's a short tour, which you can run with Node:
 
-<pre class="code" data-environment="nodejs">
-import { DatabaseSync } from "node:sqlite"
+```{.code environment="nodejs"}
+import { PGlite } from "@electric-sql/pglite"
 
-const db = new DatabaseSync(":memory:")
-db.exec(`
+// with no folder name, the database exists only while the script runs
+const db = new PGlite()
+await db.exec(`
   CREATE TABLE harvests (
-    id INTEGER PRIMARY KEY,
+    id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     bed TEXT NOT NULL,
     crop TEXT NOT NULL,
     kg REAL NOT NULL
   )
 `)
 
-const insert = db.prepare("INSERT INTO harvests (bed, crop, kg) VALUES (?, ?, ?)")
-insert.run("B2", "Radish", 1.2)
-insert.run("B4", "Spinach", 2.4)
-insert.run("B2", "Lettuce", 3.9)
-insert.run("B2", "Lettuce", 2.5)
+const insert = "INSERT INTO harvests (bed, crop, kg) VALUES ($1, $2, $3)"
+await db.query(insert, ["B2", "Radish", 1.2])
+await db.query(insert, ["B4", "Spinach", 2.4])
+await db.query(insert, ["B2", "Lettuce", 3.9])
+await db.query(insert, ["B2", "Lettuce", 2.5])
 
 // every row, as an array of objects
-console.log(db.prepare("SELECT * FROM harvests").all())
+const all = await db.query("SELECT * FROM harvests")
+console.log(all.rows)
 
 // only some rows
-console.log(db.prepare("SELECT crop, kg FROM harvests WHERE bed = ?").all("B2"))
+const bedB2 = await db.query("SELECT crop, kg FROM harvests WHERE bed = $1", ["B2"])
+console.log(bedB2.rows)
 
 // grouped and totaled, like groupby and rollup in Arquero
-console.log(db.prepare("SELECT crop, SUM(kg) AS totalKg FROM harvests GROUP BY crop ORDER BY totalKg DESC").all())
-</pre>
+const totals = await db.query("SELECT crop, SUM(kg) AS total_kg FROM harvests GROUP BY crop ORDER BY total_kg DESC")
+console.log(totals.rows)
+```
 
-- **`new DatabaseSync(":memory:")`** opens a database that exists only while the script runs, which is handy for trying things. A file name, such as `"garden.db"`, opens or creates a database file.
-- **`db.exec(sql)`** runs SQL that returns nothing, such as `CREATE TABLE`, which defines a table's columns and their types.
-- **`db.prepare(sql)`** turns SQL into a *statement* you can run many times. **`.run(...)`** runs it, for changes such as `INSERT`. **`.get(...)`** returns the first row, as an object, and **`.all(...)`** returns every row, as an array of objects.
-- Each **`?`** in the SQL is a placeholder, filled with the values passed to `run`, `get` or `all`, in order. You'll see why that matters shortly.
+- **`new PGlite()`**, with no folder name, opens a database that exists only while the script runs, which is handy for trying things. A folder name, such as `new PGlite("garden-data")`, opens the database stored in that folder, creating it the first time.
+- **`db.exec(sql)`** runs SQL whose results you don't need, such as `CREATE TABLE`, which defines a table's columns and their types. `INTEGER GENERATED ALWAYS AS IDENTITY` asks the database to number the rows itself: 1, 2, 3 and so on.
+- **`db.query(sql, values)`** runs one SQL statement and gives back a result whose **`rows`** property is an array of objects, one per row.
+- Each **`$1`**, **`$2`** and so on in the SQL is a placeholder, filled with the values in the array, in order. You'll see why that matters shortly.
+- Both return promises, so each call is `await`ed, as with `fetch` in [Asynchronous JavaScript](async){.book-link}.
 
-The three queries show the core of `SELECT`: every row, rows chosen with `WHERE`, and rows grouped with `GROUP BY` and totaled with `SUM`, the same as `groupby` and `rollup` in [Analyzing and Charting Data](charts){.book-link}. The results print with `[Object: null prototype]` in front, which is just how Node labels the plain objects `node:sqlite` returns; they work like any other objects, including with `res.json`.
+Here's what it prints:
 
-## Moving the Sign-Ups into SQLite
+```{.code environment="message"}
+[
+  { id: 1, bed: 'B2', crop: 'Radish', kg: 1.2 },
+  { id: 2, bed: 'B4', crop: 'Spinach', kg: 2.4 },
+  { id: 3, bed: 'B2', crop: 'Lettuce', kg: 3.9 },
+  { id: 4, bed: 'B2', crop: 'Lettuce', kg: 2.5 }
+]
+[
+  { crop: 'Radish', kg: 1.2 },
+  { crop: 'Lettuce', kg: 3.9 },
+  { crop: 'Lettuce', kg: 2.5 }
+]
+[
+  { crop: 'Lettuce', total_kg: 6.4 },
+  { crop: 'Spinach', total_kg: 2.4 },
+  { crop: 'Radish', total_kg: 1.2 }
+]
+```
+
+The three queries show the core of `SELECT`: every row, rows chosen with `WHERE`, and rows grouped with `GROUP BY` and totaled with `SUM`, the same as `groupby` and `rollup` in [Analyzing and Charting Data](charts){.book-link}. SQL doesn't care whether keywords are in capitals; the capitals just make them easy to spot.
+
+Notice the name `total_kg`, where you might have expected `totalKg`. Postgres turns names in SQL into lowercase unless they're in double quotes, so `AS totalKg` would come back as `totalkg`. That's why SQL names are usually written in **snake_case**, with underscores between the words. You'll see how the assistant deals with this next.
+
+## Moving the Sign-Ups into PGlite
 
 Here's the request, in a new chat with your learner profile from [A Server with Node and Express](express){.book-link}:
 
-::: {.ai-conversation prompt="Change our Express sign-up API to keep its data in a SQLite database file, garden.db, instead of in memory, so sign-ups survive a restart. The first time the server starts, it should create the tables and load the starting data from club-data.json. Keep the same routes, status codes and rules as before (including comparing emails in lowercase, and no emails in GET responses)." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="express" transcript="database/sqlite"}
-> I want to make sure I keep your existing routes, status codes and validation rules exactly as they are — but I don't have the code from our earlier session in front of me. Could you paste:
+::: {.ai-conversation prompt="Change our Express sign-up API to keep its data in a PGlite database (the @electric-sql/pglite package), stored in a folder named garden-data, instead of in memory, so sign-ups survive a restart. The first time the server starts, it should create the tables and load the starting data from club-data.json. Keep the same routes, status codes and rules as before (including comparing emails in lowercase, and no emails in GET responses)." assistant="Claude" model="claude-sonnet-5" captured="2026-09-28" profile="express" transcript="database/pglite"}
+> I don't have your current sign-up API code in front of me — could you paste it (the Express server file, and your `club-data.json`)? I want to convert your actual routes and fields correctly rather than guess at the shape of your data.
 >
-> 1. Your current Express sign-up API code (the in-memory version)
-> 2. The structure of `club-data.json` (or a sample of it)
+> While you get that, a few things to flag about the plan:
 >
-> Once I see those, I'll convert it to use SQLite (with Node's built-in `node:sqlite` module — I'll confirm details once I see your Node version, since that module is fairly new) while keeping:
+> **About `@electric-sql/pglite`:** This is a real package (Postgres compiled to WebAssembly, so it runs without installing a separate Postgres server). It's fairly new and more niche than something like `pg` — not something with years of widespread use yet, so worth knowing that it's a newer tool rather than a long-established default choice. It stores its data as files, which matches what you want (a `garden-data` folder that persists between restarts).
 >
-> - The same routes and their status codes (200, 201, 400, 404, 409, etc.)
-> - Email comparisons done in lowercase
-> - No emails included in any GET response
-> - A one-time setup on first run: create tables, then load starting data from `club-data.json`
+> **How "create tables once" will work:** On startup, the code will check whether the tables already exist. If not, it creates them and loads `club-data.json`. If they do exist, it skips loading, so restarting the server won't duplicate data.
 >
-> A couple of things I'll flag once I see the code:
-> - **`node:sqlite`** is a newer built-in module (stable in recent Node versions but still fairly new) — I'll check with you whether your Node version supports it, or whether we should use **`better-sqlite3`**, which is a very widely used package, instead.
-> - We'll need a way to detect "first run" — likely by checking if `garden.db` already exists before creating tables, using `fs.existsSync`.
+> **Async note:** PGlite's queries return promises (you await them), so the route handlers will need to be `async function`s that `await` the database calls, with `try`/`catch` around them to send a `500` if something goes wrong — same pattern as `UrlFetchApp` calls you've already handled with try/catch, just for the database instead.
 >
-> Paste the code and JSON and I'll write the updated version.
+> **Emails and privacy:** I'll keep comparing emails by lowercasing both sides before comparing, and keep emails out of any GET response, same as before.
+>
+> **File location reminder:** Since `garden-data` is a folder "next to" the script, I'll build its path from the script's own folder (`import.meta.dirname`), not from wherever the terminal happens to be when you run it.
+>
+> Send over the existing code and JSON file and I'll rewrite it.
 :::
 
-Of course: it's a new chat, and the server code is in the old one. You learned in [Working with an AI Assistant](ai-assistant){.book-link} that a new chat starts from nothing, and the assistant was right to ask rather than invent a server that only resembled yours. So paste it:
+Of course: it's a new chat, and the server code is in the old one. You learned in [Working with an AI Assistant](ai-assistant){.book-link} that a new chat starts from nothing, and the assistant was right to ask rather than invent a server that only resembled yours. Its notes are sound, too, including the honest warning that PGlite is newer than most tools you've used. So paste the code:
 
-::: {.ai-conversation prompt="Here is the current server.js: (then paste the whole file) club-data.json has three arrays: members (objects with firstName, lastName, email), slots (objects with id, date, task, start, end, capacity) and slotSignups (objects with id, slotId, memberEmail). I'm using Node 24." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="express" transcript="database/sqlite"}
-> Good, this is enough to work with. A few notes before the code:
+::: {.ai-conversation prompt="Here is the current server.js: (then paste the whole file) club-data.json has three arrays: members (objects with firstName, lastName, email), slots (objects with id, date, task, start, end, capacity) and slotSignups (objects with id, slotId, memberEmail). I'm using Node 24 and @electric-sql/pglite 0.5.8." assistant="Claude" model="claude-sonnet-5" captured="2026-09-28" profile="express" transcript="database/pglite"}
+> Here's the setup split into two files: a new `db.js` that handles the database connection and setup, and the updated `server.js` that uses it.
 >
-> - **`node:sqlite`** is a fairly new built-in module. I know its general shape (a `DatabaseSync` class, `.prepare()`, then `.run()`, `.get()` or `.all()` on the prepared statement), but I haven't used every detail of it and Node has changed it between versions. If something doesn't match — an unfamiliar error, or a property name that doesn't exist — tell me the exact message and I'll adjust. If it turns out your Node 24 build still needs a flag or behaves differently, the fallback is **`better-sqlite3`**, a very widely used package with the same synchronous style.
-> - No `npm install` needed for `node:sqlite` — it comes with Node.
-> - I check `existsSync(dbPath)` **before** opening the database, so we know whether this is truly the first run, and we never re-run the setup (and never overwrite `garden.db`) on later starts.
-> - I added a `UNIQUE` constraint on `(slotId, memberEmail)` in the database itself, not just a check in the route. That way, if two requests happened to arrive at almost the same instant, the database — not just the page's check — stops the duplicate.
+> ## Install the package
 >
-> ```javascript
-> import express from "express"
-> import { existsSync, readFileSync } from "node:fs"
+> ```
+> npm install @electric-sql/pglite@0.5.8
+> ```
+>
+> This is a fairly new package (as I mentioned before), so I'm not 100% certain about every detail of its behavior — in particular, whether `count(*)` comes back as a string or a number, and the exact shape of what `db.query()` returns. I've written the code based on its documented API (which mirrors the widely-used `pg` package's style: `db.query(sql, params)` returns `{ rows: [...] }`), but **please test each route after this change** and let me know if anything doesn't match, so we can adjust.
+>
+> ## db.js (new file)
+>
+> ```js
+> import { PGlite } from "@electric-sql/pglite"
+> import { readFileSync } from "node:fs"
 > import { join } from "node:path"
-> import { DatabaseSync } from "node:sqlite"
 >
-> // the database file sits next to this script
-> const dbPath = join(import.meta.dirname, "garden.db")
-> // if the file doesn't exist yet, this is the first time the server has run
-> const isFirstRun = !existsSync(dbPath)
-> const db = new DatabaseSync(dbPath)
+> // the database's files live in a garden-data folder next to this script,
+> // so restarting the server doesn't lose any data
+> const db = new PGlite(join(import.meta.dirname, "garden-data"))
 >
-> if (isFirstRun) {
->   setUpDatabase()
-> }
+> // creates the tables the first time the server runs, and loads
+> // club-data.json's starting data. Later restarts skip this, so
+> // sign-ups already in the database aren't overwritten.
+> export async function setupDatabase() {
+>   const existing = await db.query(`
+>     select table_name from information_schema.tables
+>     where table_schema = 'public' and table_name = 'members'
+>   `)
 >
-> // creates the tables and loads club-data.json, but only once ever
-> function setUpDatabase() {
->   db.exec(`
->     CREATE TABLE members (
->       email TEXT PRIMARY KEY,
->       firstName TEXT NOT NULL,
->       lastName TEXT NOT NULL
+>   if (existing.rows.length > 0) {
+>     console.log("Database already set up")
+>     return
+>   }
+>
+>   console.log("Setting up database for the first time...")
+>
+>   await db.exec(`
+>     create table members (
+>       email text primary key,
+>       first_name text not null,
+>       last_name text not null
 >     )
 >   `)
->   db.exec(`
->     CREATE TABLE slots (
->       id INTEGER PRIMARY KEY,
->       date TEXT NOT NULL,
->       task TEXT NOT NULL,
->       start TEXT NOT NULL,
->       end TEXT NOT NULL,
->       capacity INTEGER NOT NULL
+>
+>   await db.exec(`
+>     create table slots (
+>       id integer primary key,
+>       date text not null,
+>       task text not null,
+>       start text not null,
+>       "end" text not null,
+>       capacity integer not null
 >     )
 >   `)
->   db.exec(`
->     CREATE TABLE slotSignups (
->       id INTEGER PRIMARY KEY,
->       slotId INTEGER NOT NULL,
->       memberEmail TEXT NOT NULL,
->       UNIQUE (slotId, memberEmail)
+>
+>   await db.exec(`
+>     create table slot_signups (
+>       id integer primary key,
+>       slot_id integer not null references slots(id),
+>       member_email text not null
 >     )
 >   `)
 >
@@ -148,323 +193,504 @@ Of course: it's a new chat, and the server code is in the old one. You learned i
 >     readFileSync(join(import.meta.dirname, "club-data.json"), "utf8")
 >   )
 >
->   const insertMember = db.prepare(
->     "INSERT INTO members (email, firstName, lastName) VALUES (?, ?, ?)"
->   )
->   data.members.forEach(member => {
->     insertMember.run(member.email.toLowerCase(), member.firstName, member.lastName)
->   })
+>   for (const member of data.members) {
+>     await db.query(
+>       "insert into members (email, first_name, last_name) values ($1, $2, $3)",
+>       [member.email.toLowerCase(), member.firstName, member.lastName]
+>     )
+>   }
 >
->   const insertSlot = db.prepare(
->     "INSERT INTO slots (id, date, task, start, end, capacity) VALUES (?, ?, ?, ?, ?, ?)"
->   )
->   data.slots.forEach(slot => {
->     insertSlot.run(slot.id, slot.date, slot.task, slot.start, slot.end, slot.capacity)
->   })
+>   for (const slot of data.slots) {
+>     await db.query(
+>       `insert into slots (id, date, task, start, "end", capacity)
+>        values ($1, $2, $3, $4, $5, $6)`,
+>       [slot.id, slot.date, slot.task, slot.start, slot.end, slot.capacity]
+>     )
+>   }
 >
->   const insertSignup = db.prepare(
->     "INSERT INTO slotSignups (id, slotId, memberEmail) VALUES (?, ?, ?)"
->   )
->   data.slotSignups.forEach(signup => {
->     insertSignup.run(signup.id, signup.slotId, signup.memberEmail.toLowerCase())
->   })
+>   for (const signup of data.slotSignups) {
+>     await db.query(
+>       "insert into slot_signups (id, slot_id, member_email) values ($1, $2, $3)",
+>       [signup.id, signup.slotId, signup.memberEmail.toLowerCase()]
+>     )
+>   }
 >
 >   console.log(
->     `First run: loaded ${data.members.length} members, ${data.slots.length} slots, ${data.slotSignups.length} sign-ups`
+>     `Loaded ${data.members.length} members, ${data.slots.length} slots, ${data.slotSignups.length} signups`
 >   )
 > }
+>
+> export { db }
+> ```
+>
+> **What this does:** `information_schema.tables` is a built-in list every Postgres-style database keeps of its own tables. Checking it for a `members` table tells us whether this is a fresh database or one that already has data — that's how we avoid reloading `club-data.json` (and duplicating sign-ups) on every restart.
+>
+> ## server.js (updated)
+>
+> ```js
+> import express from "express"
+> import { join } from "node:path"
+> import { db, setupDatabase } from "./db.js"
 >
 > const app = express()
 > app.use(express.json())
 > app.use(express.static(join(import.meta.dirname, "public")))
 >
-> // a slot plus how many people have signed up, with no emails
-> function getShiftWithCount(id) {
->   return db.prepare(`
->     SELECT slots.*, COUNT(slotSignups.id) AS spotsFilled
->     FROM slots
->     LEFT JOIN slotSignups ON slotSignups.slotId = slots.id
->     WHERE slots.id = ?
->     GROUP BY slots.id
->   `).get(id)
+> // turns a database row into what a shift looks like to the outside world: no emails
+> function toShift(row) {
+>   return {
+>     id: row.id,
+>     date: row.date,
+>     task: row.task,
+>     start: row.start,
+>     end: row.end,
+>     capacity: row.capacity,
+>     spotsFilled: Number(row.spots_filled)
+>   }
 > }
 >
-> app.get("/shifts", (req, res) => {
->   const shifts = db.prepare(`
->     SELECT slots.*, COUNT(slotSignups.id) AS spotsFilled
->     FROM slots
->     LEFT JOIN slotSignups ON slotSignups.slotId = slots.id
->     GROUP BY slots.id
->     ORDER BY slots.id
->   `).all()
->   res.json(shifts)
-> })
+> function toSignup(row) {
+>   return { id: row.id, slotId: row.slot_id, memberEmail: row.member_email }
+> }
 >
-> app.get("/shifts/:id", (req, res) => {
->   const shift = getShiftWithCount(Number(req.params.id))
->   if (shift === undefined) {
->     return res.status(404).json({ error: "Shift not found" })
->   }
->   res.json(shift)
-> })
->
-> app.post("/shifts/:id/signups", (req, res) => {
->   const slotId = Number(req.params.id)
->   const slot = db.prepare("SELECT * FROM slots WHERE id = ?").get(slotId)
->   if (slot === undefined) {
->     return res.status(404).json({ error: "Shift not found" })
->   }
->
->   // emails aren't case-sensitive, so compare them in lowercase
->   const email = String(req.body.email ?? "").trim().toLowerCase()
->   if (email === "") {
->     return res.status(400).json({ error: "Email is required" })
->   }
->
->   const member = db.prepare("SELECT * FROM members WHERE email = ?").get(email)
->   if (member === undefined) {
->     return res.status(400).json({ error: "That email doesn't belong to a club member" })
->   }
->
->   const existingSignup = db.prepare(
->     "SELECT * FROM slotSignups WHERE slotId = ? AND memberEmail = ?"
->   ).get(slotId, email)
->   if (existingSignup !== undefined) {
->     return res.status(409).json({ error: "You're already signed up for this shift" })
->   }
->
->   const { spotsFilled } = db.prepare(
->     "SELECT COUNT(*) AS spotsFilled FROM slotSignups WHERE slotId = ?"
->   ).get(slotId)
->   if (spotsFilled >= slot.capacity) {
->     return res.status(409).json({ error: "This shift is full" })
->   }
->
+> app.get("/shifts", async (req, res) => {
 >   try {
->     const result = db.prepare(
->       "INSERT INTO slotSignups (slotId, memberEmail) VALUES (?, ?)"
->     ).run(slotId, email)
->     res.status(201).json({ id: Number(result.lastInsertRowid), slotId, memberEmail: email })
+>     const result = await db.query(`
+>       select s.id, s.date, s.task, s.start, s."end", s.capacity,
+>              count(su.id) as spots_filled
+>       from slots s
+>       left join slot_signups su on su.slot_id = s.id
+>       group by s.id, s.date, s.task, s.start, s."end", s.capacity
+>       order by s.id
+>     `)
+>     res.json(result.rows.map(toShift))
 >   } catch (error) {
->     // the UNIQUE constraint catches a duplicate sign-up even if two
->     // requests arrived at nearly the same moment
->     res.status(409).json({ error: "You're already signed up for this shift" })
+>     console.error(error)
+>     res.status(500).json({ error: "Something went wrong" })
 >   }
 > })
 >
-> app.delete("/signups/:id", (req, res) => {
->   const result = db.prepare("DELETE FROM slotSignups WHERE id = ?").run(Number(req.params.id))
->   if (result.changes === 0) {
->     return res.status(404).json({ error: "Sign-up not found" })
+> app.get("/shifts/:id", async (req, res) => {
+>   try {
+>     const result = await db.query(`
+>       select s.id, s.date, s.task, s.start, s."end", s.capacity,
+>              count(su.id) as spots_filled
+>       from slots s
+>       left join slot_signups su on su.slot_id = s.id
+>       where s.id = $1
+>       group by s.id, s.date, s.task, s.start, s."end", s.capacity
+>     `, [Number(req.params.id)])
+>
+>     if (result.rows.length === 0) {
+>       return res.status(404).json({ error: "Shift not found" })
+>     }
+>     res.json(toShift(result.rows[0]))
+>   } catch (error) {
+>     console.error(error)
+>     res.status(500).json({ error: "Something went wrong" })
 >   }
->   res.status(204).end()
 > })
 >
-> // 127.0.0.1 means only this computer can connect
-> app.listen(3000, "127.0.0.1", () => {
->   console.log("Sign-up API running at http://localhost:3000")
+> app.post("/shifts/:id/signups", async (req, res) => {
+>   try {
+>     const slotId = Number(req.params.id)
+>     const slotResult = await db.query(
+>       "select id, capacity from slots where id = $1",
+>       [slotId]
+>     )
+>     if (slotResult.rows.length === 0) {
+>       return res.status(404).json({ error: "Shift not found" })
+>     }
+>     const slot = slotResult.rows[0]
+>
+>     // emails aren't case-sensitive, so compare them in lowercase
+>     const email = String(req.body.email ?? "").trim().toLowerCase()
+>     if (email === "") {
+>       return res.status(400).json({ error: "Email is required" })
+>     }
+>
+>     const memberResult = await db.query(
+>       "select email from members where email = $1",
+>       [email]
+>     )
+>     if (memberResult.rows.length === 0) {
+>       return res.status(400).json({ error: "That email doesn't belong to a club member" })
+>     }
+>
+>     const existingResult = await db.query(
+>       "select id from slot_signups where slot_id = $1 and member_email = $2",
+>       [slotId, email]
+>     )
+>     if (existingResult.rows.length > 0) {
+>       return res.status(409).json({ error: "You're already signed up for this shift" })
+>     }
+>
+>     const countResult = await db.query(
+>       "select count(*) as count from slot_signups where slot_id = $1",
+>       [slotId]
+>     )
+>     if (Number(countResult.rows[0].count) >= slot.capacity) {
+>       return res.status(409).json({ error: "This shift is full" })
+>     }
+>
+>     const nextIdResult = await db.query(
+>       "select coalesce(max(id), 0) + 1 as next_id from slot_signups"
+>     )
+>     const nextId = nextIdResult.rows[0].next_id
+>
+>     const insertResult = await db.query(
+>       "insert into slot_signups (id, slot_id, member_email) values ($1, $2, $3) returning *",
+>       [nextId, slotId, email]
+>     )
+>
+>     res.status(201).json(toSignup(insertResult.rows[0]))
+>   } catch (error) {
+>     console.error(error)
+>     res.status(500).json({ error: "Something went wrong" })
+>   }
 > })
+>
+> app.delete("/signups/:id", async (req, res) => {
+>   try {
+>     const result = await db.query(
+>       "delete from slot_signups where id = $1 returning id",
+>       [Number(req.params.id)]
+>     )
+>     if (result.rows.length === 0) {
+>       return res.status(404).json({ error: "Sign-up not found" })
+>     }
+>     res.status(204).end()
+>   } catch (error) {
+>     console.error(error)
+>     res.status(500).json({ error: "Something went wrong" })
+>   }
+> })
+>
+> async function start() {
+>   await setupDatabase()
+>   // 127.0.0.1 means only this computer can connect
+>   app.listen(3000, "127.0.0.1", () => {
+>     console.log("Sign-up API running at http://localhost:3000")
+>   })
+> }
+>
+> start()
 > ```
 >
-> **What changed, in plain terms:**
+> ## What changed and why
 >
-> - Instead of arrays in memory, the three kinds of data now live in three SQLite tables inside `garden.db`.
-> - `isFirstRun` checks whether `garden.db` already exists. If not, `setUpDatabase()` creates the tables and copies in everything from `club-data.json`, then logs how many rows it loaded so you can check the count against the JSON file.
-> - Every route now runs a small SQL query instead of using array methods like `find` or `filter` — the ideas (find a slot, check for a duplicate, count sign-ups) are the same, just expressed in SQL.
-> - `getShiftWithCount` and the `GET /shifts` query use `LEFT JOIN` and `COUNT` so the number of sign-ups is worked out by the database, without ever selecting the `memberEmail` column for shifts — so emails still never appear in a GET response.
-> - Sign-up IDs are now assigned automatically by SQLite (`INTEGER PRIMARY KEY`), so there's no more `nextSignupId` variable to manage by hand.
+> - Route handlers are now `async` and `await` the database calls, wrapped in `try`/`catch` so a database problem sends back a `500` instead of crashing the server.
+> - `$1`, `$2` in the SQL are placeholders — the database fills them in safely with the values from the array, which avoids ever building SQL text out of user input directly.
+> - Instead of a `nextSignupId` variable in memory, the next sign-up ID is calculated from the database itself (`max(id) + 1`), since a plain variable wouldn't survive a restart anyway.
+> - The two `toShift`/`toSignup` functions translate the database's column names (like `slot_id`) back into the camelCase names your API already used (`slotId`), so nothing changes for whoever calls this API.
 >
-> **To test:**
-> 1. Delete `garden.db` if one exists, then run `node server.js` — check the console log's counts match your `club-data.json`.
-> 2. Run it again — it should start instantly without re-loading data (no "First run" log line).
-> 3. Use `fetch` or `curl` to sign someone up, then stop the server (Ctrl+C) and start it again — the sign-up should still be there, which is the whole point of this change.
+> ## Before you run it
+>
+> Since this creates tables and loads starting data automatically, it's guarded so it only happens once (checked by looking for the `members` table). Still, I'd suggest:
+>
+> 1. Run the server once and watch the console for "Setting up database for the first time..." and the loaded counts.
+> 2. Check the API with `curl` (or your test script) — same routes as before.
+> 3. Stop the server (Ctrl+C) and start it again — it should print "Database already set up" and your sign-ups should still be there.
+> 4. If you want to start over, delete the `garden-data` folder and run it again.
+>
+> One limitation worth knowing: calculating the next sign-up ID with `max(id) + 1` could clash if two sign-ups arrived at the exact same instant, since nothing reserves that number in between. For a small club sign-up app this is unlikely to matter, but it's a real limitation of this simple approach compared to letting the database generate IDs itself with a proper auto-incrementing column.
 :::
 
 **Read.** This is a careful reply, and it's worth reading in three parts.
 
-**The tables.** Each array becomes a table. The columns have types, `TEXT` and `INTEGER`, and **constraints**, rules the database enforces itself: `PRIMARY KEY` means each row's value is unique and identifies it, `NOT NULL` means a value is required, and `UNIQUE (slotId, memberEmail)` means one member can appear only once per shift. That last one is a thoughtful addition: even if two requests from the same member arrive at almost the same instant, and both pass the route's own check, the database refuses the second. Rules that matter should be enforced where the data is stored, which, now, means the database.
+**The tables.** Each array becomes a table, and the setup code lives in its own module, `db.js`, which `server.js` imports, as in [Modules and Packages](node-modules){.book-link}. The columns have types, `text` and `integer`, and **constraints**, rules the database enforces itself: `primary key` means each row's value is unique and identifies it, `not null` means a value is required, and `references slots(id)` means a sign-up's `slot_id` must be the id of a real slot. The first run is detected by asking `information_schema.tables`, the database's own list of its tables, whether `members` exists yet.
 
-**The queries.** Each route's array methods became SQL. The interesting one lists shifts with their counts:
+**The names.** The assistant handled Postgres's lowercase names without being asked. The columns are in snake_case, `first_name` and `slot_id`, and two small functions, `toShift` and `toSignup`, turn each row back into the camelCase names your API has always sent, so the JSON doesn't change. And `"end"` is in double quotes everywhere, because `end` is a word Postgres reserves for its own use; without the quotes, `CREATE TABLE` fails with `syntax error at or near "end"`. The dates stay as text, as in `club-data.json`; Postgres has a real `date` type, but PGlite turns those into JavaScript `Date` objects, which would change what the API sends.
 
-<pre class="code" data-environment="none">
-SELECT slots.*, COUNT(slotSignups.id) AS spotsFilled
-FROM slots
-LEFT JOIN slotSignups ON slotSignups.slotId = slots.id
-GROUP BY slots.id
-ORDER BY slots.id
-</pre>
+**The queries.** Each route's array methods became SQL, and each handler is now `async`, with `try` and `catch` sending a 500 status if the database has a problem. The interesting query lists shifts with their counts:
 
-A **`JOIN`** combines rows from two tables where a condition matches, here each slot with its sign-ups. **`LEFT JOIN`** keeps slots that have no sign-ups at all, such as shift 6, which a plain `JOIN` would drop. `GROUP BY` and `COUNT` then count each slot's sign-ups. And because only `slots.*` and the count are selected, the emails never leave the database for a GET request, so your profile's rule is kept by the query itself.
+```{.code environment="none"}
+select s.id, s.date, s.task, s.start, s."end", s.capacity,
+       count(su.id) as spots_filled
+from slots s
+left join slot_signups su on su.slot_id = s.id
+group by s.id, s.date, s.task, s.start, s."end", s.capacity
+order by s.id
+```
 
-**The details.** `result.lastInsertRowid` is the id SQLite gave the new sign-up, converted with `Number()` because it can arrive as a very large-number type called a BigInt. `result.changes` says how many rows a `DELETE` removed: 0 means there was no such sign-up, hence 404.
+`slots s` gives the table a short nickname, so `s.id` means the `id` column of `slots`. A **`JOIN`** combines rows from two tables where a condition matches, here each slot with its sign-ups. **`LEFT JOIN`** keeps slots that have no sign-ups at all, such as shift 6, which a plain `JOIN` would drop. `GROUP BY` and `COUNT` then count each slot's sign-ups. Postgres insists that every selected column be either grouped or counted; grouping by `s.id` alone would be enough, because the id decides the rest, but listing them all is clear. And because only the slot's columns and the count are selected, the emails never leave the database for a GET request, so your profile's rule is kept by the query itself.
 
-The assistant said, twice, where its knowledge of `node:sqlite` might be thin, and what to do if something didn't match. That's what you want from a reply about a newer tool.
+The assistant wasn't sure whether a count comes back as a number or as a string, so it wrapped each one in `Number()` and asked you to test. PGlite returns a number; the widely used `pg` package, for Postgres servers, returns a string. Keeping `Number()` means the code works with both.
 
-### Two improvements
+The code works. The book's test script from [A Server with Node and Express](express){.book-link} passes against it, and a sign-up made before stopping the server is still there after starting it again.
 
-The code works; the book's test script from the last lesson passes against it, and sign-ups survive a restart. Two parts can be made sturdier:
+### Three improvements
 
-- **The first-run check.** The server decides it's the first run if `garden.db` doesn't exist yet. But if setup fails halfway, say because `club-data.json` has a typo, the file now exists, and every later start skips setup and runs with half-empty tables. A sturdier approach is to run `CREATE TABLE IF NOT EXISTS` every time, which does nothing when the table is already there, and to load the data only if the tables are empty.
-- **The `catch`.** It turns *any* error from the insert into "You're already signed up." A different error, such as a full disk, would be reported as a duplicate. It should only treat a UNIQUE violation that way, and let anything else be a real error.
+Three parts can be made sturdier. The first is a real bug; the other two matter more once the database is on a server that many requests reach at once, as in the next lesson.
 
-Here's the server with both changes:
+- **Setup that fails halfway.** The setup creates the tables and *then* reads `club-data.json`. If the file has a typo, the server stops with an error, but the tables now exist. Fix the typo and start again, and the server prints "Database already set up" and runs with no members and no shifts. This happened when we tried it. The fix is a **transaction**: a group of changes that happen completely or not at all. If any step inside fails, the database undoes the others, so the tables are either all there, with their data, or not there at all. (Reading `club-data.json` before creating anything helps too.)
+- **Numbering sign-ups.** The server finds the highest id and adds 1. The assistant pointed out itself that two sign-ups arriving together could both pick the same number. The database can number rows itself, as in the SQL tour. The starting sign-ups come with their own ids, 1 to 12, so after loading them the setup tells the database to continue from the highest one.
+- **Signing up twice.** The server checks for an existing sign-up and then inserts one, as separate steps. Two requests from the same member arriving together could both pass the check before either inserts. A `UNIQUE` constraint on `slot_id` and `member_email` makes the database refuse the second, whatever the timing. The route then turns that refusal into the usual 409.
 
-<pre class="code" data-environment="nodejs">
-import express from "express"
+We couldn't make either of the last two happen on our computer: PGlite runs one query at a time, so the overlapping requests we sent were handled in turn. A Postgres server handling many connections at once has no such luck. Here's `db.js` with all three changes:
+
+```{.code environment="nodejs"}
+import { PGlite } from "@electric-sql/pglite"
 import { readFileSync } from "node:fs"
 import { join } from "node:path"
-import { DatabaseSync } from "node:sqlite"
 
-// the database file sits next to this script; it's created if it doesn't exist
-const db = new DatabaseSync(join(import.meta.dirname, "garden.db"))
+// the database's files live in a garden-data folder next to this script,
+// so restarting the server doesn't lose any data
+const db = new PGlite(join(import.meta.dirname, "garden-data"))
 
-// IF NOT EXISTS makes this safe to run every time the server starts
-db.exec(`
-  CREATE TABLE IF NOT EXISTS members (
-    email TEXT PRIMARY KEY,
-    firstName TEXT NOT NULL,
-    lastName TEXT NOT NULL
-  );
-  CREATE TABLE IF NOT EXISTS slots (
-    id INTEGER PRIMARY KEY,
-    date TEXT NOT NULL,
-    task TEXT NOT NULL,
-    start TEXT NOT NULL,
-    end TEXT NOT NULL,
-    capacity INTEGER NOT NULL
-  );
-  CREATE TABLE IF NOT EXISTS slotSignups (
-    id INTEGER PRIMARY KEY,
-    slotId INTEGER NOT NULL,
-    memberEmail TEXT NOT NULL,
-    UNIQUE (slotId, memberEmail)
-  );
-`)
+// creates the tables the first time the server runs, and loads
+// club-data.json's starting data. Later restarts skip this, so
+// sign-ups already in the database aren't overwritten.
+export async function setupDatabase() {
+  const existing = await db.query(`
+    select table_name from information_schema.tables
+    where table_schema = 'public' and table_name = 'members'
+  `)
 
-// load the starting data only if the tables are empty
-const { memberCount } = db.prepare("SELECT COUNT(*) AS memberCount FROM members").get()
-if (memberCount === 0) {
-  loadStartingData()
+  if (existing.rows.length > 0) {
+    console.log("Database already set up")
+    return
+  }
+
+  console.log("Setting up database for the first time...")
+
+  const data = JSON.parse(
+    readFileSync(join(import.meta.dirname, "club-data.json"), "utf8")
+  )
+
+  // everything inside the transaction happens completely or not at all:
+  // if any step fails, the tables it created are removed again
+  await db.transaction(async tx => {
+    await tx.exec(`
+      create table members (
+        email text primary key,
+        first_name text not null,
+        last_name text not null
+      )
+    `)
+
+    await tx.exec(`
+      create table slots (
+        id integer primary key,
+        date text not null,
+        task text not null,
+        start text not null,
+        "end" text not null,
+        capacity integer not null
+      )
+    `)
+
+    // the database numbers new sign-ups itself, and one member
+    // can sign up for a shift only once
+    await tx.exec(`
+      create table slot_signups (
+        id integer generated by default as identity primary key,
+        slot_id integer not null references slots(id),
+        member_email text not null,
+        unique (slot_id, member_email)
+      )
+    `)
+
+    for (const member of data.members) {
+      await tx.query(
+        "insert into members (email, first_name, last_name) values ($1, $2, $3)",
+        [member.email.toLowerCase(), member.firstName, member.lastName]
+      )
+    }
+
+    for (const slot of data.slots) {
+      await tx.query(
+        `insert into slots (id, date, task, start, "end", capacity)
+         values ($1, $2, $3, $4, $5, $6)`,
+        [slot.id, slot.date, slot.task, slot.start, slot.end, slot.capacity]
+      )
+    }
+
+    for (const signup of data.slotSignups) {
+      await tx.query(
+        "insert into slot_signups (id, slot_id, member_email) values ($1, $2, $3)",
+        [signup.id, signup.slotId, signup.memberEmail.toLowerCase()]
+      )
+    }
+
+    // the sign-ups above came with their own ids, so tell the database
+    // to continue numbering after the highest one
+    await tx.query(
+      "select setval(pg_get_serial_sequence('slot_signups', 'id'), max(id)) from slot_signups"
+    )
+  })
+
+  console.log(
+    `Loaded ${data.members.length} members, ${data.slots.length} slots, ${data.slotSignups.length} signups`
+  )
 }
 
-function loadStartingData() {
-  const data = JSON.parse(readFileSync(join(import.meta.dirname, "club-data.json"), "utf8"))
-  const insertMember = db.prepare("INSERT INTO members (email, firstName, lastName) VALUES (?, ?, ?)")
-  for (const member of data.members) {
-    insertMember.run(member.email.toLowerCase(), member.firstName, member.lastName)
-  }
-  const insertSlot = db.prepare("INSERT INTO slots (id, date, task, start, end, capacity) VALUES (?, ?, ?, ?, ?, ?)")
-  for (const slot of data.slots) {
-    insertSlot.run(slot.id, slot.date, slot.task, slot.start, slot.end, slot.capacity)
-  }
-  const insertSignup = db.prepare("INSERT INTO slotSignups (id, slotId, memberEmail) VALUES (?, ?, ?)")
-  for (const signup of data.slotSignups) {
-    insertSignup.run(signup.id, signup.slotId, signup.memberEmail.toLowerCase())
-  }
-  console.log(`Loaded ${data.members.length} members, ${data.slots.length} slots and ${data.slotSignups.length} sign-ups`)
-}
+export { db }
+```
+
+- **`db.transaction(async tx => { ... })`** runs the function inside a transaction. Inside it, use `tx`, not `db`, for every query. If anything in the function throws an error, every change it made is undone.
+- **`generated by default as identity`** numbers new rows, as `ALWAYS` did in the tour, but `BY DEFAULT` still lets the setup insert the starting sign-ups with their own ids.
+- **`setval(pg_get_serial_sequence('slot_signups', 'id'), max(id))`** looks up the counter the database numbers sign-ups with and sets it to the highest id loaded, so the next sign-up gets 13.
+- **`unique (slot_id, member_email)`** allows each member only once per shift.
+
+In `server.js`, only the end of the sign-up route changes. The insert leaves out the id, and `returning *` sends back the new row, id included. The `catch` recognizes the `UNIQUE` refusal by its **error code**: Postgres gives every kind of error a code, and `23505` means a unique rule was broken. Any other error is still a real problem and gets the 500:
+
+```{.code environment="nodejs"}
+import express from "express"
+import { join } from "node:path"
+import { db, setupDatabase } from "./db.js"
 
 const app = express()
 app.use(express.json())
 app.use(express.static(join(import.meta.dirname, "public")))
 
-// a slot plus how many people have signed up, with no emails
-function getShiftWithCount(id) {
-  return db.prepare(`
-    SELECT slots.*, COUNT(slotSignups.id) AS spotsFilled
-    FROM slots
-    LEFT JOIN slotSignups ON slotSignups.slotId = slots.id
-    WHERE slots.id = ?
-    GROUP BY slots.id
-  `).get(id)
+// turns a database row into what a shift looks like to the outside world: no emails
+function toShift(row) {
+  return {
+    id: row.id,
+    date: row.date,
+    task: row.task,
+    start: row.start,
+    end: row.end,
+    capacity: row.capacity,
+    spotsFilled: Number(row.spots_filled)
+  }
 }
 
-app.get("/shifts", (req, res) => {
-  const shifts = db.prepare(`
-    SELECT slots.*, COUNT(slotSignups.id) AS spotsFilled
-    FROM slots
-    LEFT JOIN slotSignups ON slotSignups.slotId = slots.id
-    GROUP BY slots.id
-    ORDER BY slots.id
-  `).all()
-  res.json(shifts)
-})
+function toSignup(row) {
+  return { id: row.id, slotId: row.slot_id, memberEmail: row.member_email }
+}
 
-app.get("/shifts/:id", (req, res) => {
-  const shift = getShiftWithCount(Number(req.params.id))
-  if (shift === undefined) {
-    return res.status(404).json({ error: "Shift not found" })
-  }
-  res.json(shift)
-})
-
-app.post("/shifts/:id/signups", (req, res) => {
-  const slotId = Number(req.params.id)
-  const slot = db.prepare("SELECT * FROM slots WHERE id = ?").get(slotId)
-  if (slot === undefined) {
-    return res.status(404).json({ error: "Shift not found" })
-  }
-
-  // emails aren't case-sensitive, so compare them in lowercase
-  const email = String(req.body.email ?? "").trim().toLowerCase()
-  if (email === "") {
-    return res.status(400).json({ error: "Email is required" })
-  }
-
-  const member = db.prepare("SELECT * FROM members WHERE email = ?").get(email)
-  if (member === undefined) {
-    return res.status(400).json({ error: "That email doesn't belong to a club member" })
-  }
-
-  const existingSignup = db.prepare(
-    "SELECT * FROM slotSignups WHERE slotId = ? AND memberEmail = ?"
-  ).get(slotId, email)
-  if (existingSignup !== undefined) {
-    return res.status(409).json({ error: "You're already signed up for this shift" })
-  }
-
-  const { spotsFilled } = db.prepare(
-    "SELECT COUNT(*) AS spotsFilled FROM slotSignups WHERE slotId = ?"
-  ).get(slotId)
-  if (spotsFilled >= slot.capacity) {
-    return res.status(409).json({ error: "This shift is full" })
-  }
-
+app.get("/shifts", async (req, res) => {
   try {
-    const result = db.prepare(
-      "INSERT INTO slotSignups (slotId, memberEmail) VALUES (?, ?)"
-    ).run(slotId, email)
-    res.status(201).json({ id: Number(result.lastInsertRowid), slotId, memberEmail: email })
+    const result = await db.query(`
+      select s.id, s.date, s.task, s.start, s."end", s.capacity,
+             count(su.id) as spots_filled
+      from slots s
+      left join slot_signups su on su.slot_id = s.id
+      group by s.id, s.date, s.task, s.start, s."end", s.capacity
+      order by s.id
+    `)
+    res.json(result.rows.map(toShift))
   } catch (error) {
-    // the UNIQUE constraint catches a duplicate even if two requests arrive
-    // at nearly the same moment; any other error is a real problem
-    if (String(error.message).includes("UNIQUE")) {
+    console.error(error)
+    res.status(500).json({ error: "Something went wrong" })
+  }
+})
+
+app.get("/shifts/:id", async (req, res) => {
+  try {
+    const result = await db.query(`
+      select s.id, s.date, s.task, s.start, s."end", s.capacity,
+             count(su.id) as spots_filled
+      from slots s
+      left join slot_signups su on su.slot_id = s.id
+      where s.id = $1
+      group by s.id, s.date, s.task, s.start, s."end", s.capacity
+    `, [Number(req.params.id)])
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Shift not found" })
+    }
+    res.json(toShift(result.rows[0]))
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Something went wrong" })
+  }
+})
+
+app.post("/shifts/:id/signups", async (req, res) => {
+  try {
+    const slotId = Number(req.params.id)
+    const slotResult = await db.query(
+      "select id, capacity from slots where id = $1",
+      [slotId]
+    )
+    if (slotResult.rows.length === 0) {
+      return res.status(404).json({ error: "Shift not found" })
+    }
+    const slot = slotResult.rows[0]
+
+    // emails aren't case-sensitive, so compare them in lowercase
+    const email = String(req.body.email ?? "").trim().toLowerCase()
+    if (email === "") {
+      return res.status(400).json({ error: "Email is required" })
+    }
+
+    const memberResult = await db.query(
+      "select email from members where email = $1",
+      [email]
+    )
+    if (memberResult.rows.length === 0) {
+      return res.status(400).json({ error: "That email doesn't belong to a club member" })
+    }
+
+    const existingResult = await db.query(
+      "select id from slot_signups where slot_id = $1 and member_email = $2",
+      [slotId, email]
+    )
+    if (existingResult.rows.length > 0) {
       return res.status(409).json({ error: "You're already signed up for this shift" })
     }
-    throw error
+
+    const countResult = await db.query(
+      "select count(*) as count from slot_signups where slot_id = $1",
+      [slotId]
+    )
+    if (Number(countResult.rows[0].count) >= slot.capacity) {
+      return res.status(409).json({ error: "This shift is full" })
+    }
+
+    // the database gives the new sign-up its id
+    const insertResult = await db.query(
+      "insert into slot_signups (slot_id, member_email) values ($1, $2) returning *",
+      [slotId, email]
+    )
+
+    res.status(201).json(toSignup(insertResult.rows[0]))
+  } catch (error) {
+    // 23505 is Postgres's code for breaking a unique rule: the same member,
+    // twice, in two requests that arrived at nearly the same moment
+    if (error.code === "23505") {
+      return res.status(409).json({ error: "You're already signed up for this shift" })
+    }
+    console.error(error)
+    res.status(500).json({ error: "Something went wrong" })
   }
 })
 
-app.delete("/signups/:id", (req, res) => {
-  const result = db.prepare("DELETE FROM slotSignups WHERE id = ?").run(Number(req.params.id))
-  if (result.changes === 0) {
-    return res.status(404).json({ error: "Sign-up not found" })
+app.delete("/signups/:id", async (req, res) => {
+  try {
+    const result = await db.query(
+      "delete from slot_signups where id = $1 returning id",
+      [Number(req.params.id)]
+    )
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Sign-up not found" })
+    }
+    res.status(204).end()
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Something went wrong" })
   }
-  res.status(204).end()
 })
 
-// 127.0.0.1 means only this computer can connect
-app.listen(3000, "127.0.0.1", () => {
-  console.log("Sign-up API running at http://localhost:3000")
-})
-</pre>
+async function start() {
+  await setupDatabase()
+  // 127.0.0.1 means only this computer can connect
+  app.listen(3000, "127.0.0.1", () => {
+    console.log("Sign-up API running at http://localhost:3000")
+  })
+}
 
-`db.exec` can run several SQL statements at once, separated by semicolons, which SQL uses the way CSS does. `throw error` in the `catch` passes an unexpected error on, and Express responds with a 500 status, which is the honest answer when the server has a problem.
+start()
+```
 
-Here's what the first start printed, followed by the test script from [A Server with Node and Express](express){.book-link}:
+Here's what the first start printed, followed by the test script:
 
-<pre class="code" data-environment="message">
-Loaded 12 members, 8 slots and 12 sign-ups
+```{.code environment="message"}
+Setting up database for the first time...
+Loaded 12 members, 8 slots, 12 signups
 Sign-up API running at http://localhost:3000
 GET /shifts/6 -> 200 {"id":6,"date":"2027-06-19","task":"planting","start":"09:00","end":"11:00","capacity":3,"spotsFilled":0}
 POST /shifts/6/signups -> 201 {"id":13,"slotId":6,"memberEmail":"ava.lopez@example.com"}
@@ -475,95 +701,143 @@ POST /shifts/2/signups -> 400 {"error":"Email is required"}
 POST /shifts/99/signups -> 404 {"error":"Shift not found"}
 DELETE /signups/13 -> 204
 DELETE /signups/13 -> 404 {"error":"Sign-up not found"}
-</pre>
+```
 
-Stop the server and start it again: this time there's no "Loaded" line, because the tables already have data, and any sign-ups made before the restart are still there.
+Stop the server and start it again: this time it prints "Database already set up", and any sign-ups made before the restart are still there. One difference from before: sign up again and the new sign-up gets id 14, not 13. The database never reuses a number, even after a row is deleted, so an old id can't be confused with a new sign-up.
+
+We also tried the typo again, by removing one slot's `end` time from `club-data.json`. The setup stopped with `null value in column "end" of relation "slots" violates not-null constraint`, the transaction undid everything, and once the file was fixed, the next start set everything up properly.
+
+::: {.tip}
+When PGlite reports an error your code doesn't catch, Node first prints a very long line of unreadable code from inside the package. Scroll past it: the line starting with `error:` says what went wrong, in plain words.
+:::
 
 ## SQL Injection
 
-Every query uses `?` placeholders, even where building the SQL with a template literal would be shorter. Continuing the chat:
+Every query uses `$1` placeholders, even where building the SQL with a template literal would be shorter. Continuing the chat:
 
-::: {.ai-conversation prompt="Why do the queries use ? placeholders, like WHERE email = ?, instead of putting the email straight into the SQL with a template literal? It would be shorter." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="express" transcript="database/sqlite"}
-> Good question — it looks shorter, but building SQL with a template literal opens a security hole called **SQL injection**.
+::: {.ai-conversation prompt="Why do the queries use $1 and $2 placeholders, like where email = $1, instead of putting the email straight into the SQL with a template literal? It would be shorter." assistant="Claude" model="claude-sonnet-5" captured="2026-09-28" profile="express" transcript="database/pglite"}
+> Good question — it would definitely be shorter to write, and it might even seem to work fine while you're testing it yourself. The problem is what happens with unexpected input.
 >
-> Here's the problem. Say we wrote the email lookup like this instead:
+> ## What could go wrong
 >
-> ```javascript
-> // don't do this
-> const member = db.prepare(`SELECT * FROM members WHERE email = '${email}'`).get()
+> Imagine building the query with a template literal, like this:
+>
+> ```js
+> const result = await db.query(`select * from members where email = '${email}'`)
 > ```
 >
-> `email` comes from `req.body.email` — data typed in by whoever is using the sign-up form. Normally it's a plain address like `ava@example.com`, and that query works fine. But nothing stops someone from typing something else into that field instead of an email, such as:
->
-> ```
-> ' OR '1'='1
-> ```
->
-> That would turn the query into:
+> Normally `email` is something like `"ava@example.com"`, so the final query looks fine:
 >
 > ```sql
-> SELECT * FROM members WHERE email = '' OR '1'='1'
+> select * from members where email = 'ava@example.com'
 > ```
 >
-> Since `'1'='1'` is always true, that condition matches every row in the table — so the "is this a club member" check would pass for anyone, with no valid email at all. With a `DELETE` or `INSERT` statement, a similar trick can do far worse, like deleting every row in a table.
+> But `email` comes from `req.body.email` — something anyone sending a request can set to *any* text at all. If someone sent this as the email:
 >
-> The `?` placeholder avoids this because the value is never turned into SQL text at all. It's handed to SQLite separately, as *data*, so SQLite always treats it as one plain value to compare — no matter what characters are in it. That's why every query in the server uses `.get(...)`, `.run(...)` or `.all(...)` with `?` placeholders instead of building the SQL string by hand.
+> ```
+> ' or '1'='1
+> ```
 >
-> The rule of thumb: any value that came from outside your code (a request body, a query string, a form) should go into SQL through a placeholder, never pasted straight into the query text.
+> the template literal would build this query:
+>
+> ```sql
+> select * from members where email = '' or '1'='1'
+> ```
+>
+> Since `'1'='1'` is always true, that query would match every row in the table, not zero rows like you intended. Depending on the query, an attacker could use this trick to bypass checks, read data they shouldn't see, or even delete rows. This is a well-known attack called **SQL injection**.
+>
+> ## Why $1 avoids the problem
+>
+> ```js
+> await db.query("select * from members where email = $1", [email])
+> ```
+>
+> Here, the SQL text and the value are sent to the database *separately*. The database treats `$1` purely as a placeholder for a value — never as SQL code to run — so no matter what text is inside `email`, it's only ever compared as a plain string. There's no way for it to change the meaning of the query.
+>
+> So it's not just shorter vs. longer — the placeholder version is actually safe against input designed to manipulate the query, and the template literal version isn't. This matters most exactly where you're using it: anywhere a value comes from `req.body` or `req.params`, i.e. from someone else's request.
 :::
 
 This is one of the most important security lessons in programming, and the explanation is exactly right. You can see it happen:
 
-<pre class="code" data-environment="nodejs">
-import { DatabaseSync } from "node:sqlite"
+```{.code environment="nodejs"}
+import { PGlite } from "@electric-sql/pglite"
 
 // a small database that exists only in memory, for trying things out
-const db = new DatabaseSync(":memory:")
-db.exec("CREATE TABLE members (email TEXT PRIMARY KEY, firstName TEXT)")
-db.prepare("INSERT INTO members (email, firstName) VALUES (?, ?)").run("ava.lopez@example.com", "Ava")
+const db = new PGlite()
+await db.exec("CREATE TABLE members (email TEXT PRIMARY KEY, first_name TEXT)")
+await db.query("INSERT INTO members (email, first_name) VALUES ($1, $2)", ["ava.lopez@example.com", "Ava"])
 
 // what someone might type into the email box
 const typed = "' OR '1'='1"
 
 // unsafe: the typed text becomes part of the SQL
-const unsafe = db.prepare(`SELECT * FROM members WHERE email = '${typed}'`).get()
-console.log("Built with a template literal:", unsafe)
+const unsafe = await db.query(`SELECT * FROM members WHERE email = '${typed}'`)
+console.log("Built with a template literal:", unsafe.rows)
 
 // safe: the typed text is passed separately, as a value
-const safe = db.prepare("SELECT * FROM members WHERE email = ?").get(typed)
-console.log("Passed with a placeholder:", safe)
-</pre>
+const safe = await db.query("SELECT * FROM members WHERE email = $1", [typed])
+console.log("Passed with a placeholder:", safe.rows)
+```
 
-It prints Ava's record for the template-literal query, even though nobody typed her email, and `undefined` for the placeholder query, which looked for a member whose email is literally `' OR '1'='1` and found none. In the sign-up server, the unsafe version would let anyone pass the "club member" check. It's the same principle as text in HTML, from [A Web App with Apps Script](web-app){.book-link}: text that gets inserted into another language is read as that language, unless it's passed as data.
+It prints:
+
+```{.code environment="message"}
+Built with a template literal: [ { email: 'ava.lopez@example.com', first_name: 'Ava' } ]
+Passed with a placeholder: []
+```
+
+The template-literal query found Ava's record, even though nobody typed her email. The placeholder query looked for a member whose email is literally `' OR '1'='1` and found none. In the sign-up server, the unsafe version would let anyone pass the "club member" check. It's the same principle as text in HTML, from [A Web App with Apps Script](web-app){.book-link}: text that gets inserted into another language is read as that language, unless it's passed as data.
 
 ::: {.term}
 > **SQL injection** — An attack in which text typed by a user becomes part of a SQL command, changing what the command does. Prevented by passing values with placeholders instead of building SQL text.
 :::
 
-## The Database File
+## The Database Folder
 
-`garden.db` is now where the club's sign-ups live, so treat it like the valuable file it is:
+The `garden-data` folder is now where the club's sign-ups live, so treat it like the valuable thing it is:
 
-- **Back it up** by copying it, ideally while the server is stopped, so the copy isn't taken in the middle of a change.
+- **Stop the server before touching it.** Only one program at a time should open the folder. Stop the server with Ctrl+C, rather than closing the terminal window, so it can finish what it's writing.
+- **Back it up** by copying the whole folder while the server is stopped.
 - **Keep it out of anything public:** out of a website's folder, from [Publishing a Site for Free](publishing){.book-link}, and out of shared code, because it contains members' emails.
-- **To look inside,** free tools such as DB Browser for SQLite open the file and show its tables, and some VS Code extensions do the same. Close them before starting the server, so two programs aren't changing the file at once.
+- **To look inside,** write a short script that opens the folder and prints a table, and run it while the server is stopped. `console.table` prints rows as a neat table:
+
+```{.code environment="nodejs"}
+import { PGlite } from "@electric-sql/pglite"
+import { join } from "node:path"
+
+// stop the server first: only one program at a time should open the folder
+const db = new PGlite(join(import.meta.dirname, "garden-data"))
+
+const signups = await db.query("SELECT * FROM slot_signups ORDER BY id")
+console.table(signups.rows)
+
+await db.close()
+```
+
+`db.close()` closes the database properly, so the folder is left tidy for the server.
+
+::: {.note}
+**Going further with SQL.** This lesson uses a small part of SQL. The SQL book covers much more, including joins, views and transactions, and it uses the same database, so everything there works in your server too.
+:::
 
 ## Your Learner Profile
 
 ::: {.ai-profile lesson="database"}
 Add rules:
 
-- Always pass values into SQL with ? placeholders. Never build SQL text from values that came from outside the code.
+- Always pass values into SQL with $1, $2 placeholders. Never build SQL text from values that came from outside the code.
+- In SQL, name tables and columns in snake_case, and turn rows into objects with camelCase names in JavaScript.
 
 Add to "What I know so far":
 
-- SQLite with node:sqlite: DatabaseSync, exec, prepare, and run, get and all
-- SQL: CREATE TABLE IF NOT EXISTS, INSERT, SELECT with WHERE, ORDER BY, COUNT, SUM, GROUP BY, JOIN and LEFT JOIN, and DELETE
-- constraints: PRIMARY KEY, NOT NULL and UNIQUE
-- lastInsertRowid and changes
+- PGlite (PostgreSQL in Node): new PGlite(folder), exec, query with $1 placeholders, result.rows, transaction, and close
+- SQL: CREATE TABLE, INSERT with RETURNING, SELECT with WHERE, ORDER BY, COUNT, SUM, GROUP BY, JOIN and LEFT JOIN, and DELETE
+- constraints: PRIMARY KEY, NOT NULL, UNIQUE and REFERENCES, and ids with GENERATED BY DEFAULT AS IDENTITY
+- transactions, and Postgres error codes such as 23505 (a unique rule broken)
+- Postgres turns unquoted names into lowercase, and end is a reserved word, so it's written "end"
 - SQL injection, and why placeholders prevent it
 :::
 
 ## Summary
 
-A database stores data safely, handles many changes at once and answers questions quickly, which a JSON file can't. SQLite is a complete database in one file, built into recent versions of Node as `node:sqlite`: `exec` runs SQL, and prepared statements `run` changes and `get` or `all` rows. Tables have typed columns and constraints such as `PRIMARY KEY` and `UNIQUE`, which let the database itself enforce the club's rules. SQL's `SELECT` chooses rows with `WHERE`, combines tables with `JOIN`, and groups and counts with `GROUP BY` and `COUNT`. Always pass values through `?` placeholders; building SQL from user input allows SQL injection. The sign-ups now survive a restart. Next, the API moves off your computer and onto the internet, with Cloudflare Workers.
+A database stores data safely, handles many changes at once and answers questions quickly, which a JSON file can't. PGlite is PostgreSQL packaged to run inside Node, keeping its data in a folder: `exec` runs SQL, and `query` runs a statement with `$1` placeholders and returns its `rows`. Tables have typed columns and constraints such as `PRIMARY KEY`, `UNIQUE` and `REFERENCES`, which let the database itself enforce the club's rules, and a transaction makes a group of changes happen completely or not at all. Postgres turns unquoted names into lowercase, so SQL names are written in snake_case and turned into camelCase in JavaScript. SQL's `SELECT` chooses rows with `WHERE`, combines tables with `JOIN`, and groups and counts with `GROUP BY` and `COUNT`. Always pass values through placeholders; building SQL from user input allows SQL injection. The sign-ups now survive a restart. Next, the API moves off your computer and onto the internet, with Cloudflare Workers and a Postgres database online.

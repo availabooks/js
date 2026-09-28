@@ -40,28 +40,28 @@ Running code on a page you're viewing is legal and normal; it's what the develop
 
 `document.querySelector` returns the *first* element that matches a selector. **`document.querySelectorAll`** returns *all* of them, as a list you can loop over with an index, like an array:
 
-<pre class="code" data-environment="html">
-&lt;table id="harvests"&gt;
-  &lt;tr&gt;&lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Bed&lt;/th&gt;&lt;th&gt;Crop&lt;/th&gt;&lt;th&gt;Kilograms&lt;/th&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;2027-04-18&lt;/td&gt;&lt;td&gt;B2&lt;/td&gt;&lt;td&gt;Radish&lt;/td&gt;&lt;td&gt;1.2&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;2027-05-13&lt;/td&gt;&lt;td&gt;B4&lt;/td&gt;&lt;td&gt;Spinach&lt;/td&gt;&lt;td&gt;2.4&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;2027-05-15&lt;/td&gt;&lt;td&gt;B2&lt;/td&gt;&lt;td&gt;Lettuce&lt;/td&gt;&lt;td&gt;3.9&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-&lt;p id="total"&gt;&lt;/p&gt;
+```{.code environment="html"}
+<table id="harvests">
+  <tr><th>Date</th><th>Bed</th><th>Crop</th><th>Kilograms</th></tr>
+  <tr><td>2027-04-18</td><td>B2</td><td>Radish</td><td>1.2</td></tr>
+  <tr><td>2027-05-13</td><td>B4</td><td>Spinach</td><td>2.4</td></tr>
+  <tr><td>2027-05-15</td><td>B2</td><td>Lettuce</td><td>3.9</td></tr>
+</table>
+<p id="total"></p>
 
-&lt;script&gt;
+<script>
   const rows = document.querySelectorAll("#harvests tr")
   let totalKg = 0
   // start at 1 to skip the header row
-  for (let i = 1; i &lt; rows.length; i++) {
+  for (let i = 1; i < rows.length; i++) {
     const cells = rows[i].querySelectorAll("td")
     const kilograms = Number(cells[3].textContent)
     totalKg += kilograms
   }
   const total = document.querySelector("#total")
   total.textContent = `${rows.length - 1} harvests, ${totalKg.toFixed(1)} kg in all`
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 The selector `"#harvests tr"`, with a space, means "every `tr` *inside* the element with id harvests." And `rows[i].querySelectorAll("td")` searches inside one row only: `querySelectorAll` can be called on any element, not just `document`. Reading a page's table is the same as reading a sheet's rows, with `textContent` in place of `getValues`, and every value arriving as text.
 
@@ -176,25 +176,25 @@ Many sites show data in tables with no way to download it. A bookmarklet that tu
 
 Here's the CSV-building part on a page, with the download replaced by showing the text, so you can see exactly what the file would contain:
 
-<pre class="code" data-environment="html">
-&lt;table&gt;
-  &lt;tr&gt;&lt;th&gt;Crop&lt;/th&gt;&lt;th&gt;Spacing (inches)&lt;/th&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;Lettuce&lt;/td&gt;&lt;td&gt;12&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;Pepper&lt;/td&gt;&lt;td&gt;18&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;Tomato&lt;/td&gt;&lt;td&gt;24&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-&lt;pre id="csv"&gt;&lt;/pre&gt;
+```{.code environment="html"}
+<table>
+  <tr><th>Crop</th><th>Spacing (inches)</th></tr>
+  <tr><td>Lettuce</td><td>12</td></tr>
+  <tr><td>Pepper</td><td>18</td></tr>
+  <tr><td>Tomato</td><td>24</td></tr>
+</table>
+<pre id="csv"></pre>
 
-&lt;script&gt;
+<script>
   const table = document.querySelector("table")
   const rows = table.querySelectorAll("tr")
   let csvText = ""
-  for (let i = 0; i &lt; rows.length; i++) {
+  for (let i = 0; i < rows.length; i++) {
     const cells = rows[i].querySelectorAll("td, th")
     let csvRow = ""
-    for (let j = 0; j &lt; cells.length; j++) {
+    for (let j = 0; j < cells.length; j++) {
       const cellText = cells[j].textContent
-      if (j &gt; 0) {
+      if (j > 0) {
         csvRow = csvRow + ","
       }
       csvRow = csvRow + '"' + cellText + '"'
@@ -202,8 +202,8 @@ Here's the CSV-building part on a page, with the download replaced by showing th
     csvText = csvText + csvRow + "\n"
   }
   document.querySelector("#csv").textContent = csvText
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 ### When the bookmarklet does nothing
 

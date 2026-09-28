@@ -24,7 +24,7 @@ The usual answer in programming is to keep **one copy** of shared code somewhere
 
 Within one workbook, JADE already shares code between modules. Every function in a code module is registered in an object called **`jade_modules`**, under the module's name in lowercase, with spaces turned into underscores. So a module named Garden Tools is `jade_modules.garden_tools`, and its functions can be called from any other module:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 // in a code module named Garden Tools
 function kilogramsByBed(harvestRows) {
   const totals = {}
@@ -38,9 +38,9 @@ function kilogramsByBed(harvestRows) {
   }
   return totals
 }
-</pre>
+```
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 // in any other code module
 async function printBedTotals(excel) {
   const sheet = excel.workbook.worksheets.getItem("Harvests")
@@ -51,7 +51,7 @@ async function printBedTotals(excel) {
   Jade.print(JSON.stringify(totals), "Kilograms by bed")
   Jade.open_output()
 }
-</pre>
+```
 
 `kilogramsByBed` doesn't touch the workbook at all: it takes rows and returns an object, like the calculating functions in [Generating Documents](documents){.book-link}. Functions like that are the easiest to share, because they work anywhere.
 
@@ -86,12 +86,12 @@ This is the honesty rule at its best. The assistant didn't know how JADE shares 
 
 JADE's documentation has a section called "Loading code from elsewhere," and it confirms the guess. Here are the lines it adds to the platform profile:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 - Functions in one code module can be called from another as jade_modules.moduleName.functionName(). The module name is the code module's name in lowercase, with spaces replaced by underscores: a module named Harvest App is jade_modules.harvest_app.
 - await Jade.load_gist(gistId, moduleName) loads a GitHub gist: it runs the gist's .js files and registers their functions as jade_modules[moduleName], then runs the module's auto_exec if it has one. JADE caches the gist in the workbook and downloads it again only when it has changed on GitHub. GitHub allows 60 anonymous requests an hour.
 - Jade.import_code_module(gistIdOrUrl) copies a gist's .js files into the workbook as editor modules (the Import a Code Module menu item does this). A module with the same name is overwritten.
 - await Jade.load_js(url, null) downloads a JavaScript library from a web address, runs it at global scope and waits for it. Jade.add_library(url) adds it without waiting, so it can't be used on the next line.
-</pre>
+```
 
 A **gist** is a small collection of files on GitHub, often a single file of code, with its own web address. You create one at **gist.github.com**, with a free GitHub account: give the file a name ending in `.js`, paste your code, and click **Create secret gist** or **Create public gist**. The gist's ID is the long string of letters and numbers at the end of its address.
 
@@ -162,19 +162,19 @@ Now look at the name of the loader function: `autoExec`. The explanation even sa
 
 Where did `autoExec` come from? From your platform profile, which says "Write in the style of my textbook: camelCase names." The assistant applied a style rule to a name the platform requires. It's the same kind of collision as in [How Web Pages Work](web-pages){.book-link}, where your rule against semicolons leaked into CSS. When two instructions meet, an assistant has to decide which wins, and it can choose wrong. The fix is to say which one wins, in the profile:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 - Write in the style of my textbook: camelCase names, except for names JADE requires, such as auto_exec.
-</pre>
+```
 
 There's one more thing to know. `load_gist` runs the loaded module's own `auto_exec`, if it has one. The Harvest App module you wrote in the last lesson *does* have one, which opens the form. So the loader's second step, opening the app, would open it a second time. The simplest loader just loads the gist and lets the app's own `auto_exec` do the rest:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 // in a small module named Harvest App Loader, in the university's workbook
 async function auto_exec() {
   // loads the app from the gist; the app's own auto_exec then opens the form
   await Jade.load_gist("yourGistIdHere", "harvest_app")
 }
-</pre>
+```
 
 ## Whose Code Is Running?
 
@@ -311,7 +311,7 @@ The assistant's reasoning about escaping is correct: the labels are drawn on the
 
 Here's the chart with the three fixes. It uses the bed IDs in order, B1 to B8, so every bed gets a bar, even one with no harvests yet:
 
-<pre class="code" data-environment="jade">
+```{.code environment="jade"}
 const CHART_JS_URL = "https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"
 const BED_IDS = ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"]
 
@@ -343,7 +343,7 @@ async function showHarvestChart(excel) {
   }
 
   await Jade.load_js(CHART_JS_URL, null)
-  Jade.open_canvas("harvestChart", '&lt;h2>Kilograms harvested by bed&lt;/h2>&lt;canvas id="chartCanvas">&lt;/canvas>')
+  Jade.open_canvas("harvestChart", '<h2>Kilograms harvested by bed</h2><canvas id="chartCanvas"></canvas>')
   const canvas = tag("chartCanvas")
   const chart = new Chart(canvas.getContext("2d"), {
     type: "bar",
@@ -353,7 +353,7 @@ async function showHarvestChart(excel) {
     }
   })
 }
-</pre>
+```
 
 A library is code from elsewhere, like a gist, and the same questions apply. Chart.js is maintained by a large, long-running open-source project and served by a major content delivery network, and the pinned version always delivers the same file. That's about as trustworthy as outside code gets. Be much more careful with an obscure library from an address you don't recognize, even if an assistant suggests it.
 

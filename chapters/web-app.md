@@ -23,11 +23,11 @@ Web pages are written in **HTML**, so this lesson starts with a first look at it
 
 HTML describes what's on a page: this is a heading, this is a paragraph, this is a table. It does that with **tags**, words in angle brackets. Most tags come in pairs, an opening tag like `<h1>` and a closing tag with a slash, like `</h1>`, around the content they describe:
 
-<pre class="code" data-environment="html">
-&lt;h1&gt;Garden Harvest&lt;/h1&gt;
-&lt;p&gt;Totals for the 2027 season.&lt;/p&gt;
-&lt;p&gt;Thank you to &lt;strong&gt;everyone&lt;/strong&gt; who helped!&lt;/p&gt;
-</pre>
+```{.code environment="html"}
+<h1>Garden Harvest</h1>
+<p>Totals for the 2027 season.</p>
+<p>Thank you to <strong>everyone</strong> who helped!</p>
+```
 
 Run it, and the page appears below the code. `<h1>` is the main heading, `<p>` is a paragraph, and `<strong>` makes text bold. Tags can go inside other tags, like `<strong>` inside `<p>`, as long as the inner one closes first. There are smaller headings too, `<h2>` through `<h6>`.
 
@@ -41,13 +41,13 @@ Run it, and the page appears below the code. `<h1>` is the main heading, `<p>` i
 
 A table takes four tags. `<table>` wraps the whole thing, `<tr>` is a row, `<th>` is a header cell and `<td>` is an ordinary cell:
 
-<pre class="code" data-environment="html">
-&lt;table&gt;
-  &lt;tr&gt;&lt;th&gt;Bed&lt;/th&gt;&lt;th&gt;Kilograms&lt;/th&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;Bed 1&lt;/td&gt;&lt;td&gt;9.5&lt;/td&gt;&lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;Bed 2&lt;/td&gt;&lt;td&gt;10.0&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-</pre>
+```{.code environment="html"}
+<table>
+  <tr><th>Bed</th><th>Kilograms</th></tr>
+  <tr><td>Bed 1</td><td>9.5</td></tr>
+  <tr><td>Bed 2</td><td>10.0</td></tr>
+</table>
+```
 
 Try adding a row for Bed 3, which produced 14.4 kilograms. The table has no lines around its cells, because how a page *looks* is decided by a second language, CSS, which you'll meet in the next part. For now, plain is fine.
 
@@ -234,7 +234,7 @@ The assistant's offer at the end, of a test function for `buildHarvestReport`, i
 
 `buildHtmlTable` only turns an array of objects into a string, so it can run on this page. The test below gives it a report for three beds, and logs the HTML it builds:
 
-<pre class="code">
+```{.code}
 function testBuildHtmlTable() {
   const report = [
     { bedName: "Bed 1", totalKg: "9.50" },
@@ -247,17 +247,17 @@ function testBuildHtmlTable() {
 
 // Turns the report array into an HTML table, as one string
 function buildHtmlTable(report) {
-  let html = "&lt;table border='1'>&lt;tr>&lt;th>Bed&lt;/th>&lt;th>Total Kilograms&lt;/th>&lt;/tr>"
+  let html = "<table border='1'><tr><th>Bed</th><th>Total Kilograms</th></tr>"
 
   for (let i = 0; i < report.length; i++) {
     const row = report[i]
-    html += `&lt;tr>&lt;td>${row.bedName}&lt;/td>&lt;td>${row.totalKg}&lt;/td>&lt;/tr>`
+    html += `<tr><td>${row.bedName}</td><td>${row.totalKg}</td></tr>`
   }
 
-  html += "&lt;/table>"
+  html += "</table>"
   return html
 }
-</pre>
+```
 
 Copy the logged HTML into the HTML editor earlier in this lesson, in place of the table there, and run it to see the page the club would see. The `border='1'` in the table's opening tag is an *attribute*, extra information inside a tag. It's an old way of drawing lines around cells; CSS is the modern way.
 
@@ -303,16 +303,16 @@ That's not a worry for a club's harvest table, where only trusted members edit t
 
 This version adds a heading and a line of explanation, and rounds to one decimal place. The calculating functions are the ones from the reply.
 
-<pre class="code" data-environment="appsscriptsheets">
+```{.code environment="appsscriptsheets"}
 function doGet() {
   const report = buildHarvestReport()
   const table = buildHtmlTable(report)
-  const html = `&lt;h1>Garden Harvest&lt;/h1>&lt;p>Total kilograms harvested from each bed this season.&lt;/p>${table}`
+  const html = `<h1>Garden Harvest</h1><p>Total kilograms harvested from each bed this season.</p>${table}`
   const page = HtmlService.createHtmlOutput(html)
   page.setTitle("Garden Harvest")
   return page
 }
-</pre>
+```
 
 `setTitle` sets the text on the browser tab. Once it's deployed, the club has a link that always shows the current totals, calculated fresh from the spreadsheet every time someone opens it.
 

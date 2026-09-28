@@ -18,7 +18,7 @@ Learning Objectives
 
 This is what Node can do that nothing else in this book could: work directly with the files and folders on your computer. Node comes with a built-in module for it, **`fs`**, for *file system*, and another, **`path`**, for building file paths correctly on any operating system. Built-in modules are imported like packages, but need no installing. The `node:` in front of their names says they're part of Node:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import fs from "node:fs"
 import path from "node:path"
 
@@ -37,7 +37,7 @@ console.log(fs.readdirSync("."))
 
 // build a path from parts; Windows gets \ and Mac gets /
 console.log(path.join("garden-photos", "2027-06", "tomatoes.jpg"))
-</pre>
+```
 
 Run it with Node in an empty project folder, and look at the folder afterward: `notes.txt` is there. A few things to notice:
 
@@ -141,7 +141,7 @@ What if the month folder already has a file with the same name? Phones name phot
 
 The fix is to check first, with **`existsSync`**, and skip any photo that would overwrite another. Here's the script with that check, in the book's style:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import fs from "node:fs"
 import path from "node:path"
 
@@ -170,7 +170,7 @@ for (const fileName of photos) {
     console.log(`Moved ${fileName} to ${monthFolder}`)
   }
 }
-</pre>
+```
 
 `padStart(2, "0")` is a string method that adds zeros to the front until the string is 2 characters long: `"6"` becomes `"06"`, and `"11"` stays `"11"`. It replaces the `if` for the leading zero.
 
@@ -263,7 +263,7 @@ In [Scripting Your Notes in Obsidian](obsidian){.book-link}, you learned that an
 
 That split uses syntax you haven't met: `const [key, ...rest] = line.split(":")`. It's **array destructuring**, like the object destructuring in [Modules and Packages](node-modules){.book-link}, but by position: `key` gets the first item of the array, and **`...rest`**, the *rest* syntax, gets all the remaining items as a new array. Then `rest.join(":")` puts them back together, so a value that contains a colon, like `note: water at 6:00`, isn't cut short. The assistant explained why, but not the syntax. Try it:
 
-<pre class="code">
+```{.code}
 const parts = "note: water at 6:00".split(":")
 console.log(parts)
 
@@ -275,7 +275,7 @@ console.log(rest.join(":").trim())
 // the same three dots in an array literal spread an array's items out
 const moreParts = [...rest, "extra"]
 console.log(moreParts)
-</pre>
+```
 
 In an array literal, the same `...` does the reverse, called **spread**: it spreads an array's items into the new array.
 

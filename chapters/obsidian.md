@@ -20,7 +20,7 @@ Learning Objectives
 
 A note can start with **front matter**, a few lines of named values between lines of three dashes. Obsidian calls them *properties*:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 ---
 bed: B1
 crop: Tomato
@@ -29,7 +29,7 @@ planted: 2027-04-10
 expected_harvest: 2027-06-29
 ---
 Planted six seedlings along the north edge. Staked on April 24.
-</pre>
+```
 
 With front matter, a folder of notes becomes a kind of database, where each note is a record and each property a field, with free-form writing underneath. That's a new shape of data after the rows of a sheet and the records of Airtable: **documents with metadata**. The club's volunteers like it for a garden journal, one note per planting, where they can write what happened as well as record the facts.
 
@@ -69,7 +69,7 @@ Until now, your learner profile has asked for `for` loops with an index, so you 
 
 Here are some of the club's plantings as an array of objects, used in the examples below:
 
-<pre class="code">
+```{.code}
 const plantings = [
   { bed: "B1", crop: "Tomato", expectedHarvest: "2027-06-29" },
   { bed: "B1", crop: "Basil", expectedHarvest: "2027-06-09" },
@@ -84,23 +84,23 @@ const tomatoes = plantings.filter(function(planting) {
   return planting.crop === "Tomato"
 })
 console.log(tomatoes)
-</pre>
+```
 
 **`filter`** calls the function once for each item, and returns a new array of the items for which it returned `true`. Here, the two tomato plantings. The original array isn't changed.
 
 That function is worth writing more briefly. An arrow function, which you learned to read in [Excel's JavaScript API, with JADE](jade){.book-link}, has a short form: when the body is a single expression, you can leave out the braces and `return`, and with one parameter, the parentheses too. These three lines do exactly the same thing:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 plantings.filter(function(planting) { return planting.crop === "Tomato" })
 plantings.filter((planting) => { return planting.crop === "Tomato" })
 plantings.filter(planting => planting.crop === "Tomato")
-</pre>
+```
 
 Read the last one as "keep each planting whose crop is Tomato." That's the form you'll see and write from now on.
 
 The other methods work the same way. Run this, and compare each result with the data:
 
-<pre class="code">
+```{.code}
 const plantings = [
   { bed: "B1", crop: "Tomato", expectedHarvest: "2027-06-29" },
   { bed: "B1", crop: "Basil", expectedHarvest: "2027-06-09" },
@@ -125,7 +125,7 @@ console.log(plantings.some(planting => planting.crop === "Kale"))
 
 // forEach just runs the function for each item
 plantings.forEach(planting => console.log(`${planting.crop} in ${planting.bed}`))
-</pre>
+```
 
 - **`map`** transforms each item and returns a new array of the results, the same length as the original.
 - **`join`** combines an array into a string, which the assistant avoided in [Automating Pages You Use](automating-pages){.book-link} because you didn't know it yet.
@@ -137,7 +137,7 @@ plantings.forEach(planting => console.log(`${planting.crop} in ${planting.bed}`)
 
 **`sort`** puts an array in order, using a function that compares two items, `a` and `b`. The function returns a negative number if `a` should come first, a positive number if `b` should, and 0 if it doesn't matter. For numbers, `a - b` does exactly that:
 
-<pre class="code">
+```{.code}
 const kilograms = [3.9, 1.2, 2.5, 0.6]
 kilograms.sort((a, b) => a - b)
 console.log(kilograms)
@@ -150,7 +150,7 @@ const plantings = [
 // dates written as YYYY-MM-DD sort correctly as text
 plantings.sort((a, b) => a.expectedHarvest.localeCompare(b.expectedHarvest))
 console.log(plantings.map(planting => planting.crop))
-</pre>
+```
 
 Two things to know about `sort`. It changes the array itself, unlike `filter` and `map`. And for strings, `localeCompare` does the comparing. Dates written year first, like "2027-05-14", sort correctly as text, which is one reason that format is so common.
 
@@ -158,7 +158,7 @@ Two things to know about `sort`. It changes the array itself, unlike `filter` an
 
 Because `filter`, `map` and `sort` return arrays, you can call the next method directly on the result. This is **chaining**, which your profile has asked assistants to avoid since [Variables and Data](variables){.book-link}:
 
-<pre class="code">
+```{.code}
 const plantings = [
   { bed: "B1", crop: "Tomato", expectedHarvest: "2027-06-29" },
   { bed: "B1", crop: "Basil", expectedHarvest: "2027-06-09" },
@@ -175,13 +175,13 @@ const juneHarvests = plantings
   .map(planting => `${planting.expectedHarvest}: ${planting.crop} (${planting.bed})`)
 
 console.log(juneHarvests.join("\n"))
-</pre>
+```
 
 Read a chain from top to bottom, one step per line: keep the June plantings, sort them by date, turn each into a line of text. Written this way, with each step on its own line and starting with a dot, a chain reads like a list of instructions. (`startsWith` is a string method that does what its name says.)
 
 Compare it with the same job as a `for` loop:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 const juneHarvests = []
 for (let i = 0; i < plantings.length; i++) {
   if (plantings[i].expectedHarvest.startsWith("2027-06")) {
@@ -189,7 +189,7 @@ for (let i = 0; i < plantings.length; i++) {
   }
 }
 // ...and then a sort, and another loop to build the lines of text
-</pre>
+```
 
 The loop shows every step, which is why you started with it. The chain says *what* to do rather than *how*, which is easier to read once you know the methods.
 
@@ -197,11 +197,11 @@ The loop shows every step, which is why you started with it. The chain says *wha
 
 One more, less common but good to recognize. **`reduce`** combines all the items into one value, carrying a running result from item to item:
 
-<pre class="code">
+```{.code}
 const kilograms = [1.2, 2.4, 3.9, 2.5]
 const total = kilograms.reduce((runningTotal, kg) => runningTotal + kg, 0)
 console.log(total)
-</pre>
+```
 
 The function gets the running result so far and the next item, and returns the new running result. The `0` after the function is where the running result starts. It's the running-total pattern from [Loops and Repetition](loops){.book-link} in one line. You saw it in the very first AI reply in [Working with an AI Assistant](ai-assistant){.book-link}, `Array.from(...).reduce(...)`, and you can read it now.
 
@@ -273,7 +273,7 @@ The club wants a note that always shows which plantings will be ready in the nex
 
 Each step is explained, as the new rule asks. One detail is worth checking against Dataview's documentation. `dv.pages` returns a Dataview array, not a plain JavaScript array, and its `sort` works differently: it takes a function that returns the value to sort *by*, such as `.sort(p => p.expected_harvest)`. The assistant used the comparing kind, `(a, b) => ...`, and it happens to come out in the right order anyway, for reasons that are an accident of how Dataview calls it. The documented form is safer. When a library has its own version of something familiar, its documentation is the authority.
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 const today = dv.date("today")
 const cutoff = today.plus({ days: 14 })
 
@@ -285,7 +285,7 @@ dv.table(
   ["Planting", "Bed", "Expected harvest"],
   readySoon.map(p => [p.file.link, p.bed, p.expected_harvest])
 )
-</pre>
+```
 
 This version uses `where`, Dataview's name for `filter`, and `p.file.link`, a link to each planting's note, so a click opens it.
 

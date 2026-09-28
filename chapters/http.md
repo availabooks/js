@@ -72,7 +72,7 @@ Here's a request for a script that shows what a response really contains, in a n
 
 Here's what it printed when this lesson was written:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 Status code: 200
 Headers:
   connection: keep-alive
@@ -82,7 +82,7 @@ Headers:
   transfer-encoding: chunked
 First 200 characters of body:
 {"latitude":40.256767,"longitude":-111.66114,"generationtime_ms":0.15997886657714844,"utc_offset_seconds":0,"timezone":"GMT","timezone_abbreviation":"GMT","elevation":1427.0,"current_weather_units":{"
-</pre>
+```
 
 Every response has the same three parts:
 
@@ -144,7 +144,7 @@ Continuing the chat:
 
 Here's what the request with the missing longitude actually printed:
 
-<pre class="code" data-environment="message">
+```{.code environment="message"}
 Status code: 400
 Headers:
   connection: keep-alive
@@ -154,7 +154,7 @@ Headers:
   date: Sun, 27 Sep 2026 04:26:49 GMT
 First 200 characters of body:
 {"error":true,"reason":"Parameter 'latitude' and 'longitude' must have the same number of elements"}
-</pre>
+```
 
 A 400, as the assistant predicted. But look at the body's reason: not "longitude is missing," but a message about the two parameters having "the same number of elements." Open-Meteo accepts lists of locations, so a missing longitude looks to it like a mismatched list. Error messages come from whoever wrote the server, and they describe the problem from the server's point of view. Always read the body of an error response; it's usually the most specific explanation you'll get, even when it takes a moment to translate.
 
@@ -295,9 +295,9 @@ The example data is invented, including volunteers named Sam and Priya, and date
 
 A browser can make GET requests, by visiting an address, but not easily other methods. **curl** is a small program for making any HTTP request from a terminal, and it's built into Windows 10 and later, Mac and Linux:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 curl -i "https://api.open-meteo.com/v1/forecast?latitude=40.25&longitude=-111.65&daily=precipitation_sum"
-</pre>
+```
 
 `-i` shows the status and headers as well as the body. In the next lesson, you'll use curl to send POST and DELETE requests to your own server.
 

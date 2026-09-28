@@ -39,18 +39,18 @@ You can try pages in three places:
 
 In the last lesson, HTML was a few tags in a string. A complete page has a standard structure:
 
-<pre class="code" data-environment="html">
-&lt;!doctype html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;College Community Garden&lt;/title&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;College Community Garden&lt;/h1&gt;
-    &lt;p&gt;A student club growing food and community since 2027.&lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
+```{.code environment="html"}
+<!doctype html>
+<html>
+  <head>
+    <title>College Community Garden</title>
+  </head>
+  <body>
+    <h1>College Community Garden</h1>
+    <p>A student club growing food and community since 2027.</p>
+  </body>
+</html>
+```
 
 - **`<!doctype html>`** tells the browser this is a modern HTML page. It always comes first.
 - **`<html>`** wraps everything else.
@@ -63,21 +63,21 @@ The indentation is only for people. The browser ignores it, but it makes it much
 
 A handful of tags covers most pages:
 
-<pre class="code" data-environment="html">
-&lt;h1&gt;College Community Garden&lt;/h1&gt;
-&lt;h2&gt;Upcoming workdays&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Saturday, May 1&lt;/li&gt;
-  &lt;li&gt;Saturday, May 8&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2&gt;How to join&lt;/h2&gt;
-&lt;ol&gt;
-  &lt;li&gt;Fill in the sign-up form.&lt;/li&gt;
-  &lt;li&gt;Come to a workday.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Questions? &lt;a href="https://example.com"&gt;Contact the club&lt;/a&gt;.&lt;/p&gt;
-&lt;img src="garden-photo.jpg" alt="Volunteers weeding the raised beds"&gt;
-</pre>
+```{.code environment="html"}
+<h1>College Community Garden</h1>
+<h2>Upcoming workdays</h2>
+<ul>
+  <li>Saturday, May 1</li>
+  <li>Saturday, May 8</li>
+</ul>
+<h2>How to join</h2>
+<ol>
+  <li>Fill in the sign-up form.</li>
+  <li>Come to a workday.</li>
+</ol>
+<p>Questions? <a href="https://example.com">Contact the club</a>.</p>
+<img src="garden-photo.jpg" alt="Volunteers weeding the raised beds">
+```
 
 - **`<h2>`** is a second-level heading, for sections. There are six levels, `<h1>` to `<h6>`.
 - **`<ul>`** is a bulleted list and **`<ol>`** a numbered one. Each item is an **`<li>`**.
@@ -96,12 +96,12 @@ Any tag can also have an **`id`** attribute, a name that's unique on the page, a
 
 CSS is a list of **rules**. Each rule has a **selector**, which says which elements it applies to, and one or more **declarations** in curly braces, each a property and a value. It usually goes in a `<style>` tag in the page's `<head>`:
 
-<pre class="code" data-environment="html">
-&lt;!doctype html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Garden&lt;/title&gt;
-    &lt;style&gt;
+```{.code environment="html"}
+<!doctype html>
+<html>
+  <head>
+    <title>Garden</title>
+    <style>
       body {
         font-family: Arial, sans-serif;
         background-color: #f4f9f4;
@@ -117,17 +117,17 @@ CSS is a list of **rules**. Each rule has a **selector**, which says which eleme
       #workday-count {
         font-weight: bold;
       }
-    &lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;College Community Garden&lt;/h1&gt;
-    &lt;p class="note"&gt;Bring gloves and water to every workday.&lt;/p&gt;
-    &lt;p&gt;Regular text.&lt;/p&gt;
-    &lt;p class="note"&gt;Workdays start at 9:00.&lt;/p&gt;
-    &lt;p id="workday-count"&gt;Three workdays this month.&lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
+    </style>
+  </head>
+  <body>
+    <h1>College Community Garden</h1>
+    <p class="note">Bring gloves and water to every workday.</p>
+    <p>Regular text.</p>
+    <p class="note">Workdays start at 9:00.</p>
+    <p id="workday-count">Three workdays this month.</p>
+  </body>
+</html>
+```
 
 There are three kinds of selectors here:
 
@@ -157,16 +157,16 @@ When the browser loads a page, it turns the HTML into a set of objects, one for 
 
 JavaScript goes in a **`<script>`** tag. To change an element, you first find it with **`document.querySelector`**, which takes a CSS selector, the same kind you just used, and returns the first element that matches. Then you change it, for example with **`textContent`**, the text inside it:
 
-<pre class="code" data-environment="html">
-&lt;h1&gt;College Community Garden&lt;/h1&gt;
-&lt;p id="message"&gt;This text will be replaced.&lt;/p&gt;
+```{.code environment="html"}
+<h1>College Community Garden</h1>
+<p id="message">This text will be replaced.</p>
 
-&lt;script&gt;
+<script>
   const message = document.querySelector("#message")
   message.textContent = "Welcome! The next workday is Saturday."
   console.log("The script ran")
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 `document` is an object representing the whole page, the way `SpreadsheetApp` represented the spreadsheet. `querySelector("#message")` finds the element whose id is "message," and assigning to its `textContent` property replaces its text.
 
@@ -282,12 +282,12 @@ The assistant opened with a note about who can see the page, following your prof
 
 Did you spot the problem? Run the page:
 
-<pre class="code" data-environment="html">
-&lt;!doctype html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;College Community Garden&lt;/title&gt;
-  &lt;style&gt;
+```{.code environment="html"}
+<!doctype html>
+<html>
+<head>
+  <title>College Community Garden</title>
+  <style>
     /* This sets the font and background for the whole page */
     body {
       font-family: Arial, sans-serif
@@ -312,28 +312,28 @@ Did you spot the problem? Run the page:
       font-weight: bold
       color: #2e7d32
     }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
+  </style>
+</head>
+<body>
 
-  &lt;h1&gt;College Community Garden&lt;/h1&gt;
+  <h1>College Community Garden</h1>
 
-  &lt;p&gt;
+  <p>
     The College Community Garden is a student-run club where we grow
     vegetables and flowers together, share what we harvest, and learn
     about sustainable gardening. Everyone is welcome, no experience needed!
-  &lt;/p&gt;
+  </p>
 
-  &lt;h2&gt;Upcoming Workdays&lt;/h2&gt;
-  &lt;ul&gt;
-    &lt;li&gt;Saturday, May 1, 2027&lt;/li&gt;
-    &lt;li&gt;Saturday, May 15, 2027&lt;/li&gt;
-    &lt;li&gt;Saturday, May 29, 2027&lt;/li&gt;
-  &lt;/ul&gt;
+  <h2>Upcoming Workdays</h2>
+  <ul>
+    <li>Saturday, May 1, 2027</li>
+    <li>Saturday, May 15, 2027</li>
+    <li>Saturday, May 29, 2027</li>
+  </ul>
 
-  &lt;p id="count"&gt;&lt;/p&gt;
+  <p id="count"></p>
 
-  &lt;script&gt;
+  <script>
     // This array holds the same workdays listed above, just so we can count them
     const workdays = ["May 1", "May 15", "May 29"]
 
@@ -345,11 +345,11 @@ Did you spot the problem? Run the page:
 
     // This puts a message with the count into that paragraph
     countParagraph.textContent = `There are ${workdayCount} workdays scheduled.`
-  &lt;/script&gt;
+  </script>
 
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
+</body>
+</html>
+```
 
 The heading is green, but the page has no background color, no Arial font and no border around the list. Here's what the assistant said when asked:
 
@@ -426,13 +426,13 @@ One more common problem. Suppose you move the `<script>` tag from the bottom of 
 
 That's right, and worth remembering. The browser reads a page from top to bottom and runs each script as soon as it reaches it. A script in the head runs before the body has been read, so `querySelector` finds nothing and returns `null`, and setting a property of `null` is an error. See it for yourself:
 
-<pre class="code" data-environment="html">
-&lt;script&gt;
+```{.code environment="html"}
+<script>
   const message = document.querySelector("#message")
   message.textContent = "Found it!"
-&lt;/script&gt;
-&lt;p id="message"&gt;Original text.&lt;/p&gt;
-</pre>
+</script>
+<p id="message">Original text.</p>
+```
 
 The error message is a good one to recognize: "Cannot set properties of null" almost always means `querySelector` didn't find what you asked for, either because the element doesn't exist *yet*, or because the selector has a typo. Putting scripts at the end of the body avoids the first problem.
 
@@ -440,12 +440,12 @@ The error message is a good one to recognize: "Cannot set properties of null" al
 
 Here's the page with its CSS fixed, and one improvement: the workdays are in *one* place, an array, and the script builds the list from it. That removes the duplication the assistant pointed out.
 
-<pre class="code" data-environment="html">
-&lt;!doctype html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;College Community Garden&lt;/title&gt;
-    &lt;style&gt;
+```{.code environment="html"}
+<!doctype html>
+<html>
+  <head>
+    <title>College Community Garden</title>
+    <style>
       body {
         font-family: Arial, sans-serif;
         background-color: #f4f9f4;
@@ -463,32 +463,32 @@ Here's the page with its CSS fixed, and one improvement: the workdays are in *on
         font-weight: bold;
         color: #2e7d32;
       }
-    &lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;College Community Garden&lt;/h1&gt;
-    &lt;p&gt;A student-run club where students and neighbors grow food together, share the harvest, and learn to garden sustainably. Everyone is welcome, and no experience is needed.&lt;/p&gt;
-    &lt;h2&gt;Upcoming Workdays&lt;/h2&gt;
-    &lt;ul id="workdays"&gt;&lt;/ul&gt;
-    &lt;p id="count"&gt;&lt;/p&gt;
+    </style>
+  </head>
+  <body>
+    <h1>College Community Garden</h1>
+    <p>A student-run club where students and neighbors grow food together, share the harvest, and learn to garden sustainably. Everyone is welcome, and no experience is needed.</p>
+    <h2>Upcoming Workdays</h2>
+    <ul id="workdays"></ul>
+    <p id="count"></p>
 
-    &lt;script&gt;
+    <script>
       // the workdays are listed once, here, and the page is built from them
       const workdays = ["Saturday, May 1, 2027", "Saturday, May 15, 2027", "Saturday, May 29, 2027"]
 
       let listHtml = ""
-      for (let i = 0; i &lt; workdays.length; i++) {
-        listHtml += `&lt;li&gt;${workdays[i]}&lt;/li&gt;`
+      for (let i = 0; i < workdays.length; i++) {
+        listHtml += `<li>${workdays[i]}</li>`
       }
       const list = document.querySelector("#workdays")
       list.innerHTML = listHtml
 
       const count = document.querySelector("#count")
       count.textContent = `There are ${workdays.length} workdays scheduled.`
-    &lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
+    </script>
+  </body>
+</html>
+```
 
 The new property is **`innerHTML`**. `textContent` sets an element's *text*: anything in it, including `<`, is shown as it is. `innerHTML` sets its *HTML*: the string is read as tags. Here that's what you want, because the string contains `<li>` tags. But it's the same rule you met in [A Web App with Apps Script](web-app){.book-link}: text inserted into HTML is read as HTML. Use `innerHTML` only with HTML you built yourself from text you trust, and `textContent` for anything else, especially anything a person typed.
 

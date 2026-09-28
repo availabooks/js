@@ -28,7 +28,7 @@ Work of this kind, combining files, cleaning them up and converting between form
 
 Reading and writing JSON files is two steps you know, put together:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 import fs from "node:fs"
 
 const beds = [
@@ -40,16 +40,16 @@ fs.writeFileSync("beds.json", JSON.stringify(beds, null, 2))
 
 const loaded = JSON.parse(fs.readFileSync("beds.json", "utf8"))
 console.log(loaded[1].sizeSqFt + 10)
-</pre>
+```
 
 ### CSV files, and why they're trickier than they look
 
 A CSV line looks easy to take apart with `split(",")`. It is, until a value contains a comma. Run this:
 
-<pre class="code">
+```{.code}
 const line = 'Seed packets,40,"Tomato, pepper and basil",15'
 console.log(line.split(","))
-</pre>
+```
 
 Four values become five, because the comma inside the quotes was split too. The CSV rules, which you met in [Automating Pages You Use](automating-pages){.book-link}, say a value with a comma is wrapped in quotes, and a quote inside a value is written twice. Handling every case correctly takes more code than it seems. For real-world CSV files, well-established packages such as `csv-parse` and `papaparse` do it properly. For files you *know* have no commas or quotes in their values, `split(",")` is fine, as long as you've checked.
 
@@ -57,7 +57,7 @@ Four values become five, because the comma inside the quotes was split too. The 
 
 Three volunteers kept the club's harvest log at different times of the season, each in a different tool, and each exported a CSV file. Here are the first lines of each:
 
-<pre class="code" data-environment="none">
+```{.code environment="none"}
 harvests-spring.csv
 Date,Bed,Crop,Kg,Logged By
 2027-04-18,B2,Radish,1.2,elena.rossi@example.com
@@ -69,7 +69,7 @@ Kale,B4,0.6,6/5/2027,keisha.brown@example.com
 harvests-summer.csv
 date,bed_id,crop,kilograms,logged_by
 2027-07-01,B1,Tomato,2.6,dev.patel@example.com
-</pre>
+```
 
 The same information, three ways: different column names, a different column order in June, and June's dates in the American month/day/year style. That's normal for data from different sources. Here's the request, in a new chat with your learner profile from [Working with Files and Folders](files){.book-link}. It describes each file's differences exactly, because describing data well, from [Arrays](arrays){.book-link}, matters as much here as it did with sheets:
 
@@ -185,12 +185,12 @@ How do you know the merge worked? Don't just look at the first few records. Chec
 
 A few lines at the end of the script can do the checking for you:
 
-<pre class="code" data-environment="nodejs">
+```{.code environment="nodejs"}
 const totalKg = sortedHarvests.reduce((sum, harvest) => sum + harvest.kg, 0)
 console.log(`Records: ${sortedHarvests.length}`)
 console.log(`Total kilograms: ${totalKg.toFixed(1)}`)
 console.log(`From ${sortedHarvests[0].date} to ${sortedHarvests[sortedHarvests.length - 1].date}`)
-</pre>
+```
 
 For the club's files, that prints 32 records, 70.9 kilograms, from 2027-04-18 to 2027-08-16. A count that's off means rows were lost or duplicated; a total that's off means numbers were misread, for example a text value that `Number()` turned into `NaN`. This is worth a profile rule.
 

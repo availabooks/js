@@ -31,7 +31,7 @@ You've been using functions like this since your first line of code. `console.lo
 
 Here's a function that greets someone:
 
-<pre class="code">
+```{.code}
 function greetTwoMembers() {
   greet("Ava")
   greet("Ben")
@@ -40,7 +40,7 @@ function greetTwoMembers() {
 function greet(name) {
   console.log(`Hello, ${name}!`)
 }
-</pre>
+```
 
 The new part is `name` in the parentheses of `greet`. It's a **parameter**: a variable that gets its value when the function is called. The first function, `greetTwoMembers`, calls `greet` twice. The first time, the value `"Ava"` goes into `name`, and the function displays *Hello, Ava!* The second time, `name` holds `"Ben"`. The value you pass in is called an **argument**.
 
@@ -58,7 +58,7 @@ Run it. The editor below the code has a menu listing the functions in it, like t
 
 A function can have several parameters, separated by commas. The arguments are matched to them in order:
 
-<pre class="code">
+```{.code}
 function describeTwoMembers() {
   describeMember("Maya", 24)
   describeMember("Cam", 9.5)
@@ -67,7 +67,7 @@ function describeTwoMembers() {
 function describeMember(firstName, hours) {
   console.log(`${firstName} has ${hours} volunteer hours.`)
 }
-</pre>
+```
 
 The first argument goes into the first parameter, and the second into the second. Swap them, as in `describeMember(24, "Maya")`, and you get *24 has Maya volunteer hours.* JavaScript doesn't check that the arguments make sense. It just matches them up by position.
 
@@ -75,7 +75,7 @@ The first argument goes into the first parameter, and the second into the second
 
 `greet` displays something, but often you want a function to *work something out* and give you the answer, so your code can use it. That's what `return` does:
 
-<pre class="code">
+```{.code}
 function tryFullName() {
   let name = fullName("Keisha", "Brown")
   console.log(name)
@@ -85,7 +85,7 @@ function tryFullName() {
 function fullName(firstName, lastName) {
   return `${firstName} ${lastName}`
 }
-</pre>
+```
 
 `return` sends a value back to wherever the function was called. So `fullName("Keisha", "Brown")` becomes the string "Keisha Brown", which is stored in `name`. You can use a function call anywhere you could use a value. In the last line of `tryFullName`, `fullName("Dev", "Patel")` becomes "Dev Patel", and `.length` counts its characters.
 
@@ -100,7 +100,7 @@ Two more things about `return`:
 
 Here's a function that returns a label for a number of hours, using the club's thresholds from [Making Decisions](decisions){.book-link}:
 
-<pre class="code">
+```{.code}
 function testLabels() {
   console.log(labelForHours(24))
   console.log(labelForHours(9.5))
@@ -116,7 +116,7 @@ function labelForHours(hours) {
     return "Low"
   }
 }
-</pre>
+```
 
 Compare it with the version in [Making Decisions](decisions){.book-link}, which read a cell, decided and wrote the result all in one function. This one does only the deciding. It doesn't know about sheets or cells at all. That makes it easy to test, as `testLabels` does, and easy to reuse.
 
@@ -124,15 +124,15 @@ Compare it with the version in [Making Decisions](decisions){.book-link}, which 
 
 Now put the pieces together. Here's the Members sheet again:
 
-<pre class="spreadsheet">
+```{.spreadsheet}
 {"sheetName": "Members", "rows": 16, "columns": 8,
  "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}],
  "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
-</pre>
+```
 
 This code labels every member's hours in column F. The first function does the work you'd run from the menu, and it calls `labelForHours` once for each member:
 
-<pre class="code">
+```{.code}
 function labelAllMembers() {
   const sheet = SpreadsheetApp.getActiveSheet()
   const range = sheet.getDataRange()
@@ -157,7 +157,7 @@ function labelForHours(hours) {
     return "Low"
   }
 }
-</pre>
+```
 
 Make sure `labelAllMembers` is selected in the menu below the code, and run it. When the loop reaches `labelForHours(hours)`, JavaScript jumps into `labelForHours` with that member's hours, runs it until it reaches a `return`, and comes back with the label, which is stored in `label`. Then the loop carries on.
 
@@ -175,11 +175,11 @@ Apps Script's Run button works the same way. So a script needs at least one func
 
 `const` creates a variable, like `let`, with one difference: once it has a value, you can't give it a new one.
 
-<pre class="code">
+```{.code}
 const clubName = "Garden Club"
 console.log(clubName)
 clubName = "Book Club"
-</pre>
+```
 
 The last line stops with `TypeError: Assignment to constant variable`. A `const` variable is assigned once, when it's created, and that's it.
 
@@ -189,12 +189,12 @@ So the rule most JavaScript programmers follow is: **use `const` unless you know
 
 There's one surprise. A `const` variable that holds an array can't be given a *new array*, but the array it holds can still change:
 
-<pre class="code">
+```{.code}
 const names = ["Maya", "Ava"]
 names.push("Ben")
 names[0] = "Dev"
 console.log(names)
-</pre>
+```
 
 That runs without an error. `const` protects the variable, not what's inside it. `names` still refers to the same array. The array just has different items now. What `const` stops is `names = ["Cam"]`, which would make `names` refer to a different array.
 
@@ -381,7 +381,7 @@ The assistant also pointed out a detail you might have missed: the sheet is read
 
 Run it. Keep `checkMembers` selected, since it's the function that does the whole job. Then try choosing `logUnpaidDues` in the menu, and see what happens when `data` has no value.
 
-<pre class="code">
+```{.code}
 function checkMembers() {
   // Get the member data from the sheet
   const data = getMemberData()
@@ -440,7 +440,7 @@ function calculateTotalHours(data) {
   // Send the total back to whichever function called this one
   return totalHours
 }
-</pre>
+```
 
 Running `logUnpaidDues` by itself stops with an error saying it can't read `length` of `undefined`. That's `data.length`, with no data. It's the same lesson as `labelForHours`: a function with parameters needs to be called by code that supplies the arguments.
 

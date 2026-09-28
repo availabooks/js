@@ -24,11 +24,11 @@ The page in [How Web Pages Work](web-pages){.book-link} ran its script once, whe
 
 Here's the simplest example. Click the button after running it:
 
-<pre class="code" data-environment="html">
-&lt;button id="greetButton"&gt;Say hello&lt;/button&gt;
-&lt;p id="greeting"&gt;&lt;/p&gt;
+```{.code environment="html"}
+<button id="greetButton">Say hello</button>
+<p id="greeting"></p>
 
-&lt;script&gt;
+<script>
   const button = document.querySelector("#greetButton")
   const greeting = document.querySelector("#greeting")
 
@@ -37,8 +37,8 @@ Here's the simplest example. Click the button after running it:
   }
 
   button.addEventListener("click", showGreeting)
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 The last line is the new part. **`addEventListener`** tells the button: "when a `click` event happens, run `showGreeting`." It takes two arguments: the name of the event, as a string, and the function to run. That function is called an **event handler**, or *listener*.
 
@@ -54,11 +54,11 @@ That's an important idea you haven't needed before: a function is a value, like 
 
 You'll often see the handler written right inside the `addEventListener` call, with no name:
 
-<pre class="code" data-environment="html">
-&lt;button id="countButton"&gt;Click me&lt;/button&gt;
-&lt;p id="clicks"&gt;No clicks yet.&lt;/p&gt;
+```{.code environment="html"}
+<button id="countButton">Click me</button>
+<p id="clicks">No clicks yet.</p>
 
-&lt;script&gt;
+<script>
   const button = document.querySelector("#countButton")
   const clicks = document.querySelector("#clicks")
   let clickCount = 0
@@ -67,8 +67,8 @@ You'll often see the handler written right inside the `addEventListener` call, w
     clickCount++
     clicks.textContent = `Clicked ${clickCount} times.`
   })
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 `function() { ... }` with no name is an **anonymous function**. It's the same as writing a named function and passing its name, just shorter when the function is only used in one place. AI replies use this form a lot. Read it as "when clicked, do this."
 
@@ -78,13 +78,13 @@ This example also shows why `let clickCount` is outside the handler. The handler
 
 A text box is an **`<input>`** element. Its **`value`** property is whatever is typed in it right now, and it's always a string, even when someone types a number:
 
-<pre class="code" data-environment="html">
-&lt;label for="hoursBox"&gt;Hours volunteered:&lt;/label&gt;
-&lt;input type="text" id="hoursBox"&gt;
-&lt;button id="addButton"&gt;Add 2 hours&lt;/button&gt;
-&lt;p id="answer"&gt;&lt;/p&gt;
+```{.code environment="html"}
+<label for="hoursBox">Hours volunteered:</label>
+<input type="text" id="hoursBox">
+<button id="addButton">Add 2 hours</button>
+<p id="answer"></p>
 
-&lt;script&gt;
+<script>
   const hoursBox = document.querySelector("#hoursBox")
   const addButton = document.querySelector("#addButton")
   const answer = document.querySelector("#answer")
@@ -93,8 +93,8 @@ A text box is an **`<input>`** element. Its **`value`** property is whatever is 
     const hoursText = hoursBox.value
     answer.textContent = `Without Number: ${hoursText + 2}. With Number: ${Number(hoursText) + 2}.`
   })
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 Type 12 and click. It's the "122" problem from [Variables and Data](variables){.book-link} all over again, and the fix is the same: convert with `Number()`. The **`<label>`** isn't required, but it's good practice: its `for` attribute names the input's id, so clicking the label puts the cursor in the box, and screen readers announce what the box is for.
 
@@ -215,12 +215,12 @@ The checking is thoughtful. It tests for empty boxes using the *text*, before co
 
 The calculation converts inches to feet, squares the spacing to get the area per plant, and divides. Try it:
 
-<pre class="code" data-environment="html">
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;Plant Spacing Calculator&lt;/title&gt;
-  &lt;style&gt;
+```{.code environment="html"}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Plant Spacing Calculator</title>
+  <style>
     body {
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -238,25 +238,25 @@ The calculation converts inches to feet, squares the spacing to get the area per
       font-weight: bold;
       margin-top: 15px;
     }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
+  </style>
+</head>
+<body>
 
-  &lt;h1&gt;Garden Club Plant Spacing Calculator&lt;/h1&gt;
+  <h1>Garden Club Plant Spacing Calculator</h1>
 
-  &lt;div class="calculator"&gt;
-    &lt;label for="bedSize"&gt;Bed size (square feet):&lt;/label&gt;
-    &lt;input type="text" id="bedSize"&gt;
+  <div class="calculator">
+    <label for="bedSize">Bed size (square feet):</label>
+    <input type="text" id="bedSize">
 
-    &lt;label for="spacing"&gt;Spacing between plants (inches):&lt;/label&gt;
-    &lt;input type="text" id="spacing"&gt;
+    <label for="spacing">Spacing between plants (inches):</label>
+    <input type="text" id="spacing">
 
-    &lt;button id="calculateButton"&gt;Calculate&lt;/button&gt;
+    <button id="calculateButton">Calculate</button>
 
-    &lt;p id="result"&gt;&lt;/p&gt;
-  &lt;/div&gt;
+    <p id="result"></p>
+  </div>
 
-  &lt;script&gt;
+  <script>
     const calculateButton = document.querySelector("#calculateButton")
 
     calculateButton.addEventListener("click", function() {
@@ -286,11 +286,11 @@ The calculation converts inches to feet, squares the spacing to get the area per
       }
 
     })
-  &lt;/script&gt;
+  </script>
 
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
+</body>
+</html>
+```
 
 Try 32 and 12 (32 plants), then some awkward values: 0 for the spacing, and 24 and 18.
 
@@ -367,12 +367,12 @@ This is the same habit as testing edges in [Making Decisions](decisions){.book-l
 
 This version adds two improvements. The inputs use `type="number"`, which gives a number keypad on phones and small up and down arrows in most browsers. And instead of a Calculate button, the result updates as the visitor types, using the `input` event on both boxes, with one named handler shared between them:
 
-<pre class="code" data-environment="html">
-&lt;!doctype html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;Plant Spacing Calculator&lt;/title&gt;
-    &lt;style&gt;
+```{.code environment="html"}
+<!doctype html>
+<html>
+  <head>
+    <title>Plant Spacing Calculator</title>
+    <style>
       body {
         font-family: Arial, sans-serif;
         margin: 20px;
@@ -390,19 +390,19 @@ This version adds two improvements. The inputs use `type="number"`, which gives 
         font-weight: bold;
         margin-top: 15px;
       }
-    &lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;How Many Plants Fit?&lt;/h1&gt;
-    &lt;div class="calculator"&gt;
-      &lt;label for="bedSize"&gt;Bed size (square feet):&lt;/label&gt;
-      &lt;input type="number" id="bedSize" value="32"&gt;
-      &lt;label for="spacing"&gt;Spacing between plants (inches):&lt;/label&gt;
-      &lt;input type="number" id="spacing" value="12"&gt;
-      &lt;p id="result"&gt;&lt;/p&gt;
-    &lt;/div&gt;
+    </style>
+  </head>
+  <body>
+    <h1>How Many Plants Fit?</h1>
+    <div class="calculator">
+      <label for="bedSize">Bed size (square feet):</label>
+      <input type="number" id="bedSize" value="32">
+      <label for="spacing">Spacing between plants (inches):</label>
+      <input type="number" id="spacing" value="12">
+      <p id="result"></p>
+    </div>
 
-    &lt;script&gt;
+    <script>
       const bedSizeInput = document.querySelector("#bedSize")
       const spacingInput = document.querySelector("#spacing")
       const result = document.querySelector("#result")
@@ -415,7 +415,7 @@ This version adds two improvements. The inputs use `type="number"`, which gives 
 
         if (bedSizeText === "" || spacingText === "") {
           result.textContent = "Enter both numbers."
-        } else if (bedSize &lt;= 0 || spacingInches &lt;= 0) {
+        } else if (bedSize <= 0 || spacingInches <= 0) {
           result.textContent = "Both numbers must be greater than zero."
         } else {
           const spacingFeet = spacingInches / 12
@@ -430,10 +430,10 @@ This version adds two improvements. The inputs use `type="number"`, which gives 
       spacingInput.addEventListener("input", updateResult)
       // show a result for the starting values, too
       updateResult()
-    &lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
+    </script>
+  </body>
+</html>
+```
 
 The last line calls `updateResult()` once, *with* parentheses, so the page shows an answer for the starting values before anyone types. The two lines above it pass `updateResult` *without* parentheses, for the inputs to call later. Seeing both side by side is a good way to fix the difference in your mind.
 

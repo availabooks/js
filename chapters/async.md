@@ -110,12 +110,12 @@ The browser's version of `UrlFetchApp.fetch` is called **`fetch`**, and it can't
 
 To use the result, you **`await`** the promise. `await` pauses the function until the promise is fulfilled, then gives you its result. And `await` can only be used inside a function marked **`async`**:
 
-<pre class="code" data-environment="html">
-&lt;p id="status"&gt;Waiting...&lt;/p&gt;
+```{.code environment="html"}
+<p id="status">Waiting...</p>
 
-&lt;script&gt;
+<script>
   async function loadForecast() {
-    const url = "https://api.open-meteo.com/v1/forecast?latitude=40.25&amp;longitude=-111.65&amp;daily=precipitation_sum&amp;timezone=auto&amp;forecast_days=3"
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=40.25&longitude=-111.65&daily=precipitation_sum&timezone=auto&forecast_days=3"
     console.log("1. Asking for the forecast")
     const response = await fetch(url)
     const data = await response.json()
@@ -126,8 +126,8 @@ To use the result, you **`await`** the promise. `await` pauses the function unti
 
   loadForecast()
   console.log("2. The page carries on")
-&lt;/script&gt;
-</pre>
+</script>
+```
 
 Run it, and look at the order of the messages: 1, 2, 3. When `loadForecast` reaches the first `await`, it pauses, and the rest of the page's code carries on, which is why message 2 appears before message 3. When the reply arrives, `loadForecast` picks up where it left off. Inside the function, `await` makes the code read top to bottom, like the synchronous code you're used to. Outside it, nothing waits.
 
@@ -246,12 +246,12 @@ Back to the chat, now that you know `async` and `await`:
 
 Run it:
 
-<pre class="code" data-environment="html">
-&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;Club Rain Forecast&lt;/title&gt;
-  &lt;style&gt;
+```{.code environment="html"}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Club Rain Forecast</title>
+  <style>
     body {
       font-family: Arial;
       margin: 20px;
@@ -259,17 +259,17 @@ Run it:
     .error {
       color: red;
     }
-  &lt;/style&gt;
-&lt;/head&gt;
-&lt;body&gt;
+  </style>
+</head>
+<body>
 
-  &lt;h1&gt;Rain Forecast&lt;/h1&gt;
+  <h1>Rain Forecast</h1>
 
-  &lt;ul id="forecast-list"&gt;&lt;/ul&gt;
+  <ul id="forecast-list"></ul>
 
-  &lt;p id="error-message" class="error"&gt;&lt;/p&gt;
+  <p id="error-message" class="error"></p>
 
-  &lt;script&gt;
+  <script>
 
     async function loadForecast() {
       // These hold the club's location
@@ -277,7 +277,7 @@ Run it:
       const longitude = -111.65
 
       // Build the web address for the Open-Meteo API
-      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&amp;longitude=${longitude}&amp;daily=precipitation_sum&amp;timezone=auto&amp;forecast_days=3`
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=precipitation_sum&timezone=auto&forecast_days=3`
 
       // Find the elements on the page we'll fill in
       const list = document.querySelector("#forecast-list")
@@ -300,7 +300,7 @@ Run it:
         const rainAmounts = data.daily.precipitation_sum
 
         // Add one list item for each day
-        for (let i = 0; i &lt; dates.length; i++) {
+        for (let i = 0; i < dates.length; i++) {
           const date = dates[i]
           const rain = rainAmounts[i]
           const item = document.createElement("li")
@@ -316,11 +316,11 @@ Run it:
 
     loadForecast()
 
-  &lt;/script&gt;
+  </script>
 
-&lt;/body&gt;
-&lt;/html&gt;
-</pre>
+</body>
+</html>
+```
 
 ::: {.caution}
 > **Not every API works from a web page.** For security, a browser only lets a page fetch from another site if that site allows it, a rule called *CORS*. Open-Meteo allows it, but many APIs don't, especially ones that need a key. When a fetch works in Apps Script but fails in a page with an error mentioning CORS, that's why, and fetching on a server, as in the assistant's first answer, is the usual solution.
@@ -378,12 +378,12 @@ Learn to recognize the signs of a missing `await`:
 
 Here's the forecast as part of the club's home page, in the book's style. It adds a day of the week to each date, using what you learned about Date objects in [Email, Calendar, and Dates](email-calendar){.book-link}. Adding `T12:00` to the date text makes it noon in your time zone, which avoids the time-zone trap from that lesson:
 
-<pre class="code" data-environment="html">
-&lt;!doctype html&gt;
-&lt;html&gt;
-  &lt;head&gt;
-    &lt;title&gt;College Community Garden&lt;/title&gt;
-    &lt;style&gt;
+```{.code environment="html"}
+<!doctype html>
+<html>
+  <head>
+    <title>College Community Garden</title>
+    <style>
       body {
         font-family: Arial, sans-serif;
         background-color: #f4f9f4;
@@ -395,20 +395,20 @@ Here's the forecast as part of the club's home page, in the book's style. It add
       .error {
         color: darkred;
       }
-    &lt;/style&gt;
-  &lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;College Community Garden&lt;/h1&gt;
-    &lt;h2&gt;Rain in the next three days&lt;/h2&gt;
-    &lt;ul id="forecast"&gt;
-      &lt;li&gt;Loading the forecast...&lt;/li&gt;
-    &lt;/ul&gt;
+    </style>
+  </head>
+  <body>
+    <h1>College Community Garden</h1>
+    <h2>Rain in the next three days</h2>
+    <ul id="forecast">
+      <li>Loading the forecast...</li>
+    </ul>
 
-    &lt;script&gt;
+    <script>
       const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
       async function showForecast() {
-        const url = "https://api.open-meteo.com/v1/forecast?latitude=40.25&amp;longitude=-111.65&amp;daily=precipitation_sum&amp;timezone=auto&amp;forecast_days=3"
+        const url = "https://api.open-meteo.com/v1/forecast?latitude=40.25&longitude=-111.65&daily=precipitation_sum&timezone=auto&forecast_days=3"
         const list = document.querySelector("#forecast")
         try {
           const response = await fetch(url)
@@ -421,7 +421,7 @@ Here's the forecast as part of the club's home page, in the book's style. It add
 
           // replace the "Loading" message with the forecast
           list.textContent = ""
-          for (let i = 0; i &lt; dates.length; i++) {
+          for (let i = 0; i < dates.length; i++) {
             // noon avoids the date shifting across time zones
             const date = new Date(`${dates[i]}T12:00`)
             const dayName = DAY_NAMES[date.getDay()]
@@ -439,10 +439,10 @@ Here's the forecast as part of the club's home page, in the book's style. It add
       }
 
       showForecast()
-    &lt;/script&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</pre>
+    </script>
+  </body>
+</html>
+```
 
 Two touches worth copying: the list says "Loading the forecast..." until the data arrives, so visitors know something is happening, and an error replaces it with a message a club member can understand. Try breaking the address, for example by changing `open-meteo` to `open-meteor`, to see the error message.
 
