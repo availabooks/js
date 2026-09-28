@@ -228,15 +228,15 @@ The profile isn't hidden. The book shows it, explains each part of it, and shows
 
 ---
 
-## 2. The workflow (taught in Lesson 2, used in every example)
+## 2. The PARSE workflow (taught in Lesson 2, used in every example)
 
-The SQL book uses Plan → Write → Examine → Try. The JS version:
+The SQL book uses Plan → Write → Examine → Try. The JS version is PARSE:
 
 1. **Plan.** Decide what you want before you ask. What goes in, what comes out, which cells or data are involved, and what counts as "correct."
 2. **Ask.** Write a prompt that includes your plan. Start the conversation with your learner profile.
 3. **Read.** Go through the reply line by line. You should be able to say what each line does. If you can't, ask the AI to explain it, or ask for a version that uses only concepts you know.
-4. **Run.** Run it, ideally on a practice sheet, and compare the result with your plan.
-5. **Revise.** Send a follow-up describing what's wrong, or fix it yourself.
+4. **Scrutinize.** Run it, ideally on a practice sheet, and examine the result closely against your plan.
+5. **Edit.** Send a follow-up describing what's wrong, or edit the code yourself.
 
 **Read** is the skill the book is really teaching. Every AI exchange in the book is followed by the authors walking through the code line by line.
 
@@ -376,7 +376,7 @@ Proposed columns (about 10 fictional members):
 
 **New:**
 - *Programming in the age of AI.* The fills-the-gaps contrast from §1: you're the one who knows what you want, and the one who has to check it.
-- *How this book works.* Preview of the five-step workflow and the conversation blocks, and a short explanation of the learner profile.
+- *How this book works.* Preview of the PARSE workflow and the conversation blocks, and a short explanation of the learner profile.
 
 **AI exchange (one short demonstration):**
 - Prompt: *"Write a JavaScript program that says hello."*

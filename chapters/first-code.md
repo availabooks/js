@@ -73,7 +73,7 @@ console.log("JavaScript is fun!")
 
 ## Asking for Your First Line of Code
 
-Time to use the five-step workflow on something small.
+Time to use the PARSE workflow on something small.
 
 **Plan.** You want one line of code that displays a greeting. Nothing needs to go in. The output is a greeting in the console, and you'll know it worked if the greeting appears under the editor.
 
@@ -99,13 +99,13 @@ Time to use the five-step workflow on something small.
 
 It doesn't change or delete anything, and it matches the plan. You can explain every part of it.
 
-**Run.** Paste the code into the editor below, or type it, and run it:
+**Scrutinize.** Paste the code into the editor below, or type it, run it, and check that the greeting appears:
 
 ```{.code}
 console.log("Hi there!")
 ```
 
-**Revise.** If your greeting appeared, there's nothing to revise. If your assistant's reply was different, run its version instead. Any line that puts a string inside `console.log( )` does the same job.
+**Edit.** If your greeting appeared, there's nothing to edit. If your assistant's reply was different, run its version instead. Any line that puts a string inside `console.log( )` does the same job.
 
 ## More About console.log
 
@@ -211,7 +211,7 @@ Compare it with the version earlier in this section, `console.log("Hello,", name
 - **With a comma,** `console.log` receives two separate values and puts a space between them for you.
 - **With `+`,** you build one string yourself, so you control the spacing. That's why the assistant's version has a space inside the quotes: `"Hello, "`. Leave it out and you'd get *Hello,Ava*.
 
-**Run.** Try both versions, then take out the space inside the quotes in the second one and run it again to see the difference:
+**Scrutinize.** Run both versions and compare the output. Then take out the space inside the quotes in the second one and run it again to see the difference:
 
 ```{.code}
 let name = "Ava"

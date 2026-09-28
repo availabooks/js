@@ -51,7 +51,7 @@ _$_import: monaco, appsscript
    :::
    ```
 
-2. **Sections (`##`)**. Most follow the workflow from outline §2: Plan, then Ask (an AI exchange), then Read (a line-by-line walkthrough), then Run and Revise.
+2. **Sections (`##`)**. Most follow the workflow from outline §2: Plan, then Ask (an AI exchange), then Read (a line-by-line walkthrough), then Scrutinize and Edit (together, PARSE).
 3. **A "Your Learner Profile" section** in any lesson that changes the profile. It holds the lesson's `ai-profile` block and explains what changed (see "Showing the profile").
 4. **`## Summary`**: a short paragraph or two.
 5. **The assessment** is a separate draft file (see "Assessments").

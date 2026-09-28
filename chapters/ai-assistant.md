@@ -8,7 +8,7 @@ Learning Objectives
 ::: {.objectives}
 1. Choose an AI assistant and use it safely.
 2. Explain how a conversation with an AI assistant works, including what it remembers and what it forgets.
-3. Apply the five-step workflow: plan, ask, read, run and revise.
+3. Apply the PARSE workflow: plan, ask, read, scrutinize and edit.
 4. Write a learner profile and explain what each part of it does.
 5. Ask follow-up questions that help you understand the code an assistant writes.
 :::
@@ -17,11 +17,6 @@ Learning Objectives
 ## Choosing an AI Assistant
 
 Any of the popular AI assistants will work with this book: ChatGPT, Gemini, Claude or Microsoft Copilot, among others. The free version of any of them is enough. You'll need to sign in with an account, and it's worth using the same assistant throughout the book so its behavior becomes familiar.
-
-Before you start, check two things:
-
-- **Your course's or employer's rules.** Some courses encourage using an AI assistant, some limit it, and some schools provide a particular assistant for students. Follow the rules that apply to you.
-- **What happens to what you type.** Conversations may be stored, and on many free plans they may be used to improve the product.
 
 ::: {.caution}
 > **Don't paste private information into an AI assistant.** That includes passwords, access keys, and real data about other people, such as a list of names and email addresses from a club or class. The examples in this book use made-up data, so you can share them freely.
@@ -41,15 +36,15 @@ Three things about conversations matter for this book:
 - **A new chat starts from nothing.** Open a new conversation and the assistant knows nothing about your earlier ones. That's why you'll start every new chat with your learner profile, which you'll write later in this lesson.
 - **Replies vary.** Send the same prompt twice and you'll get two different replies. They'll usually be similar, but the wording, and sometimes the code, will differ. The replies in this book are real ones, captured from Claude on the date shown. Yours won't match word for word, and that's expected.
 
-## Plan, Ask, Read, Run, Revise
+## PARSE: Plan, Ask, Read, Scrutinize, Edit
 
-Every example in this book follows the same five steps:
+Every example in this book follows the same five steps. Their first letters spell **PARSE**, which is also what a computer does to your code before it runs it: it reads it closely, piece by piece.
 
 1. **Plan.** Before you ask for anything, decide what you want. What information goes in? What should come out? How will you know the result is right? A clear plan makes a clear prompt, and a clear prompt leaves the assistant less to guess.
 2. **Ask.** Write a prompt that describes your plan. In a new chat, start with your learner profile.
 3. **Read.** Go through the reply line by line. For each line, you should be able to say what it does. If you can't, ask the assistant to explain it, or to rewrite the code using only what you know.
-4. **Run.** Run the code and check the result against your plan. When the code works with real data, such as a spreadsheet, try it on a practice copy first.
-5. **Revise.** If the result isn't what you planned, tell the assistant exactly what happened and what you expected, or fix the code yourself.
+4. **Scrutinize.** Run the code and examine the result closely against your plan. Did the right values appear in the right places? Did anything change that shouldn't have? When the code works with real data, such as a spreadsheet, try it on a practice copy first.
+5. **Edit.** If the result isn't what you planned, tell the assistant exactly what happened and what you expected, or edit the code yourself.
 
 Reading is the skill this book is really about. While you read, ask yourself four questions:
 
@@ -278,4 +273,4 @@ When you send one of this book's prompts to your own assistant, your reply will 
 
 ## Summary
 
-Any mainstream AI assistant works for this book, as long as you follow your course's rules and keep private information out of your chats. An assistant remembers the chat you're in, forgets everything when you start a new one, and words its replies differently every time. Every example follows five steps, plan, ask, read, run and revise, and the rule behind them is that you don't run code you can't explain. Without context, an assistant answers a beginner's question with code and explanations pitched at an expert. A learner profile fixes that by telling it where your code runs, what you know, and how to write for you. You'll paste it at the start of every new chat, and it will grow with every lesson.
+Any mainstream AI assistant works for this book, as long as you follow your course's rules and keep private information out of your chats. An assistant remembers the chat you're in, forgets everything when you start a new one, and words its replies differently every time. Every example follows five steps, PARSE: plan, ask, read, scrutinize and edit, and the rule behind them is that you don't run code you can't explain. Without context, an assistant answers a beginner's question with code and explanations pitched at an expert. A learner profile fixes that by telling it where your code runs, what you know, and how to write for you. You'll paste it at the start of every new chat, and it will grow with every lesson.

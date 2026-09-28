@@ -110,7 +110,7 @@ Text comes back as a string and a number as a number. A checkbox comes back as a
 
 ## Reading a Cell
 
-Time for the five steps.
+Time for PARSE.
 
 **Plan.** You want a function that reads a name from cell A1 and writes a greeting, such as *Hello, Ava!*, into cell B1. One value goes in (the name), and one comes out (the greeting). You'll know it worked if B1 shows the greeting with the right name.
 
@@ -208,7 +208,7 @@ This version is longer, but every line does exactly one thing, and each variable
 
 Longer isn't worse. If the greeting came out wrong, you could add `console.log(name)` after the third line to check what was read, which you couldn't easily do with the one-line version. You'll add a rule to your learner profile at the end of this lesson, so you won't have to ask for this every time.
 
-**Run.** Type a name into cell A1 of the practice sheet, then run the function:
+**Scrutinize.** Type a name into cell A1 of the practice sheet, then run the function and check cell B1:
 
 ```{.spreadsheet}
 {"sheetName": "Practice", "rows": 5, "columns": 4, "data": [{"range": "A1", "values": [["Ava"]]}], "formats": []}
@@ -239,7 +239,7 @@ function writeGreetingFromName() {
 }
 ```
 
-**Revise.** Try a different name in A1, and run it again. What happens if A1 is empty? The greeting becomes *Hello, !*, because an empty cell reads as `""`. Deciding what to do in a case like that takes a new tool, which you'll meet in the next lesson.
+**Edit.** Try a different name in A1, and run it again. What happens if A1 is empty? The greeting becomes *Hello, !*, because an empty cell reads as `""`. Deciding what to do in a case like that takes a new tool, which you'll meet in the next lesson.
 
 ## let, var and const
 
@@ -362,7 +362,7 @@ console.log(currentValue, typeof currentValue)
 
 That line would display `12 string`. The number *looks* the same in the log either way. Its type is what gives it away.
 
-This is a **logic error**, the kind you met in [Your First Lines of Code](first-code){.book-link}: no message, no warning, just a wrong answer. It's also a good example of why the Run step compares the result with your plan. If you hadn't known Ava's hours should be 14, you might not have noticed.
+This is a **logic error**, the kind you met in [Your First Lines of Code](first-code){.book-link}: no message, no warning, just a wrong answer. It's also a good example of why the Scrutinize step compares the result with your plan. If you hadn't known Ava's hours should be 14, you might not have noticed.
 
 Now ask for the fix:
 

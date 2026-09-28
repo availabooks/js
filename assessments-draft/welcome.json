@@ -29,8 +29,8 @@
     },
     {
       "type": "multiple-choice",
-      "text": "In this book's five-step workflow, which step comes right after you ask an AI assistant for code?",
-      "choices": ["Run", "Revise", "Read", "Plan"],
+      "text": "In this book's PARSE workflow, which step comes right after you ask an AI assistant for code?",
+      "choices": ["Scrutinize", "Edit", "Read", "Plan"],
       "answer": 2,
       "points": 2
     },

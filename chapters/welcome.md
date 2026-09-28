@@ -6,7 +6,7 @@ Learning Objectives
 2. Explain the difference between how a computer follows instructions and how an AI assistant responds to a request.
 3. Explain why you still need to understand code when an AI assistant can write it for you.
 4. Name the kinds of platforms where you'll use JavaScript in this book.
-5. Describe the five-step workflow this book uses for every example.
+5. Describe the PARSE workflow this book uses for every example.
 :::
 :::
 
@@ -150,13 +150,13 @@ Along the way you'll follow a student club, the College Community Garden, as it 
 
 ## How This Book Works
 
-Every example in this book follows the same five steps:
+Every example in this book follows the same five steps, and their first letters spell **PARSE**:
 
 1. **Plan.** Decide what you want before you ask for anything. What goes in, what should come out, and how will you know it's right?
 2. **Ask.** Describe your plan to your AI assistant.
 3. **Read.** Go through the code it gives you, line by line, until you can say what each line does. If you can't, ask the assistant to explain it.
-4. **Run.** Run the code and compare the result with your plan.
-5. **Revise.** If something is wrong, tell the assistant what happened, or fix it yourself.
+4. **Scrutinize.** Run the code and examine the result closely against your plan.
+5. **Edit.** If something is wrong, tell the assistant what happened, or edit the code yourself.
 
 The third step is the one this book cares about most. A rule you'll see again and again: **don't run code you can't explain.**
 
@@ -164,4 +164,4 @@ Each AI conversation in the book has a button that copies the prompt so you can 
 
 ## Summary
 
-Programming is writing instructions precise enough for a computer to follow, because a computer does exactly what it's told and never fills in gaps. An AI assistant works the other way: it fills in whatever your request leaves out with its best guess. Working with an AI means giving it enough detail to guess well, and understanding code well enough to catch the guesses that are wrong. This book teaches JavaScript because it runs almost everywhere, from spreadsheets to web servers, and it teaches every example through the same five steps: plan, ask, read, run and revise.
+Programming is writing instructions precise enough for a computer to follow, because a computer does exactly what it's told and never fills in gaps. An AI assistant works the other way: it fills in whatever your request leaves out with its best guess. Working with an AI means giving it enough detail to guess well, and understanding code well enough to catch the guesses that are wrong. This book teaches JavaScript because it runs almost everywhere, from spreadsheets to web servers, and it teaches every example through the same five steps, PARSE: plan, ask, read, scrutinize and edit.
