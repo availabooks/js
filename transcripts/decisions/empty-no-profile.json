@@ -1,0 +1,24 @@
+{
+  "lesson": "decisions",
+  "name": "empty-no-profile",
+  "assistant": "Claude",
+  "attempts": [
+    {
+      "profile": "none",
+      "model": "claude-sonnet-5",
+      "captured": "2026-09-27T02:20:48.842Z",
+      "messages": [
+        {
+          "role": "user",
+          "text": "Write an Apps Script function that reads the volunteer hours in E3 and writes High, Medium, or Low in F3, or No data if E3 is empty."
+        },
+        {
+          "role": "assistant",
+          "text": "# Apps Script Function: Volunteer Hours Classifier\n\nHere's a function that reads volunteer hours from cell E3 and writes the appropriate classification to F3:\n\n```javascript\nfunction classifyVolunteerHours() {\n  // Get the active spreadsheet and sheet\n  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();\n  \n  // Read the value from E3\n  var hours = sheet.getRange(\"E3\").getValue();\n  \n  var result;\n  \n  // Check if E3 is empty\n  if (hours === \"\" || hours === null) {\n    result = \"No data\";\n  } else {\n    // Classify based on hours (adjust thresholds as needed)\n    if (hours >= 50) {\n      result = \"High\";\n    } else if (hours >= 20) {\n      result = \"Medium\";\n    } else {\n      result = \"Low\";\n    }\n  }\n  \n  // Write the result to F3\n  sheet.getRange(\"F3\").setValue(result);\n}\n```\n\n## How It Works\n\n1. **Gets the sheet**: Uses `getActiveSheet()` to work with the currently open sheet\n2. **Reads E3**: Retrieves the value using `getRange(\"E3\").getValue()`\n3. **Checks for empty**: Tests if the value is an empty string or null\n4. **Classifies hours**: Uses if/else logic with these default thresholds:\n   - **High**: 50+ hours\n   - **Medium**: 20-49 hours\n   - **Low**: 0-19 hours\n5. **Writes to F3**: Outputs the result using `setValue()`\n\n## Customization Options\n\n**Adjust the thresholds** to match your needs:\n```javascript\nif (hours >= 100) {\n  result = \"High\";\n} else if (hours >= 40) {\n  result = \"Medium\";\n} else {\n  result = \"Low\";\n}\n```\n\n**To run on a specific sheet by name** instead of the active sheet:\n```javascript\nvar sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(\"Sheet1\");\n```\n\n**To make it run automatically** whenever the sheet is edited, you could use an `onEdit(e)` trigger instead — let me know if you'd like that version!",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        }
+      ]
+    }
+  ]
+}

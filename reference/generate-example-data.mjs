@@ -75,11 +75,58 @@ const interests = ["Home Food Growing", "Community Gardening", "Sustainable Livi
   "Mushroom Cultivation", "Medicinal Herbs", "Farm-to-Table Cooking", "Canning & Preservation",
   "Garden Photography", "Therapeutic Horticulture"]
 
+
+// sign-ups from the Google Form before the spring kickoff (Google Forms lesson):
+// one per member, with 1 to 4 interests. Timestamps are text for now, like the other dates.
+// Phone numbers use 555-01xx, which is reserved for fiction.
+const signups = members.map((m, i) => {
+  const chosen = []
+  const n = 1 + Math.floor(rand() * 4)
+  while (chosen.length < n) {
+    const interest = pick(interests)
+    if (!chosen.includes(interest)) chosen.push(interest)
+  }
+  chosen.sort((a, b) => interests.indexOf(a) - interests.indexOf(b))
+  const day = 1 + Math.floor(rand() * 12)
+  const hour = 8 + Math.floor(rand() * 13)
+  const minute = Math.floor(rand() * 60)
+  return {
+    timestamp: `2027-03-${String(day).padStart(2, "0")} ${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}`,
+    firstName: m.firstName, lastName: m.lastName, email: m.email,
+    phone: `555-01${String(10 + i).padStart(2, "0")}`, interests: chosen.join(", "),
+  }
+})
+signups.sort((a, b) => a.timestamp.localeCompare(b.timestamp))
+
+
+// upcoming shift slots volunteers can sign up for, and the sign-ups so far
+// (the servers lessons in Part VII): Saturdays in June 2027, two tasks a day
+const slotTasks = [["watering", "08:00", "09:00", 2], ["weeding", "09:00", "11:00", 4], ["harvesting", "09:00", "11:00", 3], ["planting", "09:00", "11:00", 3]]
+const slots = []
+let slotId = 1
+for (const date of ["2027-06-05", "2027-06-12", "2027-06-19", "2027-06-26"]) {
+  for (const [task, start, end, capacity] of [slotTasks[0], slotTasks[1 + (slotId % 3)]]) {
+    slots.push({ id: slotId, date, task, start, end, capacity })
+    slotId++
+  }
+}
+const slotSignups = []
+let signupId = 1
+for (const slot of slots) {
+  const n = Math.floor(rand() * (slot.capacity + 1))
+  const chosen = []
+  while (chosen.length < n) {
+    const m = pick(active)
+    if (!chosen.includes(m)) chosen.push(m)
+  }
+  for (const m of chosen) slotSignups.push({ id: signupId++, slotId: slot.id, memberEmail: m.email })
+}
+
 // self-check: shift hours add up to each member's Volunteer Hours
 for (const m of members) {
   const total = shifts.filter(s => s.memberEmail === m.email).reduce((a, s) => a + s.hours, 0)
   if (Math.abs(total - m.volunteerHours) > 1e-9) throw new Error(`hours mismatch for ${m.email}: ${total}`)
 }
-const data = { season: 2027, members, beds, plantings, shifts, harvests, supplies, interests }
+const data = { season: 2027, members, beds, plantings, shifts, harvests, supplies, interests, signups, slots, slotSignups }
 fs.writeFileSync(process.argv[2], JSON.stringify(data, null, 2) + "\n")
 console.log(Object.fromEntries(Object.entries(data).map(([k, v]) => [k, Array.isArray(v) ? v.length : v])))

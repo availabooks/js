@@ -1,515 +1,583 @@
 ---
-_$_import: monaco
+_$_import: monaco, appsscript
 ---
 
-## Why Loops Matter
+::: {.learning}
+Learning Objectives
 
-When you’re working with Google Sheets, you rarely want to perform an action just once. More often, you want to repeat something many times:
+::: {.objectives}
+1. Write a `while` loop, and explain how its condition controls when it stops.
+2. Build a `for` loop from the three parts of a counting `while` loop.
+3. Loop over the rows of a sheet, skipping the header row, to filter rows and add up values.
+4. Recognize and fix an infinite loop.
+5. Read code for lines that could damage your data before you run it.
+6. Read a `forEach` loop in code you find.
+:::
+:::
 
-- Check every value in a list
-- Process each row in a dataset
-- Build a new array from an existing one
-- Apply the same rule to a whole column
+## Doing the Same Thing Many Times
 
-Doing this manually—one step at a time—would be slow and error‑prone. Doing it in code without loops would be even worse, because you’d have to write the same line over and over again.
+Here's the club's Members sheet, which you'll use throughout this lesson:
 
-Loops solve this problem by letting your script repeat an action automatically. Instead of writing the same instruction dozens or hundreds of times, you write it once and let the loop handle the repetition.
-
-### Loops Let You Work at Scale
-
-Imagine you have an array of 500 names. Without loops, you’d need 500 separate lines of code to process them. With loops, you can handle all 500 with a single, compact structure.
-
-This is why loops are essential for spreadsheet automation: they let your script move through data the way your eyes move down a column.
-
-### Loops and Arrays Go Hand in Hand
-
-Loops become especially powerful when combined with arrays. Arrays give you a collection of values; loops give you a way to visit each value in turn. Together, they form the backbone of almost every real‑world Apps Script project.
-
-### What You’ll Learn in This Chapter
-
-In the sections ahead, you’ll explore:
-
-- The basic structure of a loop
-- How to repeat an action a specific number of times
-- How to move through the items in an array
-- How to stop a loop early or skip certain values
-- How to apply loops to real spreadsheet tasks
-
-By the end of this chapter, you’ll be able to write scripts that handle entire lists, columns, and datasets with ease. Loops are one of the biggest leaps in programming power you’ll make — and once you understand them, your automations will feel dramatically more capable.
-
-## The `while` Loop
-
-A `while` loop is the simplest kind of loop in JavaScript. It repeats an action **as long as a condition remains true**. You can think of it as a way of saying:
-
-“Keep doing this until something changes.”
-
-This makes the `while` loop perfect for situations where you don’t know in advance how many times something needs to happen. Instead of repeating a task a fixed number of times, a `while` loop repeats based on a **condition**.
-
-### How a `while` Loop Works
-
-A `while` loop has two parts:
-
-1. A **condition** that JavaScript checks
-2. A **block of code** that runs if the condition is true
-
-The structure looks like this:
-
-<pre class="code" data-environment="none">
-while (condition) {
-  // code that runs repeatedly
-}
+<pre class="spreadsheet">
+{"sheetName": "Members", "rows": 16, "columns": 8,
+ "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}],
+ "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
 </pre>
 
-As long as the condition evaluates to `true`, the code inside the braces keeps running.
+Suppose you want to log every member's name. Here's that request, in a new chat with your learner profile from [Arrays](arrays){.book-link} and the sheet description you wrote in that lesson:
 
-### 7.2.2 A Simple Example
+::: {.ai-conversation prompt="My sheet is named Members. Row 1 has headers, and each row after that is one club member (rows 2 to 13). Column A is First Name, B is Last Name, C is Email, D is Dues Paid (a checkbox, so true or false), and E is Volunteer Hours (a number). Log the first and last name of every member, skipping the header row." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="arrays" transcript="loops/each-member"}
+> Great exercise! One thing to flag: normally this kind of task uses a **loop** (like `for`), but that's not on your list yet. So instead, I'll read all the data at once with `getValues()`, then access each row by its index individually and log it. Since there are 12 members (rows 2–13), that means 12 lines that each look similar.
+>
+> ```javascript
+> function logMemberNames() {
+>   // Get the Members sheet
+>   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Members")
+>
+>   // Get all the data in the sheet as an array of arrays
+>   let data = sheet.getDataRange().getValues()
+>
+>   // Each row in "data" is one row from the sheet
+>   // data[0] is row 1 (the headers), so we skip that one
+>   // data[1] is row 2, the first member, and so on
+>
+>   Logger.log(data[1][0] + " " + data[1][1])
+>   Logger.log(data[2][0] + " " + data[2][1])
+>   Logger.log(data[3][0] + " " + data[3][1])
+>   Logger.log(data[4][0] + " " + data[4][1])
+>   Logger.log(data[5][0] + " " + data[5][1])
+>   Logger.log(data[6][0] + " " + data[6][1])
+>   Logger.log(data[7][0] + " " + data[7][1])
+>   Logger.log(data[8][0] + " " + data[8][1])
+>   Logger.log(data[9][0] + " " + data[9][1])
+>   Logger.log(data[10][0] + " " + data[10][1])
+>   Logger.log(data[11][0] + " " + data[11][1])
+>   Logger.log(data[12][0] + " " + data[12][1])
+> }
+> ```
+>
+> **What each part does:**
+> - `sheet.getDataRange().getValues()` reads every cell in the sheet and stores it as an array of arrays — one inner array per row.
+> - `data[1]` is the second row in the sheet (row 2), since arrays start counting at 0. `data[1][0]` is the First Name in that row, and `data[1][1]` is the Last Name.
+> - Each `Logger.log` line joins a first and last name with a space and prints it, moving down one row at a time until row 13 (`data[12]`).
+>
+> This works, but you can probably already see it's repetitive — this is exactly the kind of problem loops are designed to solve. Once you learn `for` loops, this same task could be written in about 3 lines instead of 12. Want me to hold off on loops until your textbook introduces them, or are you curious to see a preview?
+:::
 
-Here’s a small example that counts upward until a limit is reached:
+This is the profile at work again. The usual tool for this job is a loop, which isn't on your list yet, so the assistant said so and solved the problem with what you know: twelve nearly identical lines, one per member. It works, and you can read every line.
 
-<pre class="code">
-function incrementShorthandNotation(){
-  let x=0
-  while(x < 5){
-    x = x + 1
-    console.log(x)
-  }
-  console.log("The loop is done.")
-}
-</pre>
+But imagine the club grows to 200 members, or you decide to log emails instead of names. You'd have to write, or change, a line for every member. The assistant pointed this out itself, and offered a preview of loops.
 
-This loop logs the numbers 1 through 5\. Once `x` becomes 5, the condition `x < 5` becomes false, and the loop ends, allowing execution to proceed to the statement following the loop. Here’s the output:
+::: {.note}
+> **Did you spot the chained calls?** The reply chains `getActiveSpreadsheet().getSheetByName("Members")` and `getDataRange().getValues()`, even though your profile asks it not to chain method calls. The assistant followed the rule you care about most here, the one about unlearned concepts, and let this one slip. When it happens, a quick "Please follow my profile: one step per line" fixes it.
+:::
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHJawZZt24My53F3kwDeBIQ42nDQ9HwS4v_UqSwSNcyFwtL4Cr9uLVWZCaEx6HjA6ETSgGeQarAVTb2CzbhAkfZETcIlnID9IzG6CMa31maiPR6HsyawjgXFM0oj_gK91paNUfp7t5uGNqIyG3nvlVdXMb-bkaKxhmzcqxmowzI3mQjnKWezBtuz1kJTk/s1600/d1108ce2.png)
+A **loop** repeats a block of code, so you write the steps once and let the computer do them as many times as needed. This lesson builds up to the most common kind step by step, starting with the simplest.
 
-### Shorthand Increment Notation
+::: {.term}
+> **Loop** — Code that repeats a block of statements, usually once for each item in a list or until a condition changes. Each time through the block is called an *iteration*.
+:::
 
-Because incrementing a variable's value by one is such a common operation, JavaScript has a shorthand notation to accomplish it. It’s called the increment operator. To use it, the statement is simply the variable name preceded by two plus signs: \++x .
+## The while Loop
 
-Here is the prior example adjusted to the increment operator:
-
-<pre class="code">
-function incrementShorthandNotation_2(){
-  let x=0
-  while(x < 5){
-    ++x
-    console.log(x)
-  }
-  console.log("The loop is done.")
-}
-</pre>
-
-This does not change how the code executes, so the output will be the same as the prior example. However, the increment operator allows us to increase the value of the variable within a statement that uses the variable’s value. So, we can combine the statements that increment the value of the variable with the statement that logs its value to the console as follows:
-
-<pre class="code" >
-function incrementShorthandNotation_2(){
-  let x=0
-  while(x < 5){
-    console.log(++x)
-  }	
-  console.log("The loop is done.")
-}
-</pre>
-
-Again, this modification will not change the output of the function because the “++” increments the value _before_ it has been used in the “console.log” statement. However, it is possible to use the increment operator to modify a variable’s value _after_ it is used in the statement. To accomplish this, we just put the “++” after the variable name as follows: x++ . When we use the operator in this way, it is called “post-incrementing.” Of course, using the increment operator before a variable is called “pre-incrementing.” If we modify the prior example to post-increment the variable, it will change the output.
-
-<pre class="code">
-function incrementShorthandNotation_2(){
-  let x=0
-  while(x < 5){
-    console.log(x++)
-  }
-  console.log("The loop is done.")
-}
-</pre>
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj2tUudYhDgpe-LMtDjy-htT9-41NX4q7hzJjY_mRuR5gWYjVv7rZfAAf6ApJn7WyzTsMdS0BPjORZFA8ngtK_ysDcisxFckFtGE-ywXJsje-ntouE-r8aZzHoybPpHO0TZWvRypTb3tQE-AuKNrCeQRxk2GlSQOtAvepSVNstvytbmoqEY0uWQ2q9wZuw/s1600/65148d9d.png)
-
-Here, we see that the value of x is changed after it is displayed, so the logged values are 0-4 instead of 1-5.
-
-So far, we have not decreased a variable’s value. It should come as no surprise that it is very similar to increasing. Here’s a statement to reduce the value of x by one: <pre class="code" data-environment="none">x = x - 1</pre> and we can use a similar shorthand, decrement operator ( <pre class="code" data-environment="none">x--</pre> or <pre class="code" data-environment="none">--x</pre> )in exactly the same way as the increment operator. The increment and decrement operators only increase or decrease a variable's value by one. If you want to change it by a different value, you must use the longhand form.
-
-### Why the Condition Matters
-
-A `while` loop continues until its condition becomes false. That means **you must make sure something inside the loop eventually changes the condition**. If not, the loop will run forever, which is called an _infinite loop_.
-
-For example, this loop never ends:
-
-<pre class="code" data-environment="none">
-while (true) {  
- // This will run forever  
-}
-</pre>
-
-And this one never ends because `count` never changes:
+A `while` loop repeats its block as long as a condition is true. It looks like an `if` statement, but instead of running the block once, it goes back and checks the condition again after each time through:
 
 <pre class="code">
 let count = 1
-
-
 while (count <= 5) {
-  console.log(count)   // count stays 1 forever
+  console.log(count)
+  count = count + 1
 }
+console.log("The loop is done.")
 </pre>
 
-You’ll learn more about avoiding infinite loops later in the chapter, but the key idea is simple: **the loop must move toward a stopping point**.
+Follow it the way the computer does:
 
-Here’s a clean, focused example that does exactly what you asked:
+1. `count` starts at 1.
+2. The condition `count <= 5` is true, so the block runs: it logs 1, then adds 1 to `count`, which becomes 2.
+3. Back to the condition. `2 <= 5` is true, so the block runs again, logging 2.
+4. This repeats for 3, 4 and 5.
+5. After logging 5, `count` becomes 6. Now `6 <= 5` is false, so the loop ends, and the code carries on after the closing brace.
 
-- Read **all** the data from the sheet at once
-- Store it in an **array of arrays**
-- Use a **while loop** to move across that array
-- Log the **first value** of each row
-- Use `let` for all variable declarations
+The line `count = count + 1` is what makes the loop end. Each time through, it moves `count` a step closer to making the condition false. Without it, the condition would stay true forever. You'll see what happens then later in this lesson.
 
-## Example: Using a `while` Loop to Process data in a Sheet
+### Shortcuts for counting
 
-Let’s begin by getting some data to work with. Run this code to build a set of data for this example to use.
-
-Note: This code will replace any data you have on the active sheet of your spreadsheet, so be careful.
+Adding 1 to a variable is so common that JavaScript has a shortcut for it, the **increment operator**, `++`. These two lines do the same thing:
 
 <pre class="code" data-environment="none">
-function writeDataToActiveSheet() {
-  data= [
-  ['First Name', 'Last Name', 'Birthdate', 'Death Date', 'Birthplace'],
-  ['George', 'Washington', 'February 22, 1732', 'December 14, 1799', 'Westmoreland County, VA'],
-  ['John', 'Adams', 'October 30, 1735', 'July 4, 1826', 'Quincy, MA'],
-  ['Thomas', 'Jefferson', 'April 13, 1743', 'July 4, 1826', 'Albemarle County, VA'],
-  ['Benjamin', 'Franklin', 'January 17, 1706', 'April 17, 1790', 'Boston, MA'],
-  ['Alexander', 'Hamilton', 'January 11, 1755', 'July 12, 1804', 'Charlestown, Nevis'],
-  ['James', 'Madison', 'March 16, 1751', 'June 28, 1836', 'Port Conway, VA'],
-  ['John', 'Jay', 'December 12, 1745', 'May 17, 1829', 'New York City, NY'],
-  ['Samuel', 'Adams', 'September 27, 1722', 'October 2, 1803', 'Boston, MA'],
-  ['Patrick', 'Henry', 'May 29, 1736', 'June 6, 1799', 'Studley, VA'],
-  ['George', 'Mason', 'December 11, 1725', 'October 7, 1792', 'Fairfax County, VA']
-]
-  const sheet = SpreadsheetApp.getActiveSheet()  
-  const range = sheet.getRange(1, 1, data.length, data[0].length)
-  range.setValues(data)
-
-
-  // Set the number format to plain text 
-  //(the "@" symbol signifies plain text)
-  //this will make the data easier for you to read later on
-  sheet.getRange("C2:D11").setNumberFormat("@")
-}
+count = count + 1
+count++
 </pre>
 
-Once you have activated a sheet with no data on it, execute the `writeDataToActiveSheet` function. This should give you a sheet that looks as follows:
+`--`, the **decrement operator**, subtracts 1 in the same way. There's also a shortcut for adding any amount: `total += 5` means `total = total + 5`. You'll see all three in code from an assistant, so it's worth recognizing them.
 
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjJxKNMOB1Z3MT3_oO6d6sY7yrTdpqpDF7WX-6fvG0LKqI0_rVgv0oCTxWXLnD1m3DYOPD8e-FLB5YprJYMWIssTEbtLnwEn849XdzOkFfk2BkBJbAZnOGjQ3CZQ5Q8_SsaS6lhdjKQLdgguiHDsQDLv2mFnGbhmWD11or58LKtxQVPB-8tmt6FYdE75vA/s1600/61eb4adf.png)
+You may also see `++count`, with the `++` in front. On a line by itself it does the same thing. It only behaves differently when it's part of a larger expression, which this book avoids because it makes code harder to read.
 
-With this data in place. We are ready to build an example to read the data from the sheet and log the first and last names. Let’s start with an empty function.
+## A while Loop Over a Sheet
 
-<pre class="code" data-environment="none">
-function logFirstValues() {  
-}
-</pre>
-
-Now let’s add the code to pull the information out of the Google Sheet and into the memory of our program.
-
-<pre class="code" data-environment="none">
-function logFirstValues() {
-
-  // get a reference to the active sheet of the spreadsheet
-  let sheet = SpreadsheetApp.getActiveSheet()
-
-   // Read all rows and columns in the data range
-  let data = sheet.getDataRange().getValues()
-
-
-  // Print all the data
-  console.log('All Data:', data)
-}
-</pre>
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjUDT1I6IQbO06PD_4qxOfRXcOhm1GWywIS13PnYEHX2Ssc0xzMid7wivILoDZbg5YLiNGD3_-7R9Cp57Z7Mkkz4NOPTjmiBKerAYhLo8ko6TAu6_-uLRbBYvlI2yxgSi0AEj27MGhVj0DbO2nO9YgOx2T8KXeiAiwGDd3Q7j4L4yR6mJKqYan6zKOkRWU/s1600/a766976b.png)
-
-Now, instead of printing all of the data as an array of arrays, let’s print each row of data separately.
-
-<pre class="code" data-environment="none">
-function logFirstValues() {
-
-  let sheet = SpreadsheetApp.getActiveSheet()
-  let data = sheet.getDataRange().getValues()
-
-  // Print each row of the data
-  console.log('row', 1, data[0])
-  console.log('row', 2, data[1])
-  console.log('row', 3, data[2])
-  console.log('row', 4, data[3])
-  console.log('row', 5, data[4])
-  console.log('row', 6, data[5])
-  console.log('row', 7, data[6])
-  console.log('row', 8, data[7])
-  console.log('row', 9, data[8])
-  console.log('row', 10, data[9])
-  console.log('row', 11, data[10])
-}
-</pre>
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjSGBsEAKJBQRzH_OvYGFDxQ8JeFbUGGk7TKHvF5_676P0F1OkEK41uGwa2v7OLPY19fDZVzAv4Mm3r26jX2FtYYMcPyt0RUlc0-Wyt3pkCePbVPkj9Qap2waSGcPmiPEReDP_6ho-p2LvR3-msYznDHL52CNKCNZOllIzMKiQPSmGn1E7a0VIilqCnPDo/s1600/a468c47f.png)
-
-With a table that only has one header and ten rows of data, this is not terrible, however, if you wanted to change this code to display the first name instead of the whole row, you would need to then change all 11 rows of code. Let’s use a loop to print the data instead.
-
-The “while” loop requires a condition to control when the interpreter should exit the loop. For now, we’ll just use the boolean value “true” to control the loop. This will result in an endless loop; we’ll fix that later. For now, we are focusing on how to manipulate a variable to access a different part of the array with each iteration of the loop. To do this, we will create a variable, give it an initial value and change its value in the loop.
-
-<pre class="code" data-environment="none">
-function logFirstValues() {
-
-  let sheet = SpreadsheetApp.getActiveSheet()
-  let data = sheet.getDataRange().getValues()
-
-  // Print each row of the data
-  let index = 0
-  while(true){  
-    console.log('row', index+1, data[index])
-    index++             //  increase the value held in the index 
-                  //  variable at the end of each iteration
-  }
-}
-</pre>
-
-If you choose to run this example, the interpreter will print the data from the spreadsheet and then keep printing “row” followed by the increasing value of the “index” variable. For “data\[index\]”, it will display “undefined” because it is trying to access an element of the array that does not exist:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiofzx4p1lCBH3Z5ogrdQtcYtFBexG_K9ffwXfWNdsw8mbhPjFkisHsQeejMhMWsCUIPWt2lTJ9s0wXCXtqEOH3t3BK85DV1mtWjvFiYal8mUu7bsVArfy-dXr6JlMv6a-b9EFiZwr5xme0JUfDxS43oKGypQtIz6Xrl5rMS4YIu9tEmPy9xzYcqPRv2Ko/s1600/a541c20b.png)
-
-To stop the code from executing, just click the “Stop” button as seen here:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhetjYxBsq4CPiJvofdjjfpdETb3n-EUdwVaf6eAtmGN18WypD6LzPUbuaNcJbgZtUtIkukrzHqcz68UsBAA5vg2I4WrfVlCPqd3CWptRo1wvJ6TfAovR8OI4i0dZAsz8TqkyR-1t4uc4ZpaXsFEv4Bq_xPIEv1bM2HaAjZsjbzr9ZtwYXg8x3vHduhrkE/s1600/93e97e8f.png)  
-To make this loop end once it has displayed all data from the array, we’ll change the control condition from “true” to a condition that evaluates to “true” while accessing data and switches to “false” when there is not more data to access as seen here:
-
-<pre class="code" data-environment="none">
-function logFirstValues() {
-
-  let sheet = SpreadsheetApp.getActiveSheet()
-  let data = sheet.getDataRange().getValues()
-
-  // Print each row of the data
-  let index = 0
-  while(index < data.length){  
-    console.log('row', index+1, data[index])
-    index++                   
-  }
-}
-</pre>
-
-Here is a partial output of from the code above:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhwQhDYUpx3YxxxyQXhuQcHGnfkZucPMChMeNaOIYgGXNEqokuChyphenhypheni47jQbjyY2sC_qqLEugRD1ggwHZFkcZT0P8L2X8ym5Ua3fwmmIXIi5PqBfJD6cai04RghPZSjq7_lNnoGPODU10fjrBqwvdFrvypmzO5WmLcYV57IdV_ieufYKMX341QMGou1ebFk/s1600/5541c86b.png)  
-On the first iteration of the loop, the variable named “index” holds a value of 0 and the “data.length” evaluates to 11\. So, the condition evaluates to true because zero is less than 11\. As “index” increases with each iteration, the control condition remains true as “index” equals 1, 2, and 3…all the way to when “index” equals 10\. However, once the value in the “index” variable equals 11, the statement is 11\<11, which is a false statement. Because the control condition has become false, the interpreter discontinues the loop and moves on to process any statements that follow the loop. In this case, there are no more statements to process, so the function ends.
-
-Let’s add another parameter for our loop. The “index” will be used to keep track of what element of the array “data” the loop is on, and the “numberOfRows” variable the value of the number of elements in the “data” variable, which correlates to the number of rows in the Sheet. As you’ve just seen above, “numberOfRows \= data.length” will be 11\.
-
-Now, if we want to change what is displayed, we need only modify one line of code. To make this code display just the last name and the death date, we can modify the code as follow:
-
-<pre class="code" data-environment="none">
-function logFirstValues() {
-
-  let sheet = SpreadsheetApp.getActiveSheet()
-  let data = sheet.getDataRange().getValues()
-
-  // Print each row of the data
-  let index = 0
-  while(index < data.length){  
-    console.log('row', index+1, data[index][1], data[index][3])
-    index++                   
-  }
-}
-</pre>
-
-Now, instead of printing the whole array that represents each row, we are isolating just two values of the array, the last name and the death date, as seen here:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhq-GEXiaAxtRooBEFeuONztgYsVTq7TEykqhVW4WG0lSLYPMZcAnxFJLUodyHUylqZe9awFbaTYW2I2iHW1niKWRD5souDy9jo0bhyOUqVkswO48-aZHdxeAAjPf0yOO9-PoOawJo15h1LvfAFc0z5WfAgD5qoQy1Gvf60MzEHDtY07OSGZlN8_xQhvo8/s1600/427976a9.png)
-
-To conclude this example, let's introduce one change to make the code more readable. In the expression “data\[index\]\[1\]” we are identifying an element of an array that is itself an element of  
-an array. To improve readability, let’s add a variable at the beginning of the loop to hold one row’s data, then use that variable to access individual columns from the row as seen here:
-
-<pre class="code" data-environment="none">
-function logFirstValues() {
-
-  let sheet = SpreadsheetApp.getActiveSheet()
-  let data = sheet.getDataRange().getValues()
-
-  // Print each row of the data
-  let index = 0
-  while(index < data.length){  
-    let values = data[index]
-    console.log('row', index+1, values[1], values[3])
-    index++                   
-  }
-}
-</pre>
-
-Here, the variable named “values” holds the array of values from one row at a time, so the expression “values\[0\]” refers to the first name of any given row, and “values\[1\]” refers to the last name, etc.
-
-The While loop relies on a single condition to control how many times it executes its code: It examines the condition just before it begins each iteration. If the condition is true, it executes the code in the loop. To use this kind of loop to effectively process each value in an array, we need three bits of code:
-
-- A variable to keep track of which element of the array are examining in each iteration of loop: <pre class="code" data-environment="none">let index = 0</pre>
-- A statement to increment the value in the variable each time the code in the loop executes: <pre class="code" data-environment="none">index++</pre>
-- The condition that evaluates to True as long as we have data to process and switches to False when we are out of data: <pre class="code" data-environment="none">index < data.length</pre>
-
-Although there are many other approaches to designing a while loop to accomplish different tasks, this one is so common that there is another kind of loop in JavaScript that is specifically designed to work with these three control elements. It’s called the “For” loop
-
-## The `for` Loop
-
-Let’s begin our discussion of the For loop by examining a simplified version of our most recent example of the While loop:
-
-<pre class="code" data-environment="none">
-function logFirstValues() {
-
-  let data = ["George", "John", "Thomas", "James", "Samuel"]
-
-  let index = 0
-
-  while(index < data.length){  
-    console.log(index,data[index])
-    index++                   
-  }
-
-}
-</pre>
-
-This loop iterates over the values in the “data” array and logs the following:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhNy7zUl9b5JAxyJBF5nqEqKmMmz8NNyNKoWGHm0TEZDYpiqCPzC-A4iLjkgEUjDVSNCL9F3tgn7i7rUR1Me7jQJJYdAo5XK4Kug1sQhLPlmWRalUM0yYA7u3X_r6tvypHPyOh6tFdyWNoFJ3DCkX-EIStyK5GXzLL91YVBmPQ_P35OeqtzGzcX7XXGOY4/s1600/f512ac8a.png)
-
-Let’s review and name the three control elements that manage the execution of the loop:
-
-1. **The Initialization Statement:** <pre class="code" data-environment="none">let index = 0</pre>  
-   This statement executes only once in this example because it precedes the loop entirely, so it is not a _part_ of the loop.
-
-2. **The Control Condition:** <pre class="code" data-environment="none">index < data.length</pre>  
-   This condition is evaluated before the first execution of the code in the loop’s body and is evaluated again prior to each subsequent execution of the loop’s body to determine if it is time to exit the loop
-
-3. **The Increment Statement:** <pre class="code" data-environment="none">index++</pre>  
-   This statement is inside the body of the loop, so it will run for each iteration of the loop.
-
-Let’s rewrite the example using the For loop with the minimum number of changes to get it working, Then we’ll adjust it to the standard format in which a For loop is written.
-
-<pre class="code" data-environment="none">
-function logFirstValues() {
-
-  let data = ["George", "John", "Thomas", "James", "Samuel"]
-
-  let index = 0
-
-  for(      ; index < data.length;      ){  
-    console.log(index,data[index])
-    index++                   
-  }
-
-}
-
-</pre>
-
-All we have done here is change the keyword “while” to the keyword “for” and put semicolons before and after the control condition. This code executes exactly the same as the prior example.
-
-Because the For loop _requires_ all three of the control structures in this example, it has a place built into its syntax to accept them. The added semicolons delineate the three control elements for the For loop as follows: initialization statement; control condition; increment statement , as seen here:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj1OqKb_r2zZxB-lT5SBKz1NFDOYyy5ySriWKNBQ3frJC5jbx4WrxjW4WqM1ITZef1qzYf-ax3IhzMEFJrr3u97lcPS_zCmwlqvHarBt5wNn0CuAQbcuH8NkfmmbZ_NFgV9bd8zFJ6rujrbbp5N4Zg0D1TdDQ3Glff6BFzvqdOZYnlies74cZs2P6X57Xc/s1600/96d2d8c7.png)
-
-Here is the resulting For loop written in the standard format:
+Now to the members. Here's code that reads the sheet and logs the first few rows, one line per row:
 
 <pre class="code">
-function logFirstValues() {
-
-  let data = ["George", "John", "Thomas", "James", "Samuel"]
-
-  for(let index = 0; index < data.length; index++){  
-    console.log(index,data[index])                  
-  }
-}
-</pre>
-
-The important point to recognize here is that making this change does not change the order of execution. Each of the three preceding examples executes exactly the same because they are logically equivalent.
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEig49ZuYFrJ8G_ij22PPkXerxv4kgmj_YFb6LaSY5QDWt0i-K99qlQaURqB3BEFFTlSZ2oP0Ujw-r3Zl8bEX7JyESy7xHYirEzYruEOE4y7uSlsShxCTSsZaBPP6PYutgM8WA7wM8CdJ_23-Ioh1sKA5A0w86p2uHKp5uXP5XGdQd6tkYB4i5_Tni2nN5o/s1600/59a163dd.png)
-
-A reasonable student might ask, “if they are exactly the same, why do we need them both?” The answer is simple. All computer programming languages strike a balance between the complexity of the language itself and the simplicity of the programs that can be written using the language. In this case, the designers of JavaScript felt that because this kind of control structure was so common that it was worth adding a type of loop that expressly requires these three control elements and places them where they are reality accessible to a human reader, making the code easier to understand.
-
-In this example of the For loop, we are beginning a variable at specified value (0) and adding a value to it (1) with each iteration of the loop. As we begin each iteration of the loop we check the control condition and only continue the loop if it evaluates to True. This is the most common use of the for loop, to move an integer across a specified range. However, the control structures need not deal only with integers, or numbers. Here’s an example that
-
-The `for` loop is one of the most common and useful loop types in JavaScript. Unlike a `while` loop—which repeats until a condition changes—a `for` loop is ideal when you **know exactly how many times** you want something to repeat. This makes it perfect for working with arrays, because arrays always know their own length.
-
-A `for` loop gives you a clean, predictable way to move through each item in an array, one step at a time.
-
-### How a `for` Loop Works
-
-A `for` loop has three parts:
-
-<pre class="code" data-environment="none">
-function forLoopOfStrings() {
-
-  for (start; condition; step) {
-    // code that runs each time
-  }
-}
-</pre>
-
-- **start** — where the loop begins
-- **condition** — how long the loop should keep going
-- **step** — what happens after each repetition
-
-A simple example:
-
-<pre class="code">
-function forLoopOfStrings() {
-
-  for (let index = 0; index  < 5; index++) {
-    console.log(index)
-  }
-}
-</pre>
-
-This logs the numbers 0 through 4\.
-
-This loop simplifies the code in that it places the three parts of the loop’s control mechanism together where they are readily accessible to a human reader. However, it makes the code a bit more confusing for beginning programmers because the order in which these statements execute i
-
-In this example, notice that the “start” statement ( let index \= 0;) is executed only once: when the interpreter begins the loop.
-
-### Example: Using a For loop to access data in an array
-
-Let’s modify this loop to display elements from an array of string values.
-
-<pre class="code">
-function forLoopOfStrings() {
-  
-  let data = ["George", "Abigail", "Thomas", "Martha", "Penelope"]
-  
-  for (let index = 0; index < 5; index++) {
-    console.log(index, data[index])
-  }
-}
-</pre>
-
-In this example we have added an array called “data” and we are using the loop to log each of the values.
-
-### Example: Accessing Sheet Data with a `for` Loop
-
-Let’s write a `For` loop that logs the **first and last name** of each person in the dataset we used for our While Loop example.
-
-<pre class="code" data-environment="none">
-function logNames() {
+function logMembers() {
   let sheet = SpreadsheetApp.getActiveSheet()
-  let data = sheet.getDataRange().getValues()
+  let range = sheet.getDataRange()
+  let data = range.getValues()
+  console.log(data[1])
+  console.log(data[2])
+  console.log(data[3])
+}
+</pre>
 
-  // Start at index 1 to skip the header row
-  for (let rowIndex = 1; i < data.length; rowIndex++) {
-    let row = data[rowIndex]     // the current row (an array)
-    let first = row[0]           // first name
-    let last = row[1]            // last name
+Each line is the same except for the index. That's the clue for turning it into a loop. Replace the index with a variable, and change the variable each time:
 
-    console.log(first + " " + last)
+<pre class="code" data-environment="none">
+function logMembers() {
+  let sheet = SpreadsheetApp.getActiveSheet()
+  let range = sheet.getDataRange()
+  let data = range.getValues()
+  let rowIndex = 1
+  while (true) {
+    console.log(data[rowIndex])
+    rowIndex++
   }
 }
 </pre>
 
-### How This Works
+The condition here is just `true`, so this loop never stops. Don't run it. After the last member it would keep going, logging `undefined` for rows that don't exist, until you stopped it. It's here to show the part that changes: `rowIndex` starts at 1 and goes up by one each time, so `data[rowIndex]` is a different row on each pass.
 
-- `rowIndex = 1` Starting at 1 instead of 0 skips the header row
-- `rowIndex < data.length` ensures we stop after the last row
-- `rowIndex++` moves to the next row each time
-- `row` becomes the current inner array
-- `row[0]` and `row[1]` give us the first and last names
+To stop at the last row, the condition should be true while there are rows left and false once they run out. `data.length` is the number of rows, and the last row's index is `data.length - 1`, so the condition is `rowIndex < data.length`:
 
-This pattern—looping through an array and working with each row—is one of the most common tasks for Apps Script in Google Sheets.
+<pre class="code">
+function logMembers() {
+  let sheet = SpreadsheetApp.getActiveSheet()
+  let range = sheet.getDataRange()
+  let data = range.getValues()
+  let rowIndex = 1
+  while (rowIndex < data.length) {
+    console.log(data[rowIndex])
+    rowIndex++
+  }
+}
+</pre>
+
+Run it. `data.length` is 13, so `rowIndex` goes from 1 to 12, and every member is logged. When `rowIndex` reaches 13, `13 < 13` is false, and the loop ends. Starting at 1 instead of 0 skips the header row.
+
+Now changing what's logged means changing one line, not twelve. To log each member's name, pick items out of the row. Storing the row in its own variable makes that easier to read:
+
+<pre class="code">
+function logMembers() {
+  let sheet = SpreadsheetApp.getActiveSheet()
+  let range = sheet.getDataRange()
+  let data = range.getValues()
+  let rowIndex = 1
+  while (rowIndex < data.length) {
+    let row = data[rowIndex]
+    console.log(row[0], row[1])
+    rowIndex++
+  }
+}
+</pre>
+
+`row` holds one member's row at a time, so `row[0]` is always a first name and `row[1]` a last name, whichever member the loop is on.
+
+## From while to for
+
+Look at the three parts of that loop that control it:
+
+1. **Setting up** the counter, before the loop: `let rowIndex = 1`
+2. **The condition**, checked before each pass: `rowIndex < data.length`
+3. **The step**, at the end of each pass: `rowIndex++`
+
+This pattern, a counter that starts somewhere, goes up by one, and stops at a limit, is so common that JavaScript has a loop built around it. Here's the same loop with two changes: the word `while` becomes `for`, and there's a semicolon on each side of the condition:
+
+<pre class="code">
+function logMembers() {
+  let sheet = SpreadsheetApp.getActiveSheet()
+  let range = sheet.getDataRange()
+  let data = range.getValues()
+  let rowIndex = 1
+  for (; rowIndex < data.length; ) {
+    let row = data[rowIndex]
+    console.log(row[0], row[1])
+    rowIndex++
+  }
+}
+</pre>
+
+It looks odd, but it runs exactly the same. The semicolons mark out three slots in the `for` loop's parentheses: setup, condition, step. So far only the middle one is filled. Now move the setup into the first slot and the step into the third:
+
+<pre class="code">
+function logMembers() {
+  let sheet = SpreadsheetApp.getActiveSheet()
+  let range = sheet.getDataRange()
+  let data = range.getValues()
+  for (let rowIndex = 1; rowIndex < data.length; rowIndex++) {
+    let row = data[rowIndex]
+    console.log(row[0], row[1])
+  }
+}
+</pre>
+
+That's a standard **`for` loop**. It does exactly what the `while` loop did, in the same order:
+
+- The setup, `let rowIndex = 1`, runs once, before anything else.
+- The condition, `rowIndex < data.length`, is checked before each pass. If it's false, the loop ends.
+- The block runs.
+- The step, `rowIndex++`, runs after each pass, even though it's written at the top. Then the condition is checked again.
+
+That last point is the one that trips people up: the step is written before the block but runs after it. If you ever lose track, rewrite the `for` loop as the `while` loop above in your head.
+
+Why have both? Because putting all three controlling parts on one line makes the loop easy to read: you can see where it starts, where it stops and how it moves without hunting through the block. Use `for` when you're counting through a list, which is most of the time, and `while` when you're repeating until something happens.
+
+::: {.term}
+> **for loop** — A loop with three parts in its parentheses, separated by semicolons: a setup that runs once, a condition checked before each pass, and a step that runs after each pass: `for (let i = 0; i < 5; i++) { }`.
+:::
+
+::: {.note}
+> **Semicolons you can't leave out.** The semicolons inside a `for` loop's parentheses aren't the optional kind at the end of a line. They separate the three parts, and they're required.
+:::
+
+## Asking for a Loop
+
+Back to the chat. With loops learned, you can ask again:
+
+::: {.ai-conversation prompt="I've now learned while loops and for loops, and ++ and --. Rewrite it with a loop." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="arrays" transcript="loops/each-member"}
+> Great, loops make this much shorter! Here's the same task using a `for` loop.
+>
+> ```javascript
+> function logMemberNames() {
+>   // Get the Members sheet
+>   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Members")
+>
+>   // Get all the data in the sheet as an array of arrays
+>   let data = sheet.getDataRange().getValues()
+>
+>   // Start i at 1 to skip row 0 (the headers)
+>   // Keep going while i is less than the number of rows
+>   // Add 1 to i after each loop
+>   for (let i = 1; i < data.length; i++) {
+>     let firstName = data[i][0]
+>     let lastName = data[i][1]
+>     Logger.log(firstName + " " + lastName)
+>   }
+> }
+> ```
+>
+> **What each part does:**
+> - `data.length` is the total number of rows, including the header row, so the loop stops right after the last real row.
+> - `i` starts at `1` instead of `0` so it skips the header row and starts on the first member.
+> - Inside the loop, `data[i][0]` and `data[i][1]` get the first and last name for whichever row `i` currently points to.
+> - `firstName` and `lastName` are stored in their own variables just to make the `Logger.log` line easier to read.
+> - Each time through the loop, `i++` increases `i` by 1, moving to the next row, until `i` reaches `data.length` and the loop stops.
+:::
+
+**Read.** It's the loop you just built, with two small differences. The counter is called `i`, a very common name for a loop counter, short for *index*. And the reply stores each name in its own variable before logging it, where the book's version used a `row` variable. Both are fine. Twelve lines became one loop, and it would work just as well for 200 members.
+
+Loops get useful when you combine them with the decisions from [Making Decisions](decisions){.book-link}. The club wants to know who hasn't paid their dues:
+
+::: {.ai-conversation prompt="Now change it to log only the members who haven't paid their dues." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="arrays" transcript="loops/each-member"}
+> Simple change — just add an `if` inside the loop to check column D (Dues Paid).
+>
+> ```javascript
+> function logMemberNames() {
+>   // Get the Members sheet
+>   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Members")
+>
+>   // Get all the data in the sheet as an array of arrays
+>   let data = sheet.getDataRange().getValues()
+>
+>   // Start i at 1 to skip row 0 (the headers)
+>   // Keep going while i is less than the number of rows
+>   // Add 1 to i after each loop
+>   for (let i = 1; i < data.length; i++) {
+>     let firstName = data[i][0]
+>     let lastName = data[i][1]
+>     let duesPaid = data[i][3]
+>
+>     // Only log this member if their dues are not paid
+>     if (duesPaid === false) {
+>       Logger.log(firstName + " " + lastName)
+>     }
+>   }
+> }
+> ```
+>
+> **What's new:**
+> - `duesPaid` grabs column D (index `3`, since A is 0, B is 1, C is 2, D is 3) for the current row.
+> - The `if (duesPaid === false)` line checks whether that checkbox is unchecked, since the checkbox stores an actual boolean `true` or `false`, not text.
+> - The `Logger.log` line moved inside the `if` block, so it only runs when the condition is true — meaning only unpaid members get logged.
+:::
+
+The `if` sits inside the loop, so it's checked once for every member, and only the unpaid ones are logged. Because you described Dues Paid as a checkbox, the assistant knew the value is a real boolean and compared it with `false`.
+
+Then a total:
+
+::: {.ai-conversation prompt="Now add up everyone's volunteer hours and log the total." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="arrays" transcript="loops/each-member"}
+> This is a new task, so I'll write it fresh without the dues filter from before.
+>
+> ```javascript
+> function logTotalVolunteerHours() {
+>   // Get the Members sheet
+>   let sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Members")
+>
+>   // Get all the data in the sheet as an array of arrays
+>   let data = sheet.getDataRange().getValues()
+>
+>   // This will keep a running total of everyone's hours
+>   let totalHours = 0
+>
+>   // Start i at 1 to skip row 0 (the headers)
+>   for (let i = 1; i < data.length; i++) {
+>     let hours = data[i][4]
+>     totalHours = totalHours + hours
+>   }
+>
+>   Logger.log(totalHours)
+> }
+> ```
+>
+> **What each part does:**
+> - `totalHours` starts at `0` before the loop, so we have a place to keep adding numbers to.
+> - `hours` grabs column E (index `4`) for the current row, which is that member's Volunteer Hours.
+> - `totalHours = totalHours + hours` takes the running total, adds this row's hours, and stores the new sum back into `totalHours`.
+> - After the loop finishes going through all the members, `Logger.log(totalHours)` prints the final sum.
+:::
+
+This is a pattern you'll use constantly, called a **running total**. A variable starts at 0 *before* the loop, and each pass adds one member's hours to it. When the loop ends, it holds the sum. The variable has to be created before the loop: if `let totalHours = 0` were inside the block, it would be reset to 0 on every pass.
+
+Here are both tasks in the book's style, in one function. Run it, and check the results against the sheet. The unpaid members should be Ben, Elena, Gabe and Jordan, and the total should be 123:
+
+<pre class="code">
+function reportMembers() {
+  let spreadsheet = SpreadsheetApp.getActiveSpreadsheet()
+  let sheet = spreadsheet.getSheetByName("Members")
+  let range = sheet.getDataRange()
+  let data = range.getValues()
+  let totalHours = 0
+
+  // start at 1 to skip the header row
+  for (let rowIndex = 1; rowIndex < data.length; rowIndex++) {
+    let row = data[rowIndex]
+    let fullName = `${row[0]} ${row[1]}`
+    let duesPaid = row[3]
+    let hours = row[4]
+
+    if (duesPaid === false) {
+      console.log(`${fullName} hasn't paid dues`)
+    }
+    totalHours = totalHours + hours
+  }
+
+  console.log(`Total volunteer hours: ${totalHours}`)
+}
+</pre>
+
+Try changing it: log the members with more than 10 hours, or count the unpaid members instead of listing them. (For a count, start a variable at 0 and add 1 to it inside the `if`.)
+
+## When a Loop Never Ends
+
+Sooner or later, you'll write a loop that never stops. Here's a typical one. Can you see the problem?
+
+<pre class="code" data-environment="none">
+function logFirstNames() {
+  let sheet = SpreadsheetApp.getActiveSheet()
+  let range = sheet.getDataRange()
+  let data = range.getValues()
+  let rowIndex = 1
+  while (rowIndex < data.length) {
+    let firstName = data[rowIndex][0]
+    console.log(firstName)
+  }
+}
+</pre>
+
+When it runs in Apps Script, it logs "Maya" over and over, and never finishes. Here's what an assistant said when asked about it, in a new chat with the learner profile:
+
+::: {.ai-conversation prompt="My script never finishes. It keeps running until I click Stop. Why? Explain it, but don't fix it yet. (Then paste the code above.)" assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="arrays" transcript="loops/never-finishes"}
+> Your `while` loop's condition is `rowIndex < data.length`, but nothing inside the loop ever changes `rowIndex`. You set it to `1` before the loop starts, and then inside the loop you only read `data[rowIndex][0]` and log it — you never do something like `rowIndex = rowIndex + 1`.
+>
+> Since `rowIndex` stays `1` forever, the condition `rowIndex < data.length` never becomes false, so the loop never ends. It just keeps logging the same row's first name over and over until you manually stop it.
+:::
+
+The assistant spotted it immediately: nothing inside the loop changes `rowIndex`, so the condition `rowIndex < data.length` stays true forever. This is an **infinite loop**. The fix is the missing `rowIndex++` at the end of the block.
+
+::: {.term}
+> **Infinite loop** — A loop whose condition never becomes false, so it never ends. Usually caused by forgetting to change the variable the condition depends on.
+:::
+
+`for` loops are less prone to this, because the step is written right at the top where it's hard to forget. That's one more reason to prefer them for counting.
+
+If your script runs much longer than you expect, click **Stop** in the Apps Script toolbar. If you don't, Apps Script stops it for you after six minutes, the longest a script is allowed to run.
+
+::: {.caution}
+> **Don't run an infinite loop in this book's editors.** The code editors on these pages run in your browser tab, and a loop that never ends can freeze the tab. That's why the loops above that never end are shown but can't be run. If a page ever stops responding, close the tab and reopen it.
+:::
+
+## Reading for Danger
+
+Loops and `setValues` let code change a lot of data very quickly, which makes the Read step more important than ever. Here's a request for something that sounds harmless, sample data for practicing:
+
+::: {.ai-conversation prompt="Write an Apps Script function that fills my sheet with sample data for a club member list: a header row with First Name, Last Name, Email, Dues Paid and Volunteer Hours, and five made-up members." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="arrays" transcript="loops/sample-data"}
+> Here's a function that builds the sample data as an array of arrays, then writes it all to the sheet in one step with `setValues()`.
+>
+> ```javascript
+> function fillClubMemberList() {
+>   // Get the active sheet so we can write data into it
+>   let sheet = SpreadsheetApp.getActiveSheet()
+>
+>   // Build the header row as an array
+>   let headerRow = ["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"]
+>
+>   // Build each member row as an array
+>   let member1 = ["Ava", "Chen", "ava.chen@example.com", "Yes", 12]
+>   let member2 = ["Liam", "Torres", "liam.torres@example.com", "No", 5]
+>   let member3 = ["Maya", "Patel", "maya.patel@example.com", "Yes", 20]
+>   let member4 = ["Noah", "Kim", "noah.kim@example.com", "Yes", 8]
+>   let member5 = ["Zoe", "Okafor", "zoe.okafor@example.com", "No", 0]
+>
+>   // Combine the header and all member rows into one array of arrays
+>   let allData = [headerRow, member1, member2, member3, member4, member5]
+>
+>   // Get the range that matches the size of our data (6 rows, 5 columns)
+>   let range = sheet.getRange("A1:E6")
+>
+>   // Write all the data into the sheet at once
+>   range.setValues(allData)
+> }
+> ```
+>
+> **What's happening here:**
+> - Each row of data (header and members) is its own array, just like the `data[row][column]` idea you've learned.
+> - `allData` is an array of arrays — six rows total, each with five items.
+> - `getRange("A1:E6")` selects a block of cells matching the shape of our data (6 rows, 5 columns).
+> - `setValues(allData)` writes the whole block of data into the sheet in one step, instead of writing cell by cell.
+>
+> To run it, select `fillClubMemberList` in the Apps Script editor's function dropdown and click **Run**.
+:::
+
+The code is clear, and you can explain every line. Before you run it, though, ask the question from [Working with an AI Assistant](ai-assistant){.book-link}: *does it change or delete anything?*
+
+It does. `sheet.getRange("A1:E6")` with `setValues` writes over cells A1 to E6 of the *active* sheet, whatever is there. If you ran it while the real Members sheet was showing, it would replace Maya, Ava, Ben, Cam and Dev with made-up people. Rows 7 to 13 would be left alone, so you'd end up with a mix of real and fake members, with no warning and no error. (**Edit**, then **Undo**, in Google Sheets can usually reverse it, if you notice in time.)
+
+There's a second, quieter problem. The sample data uses the text "Yes" and "No" for Dues Paid, but your real sheet uses checkboxes, which are `true` and `false`. Code that checks `duesPaid === false` would find no unpaid members in this sample data. Practice data that doesn't match the real data's types can make working code look broken, or broken code look fine.
+
+Neither problem is the assistant's fault. You asked it to fill "my sheet," and you didn't say what types to use. But it didn't warn you either. Reading for danger means looking for three things before you run code that works with real data:
+
+- **Which sheet** it changes. "Active sheet" means whichever tab is showing when you click Run.
+- **Which cells** it changes, and whether anything is already there.
+- **Whether it deletes** anything. Watch for methods with names like `clear`, `delete` or `remove`.
+
+Then run it on a practice copy. In Google Sheets, **File**, then **Make a copy**, gives you a whole spreadsheet to experiment on.
+
+## Loops You'll See in Other Code
+
+Here's the same kind of request, the unpaid members and the total hours, sent with the sheet description but without a learner profile:
+
+::: {.ai-conversation prompt="My sheet is named Members. Row 1 has headers, and each row after that is one club member (rows 2 to 13). Column A is First Name, B is Last Name, C is Email, D is Dues Paid (a checkbox, so true or false), and E is Volunteer Hours (a number). Write Apps Script that logs the names of members who haven't paid their dues, and the total volunteer hours for all members." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="none" transcript="loops/no-profile"}
+> ```javascript
+> function checkDuesAndVolunteerHours() {
+>   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Members");
+>   var data = sheet.getRange(2, 1, 12, 5).getValues(); // Rows 2-13, columns A-E
+>
+>   var unpaidMembers = [];
+>   var totalVolunteerHours = 0;
+>
+>   for (var i = 0; i < data.length; i++) {
+>     var firstName = data[i][0];
+>     var lastName = data[i][1];
+>     var duesPaid = data[i][3];
+>     var volunteerHours = data[i][4];
+>
+>     if (duesPaid === false) {
+>       unpaidMembers.push(firstName + " " + lastName);
+>     }
+>
+>     totalVolunteerHours += Number(volunteerHours) || 0;
+>   }
+>
+>   Logger.log("Members who haven't paid dues:");
+>   if (unpaidMembers.length === 0) {
+>     Logger.log("None — everyone has paid!");
+>   } else {
+>     unpaidMembers.forEach(function(name) {
+>       Logger.log(name);
+>     });
+>   }
+>
+>   Logger.log("Total volunteer hours: " + totalVolunteerHours);
+> }
+> ```
+>
+> **How it works:**
+> - `getRange(2, 1, 12, 5)` grabs rows 2–13 (12 rows) and columns A–E (5 columns).
+> - It loops through each row, checking column D (index 3) for `false` to flag unpaid dues.
+> - It adds up column E (index 4) for total volunteer hours, using `Number(...) || 0` to safely handle any blank cells.
+> - Results are printed with `Logger.log()`, which you can view via **View > Logs** (or `Ctrl+Enter` in the Apps Script editor).
+>
+> **To run it:**
+> 1. Open your spreadsheet.
+> 2. Go to **Extensions > Apps Script**.
+> 3. Paste this code in.
+> 4. Click the ▶️ **Run** button (make sure `checkDuesAndVolunteerHours` is selected as the function).
+> 5. Check the execution log for output.
+>
+> Let me know if you'd like this to also write results into the sheet itself instead of just logging them!
+:::
+
+A lesson ago, much of this would have been unreadable. Now you can follow most of it:
+
+- **The `for` loop** is the one you know, starting at 0 because the range starts at row 2, so there's no header row in `data`.
+- **`getRange(2, 1, 12, 5)`** is another way to write a range, with numbers: start at row 2, column 1, and take 12 rows and 5 columns. That's A2:E13.
+- **`unpaidMembers.push(...)`** collects the unpaid names in an array to log later.
+- **`totalVolunteerHours += ...`** is the `+=` shortcut for a running total.
+- **`Number(volunteerHours) || 0`** converts the hours to a number, and uses 0 if that fails. `||` here isn't the *or* you learned in a condition; it picks the right-hand value when the left one is empty, zero or `NaN`. You don't need this trick, but now you know what it does.
+
+Two things deserve a closer look. The first is the hard-coded 12 in `getRange(2, 1, 12, 5)`. When the club gets its thirteenth member, this code will silently leave them out. Code that uses `getDataRange()` and `data.length` adjusts to the data automatically.
+
+The second is **`forEach`**, at the end:
+
+<pre class="code" data-environment="none">
+unpaidMembers.forEach(function(name) {
+  Logger.log(name);
+});
+</pre>
+
+`forEach` is a method that arrays have. It runs a function once for each item in the array, and hands the item to the function each time, here under the name `name`. So this does the same thing as:
+
+<pre class="code" data-environment="none">
+for (let i = 0; i < unpaidMembers.length; i++) {
+  let name = unpaidMembers[i]
+  Logger.log(name)
+}
+</pre>
+
+`forEach` is shorter, and you'll see it often, along with another form, `for (let name of unpaidMembers)`, called *for...of*, which does the same. Both hide the counter, which is exactly why this book asks for the `for` loop with an index for now: you can see every step. You'll learn to use these shorter forms later in the book.
+
+(The instructions in this reply also mention **View**, then **Logs**, the old editor menu you saw in [Arrays](arrays){.book-link}.)
+
+## Your Learner Profile
+
+::: {.ai-profile lesson="loops"}
+Add rules:
+
+- Use for loops with an index, such as for (let i = 0; i < data.length; i++). Don't use forEach or for...of.
+
+Add to "What I know so far":
+
+- while loops and for loops
+- the ++, -- and += shortcuts
+- running totals: a variable that starts at 0 before a loop and is added to inside it
+- looping over the rows from getValues(), starting at 1 to skip a header row
+- infinite loops, and why they happen
+:::
+
+What's new:
+
+- **"Use for loops with an index."** Without this rule, an assistant may use `forEach` or `for...of`, which you can recognize now but haven't practiced. A `for` loop with an index shows you exactly where the loop starts, where it stops and which row it's on, which makes it easier to check. This rule will come off later in the book, when you'll use the shorter forms.
+- **Five new items** under "What I know so far," covering the loops and patterns in this lesson.
+
+## Summary
+
+A loop repeats a block of code. A `while` loop repeats as long as its condition is true, so something inside it has to change the condition eventually, or it becomes an infinite loop. A counting `while` loop has three parts: a setup, a condition and a step. A `for` loop puts all three in its parentheses, which makes it the natural choice for going through the rows of a sheet: start at 1 to skip the header, and stop before `data.length`. Inside a loop, an `if` can pick out certain rows, and a running total can add up a column. Loops make code powerful, and code that changes many cells at once deserves careful reading: check which sheet and which cells it changes, and try it on a copy first. In code you find, you'll also see `forEach` and `for...of`, which do the same job with the counter hidden. So far, each of your scripts has been one function. In the next lesson, you'll learn to split code into several functions that work together.

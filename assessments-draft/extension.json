@@ -1,0 +1,64 @@
+{
+  "title": "Building a Browser Extension",
+  "lesson": "extension",
+  "text": "These questions check that you understand how an extension is put together, how it can send data to Apps Script, and why data must be checked where it's stored.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "An extension's popup.html has <script>alert(\"hi\")</script> between its tags, and nothing happens. Why?",
+      "choices": [
+        "alert doesn't work in extensions",
+        "Manifest V3 doesn't run JavaScript written inside the HTML; it must be in a separate .js file",
+        "The manifest is missing a name",
+        "Popups can't run JavaScript"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "In doPost(e), where is the JSON text that the extension sent?",
+      "choices": ["e.namedValues", "e.parameter", "e.postData.contents", "e.body"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which permission should make you think twice before installing an extension that only adds a notes button?",
+      "choices": [
+        "Read and change all your data on all websites",
+        "Show a popup",
+        "Store its own settings",
+        "None; extensions can't see your data"
+      ],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "The popup checks that hours is a number before sending. Why must doPost check it again?",
+      "answer": "The web app's address is public (and readable in the extension's code), so anyone can send data straight to it without the popup. Checks in the page are convenience for honest users; only checks where data is stored protect it.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "doPost returns {\"status\": \"error\", \"message\": \"...\"} when it rejects a shift, but the popup still shows \"Shift logged!\". Explain why, and how to fix it.",
+      "answer": "The error is reported inside a successful reply, so response.ok is true and the popup only checked ok. Fix: read the reply with await response.json() and check that its status is \"success\"; otherwise show reply.message.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a function checkHarvest(harvest) that returns \"\" if harvest has a bed (one of \"B1\" to \"B8\"), a crop (not missing or empty) and kilograms (a number greater than 0 and at most 50), and otherwise returns a message. Then write testCheckHarvest, which logs the result for { bed: \"B3\", crop: \"Bean\", kilograms: 2.6 }, { bed: \"B9\", crop: \"Bean\", kilograms: 2.6 } and { bed: \"B3\", kilograms: 2.6 }.",
+      "start": "function testCheckHarvest() {\n\n}\n\nfunction checkHarvest(harvest) {\n\n}",
+      "key": ["function testCheckHarvest() {\n  console.log(checkHarvest({ bed: \"B3\", crop: \"Bean\", kilograms: 2.6 }))\n  console.log(checkHarvest({ bed: \"B9\", crop: \"Bean\", kilograms: 2.6 }))\n  console.log(checkHarvest({ bed: \"B3\", kilograms: 2.6 }))\n}\n\nfunction checkHarvest(harvest) {\n  const beds = [\"B1\", \"B2\", \"B3\", \"B4\", \"B5\", \"B6\", \"B7\", \"B8\"]\n  let bedIsValid = false\n  for (let i = 0; i < beds.length; i++) {\n    if (harvest.bed === beds[i]) {\n      bedIsValid = true\n    }\n  }\n  if (bedIsValid === false) {\n    return \"Unknown bed\"\n  }\n  if (harvest.crop === undefined || harvest.crop === \"\") {\n    return \"Missing crop\"\n  }\n  const kilograms = Number(harvest.kilograms)\n  if (isNaN(kilograms) || kilograms <= 0 || kilograms > 50) {\n    return \"Kilograms must be between 0 and 50\"\n  }\n  return \"\"\n}"],
+      "lines": 24,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile and the garden context. Ask for a small extension popup that logs a harvest (bed, crop, kilograms) to the Harvests sheet through doPost. (1) Paste the reply. (2) Did it follow the new rule, checking data in doPost? (3) Read the two halves together: when doPost rejects a harvest, what does the popup show? (4) Load it unpacked, test a good and a bad harvest, and report the results.",
+      "answer": "Full credit: notes whether doPost validates; traces an error from doPost to what the popup shows (and fixes it if needed); reports tests of a good and a bad harvest. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

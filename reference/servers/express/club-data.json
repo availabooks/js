@@ -1,0 +1,40 @@
+{
+  "members": [
+    {"firstName":"Maya","lastName":"Thompson","email":"maya.thompson@example.com"},
+    {"firstName":"Ava","lastName":"Lopez","email":"ava.lopez@example.com"},
+    {"firstName":"Ben","lastName":"Okafor","email":"ben.okafor@example.com"},
+    {"firstName":"Cam","lastName":"Nguyen","email":"cam.nguyen@example.com"},
+    {"firstName":"Dev","lastName":"Patel","email":"dev.patel@example.com"},
+    {"firstName":"Elena","lastName":"Rossi","email":"elena.rossi@example.com"},
+    {"firstName":"Farah","lastName":"Haddad","email":"farah.haddad@example.com"},
+    {"firstName":"Gabe","lastName":"Martinez","email":"gabe.martinez@example.com"},
+    {"firstName":"Hana","lastName":"Kim","email":"hana.kim@example.com"},
+    {"firstName":"Isaac","lastName":"Cohen","email":"isaac.cohen@example.com"},
+    {"firstName":"Jordan","lastName":"Lee","email":"jordan.lee@example.com"},
+    {"firstName":"Keisha","lastName":"Brown","email":"keisha.brown@example.com"}
+  ],
+  "slots": [
+    {"id":1,"date":"2027-06-05","task":"watering","start":"08:00","end":"09:00","capacity":2},
+    {"id":2,"date":"2027-06-05","task":"harvesting","start":"09:00","end":"11:00","capacity":3},
+    {"id":3,"date":"2027-06-12","task":"watering","start":"08:00","end":"09:00","capacity":2},
+    {"id":4,"date":"2027-06-12","task":"weeding","start":"09:00","end":"11:00","capacity":4},
+    {"id":5,"date":"2027-06-19","task":"watering","start":"08:00","end":"09:00","capacity":2},
+    {"id":6,"date":"2027-06-19","task":"planting","start":"09:00","end":"11:00","capacity":3},
+    {"id":7,"date":"2027-06-26","task":"watering","start":"08:00","end":"09:00","capacity":2},
+    {"id":8,"date":"2027-06-26","task":"harvesting","start":"09:00","end":"11:00","capacity":3}
+  ],
+  "slotSignups": [
+    {"id":1,"slotId":1,"memberEmail":"hana.kim@example.com"},
+    {"id":2,"slotId":1,"memberEmail":"farah.haddad@example.com"},
+    {"id":3,"slotId":2,"memberEmail":"ava.lopez@example.com"},
+    {"id":4,"slotId":3,"memberEmail":"keisha.brown@example.com"},
+    {"id":5,"slotId":4,"memberEmail":"dev.patel@example.com"},
+    {"id":6,"slotId":4,"memberEmail":"keisha.brown@example.com"},
+    {"id":7,"slotId":5,"memberEmail":"maya.thompson@example.com"},
+    {"id":8,"slotId":5,"memberEmail":"ben.okafor@example.com"},
+    {"id":9,"slotId":7,"memberEmail":"ben.okafor@example.com"},
+    {"id":10,"slotId":8,"memberEmail":"keisha.brown@example.com"},
+    {"id":11,"slotId":8,"memberEmail":"hana.kim@example.com"},
+    {"id":12,"slotId":8,"memberEmail":"gabe.martinez@example.com"}
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "lesson": "variables",
+  "name": "add-hours",
+  "assistant": "Claude",
+  "attempts": [
+    {
+      "profile": "apps-script",
+      "model": "claude-sonnet-5",
+      "captured": "2026-09-27T02:15:12.753Z",
+      "messages": [
+        {
+          "role": "user",
+          "text": "I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.\n\nWhen you write code for me:\n- Use only the concepts listed below under \"What I know so far.\" If a task needs something I haven't learned, tell me what it is instead of using it.\n- Don't use semicolons at the ends of lines.\n- Keep the code short and simple, and explain what each line does in plain language.\n- Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.\n\nWhat I know so far:\n- statements and expressions\n- console.log to display values, including several values separated by commas\n- text in quote marks\n- joining strings with +\n- numbers and the arithmetic operators + - * /\n- comments that start with //\n- giving a value a name with let, for example let name = \"Ava\"\n- reading error messages\n- what a function is: a named group of steps written as function name() { }\n- choosing which function to run in the Apps Script editor\n- reading output in the Execution log\n- methods, used with a dot, such as SpreadsheetApp.getActiveSheet().getRange(\"A1\").setValue(\"Hello\") to write into a cell",
+          "isProfile": true
+        },
+        {
+          "role": "assistant",
+          "text": "Got it! Here's how I'll work with you:\n\n- I'll only use the concepts you listed\n- No semicolons\n- One function per task, no parameters, no extra helper functions\n- Short, simple code with plain-language explanations\n\nHere's a quick example so you can see the style, using things you already know:\n\n```javascript\nfunction greetAndFillCell() {\n  // let creates a name for a value, here a greeting message\n  let greeting = \"Hello\" + \", \" + \"Ava\"\n\n  // console.log shows the value in the Execution log\n  console.log(greeting)\n\n  // this method gets the active sheet, picks cell A1, and writes the greeting into it\n  SpreadsheetApp.getActiveSheet().getRange(\"A1\").setValue(greeting)\n}\n```\n\n**What each line does:**\n1. `let greeting = \"Hello\" + \", \" + \"Ava\"` — joins three pieces of text into one string and gives it the name `greeting`\n2. `console.log(greeting)` — prints the value of `greeting` so you can check it in the log\n3. `SpreadsheetApp.getActiveSheet().getRange(\"A1\").setValue(greeting)` — finds the active sheet, selects cell A1, and puts the greeting text into it\n\nWhat would you like to build or practice next? I can write a function for it following these same rules.",
+          "modelVersion": "claude-sonnet-5",
+          "reusedFrom": "2026-09-27T02:14:34.689Z"
+        },
+        {
+          "role": "user",
+          "text": "Write an Apps Script function that adds 2 to the number in cell E3 and writes the new total back into E3. Put each step on its own line."
+        },
+        {
+          "role": "assistant",
+          "text": "```javascript\nfunction addTwoToE3() {\n  // this method gets the active sheet, picks cell E3, and reads its current value\n  let currentValue = SpreadsheetApp.getActiveSheet().getRange(\"E3\").getValue()\n\n  // adds 2 to the value we just read\n  let newValue = currentValue + 2\n\n  // this method gets the active sheet, picks cell E3 again, and writes the new value into it\n  SpreadsheetApp.getActiveSheet().getRange(\"E3\").setValue(newValue)\n}\n```\n\n**What each line does:**\n1. `let currentValue = SpreadsheetApp.getActiveSheet().getRange(\"E3\").getValue()` — gets the active sheet, selects cell E3, and reads whatever number is currently there, giving it the name `currentValue`\n2. `let newValue = currentValue + 2` — adds 2 to that number and gives the result the name `newValue`\n3. `SpreadsheetApp.getActiveSheet().getRange(\"E3\").setValue(newValue)` — selects cell E3 again and writes `newValue` into it, replacing the old number",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        },
+        {
+          "role": "user",
+          "text": "When I ran this, E3 changed from 12 to 122 instead of 14. Why? Explain it, but don't fix it yet."
+        },
+        {
+          "role": "assistant",
+          "text": "Good catch — this is a classic JavaScript surprise!\n\nHere's what's happening: the `+` operator behaves differently depending on what kind of value it's working with.\n\n- If both values are **numbers**, `+` does **addition**: `12 + 2` → `14`\n- If either value is **text** (a string), `+` does **joining** (concatenation): `\"12\" + 2` → `\"122\"`\n\nYou got `122`, which means `currentValue` was actually the *text* `\"12\"`, not the *number* `12`. When you wrote `currentValue + 2`, JavaScript joined `\"12\"` and `2` together as strings instead of adding them.\n\nThis usually happens because `getValue()` reads whatever is in the cell, and if that cell is formatted as **plain text** (rather than a number format), Google Sheets stores it as a string, so `getValue()` hands back a string too.\n\nSo the bug isn't in your math — it's that `currentValue` wasn't the type of value you expected. Want me to show you how to check this, or move on to fixing it?",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        },
+        {
+          "role": "user",
+          "text": "Now show me how to fix it."
+        },
+        {
+          "role": "assistant",
+          "text": "Since you haven't learned the `Number()` function yet (which is the usual tool for this), I'll show you a fix using only what you know: arithmetic operators.\n\nHere's the trick — multiplying by 1 forces JavaScript to treat the value as a number, because `*` (unlike `+`) only makes sense for numbers, so JavaScript converts the text into a number first.\n\n```javascript\nfunction addTwoToE3() {\n  // gets the active sheet, picks cell E3, and reads its current value\n  let currentValue = SpreadsheetApp.getActiveSheet().getRange(\"E3\").getValue()\n\n  // multiplying by 1 converts currentValue to a real number, even if it was text\n  let numberValue = currentValue * 1\n\n  // now this addition works correctly, since numberValue is a number\n  let newValue = numberValue + 2\n\n  // gets the active sheet, picks cell E3 again, and writes the new value into it\n  SpreadsheetApp.getActiveSheet().getRange(\"E3\").setValue(newValue)\n}\n```\n\n**What's new here:**\n- `let numberValue = currentValue * 1` — takes whatever `currentValue` is (text or number) and multiplies by 1. If it's text like `\"12\"`, JavaScript converts it to the number `12` first, then multiplies, giving you a real number back.\n\nNow `numberValue + 2` will always do proper math instead of joining text.\n\n(By the way, there's a built-in tool called `Number()` made exactly for this kind of conversion — I didn't use it since it's not on your list yet, but it's worth knowing it exists for later.)",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        },
+        {
+          "role": "user",
+          "text": "Cell E3 holds a club member's volunteer hours. Rename the variables so the names describe what they hold."
+        },
+        {
+          "role": "assistant",
+          "text": "```javascript\nfunction addTwoToE3() {\n  // gets the active sheet, picks cell E3, and reads the member's current volunteer hours\n  let currentHours = SpreadsheetApp.getActiveSheet().getRange(\"E3\").getValue()\n\n  // multiplying by 1 converts currentHours to a real number, even if it was text\n  let hoursAsNumber = currentHours * 1\n\n  // adds 2 more volunteer hours to the total\n  let updatedHours = hoursAsNumber + 2\n\n  // gets the active sheet, picks cell E3 again, and writes the updated hours into it\n  SpreadsheetApp.getActiveSheet().getRange(\"E3\").setValue(updatedHours)\n}\n```\n\n**What changed:**\n- `currentValue` → `currentHours` — the number of volunteer hours currently in E3\n- `numberValue` → `hoursAsNumber` — the same hours, guaranteed to be a real number\n- `newValue` → `updatedHours` — the hours after adding 2 more\n\nThe logic is exactly the same — only the names changed to describe what the data actually represents.",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        }
+      ]
+    }
+  ]
+}

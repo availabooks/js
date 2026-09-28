@@ -1,0 +1,16 @@
+date,bed_id,crop,kilograms,logged_by
+2027-07-01,B1,Tomato,2.6,dev.patel@example.com
+2027-07-01,B5,Tomato,0.9,ava.lopez@example.com
+2027-07-01,B8,Cucumber,2.6,isaac.cohen@example.com
+2027-07-03,B5,Pepper,2,elena.rossi@example.com
+2027-07-05,B7,Mint,3.6,farah.haddad@example.com
+2027-07-07,B3,Bean,3.7,hana.kim@example.com
+2027-07-08,B1,Tomato,2.2,elena.rossi@example.com
+2027-07-09,B7,Mint,2.4,keisha.brown@example.com
+2027-07-10,B8,Cucumber,2.9,maya.thompson@example.com
+2027-07-13,B1,Tomato,1.4,gabe.martinez@example.com
+2027-07-16,B8,Cucumber,3.9,farah.haddad@example.com
+2027-07-17,B7,Mint,2.5,ben.okafor@example.com
+2027-08-10,B8,Squash,1.9,gabe.martinez@example.com
+2027-08-16,B8,Squash,2.3,dev.patel@example.com
+

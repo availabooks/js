@@ -1,0 +1,24 @@
+{
+  "lesson": "welcome",
+  "name": "say-hello",
+  "assistant": "Gemini",
+  "attempts": [
+    {
+      "profile": "none",
+      "model": "gemini-3.8-flash",
+      "captured": "2026-09-26T14:58:13.084Z",
+      "messages": [
+        {
+          "role": "user",
+          "text": "Write a JavaScript program that says hello."
+        },
+        {
+          "role": "model",
+          "text": "Here is the simplest way to do it in JavaScript:\n\n```javascript\nconsole.log(\"Hello, World!\");\n```\n\n### Other ways to say hello in JavaScript:\n\n**1. As a browser popup:**\n```javascript\nalert(\"Hello, World!\");\n```\n\n**2. Writing it directly onto a webpage:**\n```javascript\ndocument.write(\"Hello, World!\");\n```",
+          "modelVersion": "gemini-3.8-flash",
+          "finishReason": "STOP"
+        }
+      ]
+    }
+  ]
+}

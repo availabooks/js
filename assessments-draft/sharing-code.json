@@ -1,0 +1,64 @@
+{
+  "title": "Sharing and Reusing Code",
+  "lesson": "sharing-code",
+  "text": "These questions check that you can share code between modules and workbooks, load libraries safely, and decide how far to trust code from elsewhere.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A JADE code module is named Report Tools and contains function summarize(rows). How do you call it from another module?",
+      "choices": ["Report Tools.summarize(rows)", "jade_modules.report_tools.summarize(rows)", "jade_modules.ReportTools.summarize(rows)", "summarize(rows)"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A classmate sends you a gist ID for a JADE module you haven't read. Which is the safer first step?",
+      "choices": [
+        "Add await Jade.load_gist(id) to your auto_exec",
+        "Import it with Jade.import_code_module, then read it before running anything",
+        "Run it on your real workbook to see what it does",
+        "Paste the ID into your platform profile"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which library address is pinned to a version?",
+      "choices": [
+        "https://cdn.jsdelivr.net/npm/chart.js",
+        "https://cdn.jsdelivr.net/npm/chart.js@latest",
+        "https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js",
+        "chart.js"
+      ],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant writes a loader named autoExec, and it never runs. Why did the assistant use that name, and what should you add to your platform profile?",
+      "answer": "Its style rule said to use camelCase, and it applied that to a name JADE requires (auto_exec), so JADE never found it. Add a line saying JADE's required names, like auto_exec, win over the camelCase rule.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain what happens every time a workbook with await Jade.load_gist(\"...\", \"harvest_app\") in its auto_exec is opened, and what that means for trust.",
+      "answer": "JADE checks the gist and runs its current code (downloading again only if it changed), with full access to the workbook. Whoever controls the gist controls what runs; changes reach every workbook automatically. Use it for code whose author you trust; never put secrets in a gist.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a function kilogramsByBed(harvestRows) that returns an object of total kilograms by bed ID, from rows where row 0 is the header, B (index 1) is Bed ID and D (index 3) is Kilograms. Then write testKilogramsByBed, which logs JSON.stringify(kilogramsByBed(rows)) for rows = [[\"Date\", \"Bed ID\", \"Crop\", \"Kilograms\"], [\"2027-04-18\", \"B2\", \"Radish\", 1.2], [\"2027-05-13\", \"B4\", \"Spinach\", 2.4], [\"2027-05-15\", \"B2\", \"Lettuce\", 3.9]].",
+      "start": "function testKilogramsByBed() {\n\n}\n\nfunction kilogramsByBed(harvestRows) {\n\n}",
+      "key": ["function testKilogramsByBed() {\n  const rows = [[\"Date\", \"Bed ID\", \"Crop\", \"Kilograms\"], [\"2027-04-18\", \"B2\", \"Radish\", 1.2], [\"2027-05-13\", \"B4\", \"Spinach\", 2.4], [\"2027-05-15\", \"B2\", \"Lettuce\", 3.9]]\n  console.log(JSON.stringify(kilogramsByBed(rows)))\n}\n\nfunction kilogramsByBed(harvestRows) {\n  const totals = {}\n  for (let i = 1; i < harvestRows.length; i++) {\n    const bedId = harvestRows[i][1]\n    if (totals[bedId] === undefined) {\n      totals[bedId] = 0\n    }\n    totals[bedId] += harvestRows[i][3]\n  }\n  return totals\n}"],
+      "lines": 14,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your learner profile and your updated JADE platform profile. Ask for a JADE panel with a pie chart of total kilograms by crop, using Chart.js. (1) Paste the reply. (2) Did it follow the new rule: where the library comes from, with a pinned version? (3) Check the chart's labels and numbers against the Harvests sheet for two crops. (4) If anything conflicted with your profiles or with JADE's documentation, write a new platform profile line for it.",
+      "answer": "Full credit: notes source and pinning; checks two crops (e.g. Bean 10.1, Tomato 10.2); any new conflict turned into a profile line. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "title": "Loops and Repetition",
+  "lesson": "loops",
+  "text": "These questions check that you can read and write while and for loops, loop over the rows of a sheet, spot an infinite loop, and read code for danger before running it.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "What does this code log?\n\nlet count = 3\nwhile (count > 0) {\n  console.log(count)\n  count--\n}",
+      "choices": ["3 2 1", "3 2 1 0", "1 2 3", "Nothing; it's an infinite loop"],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "In for (let i = 1; i < data.length; i++), when does i++ run?",
+      "choices": [
+        "Once, before the loop starts",
+        "Before each pass, before the condition is checked",
+        "After each pass through the block, before the condition is checked again",
+        "Only when the condition is false"
+      ],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "data holds the values of A1:E13, with headers in row 1. Which loop visits every member row exactly once?",
+      "choices": [
+        "for (let i = 0; i < data.length; i++)",
+        "for (let i = 1; i <= data.length; i++)",
+        "for (let i = 1; i < data.length; i++)",
+        "for (let i = 1; i < 12; i++)"
+      ],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A running total gives the wrong answer: it always equals the last member's hours. What's the most likely cause?",
+      "choices": [
+        "The loop starts at 1 instead of 0.",
+        "let totalHours = 0 is inside the loop, so it's reset on every pass.",
+        "The code uses += instead of = total + hours.",
+        "The hours column is formatted as numbers."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "This loop never ends. Explain why, and fix it.\n\nlet i = 1\nwhile (i < data.length) {\n  console.log(data[i][0])\n}",
+      "answer": "Nothing in the loop changes i, so i < data.length stays true forever (an infinite loop). Add i++ (or i = i + 1) at the end of the block. Or rewrite as for (let i = 1; i < data.length; i++).",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "Rewrite this for loop as a while loop that does exactly the same thing:\n\nfor (let i = 0; i < 5; i++) {\n  console.log(i)\n}",
+      "answer": "let i = 0\nwhile (i < 5) {\n  console.log(i)\n  i++\n}",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant gives you a function that ends with sheet.getRange(\"A1:C20\").setValues(newData), where sheet is the active sheet. Before running it on your club spreadsheet, what should you check, and what should you do to stay safe?",
+      "answer": "Check which sheet is active (it writes to whichever tab is showing), which cells it overwrites (A1:C20) and whether data is already there, and whether anything is cleared or deleted; also check that the data types match the real data. Run it first on a copy (File > Make a copy); know that Undo can usually reverse it.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain what this code does, then rewrite it as a for loop with an index:\n\nnames.forEach(function(name) {\n  console.log(name)\n})",
+      "answer": "It logs each item in the names array, calling the function once per item with the item as name. for (let i = 0; i < names.length; i++) { let name = names[i]; console.log(name) } (written on separate lines, without semicolons).",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "On the Members sheet (headers in row 1, Volunteer Hours in column E), write a function named countBusyMembers that logs how many members have 10 or more volunteer hours. Use getDataRange, a for loop with an index, and a counter variable. (For the book's sheet, the answer is 6.)",
+      "start": "function countBusyMembers() {\n\n}",
+      "key": ["function countBusyMembers() {\n  let sheet = SpreadsheetApp.getActiveSheet()\n  let range = sheet.getDataRange()\n  let data = range.getValues()\n  let busyCount = 0\n  for (let i = 1; i < data.length; i++) {\n    let hours = data[i][4]\n    if (hours >= 10) {\n      busyCount++\n    }\n  }\n  console.log(busyCount)\n}"],
+      "lines": 13,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with the updated learner profile and your Members sheet description. Ask for a function that writes each member's full name into column G, but only for members who haven't paid their dues, leaving the other rows blank. (1) Paste the reply. (2) Read it for danger: which sheet and cells does it change, and does it delete anything? (3) Did it follow the for-loop rule? (4) Run it on the book's sheet or a copy, and check the result against the Dues Paid column.",
+      "answer": "Full credit: a clear danger reading (sheet, cells G2:G13 or similar, anything overwritten or cleared); correct identification of the loop style; results checked (Ben, Elena, Gabe, Jordan). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

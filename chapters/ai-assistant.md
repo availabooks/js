@@ -39,7 +39,7 @@ Three things about conversations matter for this book:
 
 - **The assistant remembers the conversation you're in.** A follow-up like "Try again, but shorter" works because the assistant can see everything said so far in that chat.
 - **A new chat starts from nothing.** Open a new conversation and the assistant knows nothing about your earlier ones. That's why you'll start every new chat with your learner profile, which you'll write later in this lesson.
-- **Replies vary.** Send the same prompt twice and you'll get two different replies. They'll usually be similar, but the wording, and sometimes the code, will differ. The replies in this book are real ones, captured from Gemini on the date shown. Yours won't match word for word, and that's expected.
+- **Replies vary.** Send the same prompt twice and you'll get two different replies. They'll usually be similar, but the wording, and sometimes the code, will differ. The replies in this book are real ones, captured from Claude on the date shown. Yours won't match word for word, and that's expected.
 
 ## Plan, Ask, Read, Run, Revise
 
@@ -64,84 +64,101 @@ And one rule applies to every example: **don't run code you can't explain.** Cod
 
 Here's a simple request, sent to an assistant in a brand-new chat with no other information:
 
-::: {.ai-conversation prompt="Write JavaScript that adds up the numbers from 1 to 10." assistant="Gemini" model="gemini-3.8-flash" captured="2026-09-26" profile="none" transcript="ai-assistant/sum-no-profile"}
-> Here are a few ways to do this in JavaScript:
+::: {.ai-conversation prompt="Write JavaScript that adds up the numbers from 1 to 10." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="none" transcript="ai-assistant/sum-no-profile"}
+> # Sum Numbers from 1 to 10
 >
-> ### Method 1: Using a standard `for` loop (Most common)
+> Here are a few different ways to accomplish this in JavaScript:
 >
+> ## Method 1: Using a for loop
 > ```javascript
 > let sum = 0;
->
 > for (let i = 1; i <= 10; i++) {
 >   sum += i;
 > }
->
-> console.log(sum); // Output: 55
+> console.log(sum); // 55
 > ```
 >
-> ---
+> ## Method 2: Using Array and reduce()
+> ```javascript
+> const sum = Array.from({length: 10}, (_, i) => i + 1)
+>   .reduce((acc, num) => acc + num, 0);
+> console.log(sum); // 55
+> ```
 >
-> ### Method 2: Using the math formula $n(n + 1) / 2$ (Fastest)
->
+> ## Method 3: Using the Gauss formula (most efficient)
 > ```javascript
 > const n = 10;
 > const sum = (n * (n + 1)) / 2;
->
-> console.log(sum); // Output: 55
+> console.log(sum); // 55
 > ```
 >
-> ---
->
-> ### Method 3: One-liner using Array methods
->
+> ## Method 4: Using a while loop
 > ```javascript
-> const sum = Array.from({ length: 10 }, (_, i) => i + 1)
->                  .reduce((acc, curr) => acc + curr, 0);
->
-> console.log(sum); // Output: 55
+> let sum = 0;
+> let i = 1;
+> while (i <= 10) {
+>   sum += i;
+>   i++;
+> }
+> console.log(sum); // 55
 > ```
+>
+> All of these methods will output **55**, which is the sum of numbers from 1 to 10 (1+2+3+4+5+6+7+8+9+10 = 55).
+>
+> The **for loop** (Method 1) is the most common and straightforward approach, while the **Gauss formula** (Method 3) is the most efficient since it calculates the sum in constant time without any iteration.
 :::
 
-All three methods are correct, and all three print 55. But look at them from a beginner's point of view. They use `let` and `const`, `+=` and `i++`, `for`, `Array.from`, `=>` and `.reduce`. The assistant chose three approaches at once, and it had no way to know that none of them would make sense to you yet.
+All four methods are correct, and all four print 55. But look at them from a beginner's point of view. They use `let` and `const`, `+=` and `i++`, `for` and `while`, `Array.from`, `=>` and `.reduce`. The assistant chose four approaches at once, and it had no way to know that none of them would make sense to you yet.
 
 This is where the rule "don't run code you can't explain" leaves you stuck. The code is probably fine, but you have no way to check it. So the natural next step is to ask for an explanation, which you can do in the same chat:
 
-::: {.ai-conversation prompt="Explain what each line of Method 3 does." assistant="Gemini" model="gemini-3.8-flash" captured="2026-09-26" profile="none" transcript="ai-assistant/sum-no-profile"}
-> Here is the code broken down line by line:
->
+::: {.ai-conversation prompt="Explain what each line of Method 2 does." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="none" transcript="ai-assistant/sum-no-profile"}
 > […]
 >
-> ### Line 1: `const sum = Array.from({ length: 10 }, (_, i) => i + 1)`
+> ### `Array.from({length: 10}, (_, i) => i + 1)`
 >
-> This line creates an array of numbers from 1 to 10:
+> This creates an array with 10 elements containing the numbers 1-10.
 >
-> * **`const sum =`**: Declares a variable named `sum` to hold the final result.
-> * **`Array.from(...)`**: A built-in JavaScript method that creates a new array from an "array-like" object.
-> * **`{ length: 10 }`**: This is an object that tells `Array.from` to make an array with 10 empty slots.
-> * **`(_, i) => i + 1`**: A function that runs on every slot to fill it with a value:
->   * `_` represents the element itself (it is unused/empty, so the underscore `_` is a common naming convention meaning "ignore this").
->   * `i` is the index of the slot (which starts at `0` and goes up to `9`).
->   * `i + 1` shifts the indexes so the values become `1` through `10`.
+> - **`{length: 10}`** — This is an "array-like" object. It just tells `Array.from()` how many elements to create (10 in this case). It doesn't need to be a real array.
 >
-> > **Result of Line 1:** It generates the array `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`.
+> - **`(_, i) => i + 1`** — This is a mapping function that runs for each element:
+>   - `_` (underscore) is a placeholder for the first argument (the current element's value), which we don't need, so we use `_` as a convention to indicate "ignore this."
+>   - `i` is the **index** of each element, starting at 0.
+>   - `i + 1` transforms each index into the actual number we want (since index 0 → 1, index 1 → 2, etc.)
+>
+> **Result:** This line produces the array `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`
 >
 > ---
 >
-> ### Line 2: `.reduce((acc, curr) => acc + curr, 0);`
+> ### `.reduce((acc, num) => acc + num, 0)`
 >
-> This line takes the array created in Line 1 and boils it down into a single number:
+> This takes the array and "reduces" it down to a single value (the sum).
 >
-> * **`.reduce(...)`**: A method that loops through the array, carrying over a running total from one element to the next.
-> * **`(acc, curr) => acc + curr`**: The function that runs for each item in the array:
->   * **`acc` (accumulator)**: The running total.
->   * **`curr` (current value)**: The current number being processed from the array.
->   * **`acc + curr`**: Adds the current number to the running total.
-> * **`0`**: The starting value for `acc` (the accumulator starts at `0`).
+> - **`reduce()`** — An array method that iterates through each element and accumulates a result.
+>
+> - **`(acc, num) => acc + num`** — The callback function that runs for each element:
+>   - `acc` (accumulator) — keeps track of the running total.
+>   - `num` — the current array element being processed.
+>   - `acc + num` — adds the current number to the running total.
+>
+> - **`0`** — This is the **initial value** for `acc`. Without this, `reduce()` would use the first array element as the starting point instead of 0.
+>
+> **How it processes the array `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`:**
+>
+> | Step | acc (before) | num | acc (after) |
+> |------|--------------|-----|--------------|
+> | 1    | 0            | 1   | 1            |
+> | 2    | 1            | 2   | 3            |
+> | 3    | 3            | 3   | 6            |
+> | 4    | 6            | 4   | 10           |
+> | 5    | 10           | 5   | 15           |
+> | ...  | ...          | ... | ...          |
+> | 10   | 45           | 10  | 55           |
 >
 > […]
 :::
 
-The explanation is accurate and carefully organized. It still doesn't help much, because it explains unfamiliar code using more unfamiliar words: *variable, method, array, object, function, element, index, accumulator.* Each of those is a real idea you'll learn, but you'd need several of them before this explanation made sense.
+The explanation is accurate and carefully organized. It even includes a table that follows the running total step by step. It still doesn't help much, because it explains unfamiliar code using more unfamiliar words: *array, object, mapping function, argument, index, method, callback, accumulator.* Each of those is a real idea you'll learn, but you'd need several of them before this explanation made sense.
 
 The problem isn't the assistant. It answered the question it was given. The problem is that it didn't know who was asking. An explanation, like code, only helps if it's pitched at your level, and the assistant can't know your level unless you tell it.
 
@@ -161,7 +178,7 @@ Add rules:
 
 Each part has a job:
 
-- **The first paragraph** says who you are and where your code runs. "An online editor that shows console.log output" describes the code editors in this book's pages. You'll use one later in this lesson. Without this, the assistant has to guess where you'll run the code, as it did with the three ways to say hello in [Welcome to Programming](welcome){.book-link}.
+- **The first paragraph** says who you are and where your code runs. "An online editor that shows console.log output" describes the code editors in this book's pages. You'll use one later in this lesson. Without this, the assistant has to guess where you'll run the code, as it did when it offered three places to run the hello program in [Welcome to Programming](welcome){.book-link}.
 - **"Use only the concepts listed below"** is the most important rule. It asks the assistant to stay within what you know, and to *say so* when a task needs something new, instead of quietly using it.
 - **"Don't use semicolons"** matches the style of this book, so the assistant's code looks like the code you'll read here. (You'll learn why semicolons are optional in the next lesson.)
 - **"Keep the code short and simple, and explain what each line does"** asks for explanations as part of every answer, pitched at a beginner.
@@ -169,56 +186,67 @@ Each part has a job:
 
 To use the profile, paste it as the first message of every new chat, before your first question. Here's what happened when this profile was sent to a new chat:
 
-::: {.ai-conversation prompt="I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm running JavaScript in an online editor that shows console.log output. I don't know any programming concepts yet. When you write code for me: - Use only the concepts listed below under &quot;What I know so far.&quot; If a task needs something I haven't learned, tell me what it is instead of using it. - Don't use semicolons at the ends of lines. - Keep the code short and simple, and explain what each line does in plain language. What I know so far: nothing yet." assistant="Gemini" model="gemini-3.8-flash" captured="2026-09-26" profile="ai-assistant" transcript="ai-assistant/sum-with-profile"}
-> Welcome! It's great to have you starting your programming journey.
+::: {.ai-conversation prompt="I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm running JavaScript in an online editor that shows console.log output. I don't know any programming concepts yet. When you write code for me: - Use only the concepts listed below under &quot;What I know so far.&quot; If a task needs something I haven't learned, tell me what it is instead of using it. - Don't use semicolons at the ends of lines. - Keep the code short and simple, and explain what each line does in plain language. What I know so far: nothing yet." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="ai-assistant" transcript="ai-assistant/sum-with-profile"}
+> Great, let's start from the very beginning!
 >
-> Since you're starting from absolute zero, our very first tool will be **how to make the computer display a message**.
+> Since your editor shows `console.log` output, that's the perfect place to start. `console.log` is a command that tells the computer to display something on the screen so you can see it.
 >
-> In JavaScript, we do this using a command called `console.log`.
+> Here's the simplest example:
 >
-> Here is your very first line of code to try in your editor:
->
-> ```javascript
-> console.log("Hello, world!")
+> ```
+> console.log("Hello")
 > ```
 >
-> ### What this line does:
+> **What this does:**
+> - `console.log(...)` means "show me whatever is inside the parentheses"
+> - `"Hello"` is some text (in programming, text like this is called a **string**, and it needs quote marks around it)
+> - Together, this line prints the word Hello to your console
 >
-> * `console.log(...)` tells the computer: *"Print whatever is inside these parentheses to the screen."*
-> * `"Hello, world!"` is the message you want to print. We put words inside quote marks so the computer knows it is regular text and not a computer command.
+> Try running that in your editor and see what happens.
 >
-> ---
->
-> Go ahead and paste that into your editor and run it. You should see `Hello, world!` appear in your console.
->
-> Once you try that, let me know! What would you like to learn next, or what is the first topic in your textbook?
+> Once you've tried it, let me know and I'll introduce the next small concept — I'll only teach you one or two new things at a time so it doesn't get overwhelming. Sound good?
 :::
 
-The assistant has changed how it behaves. Its code has no semicolon, it explains each part of the line in plain words, and it offers to go at your pace.
+The assistant has changed how it behaves. Its code has no semicolon, it explains each part of the line in plain words, and it promises to go one or two ideas at a time.
 
-Because the assistant explained the line, you can say what it does: it displays the text `Hello, world!`. That means it passes the test of "don't run code you can't explain," so go ahead and run it. Click the Run button (▶) on the editor below, and the output appears underneath.
+Because the assistant explained the line, you can say what it does: it displays the word `Hello`. That means it passes the test of "don't run code you can't explain," so go ahead and run it. Click the Run button (▶) on the editor below, and the output appears underneath.
 
 <pre class="code">
-console.log("Hello, world!")
+console.log("Hello")
 </pre>
 
-Try changing the message between the quote marks, then run it again. You'll learn more about `console.log` and the other parts of this line in the next lesson.
+Try changing the word between the quote marks, then run it again. You'll learn more about `console.log` and the other parts of this line in the next lesson.
 
 Now the same request as before, in the same chat:
 
-::: {.ai-conversation prompt="Write JavaScript that adds up the numbers from 1 to 10." assistant="Gemini" model="gemini-3.8-flash" captured="2026-09-26" profile="ai-assistant" transcript="ai-assistant/sum-with-profile"}
-> To do this, we need a few concepts that you haven't learned yet:
+::: {.ai-conversation prompt="Write JavaScript that adds up the numbers from 1 to 10." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="ai-assistant" transcript="ai-assistant/sum-with-profile"}
+> This task normally uses a concept called a **loop** (a way to repeat an action automatically) and **variables** (a way to store and update values) — you haven't learned those yet, so I won't use them.
 >
-> 1. **Numbers and the `+` (addition) operator**: How JavaScript handles math.
-> 2. **Variables**: A way to create a container in the computer's memory to hold and update the running total.
-> 3. **Loops (like a `for` loop)**: A way to make the computer count and repeat an action automatically, rather than typing every single number out by hand.
+> But since you already know `console.log`, we can still solve this in a simple way by just adding the numbers directly:
 >
-> Since you haven't learned these yet, we can't write the complete code just yet!
+> ```
+> console.log(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10)
+> ```
 >
-> Would you like to start by learning how JavaScript does basic math with numbers, or would you like to start with variables?
+> **What this does:**
+> - `console.log(...)` displays whatever is inside the parentheses
+> - `1 + 2 + 3 + ... + 10` uses the `+` symbol to add numbers together, just like in math
+> - The result (55) gets printed to your console
+>
+> This works fine for adding a small list of numbers you can type out by hand. Later, once you learn variables and loops, I'll show you a way to do this that works even for huge lists of numbers (like 1 to 1,000,000) without typing them all out.
+>
+> Want to try running this one, and then move on to learning about **variables** next?
 :::
 
-This time, you got no code at all, and that's the profile working as intended. Instead of three programs you couldn't read, you got a short list of what you'd need to learn first: numbers and arithmetic, variables, and loops. Those are exactly the topics of the next several lessons. When you've worked through them, come back to Method 1 in the first reply. You'll be able to read every line.
+This time the reply is one line you can read. The assistant noticed that the usual answer needs two things you haven't learned, **loops** and **variables**, and it told you so instead of quietly using them. Then it found a way to do the job with what you have: `console.log` and the plus sign. That's the profile working as intended.
+
+Look closely and you'll see the assistant bent one rule. Your profile says you know nothing yet, but it used `+`. It made a sensible call, because `+` works the way it does in math, and it explained it. Still, it's the kind of choice you should notice. An assistant follows your profile as a strong guideline, not a law, and reading the reply is how you catch the places it made a judgment call.
+
+The reply also mentions loops and variables, which are exactly the topics of the next several lessons. When you've worked through them, come back to Method 1 in the first reply. You'll be able to read every line.
+
+<pre class="code">
+console.log(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10)
+</pre>
 
 ::: {.tip}
 > **When the assistant ignores your profile.** In a long chat, an assistant can drift back to its usual habits, such as adding semicolons or using features you haven't learned. Remind it ("Please follow my learner profile: use only what I know"), or start a new chat and paste the profile again.

@@ -1,0 +1,72 @@
+{
+  "title": "Making Decisions",
+  "lesson": "decisions",
+  "text": "These questions check that you can read and write if statements, compare values correctly, combine conditions, and test edge cases.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "What does this code display?\n\nlet hours = 15\nif (hours > 15) {\n  console.log(\"High\")\n} else if (hours >= 5) {\n  console.log(\"Medium\")\n} else {\n  console.log(\"Low\")\n}",
+      "choices": ["High", "Medium", "Low", "High and Medium"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which condition is true?",
+      "choices": ["\"7\" === 7", "\"Ben\" === \"ben\"", "7 >= 7", "0 === \"\""],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "duesPaid is false and hours is 12. Which condition is true?",
+      "choices": [
+        "duesPaid === true && hours >= 10",
+        "duesPaid === true || hours >= 10",
+        "!(hours >= 10)",
+        "duesPaid && hours > 20"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Cell E4 is empty. What does Number(E4's value) give?",
+      "choices": ["NaN", "0", "\"\"", "An error"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "You ask an assistant: \"Write a function that labels each score as Pass or Fail.\" Its code uses 60 as the passing score, but your course passes at 70. What went wrong, and how should you have asked?",
+      "answer": "The request didn't say where the line between Pass and Fail falls, so the assistant chose its own threshold. The Plan step should decide it, and the prompt should say so, e.g. \"70 or more is Pass, anything less is Fail.\"",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "A function labels volunteer hours with if (hours >= 15) High, else if (hours >= 5) Medium, else Low. List the values you would test it with, and explain why you chose them.",
+      "answer": "Values on each side of each boundary and the boundaries themselves, e.g. 16, 15, 14, 6, 5, 4; plus 0 and an empty cell (which Number() turns into 0 unless it's checked first); optionally text such as \"abc\" (NaN). Edge cases are where bugs hide, e.g. >= versus >.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain why rawHours == \"\" would be a bug in a function that writes No data for empty cells, when a member has 0 hours.",
+      "answer": "== converts values before comparing, and it treats 0 and \"\" as equal, so a real 0 would be reported as No data. === compares type and value, so 0 === \"\" is false and only a truly empty cell matches.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "D3 holds a checkbox for Dues Paid (true or false) and E3 holds volunteer hours. Write a function named writeMemberStatus that writes Thank you in G3 if dues are paid and hours are at least 10, Reminder if dues are not paid, and OK otherwise. Use let, one step per line, and ===.",
+      "start": "function writeMemberStatus() {\n\n}",
+      "key": ["function writeMemberStatus() {\n  let sheet = SpreadsheetApp.getActiveSheet()\n  let duesCell = sheet.getRange(\"D3\")\n  let duesPaid = duesCell.getValue()\n  let hoursCell = sheet.getRange(\"E3\")\n  let hours = Number(hoursCell.getValue())\n  let status = \"\"\n  if (duesPaid === true && hours >= 10) {\n    status = \"Thank you\"\n  } else if (duesPaid === false) {\n    status = \"Reminder\"\n  } else {\n    status = \"OK\"\n  }\n  let statusCell = sheet.getRange(\"G3\")\n  statusCell.setValue(status)\n}"],
+      "lines": 16,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with the updated learner profile from the end of this lesson. Write a prompt, with your own precise thresholds, asking for a function that reads a member's volunteer hours from E3 and writes Gold, Silver or Bronze in F3, and No data if E3 is empty. (1) Paste your prompt and the reply. (2) Did the code use your thresholds exactly? Quote the conditions. (3) List the edge cases you tested, and the result of each. (4) Did the reply use anything outside your profile?",
+      "answer": "Full credit: a prompt that states every threshold (including whether each boundary is >= or >) and the empty case; a check that the code's conditions match; a sensible set of edge-case tests with results; an honest note of anything outside the profile. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

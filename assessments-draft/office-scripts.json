@@ -1,0 +1,58 @@
+{
+  "title": "Office Scripts and TypeScript",
+  "lesson": "office-scripts",
+  "text": "These questions check that you can read Office Scripts and TypeScript, and compare Office Scripts with Office.js in JADE. (Optional lesson.)",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "What does let total: number = 0 mean?",
+      "choices": [
+        "total is divided by a number",
+        "total must always hold a number, which TypeScript checks before the code runs",
+        "total is converted to a number",
+        "total is a constant"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A cell holds the text \"12\". What is (values[i][0] as number) + 2 in an Office Script?",
+      "choices": ["14", "\"122\"", "An error before the script runs", "NaN"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which is true of Office Scripts but not of Office.js in JADE?",
+      "choices": [
+        "Values are read with getValues(), with no load or sync",
+        "It works with a free Microsoft account",
+        "Code is saved in the workbook",
+        "It can show HTML panels in a task pane"
+      ],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "How would you recognize VBA code in an assistant's reply, and why won't it run in JADE or Office Scripts?",
+      "answer": "Lines like Sub Name(), Dim x As Double, End Sub, Range(\"A1\").Value. It's a different language (Visual Basic for Applications), run as Excel macros on Windows and Mac, not JavaScript.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function sumColumn(values, columnIndex) that adds up one column of an array of arrays, skipping the header row, converting each value with Number() so text works too. Then write testSumColumn, which logs sumColumn([[\"Crop\", \"Kilograms\"], [\"Kale\", 2.2], [\"Kale\", \"0.6\"], [\"Mint\", 3.6]], 1). (Expected: 6.4, allowing for floating-point digits; round with Math.round(x * 10) / 10.)",
+      "start": "function testSumColumn() {\n\n}\n\nfunction sumColumn(values, columnIndex) {\n\n}",
+      "key": ["function testSumColumn() {\n  const values = [[\"Crop\", \"Kilograms\"], [\"Kale\", 2.2], [\"Kale\", \"0.6\"], [\"Mint\", 3.6]]\n  console.log(sumColumn(values, 1))\n}\n\nfunction sumColumn(values, columnIndex) {\n  let total = 0\n  for (let i = 1; i < values.length; i++) {\n    total = total + Number(values[i][columnIndex])\n  }\n  return Math.round(total * 10) / 10\n}"],
+      "lines": 12,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "If you have a Microsoft 365 work or school account: ask your assistant for an Office Script that highlights supplies at or below their reorder level (the task from the platform profile lesson). Run it, and compare it line by line with the JADE version. If you don't have one: ask your assistant to translate the JADE showReorderPanel code into an Office Script, and explain which parts can't be translated and why. (1) Paste the reply. (2) List three differences between the versions.",
+      "answer": "Full credit: a working script or a reasoned translation; three accurate differences (e.g. no load/sync, getValues vs values, main(workbook) vs async function name(excel), no HTML canvas in Office Scripts, console.log vs Jade.print). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

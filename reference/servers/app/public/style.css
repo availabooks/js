@@ -1,0 +1,27 @@
+body {
+  font-family: sans-serif;
+  margin: 2rem;
+  max-width: 40rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+button {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+}

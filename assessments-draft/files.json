@@ -1,0 +1,59 @@
+{
+  "title": "Working with Files and Folders",
+  "lesson": "files",
+  "text": "These questions check that you can read and write files, work with folders and paths, read rest and spread syntax, and work with files safely.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A script calls fs.writeFileSync(\"report.txt\", text) and report.txt already exists. What happens?",
+      "choices": ["An error", "The text is added to the end", "The file is replaced, without asking", "A new file named report (1).txt is made"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "const [first, ...others] = [\"B1\", \"B2\", \"B3\"]\nWhat is others?",
+      "choices": ["\"B2\"", "[\"B2\", \"B3\"]", "[\"B1\", \"B2\", \"B3\"]", "\"B2, B3\""],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A script reads fs.readFileSync(\"members.csv\", \"utf8\"). The file is in the same folder as the script, but Node says it can't find it. What's the most likely cause?",
+      "choices": [
+        "utf8 is misspelled",
+        "The terminal's current working directory is a different folder",
+        "CSV files can't be read",
+        "The file is too large"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "A photo-sorting script moves files with renameSync. Why should it check existsSync first, and what are two other habits that make file scripts safer?",
+      "answer": "renameSync silently replaces a file with the same name at the destination, destroying it. Other habits: dry runs; working on a copy; printing process.cwd(); knowing that deletes skip the Recycle Bin.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Why might a photo's modified time (mtime) not be the date it was taken, and what's the alternative?",
+      "answer": "mtime is when the file last changed; downloading or copying (e.g. from a chat app or cloud) can reset it. The date taken is stored inside the photo's EXIF data, which needs a package to read.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function frontMatter(text) that takes the text of a note and returns an object of its front matter: the key: value lines between the first two lines that are exactly ---, splitting each line at the first colon (a value may contain colons). Then write testFrontMatter, which logs JSON.stringify(frontMatter(\"---\\ncrop: Tomato\\nnote: water at 6:00\\n---\\nPlanted six seedlings.\")).",
+      "start": "function testFrontMatter() {\n\n}\n\nfunction frontMatter(text) {\n\n}",
+      "key": ["function testFrontMatter() {\n  console.log(JSON.stringify(frontMatter(\"---\\ncrop: Tomato\\nnote: water at 6:00\\n---\\nPlanted six seedlings.\")))\n}\n\nfunction frontMatter(text) {\n  const lines = text.split(\"\\n\")\n  const data = {}\n  let dashesSeen = 0\n  for (const line of lines) {\n    if (line.trim() === \"---\") {\n      dashesSeen++\n    } else if (dashesSeen === 1) {\n      const [key, ...rest] = line.split(\":\")\n      data[key.trim()] = rest.join(\":\").trim()\n    }\n  }\n  return data\n}"],
+      "lines": 18,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Make a practice folder with a few text files. Start a new chat with your updated learner profile and ask for a script that renames every .txt file in the folder to start with today's date, like 2027-06-12-notes.txt. (1) Paste the reply. (2) Did it follow the updated rule: a dry run first, and a check before overwriting? (3) Run the dry run, then the real thing on your practice folder, and report the results. (4) What happens if you run it twice? Explain.",
+      "answer": "Full credit: rule compliance checked; results reported; running twice would add the date again (e.g. 2027-06-12-2027-06-12-notes.txt) unless the script checks for an existing date prefix. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

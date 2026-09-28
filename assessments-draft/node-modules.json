@@ -1,0 +1,64 @@
+{
+  "title": "Modules and Packages",
+  "lesson": "node-modules",
+  "text": "These questions check that you can split code into modules, read the two module systems, use package.json and npm, and judge packages.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "report.js contains import { totalKilograms } from \"./garden.js\" and Node says: Cannot use import statement outside a module. What's the fix?",
+      "choices": [
+        "Change import to require",
+        "Add \"type\": \"module\" to package.json",
+        "Run npm install garden",
+        "Rename garden.js to garden.json"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "const { crop, bed } = { crop: \"Kale\", bed: \"B4\", kg: 2.2 }\nWhat is bed?",
+      "choices": ["\"Kale\"", "\"B4\"", "undefined", "2.2"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A classmate zips up their project, including a node_modules folder with 4,000 files. What should they send instead?",
+      "choices": [
+        "Only node_modules",
+        "The project without node_modules; package.json and package-lock.json let anyone recreate it with npm install",
+        "Nothing; projects can't be shared",
+        "A screenshot of package.json"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant's example ends with a comment: // prints Saturday, June 12. Why should you run it rather than trust the comment?",
+      "answer": "A comment showing output is a claim; the assistant may write what it expects rather than what the code does (e.g. the weekday was wrong for the year used). Running the code shows the real result.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "List four things to check before installing an npm package, and one question to ask before looking for a package at all.",
+      "answer": "Any four: weekly downloads/popularity; recent maintenance; who maintains it; number of dependencies; exact name (typosquatting); README/documentation; npm audit. First ask whether JavaScript or Node already has a built-in feature that does the job (or whether a few lines of your own would do).",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a function summarize(harvest) that takes an object with crop, bed and kg properties, uses destructuring to get them, and returns a string like Kale from B4: 2.2 kg. Then write testSummarize, which logs summarize({ crop: \"Kale\", bed: \"B4\", kg: 2.2 }).",
+      "start": "function testSummarize() {\n\n}\n\nfunction summarize(harvest) {\n\n}",
+      "key": ["function testSummarize() {\n  console.log(summarize({ crop: \"Kale\", bed: \"B4\", kg: 2.2 }))\n}\n\nfunction summarize(harvest) {\n  const { crop, bed, kg } = harvest\n  return `${crop} from ${bed}: ${kg} kg`\n}"],
+      "lines": 10,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Create a project folder with package.json (type module), garden.js exporting two functions, and report.js importing them. Start a new chat with your updated learner profile and ask for a way to print a harvest report as a neatly aligned table in the terminal. (1) Paste the reply. (2) Did it use import, not require? Did it suggest a package, and if so, did it say how widely used it is? (3) Check any package on npmjs.com, and decide whether to install it or use a built-in (console.table exists). Explain your decision.",
+      "answer": "Full credit: checks module style; notes package suggestion and popularity; a reasoned decision (console.table is built in). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

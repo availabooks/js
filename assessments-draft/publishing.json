@@ -1,0 +1,59 @@
+{
+  "title": "Publishing a Site for Free",
+  "lesson": "publishing",
+  "text": "These questions check that you can organize a site's files, use relative paths, publish and debug a site, and decide what belongs online.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A page at club-site/index.html shows an image stored at club-site/images/beds.jpg. Which src is right?",
+      "choices": ["beds.jpg", "images/beds.jpg", "C:\\club-site\\images\\beds.jpg", "/beds.jpg"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A photo shows on your computer but not online. The page says src=\"garden.jpg\" and the file is named Garden.JPG. Why?",
+      "choices": [
+        "Web servers usually treat file names as case-sensitive, so garden.jpg and Garden.JPG are different files",
+        "JPG files can't be published",
+        "The alt attribute is missing",
+        "The server needs a new version"
+      ],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "In the Network panel, style.css appears in red with status 404. What does that mean?",
+      "choices": ["The CSS has a syntax error", "The browser asked for the file and the server couldn't find it", "The file is too large", "The site is down"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Before publishing, you notice members.csv, with members' phone numbers, in the site's folder. No page links to it. Is it safe to publish the folder? Explain.",
+      "answer": "No. Every file in the folder is published, and anyone who guesses or finds its address can download it, whether or not a page links to it. Remove it from the folder before publishing.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "Why can't a published web page keep an API key secret, even if the key is only in script.js?",
+      "answer": "The browser downloads script.js to every visitor, and anyone can read it in the developer tools (or by opening its address). Anything sent to the browser is public; secrets must stay on a server.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function riskyFileNames(names) that returns an array of the file names that contain a capital letter or a space. (Hint: name !== name.toLowerCase() is true when a name has a capital letter, and name.split(\" \").length > 1 is true when it has a space.) Then write testRiskyFileNames, which logs riskyFileNames([\"index.html\", \"Garden.JPG\", \"plant spacing.html\", \"style.css\"]). (Expected: Garden.JPG and plant spacing.html.)",
+      "start": "function testRiskyFileNames() {\n\n}\n\nfunction riskyFileNames(names) {\n\n}",
+      "key": ["function testRiskyFileNames() {\n  console.log(riskyFileNames([\"index.html\", \"Garden.JPG\", \"plant spacing.html\", \"style.css\"]))\n}\n\nfunction riskyFileNames(names) {\n  const risky = []\n  for (let i = 0; i < names.length; i++) {\n    const name = names[i]\n    const hasCapital = name !== name.toLowerCase()\n    const hasSpace = name.split(\" \").length > 1\n    if (hasCapital || hasSpace) {\n      risky.push(name)\n    }\n  }\n  return risky\n}"],
+      "lines": 14,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Ask how to add a second page to your published site, plant-spacing.html with the calculator from an earlier lesson, sharing the same style.css, with links between the two pages. (1) Paste the reply. (2) Check every href and src: are they relative, and do the names match your files exactly? (3) Publish the update and test both pages and both links on a phone. Report any problems and how you found them.",
+      "answer": "Full credit: all paths checked as relative with exact names; the update published; tests on a second device reported, with any 404s found via the Network panel. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

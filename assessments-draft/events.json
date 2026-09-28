@@ -1,0 +1,59 @@
+{
+  "title": "Events and Interactivity",
+  "lesson": "events",
+  "text": "These questions check that you can respond to events, pass functions as values, read and validate input, and choose how to round.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "What's wrong with button.addEventListener(\"click\", showTotal())?",
+      "choices": [
+        "Nothing",
+        "showTotal() runs immediately, once, and its return value (not the function) is passed as the handler",
+        "\"click\" should be \"onclick\"",
+        "Handlers must be anonymous"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A visitor types 7 into an input. What is input.value + 1?",
+      "choices": ["8", "\"71\"", "NaN", "\"8\""],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A bed needs 3.2 bags of compost. Which gives the number of bags to buy?",
+      "choices": ["Math.round(3.2)", "Math.floor(3.2)", "Math.ceil(3.2)", "Number(3.2)"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Why should a calculator check for empty input using the text in the box, before calling Number(), rather than checking the number afterward?",
+      "answer": "Number(\"\") is 0, so after conversion an empty box looks like a real 0 and can't be told apart. Checking the text for \"\" first catches it.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "A page divides by a number the visitor types, and shows Infinity when they type 0. Why didn't JavaScript stop with an error, and what should the page do instead?",
+      "answer": "In JavaScript, dividing by zero gives the special value Infinity rather than an error, so nothing stops the code. The page should validate: check that the number is greater than zero (or otherwise makes sense) and show a helpful message.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function plantsThatFit(bedSize, spacingInches) that returns how many plants fit (rounded down), or -1 if either number is not greater than zero. Then write testPlantsThatFit, which logs the results for (32, 12), (24, 18) and (48, 0). (Expected: 32, 10, -1.)",
+      "start": "function testPlantsThatFit() {\n\n}\n\nfunction plantsThatFit(bedSize, spacingInches) {\n\n}",
+      "key": ["function testPlantsThatFit() {\n  console.log(plantsThatFit(32, 12))\n  console.log(plantsThatFit(24, 18))\n  console.log(plantsThatFit(48, 0))\n}\n\nfunction plantsThatFit(bedSize, spacingInches) {\n  if (bedSize <= 0 || spacingInches <= 0) {\n    return -1\n  }\n  const spacingFeet = spacingInches / 12\n  const areaPerPlant = spacingFeet * spacingFeet\n  return Math.floor(bedSize / areaPerPlant)\n}"],
+      "lines": 14,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Ask for a page where a visitor types how many kilograms of tomatoes they harvested and picks a bed from a list (Bed 1 to Bed 8), and the page shows a thank-you message as they type. (1) Paste the reply. (2) Which events does it use, and are the handlers passed without parentheses? (3) What does it do with empty or invalid input? Test at least three edge cases and report what happened. (4) Does it use anything new, such as a select element? Explain it.",
+      "answer": "Full credit: identifies events (input/change) and correct handler passing; reports edge-case tests (empty, 0 or negative, text); explains any new element (e.g. select and its value). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

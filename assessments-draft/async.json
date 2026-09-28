@@ -1,0 +1,59 @@
+{
+  "title": "Asynchronous JavaScript",
+  "lesson": "async",
+  "text": "These questions check that you understand asynchronous code, can fetch and use JSON in a web page, and can recognize and handle common problems.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "In what order are these messages logged?\n\nasync function load() {\n  console.log(\"A\")\n  const response = await fetch(url)\n  console.log(\"C\")\n}\nload()\nconsole.log(\"B\")",
+      "choices": ["A, B, C", "A, C, B", "B, A, C", "C, B, A"],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A server replies to fetch with 404 Not Found. What happens?",
+      "choices": [
+        "fetch throws an error automatically",
+        "fetch gives a response whose ok property is false; your code has to check it",
+        "The page reloads",
+        "response.json() returns null"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "The page shows [object Promise] where a crop name should be. What's the most likely cause?",
+      "choices": ["A missing await", "A CSS error", "The crop name is empty", "The script is in the head"],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Why did UrlFetchApp.fetch in Apps Script not need await, while fetch in a web page does?",
+      "answer": "Apps Script runs on a server with no one interacting, so it can stop and wait (synchronous). A web page must stay responsive while someone uses it, so requests are asynchronous: fetch returns a promise, and await waits for it inside an async function.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "A fetch works in Apps Script but fails in your web page, with an error mentioning CORS. What does that mean, and what are your options?",
+      "answer": "The other site doesn't allow pages from other sites to fetch its data (CORS). Options: fetch it on a server instead (e.g. an Apps Script web app, later a Worker), or find an API that allows browser requests.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a function readRain(data) that takes an object shaped like Open-Meteo's reply and returns a string listing each date and its rain, separated by \"; \", such as 2026-09-26: 0 mm; 2026-09-27: 1.7 mm. Then write testReadRain, which logs readRain({ daily: { time: [\"2026-09-26\", \"2026-09-27\"], precipitation_sum: [0, 1.7] } }).",
+      "start": "function testReadRain() {\n\n}\n\nfunction readRain(data) {\n\n}",
+      "key": ["function testReadRain() {\n  const data = { daily: { time: [\"2026-09-26\", \"2026-09-27\"], precipitation_sum: [0, 1.7] } }\n  console.log(readRain(data))\n}\n\nfunction readRain(data) {\n  const dates = data.daily.time\n  const rain = data.daily.precipitation_sum\n  let text = \"\"\n  for (let i = 0; i < dates.length; i++) {\n    if (i > 0) {\n      text += \"; \"\n    }\n    text += `${dates[i]}: ${rain[i]} mm`\n  }\n  return text\n}"],
+      "lines": 16,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Ask for a page that fetches tomorrow's high temperature from Open-Meteo and shows it, with a loading message and error handling. (1) Paste the reply. (2) Point to each await and say what it waits for. (3) Does it check response.ok? (4) Break the address on purpose, and report what the page shows.",
+      "answer": "Full credit: identifies both awaits (fetch → response, json → data); notes the ok check or its absence; reports the broken-address behavior. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

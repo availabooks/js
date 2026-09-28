@@ -37,7 +37,7 @@
     {
       "type": "short-answer",
       "text": "When asked to \"Write a JavaScript program that says hello,\" the assistant in this lesson made several decisions the prompt didn't specify. Name two of them.",
-      "answer": "Any two of: the exact words (\"Hello, World!\"); where the greeting appears (console, popup or web page); the punctuation style (semicolons at the ends of lines). Accept other reasonable decisions the student can point to in the reply.",
+      "answer": "Any two of: the exact words (\"Hello, World!\"); adding a second version with a function; where the code runs (browser console, Node.js, or a web page with a popup); the punctuation style (semicolons at the ends of lines). Accept other reasonable decisions the student can point to in the reply.",
       "points": 4
     },
     {

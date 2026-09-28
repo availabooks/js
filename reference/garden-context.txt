@@ -1,0 +1,8 @@
+Here is my club's spreadsheet. It has these sheets. In each sheet, row 1 has headers and each row after that is one record.
+
+- Members: A First Name, B Last Name, C Email, D Dues Paid (a checkbox, so true or false), E Volunteer Hours (a number).
+- Beds: A Bed ID (text such as B1), B Name, C Size in square feet (a number), D Sun (full or partial), E Zone (north, south or east).
+- Plantings: A Planting ID (text such as P01), B Bed ID (matches Beds column A), C Crop, D Variety, E Planted On (a date stored as text, such as 2027-04-10), F Expected Harvest (a date stored as text), G Planted By (a member's email, matching Members column C).
+- Shifts: A Date (a date stored as text), B Task (watering, weeding, planting, harvesting or composting), C Member Email (matches Members column C), D Hours (a number).
+- Harvests: A Date (a date stored as text), B Bed ID (matches Beds column A), C Crop, D Kilograms (a number), E Logged By (a member's email).
+- Supplies: A Item, B Quantity (a number), C Unit, D Reorder At (a number; the item should be reordered when Quantity is at or below it).

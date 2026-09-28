@@ -48,7 +48,7 @@
     {
       "type": "short-answer",
       "text": "In this lesson, the assistant explained a one-line program accurately, but the explanation still didn't help a beginner. Why not, and what fixed the problem?",
-      "answer": "The explanation used other unfamiliar terms (variable, method, array, function, index, accumulator), so it was pitched above a beginner's level; the assistant didn't know who was asking. A learner profile fixed it by telling the assistant what the learner knows, and asking it to stay within that and say when something new is needed.",
+      "answer": "The explanation used other unfamiliar terms (array, object, mapping function, argument, index, method, callback, accumulator), so it was pitched above a beginner's level; the assistant didn't know who was asking. A learner profile fixed it by telling the assistant what the learner knows, and asking it to stay within that and say when something new is needed.",
       "points": 4
     },
     {

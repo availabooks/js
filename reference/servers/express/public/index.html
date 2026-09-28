@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Volunteer Sign-Up</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; max-width: 600px; }
+      li { margin-bottom: 8px; }
+      #message { font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <h1>Sign up for a shift</h1>
+    <label for="email">Your club email</label>
+    <input type="email" id="email">
+    <ul id="shifts"></ul>
+    <p id="message"></p>
+
+    <script>
+      const shiftList = document.querySelector("#shifts")
+      const message = document.querySelector("#message")
+
+      async function showShifts() {
+        const response = await fetch("/shifts")
+        const shifts = await response.json()
+        shiftList.textContent = ""
+        for (const shift of shifts) {
+          const item = document.createElement("li")
+          const spotsLeft = shift.capacity - shift.spotsFilled
+          item.textContent = `${shift.date}, ${shift.start} to ${shift.end}: ${shift.task} (${spotsLeft} of ${shift.capacity} spots left) `
+          const button = document.createElement("button")
+          button.textContent = "Sign up"
+          button.disabled = spotsLeft === 0
+          button.addEventListener("click", () => signUp(shift.id))
+          item.appendChild(button)
+          shiftList.appendChild(item)
+        }
+      }
+
+      async function signUp(shiftId) {
+        const email = document.querySelector("#email").value
+        const response = await fetch(`/shifts/${shiftId}/signups`, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ email })
+        })
+        const reply = await response.json()
+        if (response.ok) {
+          message.textContent = "You're signed up. Thank you!"
+        } else {
+          // the server's error message explains what went wrong
+          message.textContent = reply.error
+        }
+        showShifts()
+      }
+
+      showShifts()
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+{
+  "title": "Scripting Your Notes in Obsidian",
+  "lesson": "obsidian",
+  "text": "These questions check that you can use array methods and arrow functions, read DataviewJS and Templater code, and decide whether to trust a plugin.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "What does [4, 9, 2, 7].filter(n => n > 5) give?",
+      "choices": ["[9, 7]", "[4, 2]", "true", "9"],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What does [\"Kale\", \"Mint\"].map(crop => crop.length) give?",
+      "choices": ["[\"Kale\", \"Mint\"]", "[4, 4]", "8", "\"KaleMint\""],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which array method changes the original array?",
+      "choices": ["filter", "map", "sort", "join"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Rewrite with a for loop with an index, then explain which version you find easier to read and why:\nconst beds = plantings.filter(p => p.crop === \"Tomato\").map(p => p.bed)",
+      "answer": "const beds = []\nfor (let i = 0; i < plantings.length; i++) {\n  if (plantings[i].crop === \"Tomato\") {\n    beds.push(plantings[i].bed)\n  }\n}\nAny reasoned preference: the chain says what, the loop shows how.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Before installing a community plugin in Obsidian, what three things should you check, and why does it matter?",
+      "answer": "How widely used and long-established it is; whether it's maintained (recent updates); whether its code is open source. It matters because a plugin has the same access to your files as Obsidian, and could read, change or send your data.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a function readyBetween(plantings, fromDate, toDate) that returns the crops (as one string, joined with \", \") of the plantings whose expectedHarvest is between the two dates, inclusive, soonest first, using filter, sort, map and join. Dates are text like 2027-06-15. Then write testReadyBetween, which logs readyBetween(plantings, \"2027-06-10\", \"2027-06-25\") for the six plantings in the lesson. (Expected: Bean, Tomato)",
+      "start": "function testReadyBetween() {\n\n}\n\nfunction readyBetween(plantings, fromDate, toDate) {\n\n}",
+      "key": ["function testReadyBetween() {\n  const plantings = [\n    { bed: \"B1\", crop: \"Tomato\", expectedHarvest: \"2027-06-29\" },\n    { bed: \"B1\", crop: \"Basil\", expectedHarvest: \"2027-06-09\" },\n    { bed: \"B2\", crop: \"Lettuce\", expectedHarvest: \"2027-05-14\" },\n    { bed: \"B3\", crop: \"Bean\", expectedHarvest: \"2027-06-21\" },\n    { bed: \"B5\", crop: \"Tomato\", expectedHarvest: \"2027-06-21\" },\n    { bed: \"B8\", crop: \"Squash\", expectedHarvest: \"2027-08-09\" }\n  ]\n  console.log(readyBetween(plantings, \"2027-06-10\", \"2027-06-25\"))\n}\n\nfunction readyBetween(plantings, fromDate, toDate) {\n  return plantings\n    .filter(p => p.expectedHarvest >= fromDate && p.expectedHarvest <= toDate)\n    .sort((a, b) => a.expectedHarvest.localeCompare(b.expectedHarvest))\n    .map(p => p.crop)\n    .join(\", \")\n}"],
+      "lines": 18,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Set up the garden journal with at least four planting notes. Start a new chat with your updated learner profile, and ask for a DataviewJS block that shows how many plantings each bed has, as a table. (1) Paste the reply. (2) Explain each step of any chain it uses. (3) Does it use Dataview's own methods (such as where, groupBy or sort with a key) or plain array methods? Check one against Dataview's documentation. (4) Run it and check the counts against your notes.",
+      "answer": "Full credit: each chain step explained; at least one method checked against the Dataview docs (e.g. groupBy returns groups with key and rows); counts checked. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

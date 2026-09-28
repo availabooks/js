@@ -1,0 +1,62 @@
+{
+  "title": "Storing Data",
+  "lesson": "database",
+  "text": "These questions check that you can use SQLite from Node, read basic SQL, let the database enforce rules, and prevent SQL injection.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Which statement returns every harvest from bed B3?",
+      "choices": [
+        "db.prepare(\"SELECT * FROM harvests WHERE bed = ?\").all(\"B3\")",
+        "db.prepare(`SELECT * FROM harvests WHERE bed = '${bed}'`).all()",
+        "db.exec(\"SELECT * FROM harvests\")",
+        "db.prepare(\"SELECT * FROM harvests WHERE bed = ?\").run(\"B3\")"
+      ],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Why does the shift list use LEFT JOIN instead of JOIN?",
+      "choices": [
+        "LEFT JOIN is faster",
+        "So shifts with no sign-ups are still included, with a count of 0",
+        "JOIN doesn't work in SQLite",
+        "To hide emails"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A table has UNIQUE (slotId, memberEmail). What happens if code inserts the same member for the same slot twice?",
+      "choices": ["Both rows are saved", "The second insert fails with a constraint error", "The first row is replaced", "Nothing happens"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain SQL injection with an example, and how placeholders prevent it.",
+      "answer": "When user input is pasted into SQL text, special characters can change the command, e.g. an email of ' OR '1'='1 turns WHERE email = '...' into a condition that's always true. Placeholders send the value separately as data, so it's always treated as one value, never as SQL.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Why is \"load the starting data only if the members table is empty\" sturdier than \"load it only if garden.db doesn't exist\"?",
+      "answer": "If setup fails partway, the file exists anyway, so the file check would skip setup forever and leave half-empty tables. Checking whether the tables are empty (with CREATE TABLE IF NOT EXISTS each start) retries loading until it succeeds.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "Write the SQL to list each crop with its total kilograms, largest first, from a table harvests with columns crop and kg.",
+      "answer": "SELECT crop, SUM(kg) AS totalKg FROM harvests GROUP BY crop ORDER BY totalKg DESC",
+      "points": 3
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start with the lesson's SQLite server. In a new chat with your updated learner profile (paste the server code), ask for a new route, GET /members/:email/signups, that lists the shifts one member has signed up for. (1) Paste the reply. (2) Does it use placeholders? Does it follow your rule about personal data, and should this route exist at all without a login? Explain. (3) Add it, test it with fetch for a member with sign-ups, and paste the result.",
+      "answer": "Full credit: placeholders checked; a thoughtful privacy discussion (anyone could look up anyone's sign-ups by email without authentication; consider requiring a login or not exposing it); test result shown. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

@@ -55,14 +55,204 @@
           "filename": "8.html"
         },
         {
+          "id": "functions",
+          "title": "Functions",
+          "filename": "9.html"
+        },
+        {
           "id": "case",
           "title": "College Community Garden: Case setup",
-          "filename": "9.html"
+          "filename": "10.html"
         },
         {
           "id": "google-forms",
           "title": "Google Forms",
-          "filename": "10.html"
+          "filename": "11.html"
+        },
+        {
+          "id": "objects",
+          "title": "Objects and JSON",
+          "filename": "12.html"
+        },
+        {
+          "id": "triggers",
+          "title": "Menus and Triggers",
+          "filename": "13.html"
+        },
+        {
+          "id": "email-calendar",
+          "title": "Email, Calendar, and Dates",
+          "filename": "14.html"
+        },
+        {
+          "id": "documents",
+          "title": "Generating Documents",
+          "filename": "15.html"
+        },
+        {
+          "id": "custom-functions",
+          "title": "Custom Functions in Sheets",
+          "filename": "16.html"
+        },
+        {
+          "id": "web-services",
+          "title": "Talking to Web Services",
+          "filename": "17.html"
+        },
+        {
+          "id": "web-app",
+          "title": "A Web App with Apps Script",
+          "filename": "18.html"
+        },
+        {
+          "id": "web-pages",
+          "title": "How Web Pages Work",
+          "filename": "19.html"
+        },
+        {
+          "id": "events",
+          "title": "Events and Interactivity",
+          "filename": "20.html"
+        },
+        {
+          "id": "async",
+          "title": "Asynchronous JavaScript",
+          "filename": "21.html"
+        },
+        {
+          "id": "automating-pages",
+          "title": "Automating Pages You Use",
+          "filename": "22.html"
+        },
+        {
+          "id": "extension",
+          "title": "Building a Browser Extension",
+          "filename": "23.html"
+        },
+        {
+          "id": "publishing",
+          "title": "Publishing a Site for Free",
+          "filename": "24.html"
+        },
+        {
+          "id": "jade",
+          "title": "Excel's JavaScript API, with JADE",
+          "filename": "25.html"
+        },
+        {
+          "id": "platform-profile",
+          "title": "Teaching Your AI About a New Platform",
+          "filename": "26.html"
+        },
+        {
+          "id": "excel-app",
+          "title": "Building an Application in Excel",
+          "filename": "27.html"
+        },
+        {
+          "id": "sharing-code",
+          "title": "Sharing and Reusing Code",
+          "filename": "28.html"
+        },
+        {
+          "id": "office-scripts",
+          "title": "Office Scripts and TypeScript",
+          "filename": "29.html"
+        },
+        {
+          "id": "airtable",
+          "title": "Scripting Airtable",
+          "filename": "30.html"
+        },
+        {
+          "id": "obsidian",
+          "title": "Scripting Your Notes in Obsidian",
+          "filename": "31.html"
+        },
+        {
+          "id": "node",
+          "title": "Installing Node and Running Scripts",
+          "filename": "32.html"
+        },
+        {
+          "id": "node-modules",
+          "title": "Modules and Packages",
+          "filename": "33.html"
+        },
+        {
+          "id": "files",
+          "title": "Working with Files and Folders",
+          "filename": "34.html"
+        },
+        {
+          "id": "data-files",
+          "title": "Working with Data Files",
+          "filename": "35.html"
+        },
+        {
+          "id": "charts",
+          "title": "Analyzing and Charting Data",
+          "filename": "36.html"
+        },
+        {
+          "id": "cli",
+          "title": "Building Command-Line Tools",
+          "filename": "37.html"
+        },
+        {
+          "id": "playwright",
+          "title": "Automating the Web with Playwright",
+          "filename": "38.html"
+        },
+        {
+          "id": "ai-api",
+          "title": "Calling AI Models from Your Code",
+          "filename": "39.html"
+        },
+        {
+          "id": "n8n",
+          "title": "Automation Workflows with n8n",
+          "filename": "40.html"
+        },
+        {
+          "id": "http",
+          "title": "How the Web Works",
+          "filename": "41.html"
+        },
+        {
+          "id": "express",
+          "title": "A Server with Node and Express",
+          "filename": "42.html"
+        },
+        {
+          "id": "database",
+          "title": "Storing Data",
+          "filename": "43.html"
+        },
+        {
+          "id": "workers",
+          "title": "Serverless with Cloudflare Workers",
+          "filename": "44.html"
+        },
+        {
+          "id": "full-stack",
+          "title": "A Full-Stack App",
+          "filename": "45.html"
+        },
+        {
+          "id": "discord",
+          "title": "A Chat Bot for the Club",
+          "filename": "46.html"
+        },
+        {
+          "id": "tour",
+          "title": "Other Places JavaScript Runs",
+          "filename": "47.html"
+        },
+        {
+          "id": "learning-profile",
+          "title": "Writing Your Own Learning Profile",
+          "filename": "48.html"
         }
       ]
     },

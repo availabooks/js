@@ -51,36 +51,61 @@ Programming with an AI means working with both. You give the AI enough detail th
 
 Here's a short example. Below is a request sent to an AI assistant, followed by its reply. Throughout this book, conversations look like this. The request is shown first, and the reply follows.
 
-::: {.ai-conversation prompt="Write a JavaScript program that says hello." assistant="Gemini" model="gemini-3.8-flash" captured="2026-09-26" profile="none" transcript="welcome/say-hello"}
-> Here is the simplest way to do it in JavaScript:
+::: {.ai-conversation prompt="Write a JavaScript program that says hello." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="none" transcript="welcome/say-hello"}
+> Here's a simple JavaScript program that says hello:
 >
 > ```javascript
 > console.log("Hello, World!");
 > ```
 >
-> ### Other ways to say hello in JavaScript:
+> If you'd like a more complete example, here's a version with a function:
 >
-> **1. As a browser popup:**
 > ```javascript
-> alert("Hello, World!");
+> function sayHello(name) {
+>   console.log(`Hello, ${name}!`);
+> }
+>
+> sayHello("World");
 > ```
 >
-> **2. Writing it directly onto a webpage:**
-> ```javascript
-> document.write("Hello, World!");
-> ```
+> **How to run this:**
+>
+> 1. **In a browser:** Open the Developer Console (F12) and paste the code, then press Enter.
+>
+> 2. **With Node.js:**
+>    - Save the code in a file, e.g., `hello.js`
+>    - Run it in your terminal with:
+>      ```
+>      node hello.js
+>      ```
+>
+> 3. **In an HTML file:**
+>    ```html
+>    <!DOCTYPE html>
+>    <html>
+>    <body>
+>      <script>
+>        console.log("Hello, World!");
+>        alert("Hello, World!"); // This will show a popup
+>      </script>
+>    </body>
+>    </html>
+>    ```
+>
+> Let me know if you'd like a variation—like displaying the message on a webpage instead of the console, or personalizing it further!
 :::
 
 You don't need to understand this code yet. Instead, notice what the assistant decided on its own:
 
 - **The words.** The request said "hello." The assistant chose "Hello, World!", the traditional first message in programming.
-- **Where the greeting appears.** The request didn't say, so the assistant offered three possibilities: a message in a developer tool called the console, a popup window, and text written onto a web page. It couldn't know which one you needed, because it doesn't know where you'll run the code.
-- **The punctuation.** Each line ends with a semicolon (`;`). That's a style choice. JavaScript works the same without them, and this book leaves them out. You'll see why in [Your First Lines of Code](first-code){.book-link}.
+- **How much to write.** It gave a one-line program, then added a longer version "with a function" that you didn't ask for.
+- **Where the code runs.** The request didn't say, so the assistant described three places: a developer tool in your browser called the console, a program called Node.js, and a web page that also shows a popup window. It couldn't know which one you needed, because it doesn't know where you'll run the code.
+- **The punctuation.** Most lines end with a semicolon (`;`). That's a style choice. JavaScript works the same without them, and this book leaves them out. You'll see why in [Your First Lines of Code](first-code){.book-link}.
 
 None of this is wrong. It's what a sensible guess looks like when a request leaves things out. A more specific request, such as "Write one line of JavaScript that prints Hello in the console," would leave less to guess.
 
 ::: {.note}
-> **Your replies won't match this book's.** AI assistants word things differently each time, even when you send the same request twice, and different assistants give different answers. When you try an example yourself, compare the *code* in your reply with the code in the book, not the wording. The book's replies were captured from Gemini, and each one is labeled with its date.
+> **Your replies won't match this book's.** AI assistants word things differently each time, even when you send the same request twice, and different assistants give different answers. When you try an example yourself, compare the *code* in your reply with the code in the book, not the wording. The book's replies were captured from Claude, and each one is labeled with its date.
 :::
 
 ## Why You Still Need to Understand Code

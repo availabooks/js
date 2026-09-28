@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS members (
+  email TEXT PRIMARY KEY,
+  firstName TEXT NOT NULL,
+  lastName TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS slots (
+  id INTEGER PRIMARY KEY,
+  date TEXT NOT NULL,
+  task TEXT NOT NULL,
+  start TEXT NOT NULL,
+  end TEXT NOT NULL,
+  capacity INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS slotSignups (
+  id INTEGER PRIMARY KEY,
+  slotId INTEGER NOT NULL,
+  memberEmail TEXT NOT NULL,
+  cancelCode TEXT NOT NULL,
+  UNIQUE (slotId, memberEmail)
+);

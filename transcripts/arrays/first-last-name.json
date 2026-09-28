@@ -1,0 +1,94 @@
+{
+  "lesson": "arrays",
+  "name": "first-last-name",
+  "assistant": "Claude",
+  "attempts": [
+    {
+      "profile": "decisions",
+      "model": "claude-sonnet-5",
+      "captured": "2026-09-27T02:22:59.562Z",
+      "messages": [
+        {
+          "role": "user",
+          "text": "I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.\n\nWhen you write code for me:\n- Use only the concepts listed below under \"What I know so far.\" If a task needs something I haven't learned, tell me what it is instead of using it.\n- Don't use semicolons at the ends of lines.\n- Keep the code short and simple, and explain what each line does in plain language.\n- Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.\n- Use let for every variable. Don't use var or const.\n- Write each step on its own line, and store each result in a variable. Don't chain method calls together.\n- Compare values with === and !==. Don't use == or !=.\n\nWhat I know so far:\n- statements and expressions\n- console.log to display values, including several values separated by commas\n- text in quote marks\n- joining strings with +\n- numbers and the arithmetic operators + - * /\n- comments that start with //\n- giving a value a name with let, for example let name = \"Ava\"\n- reading error messages\n- what a function is: a named group of steps written as function name() { }\n- choosing which function to run in the Apps Script editor\n- reading output in the Execution log\n- methods, used with a dot, such as SpreadsheetApp.getActiveSheet().getRange(\"A1\").setValue(\"Hello\") to write into a cell\n- changing a variable's value with =, as in count = count + 1\n- strings, numbers and booleans (true and false), and checking a value's type with typeof\n- reading a cell with getValue(), and storing a sheet or a range in a variable\n- empty cells read as an empty string \"\"\n- converting with Number() and String(), and what NaN means\n- template literals: text between backticks, with ${ } to insert a value\n- if, else if and else, including an if inside another if's block\n- the comparison operators === !== > < >= <=\n- the logical operators && (and), || (or) and ! (not)\n- checking for an empty cell with === \"\" before converting a value",
+          "isProfile": true
+        },
+        {
+          "role": "assistant",
+          "text": "Thanks for the detailed list — this is really helpful! I now know exactly what tools I can use.\n\nI don't see a specific task yet, though. What would you like to practice or build? For example:\n\n- Reading a value from a cell and checking if it's empty\n- Doing some math with numbers from your sheet and writing the result back\n- Practicing if/else logic with a value you type into a cell\n- Something else you're curious about\n\nLet me know what you'd like to try, and I'll write a function using only the concepts you've listed, with line-by-line explanations.",
+          "modelVersion": "claude-sonnet-5"
+        },
+        {
+          "role": "user",
+          "text": "Write an Apps Script function that reads my data and logs the first person's last name."
+        },
+        {
+          "role": "assistant",
+          "text": "Since I don't know exactly how your sheet is laid out, I'll assume there's a header row (row 1) and the last name is in column B, so the first person's last name is in cell B2. Adjust the cell reference if your data is arranged differently.\n\n```javascript\nfunction logFirstLastName() {\n  // Get the sheet you're currently working in\n  let sheet = SpreadsheetApp.getActiveSheet()\n\n  // Get the cell B2, where the first person's last name should be\n  let lastNameCell = sheet.getRange(\"B2\")\n\n  // Read the value out of that cell\n  let lastName = lastNameCell.getValue()\n\n  // Display the value in the Execution log\n  console.log(lastName)\n}\n```\n\n**Line by line:**\n\n1. `SpreadsheetApp.getActiveSheet()` grabs the sheet you're currently viewing, and we store it in `sheet`.\n2. `sheet.getRange(\"B2\")` points to cell B2 (row 2, column B), stored in `lastNameCell`.\n3. `.getValue()` reads whatever is written in that cell, stored in `lastName`.\n4. `console.log(lastName)` prints that value so you can see it in the Execution log.\n\nLet me know how your data is actually arranged (which column has last names, whether there's a header row), and I can adjust the cell reference.",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        },
+        {
+          "role": "user",
+          "text": "I've now learned arrays: indexes starting at 0, length, push, arrays of arrays, and getValues and setValues. Rewrite it to read all of my data at once with getValues, then log the first person's last name from the array."
+        },
+        {
+          "role": "assistant",
+          "text": "Here's the rewritten version using `getValues()` to grab everything at once, then pulling out the value we want using array indexes.\n\n```javascript\nfunction logFirstLastName() {\n  // Get the sheet you're currently working in\n  let sheet = SpreadsheetApp.getActiveSheet()\n\n  // Get the range that covers all your data\n  let dataRange = sheet.getDataRange()\n\n  // Read all the values into an array of arrays (rows and columns)\n  let data = dataRange.getValues()\n\n  // Get the first person's row (index 1, since index 0 is the header row)\n  let firstPersonRow = data[1]\n\n  // Get the last name from that row (index 1, since last name is in column B)\n  let lastName = firstPersonRow[1]\n\n  // Display the value in the Execution log\n  console.log(lastName)\n}\n```\n\n**Line by line:**\n\n1. `sheet.getDataRange()` finds the range that covers all the data on the sheet (no need to type a specific range like \"B2\").\n2. `.getValues()` reads that whole range into `data`, which is an array of arrays — each inner array is one row.\n3. `data[1]` grabs the second row (index 1), since index 0 is the header row. This is `firstPersonRow`, an array of that row's column values.\n4. `firstPersonRow[1]` grabs the second item in that row (index 1), which is column B — the last name.\n5. `console.log(lastName)` prints it to the Execution log.\n\nSame assumption as before: header row on row 1, last names in column B. Let me know if your columns are arranged differently and I'll adjust the indexes.",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        },
+        {
+          "role": "user",
+          "text": "Here is my sheet. It is named Members. Row 1 has headers, and each row after that is one club member (rows 2 to 13). Column A is First Name, B is Last Name, C is Email, D is Dues Paid (a checkbox, so true or false), and E is Volunteer Hours (a number). Using getValues, log the first member's full name and email, and whether they have paid their dues."
+        },
+        {
+          "role": "assistant",
+          "text": "```javascript\nfunction logFirstMemberInfo() {\n  // Get the sheet named \"Members\"\n  let sheet = SpreadsheetApp.getSheetByName(\"Members\")\n\n  // Get the range that covers all the data on the sheet\n  let dataRange = sheet.getDataRange()\n\n  // Read all the values into an array of arrays (rows and columns)\n  let data = dataRange.getValues()\n\n  // Get the first member's row (index 1, since index 0 is the header row)\n  let firstMemberRow = data[1]\n\n  // Pull out each piece of info using the column indexes\n  let firstName = firstMemberRow[0]\n  let lastName = firstMemberRow[1]\n  let email = firstMemberRow[2]\n  let duesPaid = firstMemberRow[3]\n\n  // Combine first and last name into one string\n  let fullName = `${firstName} ${lastName}`\n\n  // Display the full name and email in the Execution log\n  console.log(`${fullName}, ${email}`)\n\n  // Check the dues paid value and log a readable message\n  if (duesPaid === true) {\n    console.log(`${fullName} has paid their dues`)\n  } else {\n    console.log(`${fullName} has not paid their dues`)\n  }\n}\n```\n\n**Line by line:**\n\n1. `SpreadsheetApp.getSheetByName(\"Members\")` gets the specific sheet named \"Members\" (instead of just whichever sheet is active).\n2. `sheet.getDataRange()` finds the range covering all the data.\n3. `.getValues()` reads it all into `data`, an array of arrays (rows and columns).\n4. `data[1]` grabs the second row (index 1) — the first member, since index 0 is headers. Stored in `firstMemberRow`.\n5. `firstMemberRow[0]`, `[1]`, `[2]`, `[3]` pull out First Name, Last Name, Email, and Dues Paid using their column positions (A=0, B=1, C=2, D=3).\n6. The template literal `` `${firstName} ${lastName}` `` joins first and last name with a space between, stored in `fullName`.\n7. `console.log(...)` prints the name and email together, separated by a comma.\n8. The `if/else` checks whether `duesPaid` is exactly `true`, and logs a matching message either way.",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        },
+        {
+          "role": "user",
+          "text": "When I ran it, I got this error: TypeError: SpreadsheetApp.getSheetByName is not a function. What does it mean? Explain it, but don't fix it yet."
+        },
+        {
+          "role": "assistant",
+          "text": "This error means JavaScript tried to run something as a function, but it isn't one (or doesn't exist where you're looking for it).\n\nBreaking down the message:\n\n- **TypeError** — this is a category of error that happens when you try to use a value in a way that doesn't match its type. Here, you're trying to *call* `getSheetByName` like a function (with parentheses and an argument), but JavaScript says that's not a valid function to call in this spot.\n- **SpreadsheetApp.getSheetByName is not a function** — this tells you specifically that `SpreadsheetApp.getSheetByName` doesn't exist as a method, so trying to call it with `()` fails.\n\nThis usually means one of two things:\n1. The method name is slightly wrong (misspelled, or it doesn't exist at all).\n2. The method exists, but not directly on `SpreadsheetApp` — it might belong to a different object, and you need to get that object first before calling the method on it.\n\nWant me to explain which of these is happening here, or would you like to look it up yourself first?",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        },
+        {
+          "role": "user",
+          "text": "Now fix it."
+        },
+        {
+          "role": "assistant",
+          "text": "```javascript\nfunction logFirstMemberInfo() {\n  // Get the spreadsheet you're currently working in\n  let spreadsheet = SpreadsheetApp.getActiveSpreadsheet()\n\n  // Get the sheet named \"Members\" from that spreadsheet\n  let sheet = spreadsheet.getSheetByName(\"Members\")\n\n  // Get the range that covers all the data on the sheet\n  let dataRange = sheet.getDataRange()\n\n  // Read all the values into an array of arrays (rows and columns)\n  let data = dataRange.getValues()\n\n  // Get the first member's row (index 1, since index 0 is the header row)\n  let firstMemberRow = data[1]\n\n  // Pull out each piece of info using the column indexes\n  let firstName = firstMemberRow[0]\n  let lastName = firstMemberRow[1]\n  let email = firstMemberRow[2]\n  let duesPaid = firstMemberRow[3]\n\n  // Combine first and last name into one string\n  let fullName = `${firstName} ${lastName}`\n\n  // Display the full name and email in the Execution log\n  console.log(`${fullName}, ${email}`)\n\n  // Check the dues paid value and log a readable message\n  if (duesPaid === true) {\n    console.log(`${fullName} has paid their dues`)\n  } else {\n    console.log(`${fullName} has not paid their dues`)\n  }\n}\n```\n\n**What changed:**\n\n`getSheetByName` is a method that belongs to a **Spreadsheet** object, not to `SpreadsheetApp` itself. `SpreadsheetApp` is more like a starting point that gives you access to a spreadsheet — you first have to get the spreadsheet itself, then ask it for a sheet by name.\n\nSo I added this line:\n\n```javascript\nlet spreadsheet = SpreadsheetApp.getActiveSpreadsheet()\n```\n\nThis gets the actual spreadsheet file you're working in, and stores it in `spreadsheet`. Then:\n\n```javascript\nlet sheet = spreadsheet.getSheetByName(\"Members\")\n```\n\ncalls `getSheetByName` on the spreadsheet (not on `SpreadsheetApp`), which works correctly.",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        },
+        {
+          "role": "user",
+          "text": "Next I want to write the labels High, Medium and Low into F2, F3 and F4 on the same sheet, all at once with one setValues call."
+        },
+        {
+          "role": "assistant",
+          "text": "```javascript\nfunction writeVolunteerLabels() {\n  // Get the spreadsheet you're currently working in\n  let spreadsheet = SpreadsheetApp.getActiveSpreadsheet()\n\n  // Get the sheet named \"Members\" from that spreadsheet\n  let sheet = spreadsheet.getSheetByName(\"Members\")\n\n  // Get the range F2:F4, where the labels will go\n  let labelRange = sheet.getRange(\"F2:F4\")\n\n  // Build an array of arrays: one row per label, one column per row\n  let labels = [[\"High\"], [\"Medium\"], [\"Low\"]]\n\n  // Write all three labels into the range at once\n  labelRange.setValues(labels)\n}\n```\n\n**Line by line:**\n\n1. `SpreadsheetApp.getActiveSpreadsheet()` gets the spreadsheet file, stored in `spreadsheet`.\n2. `spreadsheet.getSheetByName(\"Members\")` gets the \"Members\" sheet from it, stored in `sheet`.\n3. `sheet.getRange(\"F2:F4\")` points to the three cells F2, F3, and F4 together, stored in `labelRange`.\n4. `setValues` needs an array of arrays — one inner array per row, since a range is thought of as a grid of rows and columns. Since we only have one column, each inner array holds just one value: `[[\"High\"], [\"Medium\"], [\"Low\"]]`. This is stored in `labels`.\n5. `labelRange.setValues(labels)` writes those three rows into F2:F4 all at once — \"High\" goes in F2, \"Medium\" in F3, \"Low\" in F4.",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        },
+        {
+          "role": "user",
+          "text": "I added a fourth label, so the line is now let labels = [[\"High\"], [\"Medium\"], [\"Low\"], [\"Medium\"]]. When I run it I get: Exception: The number of rows in the data does not match the number of rows in the range. The data has 4 but the range has 3. What does this mean? Explain it, but don't fix it yet."
+        },
+        {
+          "role": "assistant",
+          "text": "This error means there's a mismatch between the size of the data you're trying to write and the size of the range you're writing it into.\n\nBreaking it down:\n\n- **Exception** — this is a runtime error, meaning the code ran but hit a problem partway through (as opposed to a typo-type error that stops it before it even starts).\n- **The number of rows in the data does not match the number of rows in the range** — `setValues` expects the array of arrays you give it to line up exactly with the range you're writing to. Each inner array becomes one row in that range. If the range has 3 rows, `setValues` expects exactly 3 inner arrays — no more, no less.\n- **The data has 4 but the range has 3** — your `labels` array now has 4 inner arrays (`[\"High\"]`, `[\"Medium\"]`, `[\"Low\"]`, `[\"Medium\"]`), but `labelRange` still refers to `\"F2:F4\"`, which is only 3 cells (3 rows, 1 column).\n\nSo the range you defined and the data you're trying to put into it no longer agree on how many rows there are. To fix this, something needs to change so both sides match — either the range needs to cover 4 rows, or the data needs to go back to 3 items. Want me to fix it now?",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        }
+      ]
+    }
+  ]
+}

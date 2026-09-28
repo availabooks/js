@@ -1,0 +1,84 @@
+{
+  "title": "Variables and Data",
+  "lesson": "variables",
+  "text": "These questions check that you can create and change variables, tell strings, numbers and booleans apart, read a cell, convert between text and numbers, and choose clear names.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "What does this code display?\n\nlet total = 5\ntotal = total + 3\ntotal = total * 2\nconsole.log(total)",
+      "choices": ["5", "8", "16", "13"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What does console.log(typeof \"42\") display?",
+      "choices": ["number", "string", "boolean", "42"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Cell D5 contains a checkbox that is checked. What does getValue() return for D5?",
+      "choices": ["The string \"checked\"", "The number 1", "The boolean true", "An empty string \"\""],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which line causes an error?",
+      "choices": [
+        "let count = 1 (followed later by) count = 2",
+        "let count = 1 (followed later by) let count = 2",
+        "let name = \"Ava\" (followed later by) name = \"Ben\"",
+        "let hours = 4 (followed later by) hours = hours + 1"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which template literal displays Ben has 4 hours. when firstName is \"Ben\" and hours is 4?",
+      "choices": [
+        "\"${firstName} has ${hours} hours.\"",
+        "`${firstName} has ${hours} hours.`",
+        "`firstName has hours hours.`",
+        "`{firstName} has {hours} hours.`"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "A function reads cell E7 with getValue(), adds 1, and writes the result back. E7 showed 9, and after the function runs it shows 91. Explain what happened and how to fix it.",
+      "answer": "E7 is formatted as plain text, so getValue() returned the string \"9\", not the number 9. With a string, + joins instead of adding, so \"9\" + 1 became \"91\". Fix: convert the value first, e.g. let hours = Number(cell.getValue()), then add 1. typeof would have shown the value was a string.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "You find this line in some code online: var total = 0; Name two differences from the style of code in this book, and say whether the line would work in your Apps Script project.",
+      "answer": "It uses var instead of let, and it ends with a semicolon. It would work: var is JavaScript's original keyword for creating a variable (let is the modern choice), and semicolons are optional.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Rename the variables in this code so the names describe what they hold. Cell B2 holds a member's email address.\n\nlet x = SpreadsheetApp.getActiveSheet()\nlet y = x.getRange(\"B2\")\nlet z = y.getValue()",
+      "answer": "For example: sheet (or membersSheet), emailCell, emailAddress. Accept any clear camelCase names that describe the sheet, the cell and the email address.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "On the practice sheet, A2 holds a member's first name and E2 holds their volunteer hours (possibly as text). Write a function named writeHoursMessage that writes a message such as Ava has 12 volunteer hours. into cell G2. Use let, one step per line, and a template literal.",
+      "start": "function writeHoursMessage() {\n\n}",
+      "key": ["function writeHoursMessage() {\n  let sheet = SpreadsheetApp.getActiveSheet()\n  let nameCell = sheet.getRange(\"A2\")\n  let firstName = nameCell.getValue()\n  let hoursCell = sheet.getRange(\"E2\")\n  let hours = Number(hoursCell.getValue())\n  let message = `${firstName} has ${hours} volunteer hours.`\n  let messageCell = sheet.getRange(\"G2\")\n  messageCell.setValue(message)\n}"],
+      "lines": 10,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat and paste the updated learner profile from the end of this lesson. Then send: \"Write an Apps Script function that reads the volunteer hours in cell E3, adds 3, and writes the new total back into E3. The cell might be formatted as plain text.\" (1) Paste the reply. (2) Did the assistant follow the two new rules (let only; one step per line with no chained calls)? Point to the lines that show it. (3) How did it handle the plain-text possibility? (4) Explain each line in your own words.",
+      "answer": "Full credit: evidence the updated profile was used; correct identification of whether let and one-step-per-line were followed (quote lines); notes that the conversion uses Number() (or explains a different approach); an accurate line-by-line explanation. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

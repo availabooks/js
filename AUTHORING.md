@@ -119,10 +119,10 @@ A lesson that imports `appsscript` can include a sheet:
 
 ## AI conversations
 
-Every reply is **real output captured from the Gemini API** while the lesson is written (see "Capturing replies"). Nothing in a reply is invented or edited, except for trimming, which is marked `[…]`.
+Every reply is **real output captured from the Claude API** while the lesson is written (see "Capturing replies"). Nothing in a reply is invented or edited, except for trimming, which is marked `[…]`.
 
 ```markdown
-::: {.ai-conversation prompt="Write JavaScript that adds up the numbers from 1 to 10." assistant="Gemini" model="gemini-x.y" captured="2026-10-02" profile="none" transcript="ai-assistant/sum-1-to-10"}
+::: {.ai-conversation prompt="Write JavaScript that adds up the numbers from 1 to 10." assistant="Claude" model="claude-sonnet-5" captured="2026-10-02" profile="none" transcript="ai-assistant/sum-1-to-10"}
 > Reply text, exactly as captured…
 >
 > ```javascript
@@ -140,19 +140,20 @@ Every reply is **real output captured from the Gemini API** while the lesson is 
 | `transcript` | Path under `transcripts/` to the saved raw exchange (without `.json`). |
 
 - **Follow-up turns** ("Try again. Use only what I know.") are separate blocks, as in the SQL book.
-- **Captions.** The build adds a caption at the end of each reply from these attributes: *"Reply from Gemini, captured September 26, 2026"*, with the model shown on hover. A block with `status="pending"` shows *"Reply not captured yet"* instead. (Built into `tools/author-tools/html.js`, styled by `div.ai-source` in the system CSS.)
+- **Captions.** The build adds a caption at the end of each reply from these attributes: *"Reply from Claude, captured September 26, 2026"*, with the model shown on hover. A block with `status="pending"` shows *"Reply not captured yet"* instead. (Built into `tools/author-tools/html.js`, styled by `div.ai-source` in the system CSS.)
 - **Placeholders.** If a reply couldn't be captured yet, write the block with `status="pending"` and describe what the example needs in place of the reply. Never write a stand-in reply.
 - **Re-runs.** A capture may be re-run a few times (about three at most) when an example needs a particular mistake. If the mistake doesn't appear, change the example; readers would be unlikely to see it themselves. The transcript file records how many attempts there were.
 - **After each exchange**, the lesson walks through the code line by line (the Read step) before anyone runs it.
 
 ### Capturing replies
 
-`tools/capture.mjs` sends an exchange to the Gemini API and saves it in `transcripts/<lesson-id>/<name>.json`. The API key is read from `private/gemini.key`, which git ignores.
-- The learner profile is sent as the conversation's **first message**, the way a reader would paste it, and the reply to it is saved but not shown in the book.
+`tools/capture.mjs` sends an exchange to the Claude API and saves it in `transcripts/<lesson-id>/<name>.json`. The API key is read from `private/anthropic.key`, which git ignores. Run `npm install` in the book folder once, for the Anthropic SDK.
+- The learner profile is sent as the conversation's **first message**, the way a reader would paste it, and the reply to it is saved but not shown in the book. No system prompt is sent.
 - Follow-up turns include the conversation so far.
-- The API's replies are close to, but not identical to, the Gemini app's.
-- **Replies from the Gemini app** are also fine, and closer to what readers see. The author sends the prompt in a new chat that starts with the right learner profile and pastes the reply back. The transcript records `"source": "Gemini app ... pasted in"`. Leave out the `model` attribute unless the model picker's label is known.
-- **Model:** captures use `gemini-3.8-flash` (the script's `DEFAULT_MODEL`), pinned so every reply in the book comes from the same model. Flash is the model family the free Gemini app typically uses. Change the model only for a deliberate re-capture of the whole book.
+- The API's replies are close to, but not identical to, the Claude app's.
+- **Replies from the Claude app** (claude.ai) are also fine, and closer to what readers see. The author sends the prompt in a new chat that starts with the right learner profile and pastes the reply back. The transcript records `"source": "Claude app ... pasted in"`. Leave out the `model` attribute unless the model picker's label is known.
+- **Model:** captures use `claude-sonnet-5` (the script's `DEFAULT_MODEL`), pinned so every reply in the book comes from the same model. Sonnet is the model family the free Claude app uses. Change the model only for a deliberate re-capture of the whole book.
+- **Earlier Gemini captures.** The book's first drafts used Gemini. A Claude capture with the same name moves the old transcript to `<name>.gemini.json`, so it can be compared. `--model gemini-...` still sends a capture to Gemini (key in `private/gemini.key`).
 
 ---
 

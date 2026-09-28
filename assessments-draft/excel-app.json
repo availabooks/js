@@ -1,0 +1,59 @@
+{
+  "title": "Building an Application in Excel",
+  "lesson": "excel-app",
+  "text": "These questions check that you can build a JADE task pane app, store settings in the workbook, start an app automatically, and track down what a function really returns.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "<select id=\"crop\"><option value=\"TOM\">Tomato</option><option value=\"BAS\">Basil</option></select>\nThe user chooses Basil. What is tag(\"crop\").value?",
+      "choices": ["\"Basil\"", "\"BAS\"", "1", "\"TOM\""],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What does await Jade.read_object_from_workbook(\"settings\") return if nothing has ever been saved under that key?",
+      "choices": ["null", "undefined", "{} (an empty object)", "An error"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "How do you make a JADE app start when the workbook opens?",
+      "choices": [
+        "Name a function onOpen",
+        "Define a function named auto_exec in a code module",
+        "Add a Jade.listing comment",
+        "Use a time-driven trigger"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant's code checks if (saved === null || saved === undefined) before using a value read from the workbook, and fails the first time it runs. How would you find out what the value really is, and how should the check be written?",
+      "answer": "Print typeof saved (and the value) with Jade.print, or read the documentation (it returns {} when nothing is saved). Check for what you want rather than what you think you'll get, e.g. if (typeof saved !== \"string\") use a default.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "auto_exec runs whenever someone opens the workbook with JADE. Give one benefit and one risk of that.",
+      "answer": "Benefit: an app can start by itself, so users don't need to know how to run it. Risk: code runs without anyone clicking, so a workbook from someone you don't trust could run harmful code; read it first and only open workbooks with code from trusted sources.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a JADE function addTestHarvest(excel) that adds the row [\"2027-08-20\", \"B8\", \"Squash\", 1.5, \"test@example.com\"] after the last used row of the Harvests sheet, using usedRange.load(\"rowCount\") and getRangeByIndexes, and prints the sheet row number it wrote to. (With the book's data, row 34.)",
+      "start": "async function addTestHarvest(excel) {\n\n}",
+      "key": ["async function addTestHarvest(excel) {\n  const sheet = excel.workbook.worksheets.getItem(\"Harvests\")\n  const usedRange = sheet.getUsedRange()\n  usedRange.load(\"rowCount\")\n  await excel.sync()\n  const newRow = sheet.getRangeByIndexes(usedRange.rowCount, 0, 1, 5)\n  newRow.values = [[\"2027-08-20\", \"B8\", \"Squash\", 1.5, \"test@example.com\"]]\n  await excel.sync()\n  Jade.print(`Wrote row ${usedRange.rowCount + 1}`, \"Test harvest\")\n  Jade.open_output()\n}"],
+      "lines": 12,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your learner profile and your updated JADE platform profile. Ask for a JADE panel that lists every bed with a button beside each one, and clicking a bed's button prints that bed's total kilograms. (1) Paste the reply. (2) How does it connect each button to its bed? Is each handler wrapped with Jade.automate? (3) Did the assistant say it was unsure about anything? If so, look it up in JADE's documentation and report what you found. (4) Run it and check two beds against the lesson on the garden case (Bed 1: 9.5 kg, Bed 3: 14.4 kg).",
+      "answer": "Full credit: explains the per-button connection (a loop with ids, or data attributes) and Jade.automate use; reports any admitted uncertainty and what the documentation says; results checked. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

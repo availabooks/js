@@ -1,0 +1,65 @@
+{
+  "title": "Email, Calendar, and Dates",
+  "lesson": "email-calendar",
+  "text": "These questions check that you can send email safely, work with Date objects, and use dry runs and the permission screen to check code before it acts.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "const d = new Date(2027, 11, 25)\nWhat does d.getMonth() give?",
+      "choices": ["12", "11", "25", "\"December\""],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "const d = new Date(2027, 0, 30)\nd.setDate(d.getDate() + 3)\nWhat date is d now?",
+      "choices": ["January 33, 2027", "February 2, 2027", "February 3, 2027", "An error"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A script only needs to send email. Which should it use, and why?",
+      "choices": [
+        "GmailApp, because it's newer",
+        "MailApp, because it only needs permission to send email, while GmailApp asks for full access to Gmail",
+        "Either; they ask for the same permissions",
+        "CalendarApp"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "What is a dry run, and why is it especially important for code that sends email?",
+      "answer": "Running the code so it logs what it would do instead of doing it. Email can't be unsent, so a dry run lets you check recipients and wording before anyone receives a message.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant tells you your script will only ask for permission to send email, but the permission screen asks to read and delete all your email. Which do you trust, and what should you do?",
+      "answer": "Trust the permission screen; it's what the script will actually be allowed to do. Find out why (e.g. GmailApp is used) and change the code (e.g. to MailApp) or don't approve it.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "A script creates next month's workday events on the club calendar. What happens if someone runs it twice, and how could you protect against that?",
+      "answer": "Every event is created twice (duplicates). Protect by checking for existing events first (e.g. getEvents for the day), keeping a note of what's been created, or making sure only one person runs it; at minimum, read for repeat effects before running.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a function dateToText(date) that returns a date as text like 2027-04-09 (four-digit year, two-digit month, two-digit day), using getFullYear, getMonth and getDate. Then write testDateToText, which logs dateToText(new Date(2027, 3, 9)) and dateToText(new Date(2027, 10, 21)). (Expected: 2027-04-09 and 2027-11-21.)",
+      "start": "function testDateToText() {\n\n}\n\nfunction dateToText(date) {\n\n}",
+      "key": ["function testDateToText() {\n  console.log(dateToText(new Date(2027, 3, 9)))\n  console.log(dateToText(new Date(2027, 10, 21)))\n}\n\nfunction dateToText(date) {\n  const year = date.getFullYear()\n  const month = date.getMonth() + 1\n  const day = date.getDate()\n  let monthText = String(month)\n  if (month < 10) {\n    monthText = `0${month}`\n  }\n  let dayText = String(day)\n  if (day < 10) {\n    dayText = `0${day}`\n  }\n  return `${year}-${monthText}-${dayText}`\n}"],
+      "lines": 20,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile and the garden context. Ask for a script that emails each member who hasn't paid dues a polite reminder. (1) Paste the reply. (2) Did it do a dry run first, as your profile asks? (3) Which service does it use to send, and what permission will it ask for? (4) Run the dry run on the book's sheets or your copy, and check that exactly the unpaid members (Ben, Elena, Gabe, Jordan) would be emailed.",
+      "answer": "Full credit: notes whether a dry run was used; identifies MailApp (send only) or GmailApp (full Gmail access); dry-run output checked against the four unpaid members. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

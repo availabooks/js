@@ -1,0 +1,59 @@
+{
+  "title": "Scripting Airtable",
+  "lesson": "airtable",
+  "text": "These questions check that you understand Airtable's structure, can read and create records in a script, and can group records safely.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A shift's Member field links to one member. What does shift.getCellValue(\"Member\") return?",
+      "choices": ["The member's email as a string", "An array with one object, such as [{ id: \"rec...\", name: \"...\" }]", "The member's record ID as a string", "true"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "The Task field is a single select. Which value can createRecordAsync write to it?",
+      "choices": ["\"watering\"", "{ name: \"watering\" }", "[\"watering\"]", "{ id: \"watering\" }"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Why does an Airtable script use await in front of selectRecordsAsync?",
+      "choices": [
+        "It's a style choice",
+        "Loading records takes time and returns a promise, like fetch",
+        "It makes the script run faster",
+        "Airtable requires await on every line"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "A script totals hours using each linked member's name as the key. Explain what goes wrong when two members share the name shown, and how to fix it.",
+      "answer": "Their hours are added together under one key, so totals are wrong and a member disappears. Key totals by the linked record's id, which is unique, and keep the name only for display. (A unique primary field, such as Email, also helps.)",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Why was Email a better choice than First Name for the Members table's primary field?",
+      "answer": "The primary field names each record wherever it's linked or shown; emails are unique, first names aren't. It also let Airtable convert the Shifts table's Member Email column into links by matching emails.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Airtable-style records can be imitated with objects. Write a function hoursById(shifts) where each shift is { member: [{ id, name }], hours }, returning an object of total hours by member id (skip shifts with no member). Then write testHoursById, which logs JSON.stringify(hoursById(shifts)) for shifts = [{ member: [{ id: \"rec1\", name: \"Ava\" }], hours: 1 }, { member: [{ id: \"rec2\", name: \"Ava\" }], hours: 2 }, { member: [{ id: \"rec1\", name: \"Ava\" }], hours: 1.5 }, { member: null, hours: 3 }]. (Expected: {\"rec1\":2.5,\"rec2\":2})",
+      "start": "function testHoursById() {\n\n}\n\nfunction hoursById(shifts) {\n\n}",
+      "key": ["function testHoursById() {\n  const shifts = [\n    { member: [{ id: \"rec1\", name: \"Ava\" }], hours: 1 },\n    { member: [{ id: \"rec2\", name: \"Ava\" }], hours: 2 },\n    { member: [{ id: \"rec1\", name: \"Ava\" }], hours: 1.5 },\n    { member: null, hours: 3 }\n  ]\n  console.log(JSON.stringify(hoursById(shifts)))\n}\n\nfunction hoursById(shifts) {\n  const totals = {}\n  for (let i = 0; i < shifts.length; i++) {\n    const links = shifts[i].member\n    if (links !== null) {\n      const id = links[0].id\n      if (totals[id] === undefined) {\n        totals[id] = 0\n      }\n      totals[id] += shifts[i].hours\n    }\n  }\n  return totals\n}"],
+      "lines": 18,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Build the club's base as described in the lesson. Start a new chat with your updated learner profile and a description of your base's tables and field types. Ask for a script that lists, for each task, how many shifts and how many hours were logged. (1) Paste the reply. (2) How does it read the Task field, a single select? Does it use the value's name? (3) Does it load only the fields it needs? (4) Run it and check one task's numbers by filtering the Shifts table in Airtable.",
+      "answer": "Full credit: notes reading a single select (getCellValue gives { id, name, color }, or getCellValueAsString); notes fields option; checks one task by filtering. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

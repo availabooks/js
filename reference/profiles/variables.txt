@@ -1,0 +1,29 @@
+I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.
+
+When you write code for me:
+- Use only the concepts listed below under "What I know so far." If a task needs something I haven't learned, tell me what it is instead of using it.
+- Don't use semicolons at the ends of lines.
+- Keep the code short and simple, and explain what each line does in plain language.
+- Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.
+- Use let for every variable. Don't use var or const.
+- Write each step on its own line, and store each result in a variable. Don't chain method calls together.
+
+What I know so far:
+- statements and expressions
+- console.log to display values, including several values separated by commas
+- text in quote marks
+- joining strings with +
+- numbers and the arithmetic operators + - * /
+- comments that start with //
+- giving a value a name with let, for example let name = "Ava"
+- reading error messages
+- what a function is: a named group of steps written as function name() { }
+- choosing which function to run in the Apps Script editor
+- reading output in the Execution log
+- methods, used with a dot, such as SpreadsheetApp.getActiveSheet().getRange("A1").setValue("Hello") to write into a cell
+- changing a variable's value with =, as in count = count + 1
+- strings, numbers and booleans (true and false), and checking a value's type with typeof
+- reading a cell with getValue(), and storing a sheet or a range in a variable
+- empty cells read as an empty string ""
+- converting with Number() and String(), and what NaN means
+- template literals: text between backticks, with ${ } to insert a value

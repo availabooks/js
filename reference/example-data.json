@@ -1072,5 +1072,231 @@
     "Canning & Preservation",
     "Garden Photography",
     "Therapeutic Horticulture"
+  ],
+  "signups": [
+    {
+      "timestamp": "2027-03-02 09:24",
+      "firstName": "Isaac",
+      "lastName": "Cohen",
+      "email": "isaac.cohen@example.com",
+      "phone": "555-0119",
+      "interests": "Nutrition & Wellness, Native Plant Restoration, Mushroom Cultivation, Medicinal Herbs"
+    },
+    {
+      "timestamp": "2027-03-02 09:34",
+      "firstName": "Elena",
+      "lastName": "Rossi",
+      "email": "elena.rossi@example.com",
+      "phone": "555-0115",
+      "interests": "Sustainable Living, Vertical Gardening, Container Gardening, Garden Photography"
+    },
+    {
+      "timestamp": "2027-03-03 14:39",
+      "firstName": "Ben",
+      "lastName": "Okafor",
+      "email": "ben.okafor@example.com",
+      "phone": "555-0112",
+      "interests": "Community Gardening"
+    },
+    {
+      "timestamp": "2027-03-03 18:29",
+      "firstName": "Dev",
+      "lastName": "Patel",
+      "email": "dev.patel@example.com",
+      "phone": "555-0114",
+      "interests": "Home Food Growing, Organic Gardening, Medicinal Herbs"
+    },
+    {
+      "timestamp": "2027-03-05 15:18",
+      "firstName": "Keisha",
+      "lastName": "Brown",
+      "email": "keisha.brown@example.com",
+      "phone": "555-0121",
+      "interests": "Hydroponics, Canning & Preservation, Therapeutic Horticulture"
+    },
+    {
+      "timestamp": "2027-03-07 09:13",
+      "firstName": "Hana",
+      "lastName": "Kim",
+      "email": "hana.kim@example.com",
+      "phone": "555-0118",
+      "interests": "Nutrition & Wellness, Hydroponics, Microgreens & Sprouts, Pollinator Gardens"
+    },
+    {
+      "timestamp": "2027-03-08 20:32",
+      "firstName": "Jordan",
+      "lastName": "Lee",
+      "email": "jordan.lee@example.com",
+      "phone": "555-0120",
+      "interests": "Heirloom Seeds, Farm-to-Table Cooking, Therapeutic Horticulture"
+    },
+    {
+      "timestamp": "2027-03-09 08:55",
+      "firstName": "Ava",
+      "lastName": "Lopez",
+      "email": "ava.lopez@example.com",
+      "phone": "555-0111",
+      "interests": "Native Plant Restoration"
+    },
+    {
+      "timestamp": "2027-03-09 20:46",
+      "firstName": "Maya",
+      "lastName": "Thompson",
+      "email": "maya.thompson@example.com",
+      "phone": "555-0110",
+      "interests": "Pollinator Gardens, Mushroom Cultivation"
+    },
+    {
+      "timestamp": "2027-03-12 10:19",
+      "firstName": "Farah",
+      "lastName": "Haddad",
+      "email": "farah.haddad@example.com",
+      "phone": "555-0116",
+      "interests": "Teaching Through Gardening, Houseplant Care, Hydroponics, Vertical Gardening"
+    },
+    {
+      "timestamp": "2027-03-12 11:34",
+      "firstName": "Gabe",
+      "lastName": "Martinez",
+      "email": "gabe.martinez@example.com",
+      "phone": "555-0117",
+      "interests": "Vertical Gardening, Native Plant Restoration, Therapeutic Horticulture"
+    },
+    {
+      "timestamp": "2027-03-12 15:19",
+      "firstName": "Cam",
+      "lastName": "Nguyen",
+      "email": "cam.nguyen@example.com",
+      "phone": "555-0113",
+      "interests": "Houseplant Care, Pollinator Gardens"
+    }
+  ],
+  "slots": [
+    {
+      "id": 1,
+      "date": "2027-06-05",
+      "task": "watering",
+      "start": "08:00",
+      "end": "09:00",
+      "capacity": 2
+    },
+    {
+      "id": 2,
+      "date": "2027-06-05",
+      "task": "harvesting",
+      "start": "09:00",
+      "end": "11:00",
+      "capacity": 3
+    },
+    {
+      "id": 3,
+      "date": "2027-06-12",
+      "task": "watering",
+      "start": "08:00",
+      "end": "09:00",
+      "capacity": 2
+    },
+    {
+      "id": 4,
+      "date": "2027-06-12",
+      "task": "weeding",
+      "start": "09:00",
+      "end": "11:00",
+      "capacity": 4
+    },
+    {
+      "id": 5,
+      "date": "2027-06-19",
+      "task": "watering",
+      "start": "08:00",
+      "end": "09:00",
+      "capacity": 2
+    },
+    {
+      "id": 6,
+      "date": "2027-06-19",
+      "task": "planting",
+      "start": "09:00",
+      "end": "11:00",
+      "capacity": 3
+    },
+    {
+      "id": 7,
+      "date": "2027-06-26",
+      "task": "watering",
+      "start": "08:00",
+      "end": "09:00",
+      "capacity": 2
+    },
+    {
+      "id": 8,
+      "date": "2027-06-26",
+      "task": "harvesting",
+      "start": "09:00",
+      "end": "11:00",
+      "capacity": 3
+    }
+  ],
+  "slotSignups": [
+    {
+      "id": 1,
+      "slotId": 1,
+      "memberEmail": "hana.kim@example.com"
+    },
+    {
+      "id": 2,
+      "slotId": 1,
+      "memberEmail": "farah.haddad@example.com"
+    },
+    {
+      "id": 3,
+      "slotId": 2,
+      "memberEmail": "ava.lopez@example.com"
+    },
+    {
+      "id": 4,
+      "slotId": 3,
+      "memberEmail": "keisha.brown@example.com"
+    },
+    {
+      "id": 5,
+      "slotId": 4,
+      "memberEmail": "dev.patel@example.com"
+    },
+    {
+      "id": 6,
+      "slotId": 4,
+      "memberEmail": "keisha.brown@example.com"
+    },
+    {
+      "id": 7,
+      "slotId": 5,
+      "memberEmail": "maya.thompson@example.com"
+    },
+    {
+      "id": 8,
+      "slotId": 5,
+      "memberEmail": "ben.okafor@example.com"
+    },
+    {
+      "id": 9,
+      "slotId": 7,
+      "memberEmail": "ben.okafor@example.com"
+    },
+    {
+      "id": 10,
+      "slotId": 8,
+      "memberEmail": "keisha.brown@example.com"
+    },
+    {
+      "id": 11,
+      "slotId": 8,
+      "memberEmail": "hana.kim@example.com"
+    },
+    {
+      "id": 12,
+      "slotId": 8,
+      "memberEmail": "gabe.martinez@example.com"
+    }
   ]
 }

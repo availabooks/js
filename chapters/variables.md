@@ -1,536 +1,528 @@
 ---
-_$_import: monaco
+_$_import: monaco, appsscript
 ---
 
-## What Variables Are and Why They Matter
+::: {.learning}
+Learning Objectives
 
-As you begin writing programs that do more than print a message or perform a single calculation, you need a way to store information—something your code can remember, reuse, and change as it runs. That’s exactly what **variables** are for. A variable is a named container that holds a piece of data. You can think of it like a labeled box: you put something inside, give the box a name, and later you can open it, change what’s inside, or use its contents in a calculation.
+::: {.objectives}
+1. Create variables with `let` and give them new values.
+2. Tell strings, numbers and booleans apart, and check a value's type with `typeof`.
+3. Read a value from a cell with `getValue`, and write code that does one step per line.
+4. Explain why `"12" + 2` gives `"122"`, and convert between text and numbers with `Number()` and `String()`.
+5. Build text with template literals.
+6. Choose clear variable names, and recognize `var` and `const` in code you find.
+:::
+:::
 
-In JavaScript and Google Apps Script, variables let you keep track of values such as numbers, text, dates, or even entire lists of data. Without variables, every program would be rigid and repetitive. With them, your code becomes flexible, dynamic, and capable of responding to different situations.
+## Variables
 
-A simple example looks like this:
-
-<pre class="code" data-environment="none"> 
-let score = 10 
-</pre>
-
-Here, `score` is the variable’s name, and `10` is the value stored inside it. Once you’ve created this variable, you can use it anywhere in your script:
-
-<pre class="code" data-environment="none"> 
-console.log(score)
-</pre>
-
-To see this example execute in Google Apps Script, do the following:
-
-1. Open a new Google Sheet
-2. From the menu bar, choose “Extensions” then “Apps Script”  
-   ![{width:334, alt="Opening Apps Script Editor"}](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi3j_ZQ5HXTAbC-DQiRbQOngEJNc3rQ-OHiKKCTnsovgeU16k4zbgiuLsrmReTfJSmFhBOMVNyUiVv4rMuF9kES2x3O7TkNbn7s1UqLZxURDNscVa79jioBfRWZrp_OCqShjwpMeK_0Ayr6yTFGs8OJJjcr1W6EUwWiYhtSRSOtbL1VpbxMEM-xkaFaLa0/s1600/84cd1741.png)
-
-This will open the Google Apps Script editor with a new script file named “[Code.gs](http://Code.gs),” showing the following:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8B09kVhscTTl6lJyGzklWN2kqMt7ZSY4Aa-vct7HmHR6GjRXVmIfFPC8G_DM0WaOMikBZMn784e6vapHIWLVVCf3jdXQsRuuzjKIO2zKTwFO8a6xq5130b4_q2-Q40qMQTPnDO4834vEnHiJMsqLMTnd-1gXK5yhiSH0ycr2Dw6XELt-zbi7OwtGjLl8/s1600/d467b986.png)
-
-Notice that there is already some code here in the code GS file. What you see is the basic structure of a function. We'll talk more about functions later but it's the structure that allows us to group multiple lines of code to execute together. To execute code, just write (or paste) the lines between the braces as follows:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQH1PqnDqi-QXT6DoByjraPWqGCbkdbNc8dJHFaY2fUd9befeIjBFcLDATgGGPTERA47c_XO5i9ALj9tRj2ESXQiyfH_BDugG0TvpDIt2YagNWtP-XD5nXRlddIS6WRwnnDFmMPCL5kEabRe7ohn_JG3t2JGzScvkwV5dSCb5APZKCqzKAlQID0kx5XZM/s1600/1637cacb.png)
-
-Now, your code is ready to execute. To do so, click the “Run” button.
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhmFx67OG_2-F0Or2T_2_nUhmnNcYMEpW-6mXcqTI8YP5BEyazIg8w56aMMiD8co-Gv_RLapr3CCQ9cw6Jh5OQ-rrPH73Uj1Xnp0kXvD0XDdH_wCb4Vtig4t7JQZ3gcT_axtXVrwRCQydhAH1yofuQ7yK1xCJI96CHLdPsEWWWlSx9_AovzmVfnHOnFTl4/s1600/8029f1d6.png)
-
-This will execute the function and open the execution log:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjP3hh-YYHn0EgM_VPlCLHqfmQ-CtJbjkncf_Ylaf5caooCSraRp5jF2c-wxQArAEuzWiu0NbzIjnrrJHmrfGfy_wbcvOs8EEB926WDeOrZMNPdbE1J7P7vwk6whzUGGxCYR1a-MSpgTA6spM2uWhofYUpNdMT6Vucm__o9vaI3bCdmslDaatH4Mew0qTw/s1600/9109882d.png)
-
-There are three entries in the execution log: The first and the last just show the times that the function began and completed running. The remaining item displays the value of the variable named “count” at the time that line 3 of the function ran.
-
-You can modify the code in the “myFunction” function to run any of the examples in this section.
-
-Now let’s continue with our discussion of variables. Modify the code as follows:
+In [Your First Lines of Code](first-code){.book-link} you gave a value a name with `let`:
 
 <pre class="code">
-let count = 10  
- count = 20  
- count = count + 1  
- console.log(count)
-</pre>
-
-The first statement defines the variable “count” and gives it a value of 10\. The second statement changes the value of the variable “count” to 20\. The third statement will set a new value for the “count” variable, but to calculate the new value, it must read its current value. Before it can assign the value it must evaluate “count \+ 1”. At this point of the code, count holds a value of 20, so “count \+ 1” evaluates to 21\. So the variable named “count” will take on the value 21\. The final statement will print 21 into the execution log. Give it a try.
-
-This ability to store and update information is at the heart of programming. It’s how you track progress, remember user input, process spreadsheet data, or build tools that adapt to whatever information they’re given.
-
-Variables matter because they allow your programs to:
-
-- **Reuse values** without rewriting them
-- **Respond to changing data**
-- **Store results** from calculations or user actions
-- **Organize information** in a clear, meaningful way
-- **Build more complex logic** that depends on what’s happening in the program
-
-In Google Apps Script, variables become especially powerful because they can hold values pulled directly from a spreadsheet—like a list of names, a column of numbers, or a single cell’s content. Once that data is in a variable, your script can analyze it, transform it, or write new results back into the sheet.
-
-As you move through this chapter, you’ll learn how to create variables, choose good names for them, and work with different kinds of data. These skills form the foundation for everything you’ll build next, whether you’re automating a spreadsheet, generating reports, or writing full applications.
-
-## Primitive Types: Strings, Numbers, Booleans
-
-Every programming language needs a way to represent basic kinds of information. In JavaScript—and therefore in Google Apps Script—these fundamental building blocks are called **primitive types**. They’re the simplest forms of data your program can work with, and they show up everywhere: in calculations, text processing, decisions, and interactions with spreadsheet values.
-
-Understanding these types will help you write clearer code and avoid common mistakes as you begin working with real data from Google Sheets.
-
-### Strings: Working With Text
-
-A **string** is any piece of text—words, sentences, symbols, or even empty space. Strings are written inside quotes:
-
-<pre class="code" data-environment="none">
 let name = "Ava"
-let message = "Hello, world!"
-let empty = ""
+console.log("Hello,", name)
 </pre>
 
-Strings are useful for:
-
-- Labels and descriptions
-- Messages you log or display
-- Data pulled from spreadsheet cells
-- Building dynamic text (like email subjects or custom messages)
-
-You can combine strings using the `+` operator:
-
-<pre class="code" data-environment="none">
-let greeting = "Hello, " + name
-</pre>
-
-In Apps Script, strings are especially common because spreadsheet data often arrives as text—even when it looks like a number.
-
-### Numbers: Doing Math and Calculations
-
-Numbers in JavaScript represent both whole numbers and decimals:
-
-<pre class="code" data-environment="none">
-let age = 30
-let price = 19.99
-let total = age + price
-</pre>
-
-You can perform all the usual arithmetic:
-
-<pre class="code" data-environment="none">
-let sum = 5 + 7
-let product = 3 * 4
-let average = (10 + 20 + 30) / 3
-</pre>
-
-In Google Sheets, numbers are everywhere—totals, counts, dates, percentages—so being comfortable with numeric operations is essential. Apps Script can read numbers directly from cells and use them in calculations or write new results back into the sheet.
-
-### Booleans: True or False Values
-
-A **boolean** represents one of two possible values:
-
-<pre class="code" data-environment="none">
-let isActive = true
-let isComplete = false
-</pre>
-
-Booleans are the backbone of decision‑making in your programs. They’re used in conditions, comparisons, and logic:
-
-<pre class="code" data-environment="none">
-let score = 85
-let passed = score > 70   // passed becomes true
-</pre>
-
-Whenever your script needs to choose between two paths—send an email or not, update a cell or skip it, run a calculation or stop—a boolean is involved.
-
-### Why Primitive Types Matter
-
-These three types—strings, numbers, and booleans—form the foundation of almost everything you’ll do in Apps Script. They allow your programs to:
-
-- Store and manipulate text
-- Perform calculations
-- Make decisions
-- Interpret spreadsheet data
-- Build dynamic, flexible scripts
-
-As you begin interacting with Google Sheets, you’ll see these types constantly. A cell might contain a string, a number, or something that becomes a boolean when you compare it. Understanding how these types behave will make your scripts more reliable and easier to reason about.
-
-Next, we’ll explore how to work with these values inside variables and how to combine them into more complex structures.
-
-## Working With Variables in Apps Script
-
-Now that you’ve seen the basic data types—strings, numbers, and booleans—it’s time to look more closely at how variables actually behave inside your programs. Variables are the foundation of everything you’ll do in Apps Script, especially once you start pulling information out of a spreadsheet and transforming it with code.
-
-### Declaring Variables With `let`
-
-In modern JavaScript (and Apps Script), the most common way to create a variable is with the keyword `let`:
-
-<pre class="code" data-environment="none">
-let total = 0
-let name = "Jordan"
-let isReady = true
-</pre>
-
-When you declare a variable with `let`, you’re telling the computer:  
- _“Create a container with this name, and store this value inside it.”_
-
-You can change the value later:
-
-<pre class="code" data-environment="none">
-total = total + 5
-name = "Jordan Smith"
-isReady = false
-</pre>
-
-This flexibility is what makes variables so powerful. They allow your program to evolve as it runs.
-
-### Choosing Good Variable Names
-
-A variable name should describe what the value represents. Clear names make your code easier to read and understand—especially when you come back to it later.
-
-Good examples:
-
-- `totalSales`
-- `firstName`
-- `isComplete`
-- `rowCount`
-
-Less helpful examples:
-
-- `x`
-- `data1`
-- `thing`
-
-Apps Script doesn’t care what you name your variables, but _you_ will. Good names make your scripts feel organized and intentional.
-
-### Variables and Spreadsheet Data
-
-In Apps Script, variables often hold values pulled directly from a Google Sheet. For example:
-
-<pre class="code" data-environment="none">
-let sheet = SpreadsheetApp.getActiveSheet()
-let cell = sheet.getRange("A1")
-let value = cell.getValue()
-</pre>
-
-Here:
-
-- `sheet` stores a reference to the active sheet
-- `cell` stores a reference to cell A1 on the active sheet
-- `value` stores whatever is in cell A1
-
-The first time you run code that accesses data from the spreadsheet, the Apps Script environment will prompt you to be sure that you want to allow code to access your sheet. You can probably imagine that someone with malicious intent could try to trick someone into running code that accesses or deletes sensitive data or sends email messages to other users. Every time you run code that accesses a feature of the Apps Script environment for the first time, you will be prompted with a warning message about the service that is about to be invoked. This can be a bit annoying, but it’s there for the safety of folks who may be copying and pasting code that they don’t understand. Apps Script requires you to approve the script each time a new service is introduced.
-
-When you run the code above for the first time, you will see a prompt similar to the following:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhR8c6fPDH044_XrWrpK4wNhadf7g3a_6jL0SvBarMFDmauJCJK9nMXmidDn_QPVMfYATAiNRJZPjLxHY82IiPByc5L2GlOET3YFM3JNkrluHjTR-Tnr2i3dYdLjR0DAkdpCwjGo39YQIBc97Txre9joxgtHEwZvx2xj76c8FzjIPYO8v4NSKYCAK4aiX8/s1600/a67405fb.png)
-
-When you indicate that you will “review permissions”, you’ll advance to the next step in the process.
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgnxOFlrt_7D-HUUfe371b6D-5lAUk2VGIXmqoTf7arbM83PKfu0f1dkRzBPOkIhzWKdrRIQwV_0vcVUK0hHgD8D99ds6NGHhqF4w3YvwNPe2i0AcZjiLRAt7gmfRYjbyAc5mbj3xxF7FnTcxVuAdMVC1Hxzc-BJsC61OEJvROQxLZjr0UvpkJnaIc-Xyw/s1600/75d1cb3b.png)
-
-Here, you’ll need to click the gray “advanced” link on the left side of the window.
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi58vQBbnMxMiEuu3Fbfq2KVOILoBL-5WgYlZF_x0NASyET16xoFQkQ2iDVYqVXes8bO8-nD0OOExPaiJqEio7jnpal__gF44BPM8gnbP-DWdH_UpMOMB8fYPsGGOSWcsp9tMVIRIhT53JgNZNcJAjLR9GPTvqVZTz0ephw6goSO-H7k3ZE-0Be_kKrpHw/s1600/6c44db2e.png)
-
-Now, click the gray “Go to Untitiled project (unsafe)” link in the bottle left of the window. This will bring up the prompt that alerts you to the fact that this code is going to access data from your sheet as follows:
-
-![](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgBrKg0BwVK7EM8Q8m6iHwrRpKM2nphUPb4Bg-lrQdHbKupzeJv7J0sjCVZr-EsSbjDTYRBykxamPYuOG0IMQv-Oi85qp9SjN2Qw-vdo10CxeQm_c_yuQDpx885SKC7A89OmetQDn0cIFtsz8RCl7xoWh0Ag_0P0Rrv9BX3iUXOi5wvhKbqwdUFgKl-I18/s1600/13fac37e.png)
-
-When you click “Continue” you authorize this script to execute with the permissions that were listed. The Apps Script environment will not prompt you to approve those permissions again is this project. However, if you add code that requires other permissions, you’ll need to through a similar approval process.
-
-Also, sometimes the Apps Script environment will execute the script after you approve its elevated access and sometimes it does not. If you do not see the expected output, just run the script again.
-
-Now, let’s return to our discussion of variables.
-
-Once the data is in a variable, you can manipulate it just like any other value:
-
-<pre class="code" data-environment="none">
-console.log("The value in A1 is: ", value)
-</pre>
-
-This is where variables start to feel practical—you’re no longer working with abstract examples, but with real information from your spreadsheet.
-
-### Reassigning vs. Redefining
-
-One important detail: you can **change** the value of a variable declared with `let`, but you cannot **redeclare** it in the same scope.
-
-This is allowed:
-
-<pre class="code" data-environment="none">
-let count = 10  
-count = 20 // OK
-</pre>
-
-This is not:
-
-<pre class="code" data-environment="none">
-let count = 10
-let count = 20    // Not allowed
-</pre>
-
-Understanding this distinction helps you avoid common errors as your scripts grow.
-
-### Why Variables Matters
-
-Variables are the glue that holds your programs together. They let you:
-
-- Capture data from a spreadsheet
-- Store intermediate results
-- Build dynamic messages
-- Track progress through a script
-- Make decisions based on changing values
-
-As you move forward, you’ll use variables constantly—sometimes dozens of them in a single script. Getting comfortable with how they work now will make everything else feel much more natural.
-
-## Working With Text and Numbers
-
-As you begin writing scripts that interact with real spreadsheet data, you’ll spend a lot of time working with two fundamental types of information: **text** and **numbers**. These values show up everywhere in Google Sheets—names, labels, totals, dates, prices, IDs—and understanding how to manipulate them in JavaScript (and Apps Script) is essential for building useful tools.
-
-Even though text and numbers behave differently, the way you work with them in JavaScript is surprisingly intuitive once you see a few examples.
-
-### Working With Text (Strings)
-
-Text values—called **strings**—are written inside quotes:
-
-<pre class="code" data-environment="none">
-let firstName = "Jordan"
-let message = "Welcome to Apps Script!"
-</pre>
-
-Strings are incredibly flexible. You can:
-
-- Combine them
-- Break them apart
-- Insert values into them
-- Use them to build dynamic messages or labels
-
-For example, you can join strings using the `+` operator:
-
-<pre class="code" data-environment="none">
-let greeting = "Hello, " + firstName + "!"
-</pre>
-
-This approach to manipulating string data is called string concatenation.
-
-Or build more readable text using template literals:
-
-<pre class="code" data-environment="none">
-let greeting = `Hello, ${firstName}!`
-</pre>
-
-This approach to manipulating string data is called string interpolation.
-
-When you pull text from a spreadsheet, it arrives as a string:
-
-<pre class="code" data-environment="none">
-let sheet = SpreadsheetApp.getActiveSheet()
-let city = sheet.getRange("A2").getValue()  // likely a string
-</pre>
-
-Once it’s in a variable, you can transform it however you like—capitalize it, add punctuation, or combine it with other values.
-
-### Working With Numbers
-
-Numbers in JavaScript represent both whole numbers and decimals:
-
-<pre class="code" data-environment="none">
-let price = 19.99
-let quantity = 3
-let total = price * quantity
-</pre>
-
-You can perform all the standard arithmetic operations:
-
-- Addition: `+`
-- Subtraction: `-`
-- Multiplication: `*`
-- Division: `/`
-- Remainder: `%`
-
-Apps Script reads numeric spreadsheet values as JavaScript numbers:
-
-<pre class="code" data-environment="none">
-let amount = sheet.getRange("B5").getValue()  // a number
-let doubled = amount * 2
-</pre>
-
-This makes it easy to build scripts that calculate totals, averages, or other metrics directly from your data.
-
-### Converting Between Text and Numbers
-
-Sometimes you’ll get a value from a spreadsheet that _looks_ like a number but is actually stored as text. Or you may need to turn a number into text to build a message.
-
-JavaScript gives you simple tools for this:
-
-Convert text to a number:
-
-<pre class="code" data-environment="none">
-let num = Number("42") // becomes 42
-</pre>
-
-Convert a number to text:
-
-<pre class="code" data-environment="none">
-let text = String(42) // becomes "42"
-</pre>
-
-Apps Script often handles these conversions automatically, but it’s helpful to know how to do it yourself when needed.
-
-### Example: Reading a Name and Writing a Greeting
-
-This small script reads a user’s name from cell **A1** in your spreadsheet and writes a greeting like **“Hello, Jordan\!”** into cell **B1**. Go ahead and put your name into cell **A1**.
+A named value like `name` is a **variable**. The name comes from the fact that its value can *vary*: once a variable exists, you can give it a new value whenever you like. Run this, and watch what the last line displays:
 
 <pre class="code">
-function writeGreeting() {
-  // Get the active sheet
+let count = 10
+count = 20
+count = count + 1
+console.log(count)
+</pre>
+
+Read it one line at a time, the way the computer does:
+
+1. `let count = 10` creates a variable called `count` and stores 10 in it.
+2. `count = 20` stores 20 in `count`. The 10 is gone. There's no `let` this time, because `count` already exists. `let` is only for creating a variable.
+3. `count = count + 1` looks strange if you read `=` as "equals." Read it instead as "store": *work out `count + 1`, then store the result in `count`*. At that moment `count` holds 20, so `count + 1` is 21, and 21 is stored.
+4. `console.log(count)` displays 21.
+
+::: {.term}
+> **Assignment** — Storing a value in a variable with `=`. In `count = count + 1`, the right side is worked out first, using the variable's current value, and the result is then stored on the left.
+:::
+
+If you use `let` twice for the same name, JavaScript stops with an error, because the variable already exists. Try it:
+
+<pre class="code">
+let count = 10
+let count = 20
+</pre>
+
+The message says `count` "has already been declared." *Declaring* a variable means creating it, which is what `let` does.
+
+Variables are how a program remembers things: a total that grows as you add to it, a name read from a spreadsheet, a message you build a piece at a time. Almost every line of code you'll read from now on uses at least one.
+
+## Three Kinds of Values
+
+Every value in JavaScript has a **type**, which tells JavaScript what kind of value it is and what can be done with it. You'll use three types constantly:
+
+- **Strings** are text, written in quote marks: `"Ava"`, `"ava.lopez@example.com"`, `"12"`. Even `"12"` is text, because of the quotes.
+- **Numbers** are written without quotes, and can be whole or decimal: `12`, `9.5`, `-3`.
+- **Booleans** have only two possible values, `true` and `false`, written without quotes. They answer yes-or-no questions, such as *has this member paid their dues?*
+
+::: {.term}
+> **Type** — The kind of value something is, such as a string, a number or a boolean. A value's type decides what operations make sense for it.
+:::
+
+::: {.term}
+> **Boolean** — A value that is either `true` or `false`. Named after George Boole, a mathematician who studied logic.
+:::
+
+You can ask JavaScript for any value's type with `typeof`:
+
+<pre class="code">
+console.log(typeof "Ava")
+console.log(typeof 12)
+console.log(typeof "12")
+console.log(typeof true)
+</pre>
+
+`typeof` is especially handy when a value doesn't behave the way you expect, because the problem is often that it's a different type than you thought. You'll see exactly that later in this lesson.
+
+### Values from a spreadsheet
+
+When your code reads a cell, the type of value it gets depends on what's in the cell. Here's a club's member list, the kind of sheet you'll work with for the next several lessons. Column D holds checkboxes: checked means the member has paid dues for the year.
+
+<pre class="spreadsheet">
+{"sheetName": "Members", "rows": 16, "columns": 7,
+ "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, 24], ["Ava", "Lopez", "ava.lopez@example.com", true, 12], ["Ben", "Okafor", "ben.okafor@example.com", false, 4], ["Cam", "Nguyen", "cam.nguyen@example.com", true, 9.5], ["Dev", "Patel", "dev.patel@example.com", true, 15], ["Elena", "Rossi", "elena.rossi@example.com", false, 6.5], ["Farah", "Haddad", "farah.haddad@example.com", true, 11], ["Gabe", "Martinez", "gabe.martinez@example.com", false, 2], ["Hana", "Kim", "hana.kim@example.com", true, 18.5], ["Isaac", "Cohen", "isaac.cohen@example.com", true, 7], ["Jordan", "Lee", "jordan.lee@example.com", false, 0], ["Keisha", "Brown", "keisha.brown@example.com", true, 13.5]]}],
+ "formats": [{"range": "A1:E1", "fontWeight": "bold"}]}
+</pre>
+
+The code below reads three cells from Ava's row, row 3, and displays each value with its type. It uses a new method, `getValue`, which reads what's in a cell, the way `setValue` writes to one.
+
+<pre class="code">
+function showTypes() {
+  let sheet = SpreadsheetApp.getActiveSheet()
+  let firstName = sheet.getRange("A3").getValue()
+  let duesPaid = sheet.getRange("D3").getValue()
+  let hours = sheet.getRange("E3").getValue()
+  console.log(firstName, typeof firstName)
+  console.log(duesPaid, typeof duesPaid)
+  console.log(hours, typeof hours)
+}
+</pre>
+
+Text comes back as a string and a number as a number. A checkbox comes back as a boolean: `true` if it's checked, `false` if it isn't. An empty cell comes back as an empty string, `""`. Try changing the code to read an empty cell, such as `G3`, and see what it displays.
+
+## Reading a Cell
+
+Time for the five steps.
+
+**Plan.** You want a function that reads a name from cell A1 and writes a greeting, such as *Hello, Ava!*, into cell B1. One value goes in (the name), and one comes out (the greeting). You'll know it worked if B1 shows the greeting with the right name.
+
+**Ask.** Start a new chat with your learner profile from [Getting Started with Google Apps Script in Google Sheets](apps-script){.book-link}, and send:
+
+::: {.ai-conversation prompt="Write an Apps Script function that reads a name from cell A1 and writes a greeting like Hello, Ava! in cell B1." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="apps-script" transcript="variables/greeting"}
+> Here's a function that does that:
+>
+> ```javascript
+> function writeGreetingFromName() {
+>   // this gets the active sheet, picks cell A1, and reads its value
+>   let name = SpreadsheetApp.getActiveSheet().getRange("A1").getValue()
+>
+>   // this joins "Hello, " with the name and an exclamation point
+>   let greeting = "Hello, " + name + "!"
+>
+>   // this shows the greeting in the Execution log so you can check it
+>   console.log(greeting)
+>
+>   // this gets the active sheet, picks cell B1, and writes the greeting into it
+>   SpreadsheetApp.getActiveSheet().getRange("B1").setValue(greeting)
+> }
+> ```
+>
+> **What each line does:**
+> 1. `let name = SpreadsheetApp.getActiveSheet().getRange("A1").getValue()` — gets the active sheet, selects cell A1, reads whatever value is in it, and names that value `name`
+> 2. `let greeting = "Hello, " + name + "!"` — joins the text `"Hello, "`, the name from A1, and `"!"` into one string
+> 3. `console.log(greeting)` — prints the greeting so you can see it in the log
+> 4. `SpreadsheetApp.getActiveSheet().getRange("B1").setValue(greeting)` — selects cell B1 and writes the greeting into it
+>
+> Try putting "Ava" in cell A1 before running it, then check cell B1 for the result.
+:::
+
+**Read.** The assistant followed your profile closely. Everything is in one function with a descriptive name, every variable uses `let`, there are no semicolons, and each line is explained twice: once in a comment, and again in a numbered list.
+
+Go through it line by line:
+
+- The first line inside the function gets the sheet, picks cell A1, reads its value and stores it in a variable called `name`. That's four steps in one line.
+- `let greeting = "Hello, " + name + "!"` joins three strings: `"Hello, "`, whatever is in `name`, and `"!"`. You learned this use of `+` in [Your First Lines of Code](first-code){.book-link}.
+- `console.log(greeting)` shows the greeting in the Execution log. You didn't ask for this, but it's a sensible addition: it lets you check the value before you look at the sheet.
+- The last line gets the sheet again, picks cell B1 and writes the greeting there.
+
+Notice two things. First, the reply uses `getValue`, which isn't on your "what I know" list. It's the obvious partner to `setValue`, and the assistant explained it, but it didn't mention that it was new. This is the same kind of judgment call you saw in [Working with an AI Assistant](ai-assistant){.book-link}, and the reason you read every line.
+
+Second, the long lines are hard to check. The first one does four things, and the last one repeats `SpreadsheetApp.getActiveSheet()` just to get the same sheet a second time. When several method calls are joined with dots on one line like this, it's called **chaining**. It's common, and you'll see it in a lot of code, but while you're learning it hides the steps. So ask for them one at a time:
+
+::: {.term}
+> **Chaining** — Calling one method directly on the result of another, joined by dots on one line, as in `sheet.getRange("A1").getValue()`.
+:::
+
+::: {.ai-conversation prompt="Rewrite it with each step on its own line. Store the sheet in a variable so the code only gets it once." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="apps-script" transcript="variables/greeting"}
+> Here's the rewritten version:
+>
+> ```javascript
+> function writeGreetingFromName() {
+>   // this gets the active sheet once and names it "sheet"
+>   let sheet = SpreadsheetApp.getActiveSheet()
+>
+>   // this picks cell A1 on that sheet
+>   let cellA1 = sheet.getRange("A1")
+>
+>   // this reads the value from cell A1
+>   let name = cellA1.getValue()
+>
+>   // this joins "Hello, " with the name and an exclamation point
+>   let greeting = "Hello, " + name + "!"
+>
+>   // this shows the greeting in the Execution log so you can check it
+>   console.log(greeting)
+>
+>   // this picks cell B1 on the sheet
+>   let cellB1 = sheet.getRange("B1")
+>
+>   // this writes the greeting into cell B1
+>   cellB1.setValue(greeting)
+> }
+> ```
+>
+> **What each line does:**
+> 1. `let sheet = SpreadsheetApp.getActiveSheet()` — gets the active sheet one time and names it `sheet`
+> 2. `let cellA1 = sheet.getRange("A1")` — uses `sheet` to select cell A1
+> 3. `let name = cellA1.getValue()` — reads the value in cell A1
+> 4. `let greeting = "Hello, " + name + "!"` — builds the greeting text
+> 5. `console.log(greeting)` — prints the greeting to the log
+> 6. `let cellB1 = sheet.getRange("B1")` — uses the same `sheet` to select cell B1
+> 7. `cellB1.setValue(greeting)` — writes the greeting into cell B1
+:::
+
+This version is longer, but every line does exactly one thing, and each variable holds the result of one step:
+
+- `sheet` holds the sheet. Both cells are picked from it, so the code gets the sheet only once.
+- `cellA1` and `cellB1` hold the two cells. A variable can hold a cell, a sheet or anything else, not just text and numbers.
+- `name` holds the value read from A1.
+- `greeting` holds the message built from it.
+
+Longer isn't worse. If the greeting came out wrong, you could add `console.log(name)` after the third line to check what was read, which you couldn't easily do with the one-line version. You'll add a rule to your learner profile at the end of this lesson, so you won't have to ask for this every time.
+
+**Run.** Type a name into cell A1 of the practice sheet, then run the function:
+
+<pre class="spreadsheet">
+{"sheetName": "Practice", "rows": 5, "columns": 4, "data": [{"range": "A1", "values": [["Ava"]]}], "formats": []}
+</pre>
+
+<pre class="code">
+function writeGreetingFromName() {
+  // this gets the active sheet once and names it "sheet"
   let sheet = SpreadsheetApp.getActiveSheet()
 
-  // Get a reference to cell A1
+  // this picks cell A1 on that sheet
   let cellA1 = sheet.getRange("A1")
 
-  // Read the user's name from cell A1
+  // this reads the value from cell A1
   let name = cellA1.getValue()
 
-  // Build the greeting message
+  // this joins "Hello, " with the name and an exclamation point
   let greeting = "Hello, " + name + "!"
 
-  // Get a reference to cell B1
+  // this shows the greeting in the Execution log so you can check it
+  console.log(greeting)
+
+  // this picks cell B1 on the sheet
   let cellB1 = sheet.getRange("B1")
 
-  // Write the greeting into cell B1
+  // this writes the greeting into cell B1
   cellB1.setValue(greeting)
 }
 </pre>
 
-This shows how to read from and write to a single cell on a sheet. Accessing multiple cells at once is a bit more advanced and will be covered in section XXXXXXXX.
+**Revise.** Try a different name in A1, and run it again. What happens if A1 is empty? The greeting becomes *Hello, !*, because an empty cell reads as `""`. Deciding what to do in a case like that takes a new tool, which you'll meet in the next lesson.
 
-If this if the first time you are running a script that accesses data in the worksheet, you’ll have to specifically allow it, see section 4.3.3
+## let, var and const
 
-#### How it works:
+Here's the same request, sent in a new chat with **no** learner profile:
 
-- `getRange("A1").getValue()` pulls the name from the sheet and stores it in the variable `name`.
-- The script builds a new string by combining `"Hello, "` with the name.
-- `setValue()` writes the final message into cell B1.
+::: {.ai-conversation prompt="Write an Apps Script function that reads a name from cell A1 and writes a greeting like Hello, Ava! in cell B1." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="none" transcript="variables/greeting-no-profile"}
+> Here's an Apps Script function that reads a name from cell A1 and writes a greeting in cell B1:
+>
+> ```javascript
+> function writeGreeting() {
+>   // Get the active spreadsheet and the active sheet
+>   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+>
+>   // Read the name from cell A1
+>   var name = sheet.getRange("A1").getValue();
+>
+>   // Build the greeting message
+>   var greeting = "Hello, " + name + "!";
+>
+>   // Write the greeting to cell B1
+>   sheet.getRange("B1").setValue(greeting);
+> }
+> ```
+>
+> […]
+:::
 
-Try putting your own name in **A1**, run the script, and watch the greeting appear instantly. It’s a simple example, but it captures the essence of Apps Script: reading real data, transforming it with JavaScript, and writing meaningful results back into the spreadsheet.
+The steps are familiar: get the sheet, read A1, build the greeting, write it to B1. (The reply went on with steps for running the code, then suggested a second function that runs by itself whenever the sheet is edited, which uses several things you haven't learned.) Three differences from the profile version stand out:
 
-### Why This Matters
+- **Semicolons** at the end of each line. As you know, they make no difference.
+- **`getActiveSpreadsheet().getActiveSheet()`** instead of `getActiveSheet()`. It gets the whole spreadsheet file first, then the sheet showing in it. The result is the same sheet.
+- **`var`** instead of `let`.
 
-Working with text and numbers is the backbone of almost every spreadsheet automation. Whether you’re:
+`var` is JavaScript's original keyword for creating a variable. `let` arrived in 2015, along with a third keyword, `const`. They look like this:
 
-- Cleaning up names
-- Formatting labels
-- Calculating totals
-- Generating reports
-- Building custom messages
-- Processing rows of mixed data
-
-…you’ll rely on these basic operations constantly.
-
-Mastering how to read, combine, and transform text and numbers gives you the power to turn raw spreadsheet data into something meaningful—and sets the stage for more advanced scripting in the chapters ahead.
-
-## Naming Conventions and Best Practices
-
-As your scripts grow beyond a few lines, the names you choose for your variables start to matter a lot. Good naming makes your code easier to read, easier to debug, and easier to return to weeks or months later. In Apps Script—just like in any JavaScript environment—clear, consistent naming is one of the simplest ways to write code that feels clean and professional.
-
-### Use Clear, Descriptive Names
-
-A variable name should tell you _what the value represents_, not how it’s used or what type it is. When you read your code later, you want the meaning to be obvious at a glance.
-
-Good examples:
-
-- `totalSales`
-- `firstName`
-- `isApproved`
-- `rowCount`
-
-Less helpful examples:
-
-- `x`
-- `temp`
-- `data1`
-- `flag`
-
-Descriptive names reduce mental overhead. You don’t have to remember what `x` means—you can just read the name and keep going.
-
-### Follow JavaScript’s camelCase Style
-
-Although other style conventions can be used in JavaScript, we will use **camelCase** for variable and function names. This means:
-
-- The first word is lowercase
-- Each following word starts with a capital letter
-
-Examples:
-
-<pre class="code" data-environment="none">
-let customerName = "Ava"
-let totalAmount = 42
-let isComplete = false
+<pre class="code">
+var greeting = "Hi"
+let team = "Blue"
+const daysInWeek = 7
+console.log(greeting, team, daysInWeek)
 </pre>
 
-CamelCase seems to be the most commonly used naming convention across the JavaScript ecosystem, so following it helps your code feel familiar and consistent.
+- **`let`** creates a variable whose value you can change. It's what this book uses.
+- **`const`** creates a variable whose value *can't* be changed. Try adding `daysInWeek = 8` to the code above and running it.
+- **`var`** also creates a variable you can change, but it has some older behavior that can cause surprising bugs in larger programs. Most modern JavaScript avoids it. It's still common in Apps Script examples, because so many were written before 2015, and assistants learned from those examples.
 
-### Start Names With Letters, Not Numbers
+You'll see all three in code you find online and in AI replies. For now, your learner profile will ask your assistant to use `let` for everything, so you can change any value while you experiment and don't have to decide which keyword fits. You'll learn when `const` is the better choice in the lesson on functions, and the profile rule will come off then.
 
-Variable names must begin with a letter, underscore, or dollar sign. They cannot start with a number:
+## When Numbers Are Really Text
 
-<pre class="code" data-environment="none">
-let name1 = "Jordan" // valid  
-let _count = 10 // valid  
-let 1stValue = 5 // not valid
+Here's a problem you're likely to meet with real spreadsheets. Below is the Members sheet again, with one difference you can't see: the Volunteer Hours column is formatted as **plain text**. That happens more often than you'd think, for example when data is pasted in from another program, or when someone sets a column to plain text so that codes with leading zeros, like `007`, keep them.
+
+<pre class="spreadsheet">
+{"sheetName": "Members", "rows": 16, "columns": 7,
+ "data": [{"range": "A1:E13", "values": [["First Name", "Last Name", "Email", "Dues Paid", "Volunteer Hours"], ["Maya", "Thompson", "maya.thompson@example.com", true, "24"], ["Ava", "Lopez", "ava.lopez@example.com", true, "12"], ["Ben", "Okafor", "ben.okafor@example.com", false, "4"], ["Cam", "Nguyen", "cam.nguyen@example.com", true, "9.5"], ["Dev", "Patel", "dev.patel@example.com", true, "15"], ["Elena", "Rossi", "elena.rossi@example.com", false, "6.5"], ["Farah", "Haddad", "farah.haddad@example.com", true, "11"], ["Gabe", "Martinez", "gabe.martinez@example.com", false, "2"], ["Hana", "Kim", "hana.kim@example.com", true, "18.5"], ["Isaac", "Cohen", "isaac.cohen@example.com", true, "7"], ["Jordan", "Lee", "jordan.lee@example.com", false, "0"], ["Keisha", "Brown", "keisha.brown@example.com", true, "13.5"]]}],
+ "formats": [{"range": "A1:E1", "fontWeight": "bold"}, {"range": "E2:E13", "numberFormat": "@"}]}
 </pre>
 
-Sticking to letters for most names keeps things simple.
+Ava just worked a two-hour shift, so her hours in E3 should go from 12 to 14. Here's the request, in a new chat with your learner profile. It asks for one step per line, as you did above:
 
-### Avoid Abbreviations Unless They’re Obvious
+::: {.ai-conversation prompt="Write an Apps Script function that adds 2 to the number in cell E3 and writes the new total back into E3. Put each step on its own line." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="apps-script" transcript="variables/add-hours"}
+> ```javascript
+> function addTwoToE3() {
+>   // this method gets the active sheet, picks cell E3, and reads its current value
+>   let currentValue = SpreadsheetApp.getActiveSheet().getRange("E3").getValue()
+>
+>   // adds 2 to the value we just read
+>   let newValue = currentValue + 2
+>
+>   // this method gets the active sheet, picks cell E3 again, and writes the new value into it
+>   SpreadsheetApp.getActiveSheet().getRange("E3").setValue(newValue)
+> }
+> ```
+>
+> **What each line does:**
+> 1. `let currentValue = SpreadsheetApp.getActiveSheet().getRange("E3").getValue()` — gets the active sheet, selects cell E3, and reads whatever number is currently there, giving it the name `currentValue`
+> 2. `let newValue = currentValue + 2` — adds 2 to that number and gives the result the name `newValue`
+> 3. `SpreadsheetApp.getActiveSheet().getRange("E3").setValue(newValue)` — selects cell E3 again and writes `newValue` into it, replacing the old number
+:::
 
-Shortened names save a few keystrokes but cost clarity. Unless the abbreviation is universally understood, spell it out.
+**Read.** Each line is explained, and the logic matches the plan: read E3, add 2, write the result back. One thing didn't go as asked, though: the first and last lines are still chained. The assistant took "each step on its own line" to mean "each statement on its own line," which is a reasonable reading. The rule you'll add to your profile says exactly what you mean: don't chain method calls.
 
-Prefer:
+The code looks right, and it would work on most sheets. Run it on this one:
 
-- `departmentTotal` over `deptTot`
-- `emailAddress` over `emlAddr`
+<pre class="code">
+function addTwoToE3() {
+  // this method gets the active sheet, picks cell E3, and reads its current value
+  let currentValue = SpreadsheetApp.getActiveSheet().getRange("E3").getValue()
 
-Clear code is almost always better than compact code.
+  // adds 2 to the value we just read
+  let newValue = currentValue + 2
 
-### Use Boolean Names That Read Like True/False Statements
-
-Boolean variables should sound like conditions. This makes your code easier to read when you use them in logic.
-
-Examples:
-
-- `customerIsActive`
-- `hasPermission`
-- `isComplete`
-- `shouldSendEmail`
-
-When you read a line like:
-
-<pre class="code" data-environment="none">
-if (customerIsActive) {
+  // this method gets the active sheet, picks cell E3 again, and writes the new value into it
+  SpreadsheetApp.getActiveSheet().getRange("E3").setValue(newValue)
+}
 </pre>
 
-…it feels natural and self‑explanatory.
+Ava's hours are now 122. Before you read on, can you work out why? Here's what happened when that question went back to the assistant, in the same chat:
 
-### Keep a Consistent Style Across Your Script
+::: {.ai-conversation prompt="When I ran this, E3 changed from 12 to 122 instead of 14. Why? Explain it, but don't fix it yet." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="apps-script" transcript="variables/add-hours"}
+> Good catch — this is a classic JavaScript surprise!
+>
+> Here's what's happening: the `+` operator behaves differently depending on what kind of value it's working with.
+>
+> - If both values are **numbers**, `+` does **addition**: `12 + 2` → `14`
+> - If either value is **text** (a string), `+` does **joining** (concatenation): `"12" + 2` → `"122"`
+>
+> You got `122`, which means `currentValue` was actually the *text* `"12"`, not the *number* `12`. When you wrote `currentValue + 2`, JavaScript joined `"12"` and `2` together as strings instead of adding them.
+>
+> This usually happens because `getValue()` reads whatever is in the cell, and if that cell is formatted as **plain text** (rather than a number format), Google Sheets stores it as a string, so `getValue()` hands back a string too.
+>
+> So the bug isn't in your math — it's that `currentValue` wasn't the type of value you expected. Want me to show you how to check this, or move on to fixing it?
+:::
 
-Consistency is more important than perfection. If you choose a naming pattern, stick with it. For example:
-
-- If you use `firstName`, don’t switch to `last_name` later
-- If you name one variable `totalSales`, don’t name another `sales_total`
-
-A consistent style makes your code feel intentional and easier to navigate.
-
-### Why Naming Matters in Apps Script
-
-When you start interacting with spreadsheet data, you’ll often have variables like:
+That's exactly right. `getValue` read the text `"12"`, not the number 12, and `+` with a string joins instead of adding. You could have confirmed it yourself with `typeof`:
 
 <pre class="code" data-environment="none">
-let sheet = SpreadsheetApp.getActiveSheet()  
-let names = sheet.getRange("A2:A20").getValues()  
-let total = sheet.getRange("B1").getValue()
+console.log(currentValue, typeof currentValue)
 </pre>
 
-Clear names help you keep track of what each value represents—especially when you’re juggling multiple ranges, rows, and calculations.
+That line would display `12 string`. The number *looks* the same in the log either way. Its type is what gives it away.
 
-Good naming is one of the simplest habits that separates messy scripts from maintainable ones. As your projects grow, you’ll be glad you invested in clarity early on.
+This is a **logic error**, the kind you met in [Your First Lines of Code](first-code){.book-link}: no message, no warning, just a wrong answer. It's also a good example of why the Run step compares the result with your plan. If you hadn't known Ava's hours should be 14, you might not have noticed.
 
-If you’d like, we can move on to arrays and objects next, or jump into reading and writing spreadsheet data using these naming principles.
+Now ask for the fix:
+
+::: {.ai-conversation prompt="Now show me how to fix it." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="apps-script" transcript="variables/add-hours"}
+> Since you haven't learned the `Number()` function yet (which is the usual tool for this), I'll show you a fix using only what you know: arithmetic operators.
+>
+> Here's the trick — multiplying by 1 forces JavaScript to treat the value as a number, because `*` (unlike `+`) only makes sense for numbers, so JavaScript converts the text into a number first.
+>
+> ```javascript
+> function addTwoToE3() {
+>   // gets the active sheet, picks cell E3, and reads its current value
+>   let currentValue = SpreadsheetApp.getActiveSheet().getRange("E3").getValue()
+>
+>   // multiplying by 1 converts currentValue to a real number, even if it was text
+>   let numberValue = currentValue * 1
+>
+>   // now this addition works correctly, since numberValue is a number
+>   let newValue = numberValue + 2
+>
+>   // gets the active sheet, picks cell E3 again, and writes the new value into it
+>   SpreadsheetApp.getActiveSheet().getRange("E3").setValue(newValue)
+> }
+> ```
+>
+> **What's new here:**
+> - `let numberValue = currentValue * 1` — takes whatever `currentValue` is (text or number) and multiplies by 1. If it's text like `"12"`, JavaScript converts it to the number `12` first, then multiplies, giving you a real number back.
+>
+> Now `numberValue + 2` will always do proper math instead of joining text.
+>
+> (By the way, there's a built-in tool called `Number()` made exactly for this kind of conversion — I didn't use it since it's not on your list yet, but it's worth knowing it exists for later.)
+:::
+
+This is an interesting reply. Your profile said to use only what you know, and `Number()`, the usual tool for this job, isn't on your list. So the assistant found a trick that uses only arithmetic: multiplying by 1. Because `*` only works with numbers, JavaScript turns `"12"` into 12 before multiplying, and the result is a real number.
+
+The trick works, but it's the kind of code that puzzles readers later: why would anyone multiply by 1? The assistant was honest about this. It mentioned `Number()` at the end and said it's worth knowing. This is a signal to watch for. When staying inside your profile produces a workaround, it's often a sign there's something new worth learning. So here it is.
+
+### Converting between text and numbers
+
+`Number()` turns a value into a number. `String()` does the opposite:
+
+<pre class="code">
+let hoursText = "12"
+let hours = Number(hoursText)
+console.log(hours + 2, typeof hours)
+
+let total = 14
+let totalText = String(total)
+console.log(totalText + 2, typeof totalText)
+</pre>
+
+If a string doesn't look like a number, such as `"twelve"`, `Number()` gives a special value called `NaN`, short for "not a number." If you see `NaN` in your output, some text that wasn't a number ended up in a calculation.
+
+Here's the function again, rewritten in the book's style with `Number()` and one step per line. Before you run it, set E3 back to 12 by typing into the cell.
+
+<pre class="code">
+function addShiftHours() {
+  let sheet = SpreadsheetApp.getActiveSheet()
+  let hoursCell = sheet.getRange("E3")
+  // the cell may hold text, so convert what it holds to a number
+  let currentHours = Number(hoursCell.getValue())
+  let updatedHours = currentHours + 2
+  hoursCell.setValue(updatedHours)
+}
+</pre>
+
+Notice the rewrite needs only one `getRange` for E3. The cell is stored in `hoursCell`, and the code both reads from it and writes to it.
+
+## Building Text with Template Literals
+
+Joining strings with `+` gets awkward when a message has several parts, and it's easy to forget a space:
+
+<pre class="code">
+let firstName = "Ava"
+let hours = 14
+console.log("Thank you, " + firstName + "! You have " + hours + " volunteer hours.")
+</pre>
+
+JavaScript has a neater way to build text, called a **template literal**. It's written between backticks (`` ` ``) instead of quote marks, and you drop a value into it with `${ }`:
+
+<pre class="code">
+let firstName = "Ava"
+let hours = 14
+console.log(`Thank you, ${firstName}! You have ${hours} volunteer hours.`)
+</pre>
+
+Both lines display the same message. The template literal reads like the finished sentence, with the spaces exactly where you see them. The backtick key is usually at the top left of the keyboard, next to the 1 key.
+
+::: {.term}
+> **Template literal** — A string written between backticks, in which `${ }` inserts the value of a variable or expression: `` `Hello, ${name}!` ``.
+:::
+
+Assistants use template literals often, so it's worth being able to read them. Anything inside `${ }` is worked out first, so it can even be a calculation: `` `${hours * 2} hours` ``.
+
+## Naming Variables
+
+The assistant's names in the hours example, `currentValue` and `newValue`, are fine as far as they go, but they don't say *what* the value is. The assistant couldn't have done better, because it didn't know what was in E3. So tell it:
+
+::: {.ai-conversation prompt="Cell E3 holds a club member's volunteer hours. Rename the variables so the names describe what they hold." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="apps-script" transcript="variables/add-hours"}
+> ```javascript
+> function addTwoToE3() {
+>   // gets the active sheet, picks cell E3, and reads the member's current volunteer hours
+>   let currentHours = SpreadsheetApp.getActiveSheet().getRange("E3").getValue()
+>
+>   // multiplying by 1 converts currentHours to a real number, even if it was text
+>   let hoursAsNumber = currentHours * 1
+>
+>   // adds 2 more volunteer hours to the total
+>   let updatedHours = hoursAsNumber + 2
+>
+>   // gets the active sheet, picks cell E3 again, and writes the updated hours into it
+>   SpreadsheetApp.getActiveSheet().getRange("E3").setValue(updatedHours)
+> }
+> ```
+>
+> **What changed:**
+> - `currentValue` → `currentHours` — the number of volunteer hours currently in E3
+> - `numberValue` → `hoursAsNumber` — the same hours, guaranteed to be a real number
+> - `newValue` → `updatedHours` — the hours after adding 2 more
+>
+> The logic is exactly the same — only the names changed to describe what the data actually represents.
+:::
+
+The new names, `currentHours`, `hoursAsNumber` and `updatedHours`, tell you what each value means without reading the rest of the code. Notice what didn't change: the function is still called `addTwoToE3`. You asked about variables, and the assistant did exactly that. If you want a better function name, such as `addShiftHours`, you have to ask for that too.
+
+Good names are one of the easiest ways to make code readable. A few guidelines:
+
+- **Say what the value is.** `volunteerHours` is better than `value`, `x` or `data`.
+- **Use camelCase.** Start with a lowercase letter and capitalize each word after the first: `firstName`, `hoursCell`, `updatedHours`. JavaScript names can't contain spaces.
+- **Spell it out.** `emailAddress` is clearer than `emlAddr`. Common abbreviations like `id` are fine.
+- **Name booleans like yes-or-no questions.** `duesPaid` or `isMember` reads naturally when you check it, as you'll do in the next lesson.
+- **Follow the rules.** Names can contain letters, digits, `_` and `$`, but can't start with a digit, and can't be a word JavaScript already uses, such as `let` or `function`.
+
+Capital letters matter. `hours` and `Hours` are two different names, which is a common source of "is not defined" errors.
+
+## Your Learner Profile
+
+You've learned a lot in this lesson, and your profile gets two new rules:
+
+::: {.ai-profile lesson="variables"}
+Add rules:
+
+- Use let for every variable. Don't use var or const.
+- Write each step on its own line, and store each result in a variable. Don't chain method calls together.
+
+Add to "What I know so far":
+
+- changing a variable's value with =, as in count = count + 1
+- strings, numbers and booleans (true and false), and checking a value's type with typeof
+- reading a cell with getValue(), and storing a sheet or a range in a variable
+- empty cells read as an empty string ""
+- converting with Number() and String(), and what NaN means
+- template literals: text between backticks, with ${ } to insert a value
+:::
+
+What's new:
+
+- **"Use let for every variable."** Without this rule, an assistant may use `var` or `const`, depending on the examples it learned from. `let` works everywhere and lets you change any value. You'll learn when to use `const` in the lesson on functions, and this rule will come off then.
+- **"Write each step on its own line."** This asks for code like the second greeting function, where each line does one thing and you can check any step with `console.log`. The rule names chained method calls specifically, because "each step on its own line" alone wasn't enough, as you saw with the hours example.
+- **Six new items** under "What I know so far." With `Number()` on the list, an assistant fixing the hours bug should reach for it instead of multiplying by 1.
+
+## Summary
+
+A variable is a name for a value, created with `let`. You can give it a new value with `=`, which works out the right side first and then stores the result. Every value has a type, and the three you'll use most are strings, numbers and booleans. `typeof` tells you which one you have. `getValue` reads a cell, and the type you get depends on what's in it: a cell formatted as plain text gives a string even when it looks like a number, so `+` joins instead of adding. `Number()` and `String()` convert between the two. Template literals build text with `${ }`. Code is easier to check when each line does one step and variables have names that say what they hold, and your learner profile now asks for both. So far your code does the same thing every time it runs. In the next lesson, it will look at a value and decide what to do.

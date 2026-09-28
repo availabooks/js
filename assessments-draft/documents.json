@@ -1,0 +1,59 @@
+{
+  "title": "Generating Documents",
+  "lesson": "documents",
+  "text": "These questions check that you can fill in a document template, build a document, work with Drive IDs, and organize a script so its calculations can be tested.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A document's address is https://docs.google.com/document/d/1aBcD2eFg/edit. What is its ID?",
+      "choices": ["document", "1aBcD2eFg", "edit", "docs.google.com"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A certificate script fills in a copy of the template, then makes a PDF, but the PDF still shows {{First Name}}. What was most likely left out?",
+      "choices": ["doc.saveAndClose() before making the PDF", "String(hours)", "setTrashed(true)", "DocumentApp.create"],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Why keep TEMPLATE_ID as a constant at the top of the file?",
+      "choices": [
+        "Apps Script requires IDs to be at the top.",
+        "It's a setting every function can use, and there's one place to change it.",
+        "Constants run faster.",
+        "It keeps the ID secret."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "In the certificate script, why is it important that setTrashed(true) is called on copyFile and not templateFile? How would you check this before running the script on every member?",
+      "answer": "Trashing the template would destroy the original, and every later certificate would fail. Read the line carefully, and test on one certificate (e.g. a test function) and check that the template is still in Drive afterward.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "The newsletter script has getCropTotals(harvestData), which returns an object, and addHarvestTable(body, cropTotals), which changes a document. Which can you test on this book's pages, and why is it useful to write scripts this way?",
+      "answer": "getCropTotals: it only calculates from an array and creates nothing. Keeping calculations separate from actions lets you test the bug-prone part anywhere, quickly and safely, and keeps the part that creates files small.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a function fillTemplate(text, member) that returns text with {{First Name}} and {{Hours}} replaced by member.firstName and member.hours, using the string method replace (which replaces the first match). Then write testFillTemplate, which logs fillTemplate(\"Thank you, {{First Name}}, for {{Hours}} hours!\", { firstName: \"Hana\", hours: 18.5 }). (Expected: Thank you, Hana, for 18.5 hours!)",
+      "start": "function testFillTemplate() {\n\n}\n\nfunction fillTemplate(text, member) {\n\n}",
+      "key": ["function testFillTemplate() {\n  const member = { firstName: \"Hana\", hours: 18.5 }\n  console.log(fillTemplate(\"Thank you, {{First Name}}, for {{Hours}} hours!\", member))\n}\n\nfunction fillTemplate(text, member) {\n  const withName = text.replace(\"{{First Name}}\", member.firstName)\n  const withHours = withName.replace(\"{{Hours}}\", String(member.hours))\n  return withHours\n}"],
+      "lines": 12,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile and the garden context. Ask for a script that creates one Google Doc listing every bed, with its name, size and sun, as a table, plus a heading. (1) Paste the reply. (2) Did it follow the updated dry-run rule for creating a file? How? (3) Which part could you test on this book's pages? (4) Run it in Apps Script and check the table against the Beds sheet.",
+      "answer": "Full credit: identifies how the rule was followed (log, one-item test, or asking first); identifies a pure data function that could be tested on the page (or notes there isn't one and suggests one); table checked against the sheet. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

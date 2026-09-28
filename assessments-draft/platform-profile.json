@@ -1,0 +1,59 @@
+{
+  "title": "Teaching Your AI About a New Platform",
+  "lesson": "platform-profile",
+  "text": "These questions check that you can recognize different kinds of Excel code, write and improve a platform profile, and build a JADE panel.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A reply begins with function main(workbook: ExcelScript.Workbook). What kind of code is it?",
+      "choices": ["Office.js for JADE", "Office Scripts", "VBA", "Apps Script"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "In a JADE canvas, why must a button's handler that changes the workbook be wrapped with Jade.automate?",
+      "choices": [
+        "So it runs inside Excel.run with a request context",
+        "So the button looks right",
+        "Because onclick only accepts strings",
+        "So it runs faster"
+      ],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which is valid Office.js for the cells B2 to D2?",
+      "choices": ["sheet.getRange(2, 2, 1, 3)", "sheet.getRange(\"B2:D2\")", "sheet.getRange(\"B2\", \"D2\")", "SpreadsheetApp.getRange(\"B2:D2\")"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Why did the assistant know Office.js well but JADE barely at all, and why is that dangerous even when its answers sound confident?",
+      "answer": "Assistants learn from existing text and code; Office.js has a lot, JADE very little. Where knowledge runs out, they fill gaps with what's true of similar tools, in the same confident tone, so wrong answers are hard to spot without checking.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Name four kinds of information a good platform profile should include, and where the information comes from.",
+      "answer": "What the platform is and isn't (confusable kinds); how code is written and run; how to show output and interfaces; known pitfalls as rules; style preferences. Sources: the platform's documentation and mistakes observed in assistants' replies.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a JADE function countLowSupplies(excel) that reads the Supplies sheet (B Quantity, D Reorder At, headers in row 1) and prints how many items are at or below their reorder level, with Jade.print, and shows the Output panel. (For the book's data, 3.)",
+      "start": "async function countLowSupplies(excel) {\n\n}",
+      "key": ["async function countLowSupplies(excel) {\n  const sheet = excel.workbook.worksheets.getItem(\"Supplies\")\n  const usedRange = sheet.getUsedRange()\n  usedRange.load(\"values\")\n  await excel.sync()\n  const data = usedRange.values\n  let lowCount = 0\n  for (let i = 1; i < data.length; i++) {\n    if (data[i][1] <= data[i][3]) {\n      lowCount++\n    }\n  }\n  Jade.print(`Items to reorder: ${lowCount}`, \"Supplies\")\n  Jade.open_output()\n}"],
+      "lines": 16,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your learner profile and the JADE platform profile. Ask for a JADE panel with a text box and a button, where a volunteer types a crop name and clicking the button prints the total kilograms harvested for that crop from the Harvests sheet. (1) Paste the reply. (2) Check it against every line of the platform profile: which lines applied, and were they followed? (3) Did it make any mistake the profile didn't cover? If so, write a new line for the profile. (4) Run it in JADE and report the result for Tomato (10.2 kg).",
+      "answer": "Full credit: a line-by-line check against the platform profile (canvas, tag, Jade.automate, print/open_output, escaping typed text); any new mistake turned into a clear profile line; result reported. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

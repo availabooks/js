@@ -1,0 +1,69 @@
+{
+  "title": "Automating the Web with Playwright",
+  "lesson": "playwright",
+  "text": "These questions check that you can drive a browser with Playwright, understand where its code runs, and scrape responsibly.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "const minPrice = 20\nconst cheap = await page.$$eval(\".product_pod\", pods => pods.filter(p => Number(p.dataset.price) < minPrice))\nWhy does this fail?",
+      "choices": [
+        "$$eval can't filter",
+        "The function runs inside the browser page, where minPrice (a Node variable) doesn't exist; and elements can't be returned to Node",
+        "dataset is misspelled",
+        "It needs headless: false"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Before scraping a supplier's catalog, which should you check first?",
+      "choices": [
+        "Whether the supplier offers an official price list, feed or API",
+        "How fast your internet connection is",
+        "Whether Chromium is installed",
+        "Whether the site uses HTML"
+      ],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "On page 3 of a catalog, a next link has href=\"page-4.html\". What does new URL(\"page-4.html\", \"https://books.toscrape.com/catalogue/page-3.html\").href give?",
+      "choices": [
+        "page-4.html",
+        "https://books.toscrape.com/page-4.html",
+        "https://books.toscrape.com/catalogue/page-4.html",
+        "An error"
+      ],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Give three things a scraping script should do to be a good citizen on someone else's website.",
+      "answer": "Any three: follow the site's terms and robots.txt; pause between requests; stop at the real end (follow next links) rather than hammering guesses; avoid personal data and logins; identify failures rather than retrying rapidly; prefer an official data source.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "Why is it better for a multi-page scraper to report which page failed and stop, rather than catch the error and carry on silently?",
+      "answer": "Silently carrying on would produce a partial list that looks complete, so you'd trust wrong results. Reporting the failure (and counts) shows the data is incomplete, as with hidden errors in triggers.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Scraped prices arrive as text like \"£13.99\". Write a function cheapest(products) that takes an array of { title, priceText } and returns the title of the cheapest product, converting prices with slice(1) and Number(). Then write testCheapest, which logs cheapest([{ title: \"A\", priceText: \"£51.77\" }, { title: \"B\", priceText: \"£13.99\" }, { title: \"C\", priceText: \"£17.46\" }]). (Expected: B)",
+      "start": "function testCheapest() {\n\n}\n\nfunction cheapest(products) {\n\n}",
+      "key": ["function testCheapest() {\n  console.log(cheapest([{ title: \"A\", priceText: \"£51.77\" }, { title: \"B\", priceText: \"£13.99\" }, { title: \"C\", priceText: \"£17.46\" }]))\n}\n\nfunction cheapest(products) {\n  const priced = products.map(p => ({ title: p.title, price: Number(p.priceText.slice(1)) }))\n  priced.sort((a, b) => a.price - b.price)\n  return priced[0].title\n}"],
+      "lines": 12,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Ask for a Playwright script that opens your published club site (or any site you built), checks that every link on the home page leads to a page that loads, and saves a phone-size screenshot. (1) Paste the reply. (2) Point out which code runs in Node and which in the page. (3) Does it pause between requests and mention checking terms, as your new rule asks (even though it's your own site)? (4) Run it and report the results.",
+      "answer": "Full credit: identifies Node vs page code ($$eval/evaluate functions); notes rule compliance; reports results (e.g. link statuses, screenshot). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

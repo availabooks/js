@@ -1,0 +1,59 @@
+{
+  "title": "Building Command-Line Tools",
+  "lesson": "cli",
+  "text": "These questions check that you can read command-line arguments, supply defaults, build a command that runs from anywhere, and schedule it.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Running node report.js --bed B3 gives process.argv. What is process.argv.slice(2)?",
+      "choices": ["[\"node\", \"report.js\"]", "[\"--bed\", \"B3\"]", "\"--bed B3\"", "[\"B3\"]"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "const kg = 0\nWhat is kg ?? 5, and what is kg || 5?",
+      "choices": ["5 and 5", "0 and 5", "0 and 0", "5 and 0"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A tool reads readFileSync(\"harvests.json\") and works in its own folder, but fails when run from another folder. Why?",
+      "choices": [
+        "npm link wasn't run",
+        "The relative path is resolved from the current working directory, not the script's folder",
+        "JSON files can't be read from other folders",
+        "The shebang line is missing"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Name the three pieces that let you type garden-report instead of node garden-report.js, and what each does.",
+      "answer": "The shebang line #!/usr/bin/env node (tells Mac/Linux to run the file with Node); a bin entry in package.json mapping the command name to the script; npm link (installs the command so it's available in any terminal; on Windows it creates a .cmd shim).",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "A weekly report scheduled for Monday at 7:00 didn't run, and the log file has nothing new. Give two possible reasons.",
+      "answer": "The laptop was asleep or off (enable running missed tasks, or use an always-on machine); the task's command was broken (e.g. created in PowerShell with Command Prompt quoting, or a wrong path); it only runs when the user is logged on.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function getOption(args, name) that returns the value after an option in an array of arguments, such as getOption([\"--crop\", \"Kale\"], \"--crop\") → \"Kale\", or null if the option is missing or has no value after it. Then write testGetOption, which logs getOption([\"--crop\", \"Kale\"], \"--crop\"), getOption([\"--crop\"], \"--crop\") and getOption([\"--from\", \"2027-06-01\"], \"--crop\").",
+      "start": "function testGetOption() {\n\n}\n\nfunction getOption(args, name) {\n\n}",
+      "key": ["function testGetOption() {\n  console.log(getOption([\"--crop\", \"Kale\"], \"--crop\"))\n  console.log(getOption([\"--crop\"], \"--crop\"))\n  console.log(getOption([\"--from\", \"2027-06-01\"], \"--crop\"))\n}\n\nfunction getOption(args, name) {\n  const index = args.indexOf(name)\n  if (index === -1 || index + 1 >= args.length) {\n    return null\n  }\n  return args[index + 1]\n}"],
+      "lines": 12,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Ask for a command-line tool, bed-report, that prints each bed's total kilograms, with an optional --bed option for one bed, and a --help option that explains how to use it. (1) Paste the reply. (2) Does it use parseArgs? Does it find harvests.json from the script's folder, as your new rule asks? (3) Make it a command with npm link, run it from two different folders, and paste the output. Check Bed 3's total (14.4 kg).",
+      "answer": "Full credit: notes parseArgs and script-relative paths; runs from two folders; Bed 3 total checked. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

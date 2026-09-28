@@ -1,0 +1,59 @@
+{
+  "title": "College Community Garden: Case Setup",
+  "lesson": "case",
+  "text": "These questions check that you understand the club's spreadsheet, can use the garden context with an assistant, and can round numbers for display.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "The Harvests sheet stores B3 instead of \"Bed 3\". Where do you find the bed's name?",
+      "choices": ["In the Plantings sheet's Variety column", "On the Beds sheet, in the row whose Bed ID is B3", "On the Members sheet", "It isn't stored anywhere"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What does (7.25).toFixed(1) give?",
+      "choices": ["7.3 (a number)", "\"7.3\" (a string)", "7 (a number)", "\"7.25\" (a string)"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Why are the date columns in the club's spreadsheet formatted as plain text for now?",
+      "choices": [
+        "Google Sheets can't store dates.",
+        "So getValue returns a string like \"2027-04-18\" instead of a Date object, which you haven't learned yet.",
+        "Text dates sort better than real dates.",
+        "Apps Script can't read date cells."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "A total of harvest weights logs as 13.600000000000001. Is the code wrong? Explain what's happening and how to display the total as 13.6.",
+      "answer": "The code isn't wrong: computers store most decimals approximately in binary, so adding several can leave a tiny error. Round for display with total.toFixed(1) (a string) or Math.round(total * 10) / 10 (a number). Round when showing, not while adding.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Why does the garden context say things like \"matches Beds column A\" and \"a date stored as text, such as 2027-04-10\"? What might an assistant do without that information?",
+      "answer": "It tells the assistant how the sheets connect and what the values look like. Without it, the assistant might guess wrong columns for matching (e.g., compare bed names to IDs), treat dates as Date objects, or make other wrong assumptions, producing code that runs but gives wrong results.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Using the Supplies sheet (A Item, B Quantity, C Unit, D Reorder At), write a function named logSuppliesToReorder that logs each item whose quantity is at or below its reorder level, in a message like Compost: 6 bags (reorder at 8). For the book's data, that's Compost, Garden gloves and Twine.",
+      "start": "function logSuppliesToReorder() {\n\n}",
+      "key": ["function logSuppliesToReorder() {\n  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()\n  const sheet = spreadsheet.getSheetByName(\"Supplies\")\n  const range = sheet.getDataRange()\n  const data = range.getValues()\n  for (let i = 1; i < data.length; i++) {\n    const item = data[i][0]\n    const quantity = data[i][1]\n    const unit = data[i][2]\n    const reorderAt = data[i][3]\n    if (quantity <= reorderAt) {\n      console.log(`${item}: ${quantity} ${unit} (reorder at ${reorderAt})`)\n    }\n  }\n}"],
+      "lines": 16,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your learner profile and the garden context. Ask for a script that logs each member's first name and the number of shifts they worked, using the Members and Shifts sheets. (1) Paste the reply. (2) Explain how the code matches shifts to members. Which columns does it compare? (3) Run it on the book's sheets or your copy, and check two members' counts by looking at the Shifts sheet yourself.",
+      "answer": "Full credit: explains matching Members column C (email) to Shifts column C (member email); counts verified by hand for two members. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

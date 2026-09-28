@@ -1,0 +1,64 @@
+{
+  "title": "Calling AI Models from Your Code",
+  "lesson": "ai-api",
+  "text": "These questions check that you can call an AI model's API safely: handling keys, reading replies, estimating costs, and guarding against invented details.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Where should an API key for a Node script on your computer be kept?",
+      "choices": [
+        "In a constant at the top of the script",
+        "In a .env file (listed in .gitignore), read from process.env",
+        "In the prompt",
+        "In the script's comments"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What does Object.entries({ Kale: 2.2, Mint: 8.5 }) give?",
+      "choices": ["[\"Kale\", \"Mint\"]", "[2.2, 8.5]", "[[\"Kale\", 2.2], [\"Mint\", 8.5]]", "{ Kale: 2.2, Mint: 8.5 }"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A newsletter script asks a model for a paragraph that includes the week's total. Where should the total be calculated?",
+      "choices": [
+        "By the model, from the list of harvests",
+        "In the code, and given to the model as a fact",
+        "It doesn't matter",
+        "By the newsletter's readers"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "A call used 500 input tokens and 300 output tokens, with a model priced at $2 per million input tokens and $10 per million output tokens. What did it cost? Show your working.",
+      "answer": "500 × $2 / 1,000,000 = $0.001; 300 × $10 / 1,000,000 = $0.003; total $0.004 (less than half a cent).",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "An API-written paragraph says the club \"planted 40 new seedlings this week,\" which wasn't in the prompt. Explain why this happens, and describe three ways to handle it.",
+      "answer": "The model writes what's likely, filling gaps with plausible invented details (hallucination). Handle it by: giving the facts and telling it not to add others; having a person review before use; never letting the script publish automatically (also: keep prompts complete, compute numbers in code).",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a function buildPrompt(totals) that takes an object of kilograms by crop and returns a prompt string: a first line \"Write a short newsletter paragraph using only these numbers:\", then one line per crop like \"Tomato: 3.1 kg\", then a line \"Total: X kg\" with the total to one decimal place. Use Object.entries and Object.values. Then write testBuildPrompt, which logs buildPrompt({ Tomato: 3.1, Bean: 2.6 }).",
+      "start": "function testBuildPrompt() {\n\n}\n\nfunction buildPrompt(totals) {\n\n}",
+      "key": ["function testBuildPrompt() {\n  console.log(buildPrompt({ Tomato: 3.1, Bean: 2.6 }))\n}\n\nfunction buildPrompt(totals) {\n  const lines = Object.entries(totals).map(([crop, kg]) => `${crop}: ${kg} kg`)\n  const total = Object.values(totals).reduce((sum, kg) => sum + kg, 0)\n  return [\"Write a short newsletter paragraph using only these numbers:\", ...lines, `Total: ${total.toFixed(1)} kg`].join(\"\\n\")\n}"],
+      "lines": 10,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "If you have access to an AI API (any provider): start a new chat with your updated learner profile and ask for a script that sends a volunteer's short notes about a workday to the API and gets back a one-sentence summary. (1) Paste the reply. (2) Check the model name and request format against the provider's documentation. (3) Run it on three sets of notes you write, and report any invented details. If you don't have API access: ask the assistant to explain the request format for a provider of your choice, then check each part against that provider's documentation and report what differed.",
+      "answer": "Full credit: model name and format checked against docs; key kept in .env; output reviewed for invented details (or a documented comparison without access). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

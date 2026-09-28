@@ -1,0 +1,59 @@
+{
+  "title": "A Full-Stack App",
+  "lesson": "full-stack",
+  "text": "These questions check that you understand how the layers of a full-stack app fit together, and can use localStorage, form events and browser tests.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "With \"assets\": { \"directory\": \"./public\" } in wrangler.jsonc, what happens to a request for /shifts?",
+      "choices": [
+        "It returns public/shifts.html",
+        "No file matches, so it goes to the Worker's fetch function",
+        "It returns a 404",
+        "It's blocked by CORS"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "localStorage.setItem(\"codes\", [\"a1\", \"b2\"]) stores what?",
+      "choices": ["The array", "The text \"a1,b2\"", "Nothing; it throws", "JSON text [\"a1\",\"b2\"]"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A form's submit handler sends the data with fetch, but the page reloads and the result disappears. What's missing?",
+      "choices": ["await", "event.preventDefault()", "response.ok", "localStorage"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Give two limits of keeping cancel codes in localStorage, and what kind of feature would remove them.",
+      "answer": "They exist only in one browser (lost on another device or when site data is cleared); anyone using the same browser can cancel them. A login system (accounts) would let a member manage sign-ups from anywhere, securely.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "A Playwright test signs up, then immediately reads the \"My sign-ups\" list and finds it empty, though the sign-up worked. What's wrong with the test, and how do you fix it?",
+      "answer": "It read the list before the page finished refreshing (asynchronously). Wait for the expected element, e.g. await page.waitForSelector(\"#my-signups-list li button\"), before reading.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write two functions that keep a list in a storage object shaped like localStorage (with getItem and setItem): loadList(storage, key), which returns the saved array or [] if nothing is saved, and addToList(storage, key, item). Then write testList, which makes a fake storage with an object behind it, adds { id: 13, cancelCode: \"x\" }, and logs JSON.stringify(loadList(storage, \"signups\")).",
+      "start": "function testList() {\n\n}\n\nfunction loadList(storage, key) {\n\n}\n\nfunction addToList(storage, key, item) {\n\n}",
+      "key": ["function testList() {\n  const saved = {}\n  const storage = {\n    getItem: key => (key in saved ? saved[key] : null),\n    setItem: (key, value) => { saved[key] = String(value) }\n  }\n  addToList(storage, \"signups\", { id: 13, cancelCode: \"x\" })\n  console.log(JSON.stringify(loadList(storage, \"signups\")))\n}\n\nfunction loadList(storage, key) {\n  const text = storage.getItem(key)\n  if (text === null) {\n    return []\n  }\n  return JSON.parse(text)\n}\n\nfunction addToList(storage, key, item) {\n  const list = loadList(storage, key)\n  list.push(item)\n  storage.setItem(key, JSON.stringify(list))\n}"],
+      "lines": 22,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Run the lesson's app with wrangler dev. In a new chat with your updated learner profile, paste public/script.js and ask for a feature: after signing up, show the shift's date and task in the success message. (1) Paste the reply. (2) Does it use textContent or innerHTML for the message? Is that safe here? (3) Add it, and extend the browser test to check the new message. Paste the test's output.",
+      "answer": "Full credit: notes textContent vs innerHTML and reasons about where the text comes from; test extended and passing. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "garden-signups",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "garden-signups",
+      "database_id": "paste-the-id-from-wrangler-d1-create"
+    }
+  ]
+}

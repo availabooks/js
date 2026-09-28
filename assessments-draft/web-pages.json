@@ -1,0 +1,64 @@
+{
+  "title": "How Web Pages Work",
+  "lesson": "web-pages",
+  "text": "These questions check that you can read and write HTML and CSS, change a page with JavaScript through the DOM, and use the developer tools.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Which CSS rule applies to every element with class=\"note\"?",
+      "choices": ["note { color: green; }", ".note { color: green; }", "#note { color: green; }", "<note> { color: green; }"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "This rule makes nothing bold and nothing green. Why?\n#count {\n  font-weight: bold\n  color: green\n}",
+      "choices": [
+        "#count should be .count",
+        "The declarations have no semicolons, so they run together into one invalid declaration",
+        "CSS doesn't support color",
+        "It must be in the body"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A script in the head runs document.querySelector(\"#total\").textContent = \"5\" and the Console shows: Cannot set properties of null. What's the most likely cause?",
+      "choices": [
+        "textContent is misspelled",
+        "The script ran before the element with id total was read, so querySelector returned null",
+        "The page has no CSS",
+        "IDs can't contain letters"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "What's the difference between setting an element's textContent and its innerHTML to \"<b>Hi</b>\"? When should you use each?",
+      "answer": "textContent shows the characters <b>Hi</b> literally; innerHTML reads them as HTML and shows a bold Hi. Use innerHTML only for HTML you built from trusted text; use textContent for anything a person typed, because text inserted into HTML is read as HTML.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Your learner profile's rule \"Don't use semicolons at the ends of lines\" caused a problem in this lesson. What was the problem, and what does it teach about learner profiles?",
+      "answer": "The assistant left semicolons out of CSS too, where they're required, so most styles failed. Rules are written for a situation; when you move to a new language or platform, check whether each rule still fits, and qualify or change it (here: JavaScript only).",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a complete HTML page titled Garden Supplies with an h1 heading, a bulleted list of three supplies (Compost, Twine, Garden gloves), and a CSS rule that makes the heading dark green. Then add a script at the end of the body that puts the text 3 items need reordering. into an empty paragraph with the id status.",
+      "start": "<!doctype html>\n<html>\n  <head>\n  </head>\n  <body>\n  </body>\n</html>",
+      "key": ["<!doctype html>\n<html>\n  <head>\n    <title>Garden Supplies</title>\n    <style>\n      h1 {\n        color: darkgreen;\n      }\n    </style>\n  </head>\n  <body>\n    <h1>Garden Supplies</h1>\n    <ul>\n      <li>Compost</li>\n      <li>Twine</li>\n      <li>Garden gloves</li>\n    </ul>\n    <p id=\"status\"></p>\n    <script>\n      const status = document.querySelector(\"#status\")\n      status.textContent = \"3 items need reordering.\"\n    </script>\n  </body>\n</html>"],
+      "lines": 24,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Ask for a page listing the garden's eight beds (Bed 1 to Bed 8) with a CSS style that shades every bed with partial sun differently from the ones with full sun (Beds 4, 6 and 7 have partial sun). (1) Paste the reply. (2) Did the CSS include semicolons, and did the JavaScript leave them out, as your updated profile asks? (3) Which selector kind does it use for the shading: tag, class or id? Why is that the right kind? (4) Open it in your browser and check it with the developer tools' Elements panel.",
+      "answer": "Full credit: semicolons checked in both languages; identifies a class selector (several elements share the style) as the right choice; describes inspecting an element. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

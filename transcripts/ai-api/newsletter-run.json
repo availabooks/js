@@ -1,0 +1,14 @@
+{
+  "lesson": "ai-api",
+  "name": "newsletter-run",
+  "assistant": "Claude",
+  "source": "output of the lesson's newsletter.js, run once through the Claude API",
+  "model": "claude-opus-5",
+  "captured": "2026-09-27T04:20:41.182439Z",
+  "prompt": "Write a short, friendly paragraph (under 80 words) for the College Community Garden's weekly newsletter about this week's harvest. Use these numbers exactly, and don't add any others:\nTomato: 3.1 kg\nBean: 2.6 kg\nCucumber: 2.6 kg\nTotal: 8.3 kg",
+  "output": "**This Week in the Garden**\n\nWhat a wonderful week at the plots! Our tomato vines came through with 3.1 kg of ripe fruit, while the bean rows and cucumber trellises each contributed a tidy 2.6 kg. Altogether, that's 8.3 kg of fresh produce headed to the campus pantry and to the hands of our volunteers. Thank you to everyone who watered, weeded, and picked. Come join us at the beds this weekend — there's always room for another pair of gloves!",
+  "usage": {
+    "input_tokens": 116,
+    "output_tokens": 263
+  }
+}

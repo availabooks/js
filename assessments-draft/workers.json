@@ -1,0 +1,64 @@
+{
+  "title": "Serverless with Cloudflare Workers",
+  "lesson": "workers",
+  "text": "These questions check that you understand how a Worker handles requests, can use D1 and Wrangler, and can protect a public API.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "What does a Worker's fetch function return?",
+      "choices": ["Nothing; it calls res.json()", "A Response object", "A string, which Cloudflare sends", "An Express app"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which D1 call returns one row, or null if there is none?",
+      "choices": [
+        "env.DB.prepare(\"SELECT * FROM slots WHERE id = ?\").bind(3).first()",
+        "env.DB.prepare(\"SELECT * FROM slots WHERE id = ?\").bind(3).run()",
+        "env.DB.exec(\"SELECT * FROM slots\")",
+        "env.DB.get(3)"
+      ],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What does npx wrangler d1 execute garden-signups --local --file=./seed.sql do?",
+      "choices": [
+        "Loads the seed data into the real, online database",
+        "Loads the seed data into a local copy of the database, used by wrangler dev",
+        "Deploys the Worker",
+        "Deletes the database"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Why was DELETE /signups/:id safe enough on your own computer but not on Workers, and how does a cancel code fix it?",
+      "answer": "Locally only you could reach it; online anyone can, and sequential ids are easy to guess, so anyone could cancel everyone's sign-ups. A cancel code is a long random token (crypto.randomUUID) given only to the person who signed up, required to cancel, so it can't be guessed.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant moving your API to Workers dropped a rule and renamed a field. Why did that happen, and what should you do when moving code to a new platform?",
+      "answer": "In a new chat it didn't know the original rules or field names (\"the same as before\" means nothing to it), so it made assumptions. Give it the old code or a complete list of rules and names, and test the new version against the original design.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "A Worker routes by splitting the path. Write a function route(method, pathname) that returns \"list\" for GET /shifts, \"one\" for GET /shifts/:id, \"signup\" for POST /shifts/:id/signups, \"cancel\" for DELETE /signups/:id, and \"none\" otherwise. Then write testRoute, which logs route(\"GET\", \"/shifts\"), route(\"POST\", \"/shifts/6/signups\"), route(\"DELETE\", \"/signups/13\") and route(\"GET\", \"/members\").",
+      "start": "function testRoute() {\n\n}\n\nfunction route(method, pathname) {\n\n}",
+      "key": ["function testRoute() {\n  console.log(route(\"GET\", \"/shifts\"))\n  console.log(route(\"POST\", \"/shifts/6/signups\"))\n  console.log(route(\"DELETE\", \"/signups/13\"))\n  console.log(route(\"GET\", \"/members\"))\n}\n\nfunction route(method, pathname) {\n  const parts = pathname.split(\"/\").filter(part => part !== \"\")\n  if (method === \"GET\" && parts.length === 1 && parts[0] === \"shifts\") {\n    return \"list\"\n  }\n  if (method === \"GET\" && parts.length === 2 && parts[0] === \"shifts\") {\n    return \"one\"\n  }\n  if (method === \"POST\" && parts.length === 3 && parts[0] === \"shifts\" && parts[2] === \"signups\") {\n    return \"signup\"\n  }\n  if (method === \"DELETE\" && parts.length === 2 && parts[0] === \"signups\") {\n    return \"cancel\"\n  }\n  return \"none\"\n}"],
+      "lines": 18,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Set up the lesson's Worker locally with wrangler dev. In a new chat with your updated learner profile, paste the Worker code and ask for a new route, GET /shifts/:id/spots, returning { spotsLeft }. (1) Paste the reply. (2) Did the assistant follow your new rule, or did you give it the code first? (3) Add the route, test it with a script for shift 6 and an unknown shift, and paste the output. (4) If you have a Cloudflare account, deploy it and test the public address too.",
+      "answer": "Full credit: rule compliance noted; route tested locally with correct results (e.g. 3 spots left for shift 6 before sign-ups; 404 unknown); deployment reported if attempted. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

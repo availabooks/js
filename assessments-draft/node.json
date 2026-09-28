@@ -1,0 +1,59 @@
+{
+  "title": "Installing Node and Running Scripts",
+  "lesson": "node",
+  "text": "These questions check that you can install and run Node.js, use a terminal, and read Node's errors.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Your terminal's prompt is C:\\Users\\ava\\Documents>. Your script is in C:\\Users\\ava\\Documents\\garden\\report.js. Which command runs it?",
+      "choices": ["node report.js", "cd garden, then node report.js", "node Documents\\report.js", "cd .., then node report.js"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A script copied from a web page stops with ReferenceError: document is not defined. Why?",
+      "choices": [
+        "Node isn't installed correctly",
+        "The code was written for a browser, and Node has no web page, so no document",
+        "The file name is wrong",
+        "document must be imported with npm"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A script seems stuck in an infinite loop. How do you stop it?",
+      "choices": ["Close VS Code", "Press Ctrl+C in the terminal", "Type exit in the editor", "Press Cmd+Q"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant's installation steps say to download node-v18.17.0. Why shouldn't you just use that version, and where should you get the version number?",
+      "answer": "The assistant is remembering what was current when it learned; Node releases new versions regularly, so 18 may be outdated or unsupported. Get the current LTS from the official site, nodejs.org.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain this error, and how you'd fix it: Error: Cannot find module 'C:\\Users\\ben\\harvest.js'",
+      "answer": "Node looked for harvest.js in the current working directory, C:\\Users\\ben, and it isn't there. Move to the folder that contains the file with cd (or open that folder in VS Code and use its terminal), or type the full path.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a Node script (it can also run in the book's editor) with a function daysUntil(targetDay, today) that returns how many days from today (0 to 6) until the next targetDay, where both are getDay() numbers, and 0 if today is that day. Then write testDaysUntil, which logs daysUntil(6, 3), daysUntil(6, 6) and daysUntil(0, 5). (Expected: 3, 0, 2.)",
+      "start": "function testDaysUntil() {\n\n}\n\nfunction daysUntil(targetDay, today) {\n\n}",
+      "key": ["function testDaysUntil() {\n  console.log(daysUntil(6, 3))\n  console.log(daysUntil(6, 6))\n  console.log(daysUntil(0, 5))\n}\n\nfunction daysUntil(targetDay, today) {\n  return (targetDay - today + 7) % 7\n}"],
+      "lines": 10,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Install Node and VS Code. Start a new chat with your updated learner profile, and ask for a Node script that prints each day of the coming week with its date, marking Saturday as a workday. (1) Paste the reply. (2) Run it in VS Code's terminal, and paste the output. (3) Introduce a typo on purpose, run it, and explain each part of the error message Node prints.",
+      "answer": "Full credit: script runs with sensible output; the error message is explained (file and line, the pointer, the error type and message, the stack trace). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

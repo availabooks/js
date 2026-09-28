@@ -1,0 +1,64 @@
+{
+  "title": "Automation Workflows with n8n",
+  "lesson": "n8n",
+  "text": "These questions check that you understand n8n workflows and items, can write Code node JavaScript, and can choose between a workflow tool and a script.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Which does an n8n Code node need to return?",
+      "choices": [
+        "[{ memberEmail: \"ava.lopez@example.com\", totalHours: 12 }]",
+        "[{ json: { memberEmail: \"ava.lopez@example.com\", totalHours: 12 } }]",
+        "{ memberEmail: \"ava.lopez@example.com\" }",
+        "\"ava.lopez@example.com: 12\""
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Code you found online for n8n starts with for (const item of items) inside a Function node. What does that tell you?",
+      "choices": [
+        "It's written for an older version of n8n; today's Code node uses $input.all()",
+        "It's Python",
+        "It only works on Mac",
+        "It's the newest syntax"
+      ],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Your Monday workflow didn't run this week. You started n8n with npx n8n on your laptop. What's the most likely reason?",
+      "choices": ["n8n only runs on weekends", "n8n wasn't running (the laptop was off or the terminal closed)", "The IF node was false", "Open-Meteo needs a key"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Give two situations where n8n is a better choice than a Node script, and two where a script is better.",
+      "answer": "n8n: connecting services with ready-made nodes; seeing each run's data; schedules without cron; non-programmers may change it. Script: complex logic or testing; needs packages; version control as text; a tool people run themselves.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Where should the Discord webhook address go in an n8n workflow, and why not directly in the HTTP Request node's URL field?",
+      "answer": "In n8n's Credentials (encrypted, separate from the workflow), or another secret store it supports. In the URL field it's saved in plain text in the workflow, and anyone who sees or exports the workflow gets the secret.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "n8n items can be imitated with plain objects. Write a function totalRainItem(items) that takes an array with one item whose json has daily.precipitation_sum (an array of millimeters), and returns an array with one item: { json: { totalRain, needsWatering } }, where totalRain is rounded to one decimal place and needsWatering is true if it's under 5. Then write testTotalRainItem, which logs JSON.stringify(totalRainItem([{ json: { daily: { precipitation_sum: [0, 1.7, 0.4, 0, 2.2, 0, 0] } } }])).",
+      "start": "function testTotalRainItem() {\n\n}\n\nfunction totalRainItem(items) {\n\n}",
+      "key": ["function testTotalRainItem() {\n  console.log(JSON.stringify(totalRainItem([{ json: { daily: { precipitation_sum: [0, 1.7, 0.4, 0, 2.2, 0, 0] } } }])))\n}\n\nfunction totalRainItem(items) {\n  const forecast = items[0].json\n  const total = forecast.daily.precipitation_sum.reduce((sum, mm) => sum + mm, 0)\n  const totalRain = Math.round(total * 10) / 10\n  return [{ json: { totalRain, needsWatering: totalRain < 5 } }]\n}"],
+      "lines": 12,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Run n8n with npx n8n. Start a new chat with your updated learner profile and ask for a workflow that runs every Friday, reads the Supplies data (use a Code node that returns the eight supplies as items, if you don't have it anywhere else), and posts a list of items to reorder to a test Discord channel or, without Discord, shows it in the final node's output. (1) Paste the reply. (2) Did the Code node follow your new rule ($input, { json })? (3) Build it, test it with Test workflow, and report the items each node produced (Compost, Garden gloves, Twine should need reordering).",
+      "answer": "Full credit: rule compliance checked; workflow built and tested; results match the three supplies. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

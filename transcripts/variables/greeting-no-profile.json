@@ -1,0 +1,24 @@
+{
+  "lesson": "variables",
+  "name": "greeting-no-profile",
+  "assistant": "Claude",
+  "attempts": [
+    {
+      "profile": "none",
+      "model": "claude-sonnet-5",
+      "captured": "2026-09-27T02:14:53.665Z",
+      "messages": [
+        {
+          "role": "user",
+          "text": "Write an Apps Script function that reads a name from cell A1 and writes a greeting like Hello, Ava! in cell B1."
+        },
+        {
+          "role": "assistant",
+          "text": "Here's an Apps Script function that reads a name from cell A1 and writes a greeting in cell B1:\n\n```javascript\nfunction writeGreeting() {\n  // Get the active spreadsheet and the active sheet\n  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();\n  \n  // Read the name from cell A1\n  var name = sheet.getRange(\"A1\").getValue();\n  \n  // Build the greeting message\n  var greeting = \"Hello, \" + name + \"!\";\n  \n  // Write the greeting to cell B1\n  sheet.getRange(\"B1\").setValue(greeting);\n}\n```\n\n### How to use it:\n\n1. Open your Google Sheet.\n2. Go to **Extensions > Apps Script**.\n3. Delete any boilerplate code and paste the function above.\n4. Save the project (e.g., name it \"GreetingScript\").\n5. Put a name in cell **A1** (e.g., `Ava`).\n6. Run the `writeGreeting` function:\n   - Click the **Run** button (▶) in the toolbar, or\n   - Select `writeGreeting` from the function dropdown and click **Run**.\n7. Grant any permissions requested (first run only).\n8. Check cell **B1** — it should now show `Hello, Ava!`\n\n### Optional: Auto-run on edit\n\nIf you want the greeting to update automatically whenever A1 changes, use an `onEdit` trigger instead:\n\n```javascript\nfunction onEdit(e) {\n  var sheet = e.source.getActiveSheet();\n  var editedCell = e.range;\n  \n  // Only run if the edited cell is A1\n  if (editedCell.getA1Notation() === \"A1\") {\n    var name = editedCell.getValue();\n    var greeting = \"Hello, \" + name + \"!\";\n    sheet.getRange(\"B1\").setValue(greeting);\n  }\n}\n```\n\nThis special function name (`onEdit`) is automatically triggered whenever a user edits the spreadsheet — no manual running required. Just paste this instead of (or alongside) the first function, and it will fire every time you type something into A1.",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        }
+      ]
+    }
+  ]
+}

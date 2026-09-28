@@ -1,0 +1,54 @@
+{
+  "title": "Analyzing and Charting Data",
+  "lesson": "charts",
+  "text": "These questions check that you can analyze data with Arquero, chart it with Observable Plot, and choose and interpret charts honestly.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "In aq.from(harvests).groupby(\"bed\").rollup({ total: d => aq.op.sum(d.kg) }), what does rollup produce?",
+      "choices": ["One row per harvest, with a total column", "One row per bed, with the sum of its kilograms", "One number", "A chart"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "You have 6 beds and want to compare two groups of them. Which chart is usually more honest?",
+      "choices": ["Two bars showing each group's average", "A dot for each bed, grouped by category", "A pie chart", "A single number"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What does x => ({ id: x }) return for x = \"B2\"?",
+      "choices": ["undefined", "{ id: \"B2\" }", "\"B2\"", "An error"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "The dot plot showed full-sun beds averaging more per square foot than partial-sun beds. Why can't the club conclude that full sun caused the difference?",
+      "answer": "Only 8 beds and one season, so one unusual bed moves the average a lot; the groups overlap; and other things differ between beds, especially the crops planted (e.g. mint in Bed 7, cucumbers and squash in Bed 8), which may explain as much as the sun.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "A chart page will be published on the club's website. The data includes each harvest's loggedBy email. What should you do before publishing, and why?",
+      "answer": "Remove the loggedBy field (or any personal data) from the data in the page, because everything in a published page, including its data, can be read by anyone.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Without libraries, write a function kgPerSqFt(harvests, beds) that returns an array of { bed, kgPerSqFt } objects, one per bed in the beds array, rounded to 2 decimal places. harvests have bed and kg; beds have id and sizeSqFt. Then write testKgPerSqFt, which logs JSON.stringify(kgPerSqFt(harvests, beds)) for harvests = [{ bed: \"B1\", kg: 3.2 }, { bed: \"B2\", kg: 1.2 }, { bed: \"B1\", kg: 3.2 }] and beds = [{ id: \"B1\", sizeSqFt: 32 }, { id: \"B2\", sizeSqFt: 24 }]. (Expected: [{\"bed\":\"B1\",\"kgPerSqFt\":0.2},{\"bed\":\"B2\",\"kgPerSqFt\":0.05}])",
+      "start": "function testKgPerSqFt() {\n\n}\n\nfunction kgPerSqFt(harvests, beds) {\n\n}",
+      "key": ["function testKgPerSqFt() {\n  const harvests = [{ bed: \"B1\", kg: 3.2 }, { bed: \"B2\", kg: 1.2 }, { bed: \"B1\", kg: 3.2 }]\n  const beds = [{ id: \"B1\", sizeSqFt: 32 }, { id: \"B2\", sizeSqFt: 24 }]\n  console.log(JSON.stringify(kgPerSqFt(harvests, beds)))\n}\n\nfunction kgPerSqFt(harvests, beds) {\n  return beds.map(bed => {\n    const total = harvests\n      .filter(h => h.bed === bed.id)\n      .reduce((sum, h) => sum + h.kg, 0)\n    return { bed: bed.id, kgPerSqFt: Math.round(total / bed.sizeSqFt * 100) / 100 }\n  })\n}"],
+      "lines": 16,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Ask a question about the club's data that a chart could answer, such as how harvests changed week by week over the season. (1) Paste the reply. (2) Did the assistant say what question the chart answers and why it chose that chart, as your new rule asks? (3) Build the page with the club's real harvests and run it. (4) Write two sentences for the university about what the chart shows, and one about what it can't show.",
+      "answer": "Full credit: rule compliance noted; working page with real data; interpretation that stays within what the data supports (e.g. timing of harvests reflects planting dates). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

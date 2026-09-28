@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Garden Shift Sign-Up</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Garden Shift Sign-Up</h1>
+
+<h2>Upcoming shifts</h2>
+<table id="shifts-table">
+  <thead>
+    <tr><th>Date</th><th>Task</th><th>Time</th><th>Spots left</th></tr>
+  </thead>
+  <tbody id="shifts-body"></tbody>
+</table>
+
+<h2>Sign up</h2>
+<form id="signup-form">
+  <label for="shift-select">Shift</label>
+  <select id="shift-select"></select>
+
+  <label for="email-input">Email</label>
+  <input type="text" id="email-input">
+
+  <button type="submit">Sign up</button>
+</form>
+<p id="signup-message"></p>
+
+<h2>My sign-ups (this browser)</h2>
+<ul id="my-signups-list"></ul>
+<p id="cancel-message"></p>
+
+<script src="script.js"></script>
+</body>
+</html>

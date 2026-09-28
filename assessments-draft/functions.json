@@ -1,0 +1,77 @@
+{
+  "title": "Functions",
+  "lesson": "functions",
+  "text": "These questions check that you can write functions with parameters and return values, organize a script around a function you can run, and choose between const and let.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "function double(n) {\n  return n * 2\n}\nlet result = double(7) + 1\nWhat is result?",
+      "choices": ["14", "15", "16", "undefined"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "function show(n) {\n  console.log(n * 2)\n}\nlet result = show(7)\nWhat is stored in result?",
+      "choices": ["14", "\"14\"", "undefined", "7"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which line causes an error?",
+      "choices": [
+        "const names = [\"Ava\"] followed by names.push(\"Ben\")",
+        "const total = 0 followed by total += 5",
+        "let total = 0 followed by total += 5",
+        "const sheet = SpreadsheetApp.getActiveSheet() followed by sheet.getRange(\"A1\")"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A Code.gs file has two functions: reportMembers() and labelForHours(hours). Which should you select in the Run menu, and why?",
+      "choices": [
+        "labelForHours, because it does the calculation",
+        "reportMembers, because the Run button can't pass arguments, so the function you run must have no parameters",
+        "Either one; Apps Script fills in the arguments",
+        "Neither; Apps Script runs every function in the file"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "In the function describeMember(firstName, hours), what are the parameters? In the call describeMember(\"Hana\", 18.5), what are the arguments? What would describeMember(18.5, \"Hana\") display if the function logs `${firstName} has ${hours} volunteer hours.`?",
+      "answer": "Parameters: firstName and hours. Arguments: \"Hana\" and 18.5. It would display 18.5 has Hana volunteer hours., because arguments are matched to parameters by position.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "For each variable, say whether it should be declared with const or let, and why: (a) the sheet returned by getActiveSheet(), (b) a loop counter i, (c) a running total, (d) the array returned by getValues().",
+      "answer": "(a) const: set once, never reassigned. (b) let: i++ changes it. (c) let: reassigned on every pass. (d) const: the variable isn't reassigned (even if the array's contents were changed with push, const would still be fine).",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Your learner profile dropped the rule \"Put all the code in one function... Don't create extra functions or use parameters.\" Why was it there in the first place, and why is it safe to remove now?",
+      "answer": "Before learning parameters, arguments and return, code split into helper functions that pass values around would have been hard to read and check. Now the learner can follow how values move between functions, so smaller functions make code easier to check, not harder. A new rule keeps one no-parameter function to run.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function named hoursToGoal(hours, goal) that returns how many more hours a member needs to reach the goal, or 0 if they've already reached it. Then write a no-parameter function named testGoals that logs hoursToGoal(12, 20), hoursToGoal(24, 20) and hoursToGoal(20, 20). (Expected: 8, 0, 0.)",
+      "start": "function testGoals() {\n\n}\n\nfunction hoursToGoal(hours, goal) {\n\n}",
+      "key": ["function testGoals() {\n  console.log(hoursToGoal(12, 20))\n  console.log(hoursToGoal(24, 20))\n  console.log(hoursToGoal(20, 20))\n}\n\nfunction hoursToGoal(hours, goal) {\n  if (hours >= goal) {\n    return 0\n  }\n  return goal - hours\n}"],
+      "lines": 14,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with the updated learner profile and your Members sheet description. Ask for a script that writes each member's label (High, Medium or Low, with thresholds you choose) into column F, using a separate function that takes a number of hours and returns the label. (1) Paste the reply. (2) Which function do you run, and why? (3) For each function, list its parameters and what it returns (if anything). (4) Point to one const and one let, and explain why each was chosen.",
+      "answer": "Full credit: identifies the no-parameter function as the one to run; correctly lists parameters and return values; correctly explains const (never reassigned) and let (reassigned, e.g. a loop counter). Thresholds are stated in the prompt. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "title": "Custom Functions in Sheets",
+  "lesson": "custom-functions",
+  "text": "These questions check that you can write and test custom functions, and explain when Sheets recalculates them and what they can't do.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A cell contains =KGFOR(\"B3\", Harvests!A2:E). What does the function's second parameter receive?",
+      "choices": ["The text \"Harvests!A2:E\"", "An array of arrays with the values in that range", "A Range object", "Only the first cell's value"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which can a custom function do?",
+      "choices": ["Send an email with MailApp", "Write values into other cells", "Return an array of arrays that spills into neighboring cells", "Create a Google Doc"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "=TOTALKG() reads the Harvests sheet inside its code. After new harvests are logged, the cell still shows last week's total. Explain why, and how to fix it.",
+      "answer": "Sheets recalculates only when the formula's inputs change, and the formula has none it can see; the dependency is hidden inside the code. Pass the data as a range argument, e.g. =TOTALKG(Harvests!A2:E), so Sheets recalculates when that range changes.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Why is Shifts!A2:D better than Shifts!A2:D1000 for a range that keeps growing?",
+      "answer": "A2:D is open-ended: it goes to the bottom of the sheet, so new rows are always included. A2:D1000 stops at row 1000, so rows after that would be left out.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a custom function KGFOR(bedId, harvestsData) that returns the total kilograms for a bed, where harvestsData is the Harvests sheet's data without the header (B is Bed ID, D is Kilograms), rounded to one decimal place as a number with Math.round. Then write testKgFor, which calls it with this data and logs the result for \"B2\" (expected 3.7):\n[[\"2027-04-18\", \"B2\", \"Radish\", 1.2, \"x\"], [\"2027-05-13\", \"B4\", \"Spinach\", 2.4, \"x\"], [\"2027-05-21\", \"B2\", \"Lettuce\", 2.5, \"x\"]]",
+      "start": "function testKgFor() {\n\n}\n\nfunction KGFOR(bedId, harvestsData) {\n\n}",
+      "key": ["function testKgFor() {\n  const harvestsData = [[\"2027-04-18\", \"B2\", \"Radish\", 1.2, \"x\"], [\"2027-05-13\", \"B4\", \"Spinach\", 2.4, \"x\"], [\"2027-05-21\", \"B2\", \"Lettuce\", 2.5, \"x\"]]\n  console.log(KGFOR(\"B2\", harvestsData))\n}\n\nfunction KGFOR(bedId, harvestsData) {\n  let total = 0\n  for (let i = 0; i < harvestsData.length; i++) {\n    if (harvestsData[i][1] === bedId) {\n      total += harvestsData[i][3]\n    }\n  }\n  return Math.round(total * 10) / 10\n}"],
+      "lines": 14,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile and the garden context. Ask for a custom function =CROPSIN(bedId, plantingsRange) that returns the crops planted in a bed, joined with commas. (1) Paste the reply. (2) Does it take the data as an argument, or read the sheet itself? Why does that matter? (3) Test it from a test function with data from the Plantings sheet, and report the result for B1 (Tomato, Basil).",
+      "answer": "Full credit: identifies whether data is passed in and explains recalculation; test result reported (B1: Tomato, Basil). Replies vary; the reply may use join(), which the student should notice is new. Grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

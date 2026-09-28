@@ -60,7 +60,7 @@
     {
       "type": "short-answer",
       "text": "In this lesson, an assistant refused to write code that writes Hello into cell A1. Why did it refuse, and what should the learner do about it?",
-      "answer": "Its learner profile said to use only what the learner knows and to say when a task needs something new; writing to a sheet needs SpreadsheetApp and methods, which weren't in the profile. The profile was out of date: it still described an online editor and listed nothing about Apps Script. The learner should learn the new concept and update the profile (environment and what they know), after which the assistant can write the code.",
+      "answer": "Its learner profile said to use only what the learner knows and to say when a task needs something new; writing to a sheet needs a function and Apps Script's commands for sheets (SpreadsheetApp and its methods), which weren't in the profile. The profile was out of date: it still described an online editor and listed nothing about Apps Script. The learner should learn the new concept and update the profile (environment and what they know), after which the assistant can write the code.",
       "points": 4
     },
     {

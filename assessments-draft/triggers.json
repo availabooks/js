@@ -1,0 +1,60 @@
+{
+  "title": "Menus and Triggers",
+  "lesson": "triggers",
+  "text": "These questions check that you can build a custom menu, set up and test triggers, read a form submission from the event object, and find out why automatic code failed.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Which runs automatically because of its name, with nothing to set up?",
+      "choices": ["onOpen", "addMemberFromSignUp", "a time-driven trigger", "an on-form-submit trigger"],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A form-submit trigger receives e. The form's Email question was answered with ava.lopez@example.com. What is e.namedValues[\"Email\"]?",
+      "choices": ["\"ava.lopez@example.com\"", "[\"ava.lopez@example.com\"]", "{ Email: \"ava.lopez@example.com\" }", "undefined"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Your onOpen menu doesn't appear and no error is shown. Where should you look first?",
+      "choices": ["The spreadsheet's Help menu", "The Executions page in the Apps Script editor", "Your email inbox", "The Form Responses sheet"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Every new sign-up is being added to the Members sheet twice. What is the most likely cause, and how do you fix it?",
+      "answer": "There are two identical on-form-submit triggers (e.g. Save was clicked twice). Open the Triggers page and delete the extra one.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "Why is membersSheet.appendRow([...]) safer than writing to getLastRow() + 1 in a form-submit trigger?",
+      "answer": "If two submissions are processed at nearly the same time, both could compute the same next empty row and one would overwrite the other. appendRow adds the row in a single step, so the runs can't collide.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "You click Run on addMemberFromSignUp(e) in the editor and get an error about reading namedValues of undefined. Is the function broken? How should you test it instead?",
+      "answer": "Not necessarily: when you run it yourself there's no event, so e is undefined. Test it by calling it from another function with a made-up event object, e.g. { namedValues: { \"First Name\": [\"Test\"], ... } }.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a test function named testWelcomeName that creates a fake event object with namedValues for \"First Name\" (Test) and \"Last Name\" (Member), and passes it to this function:\n\nfunction logWelcome(e) {\n  const answers = e.namedValues\n  console.log(`Welcome, ${answers[\"First Name\"][0]} ${answers[\"Last Name\"][0]}!`)\n}",
+      "start": "function testWelcomeName() {\n\n}",
+      "key": ["function testWelcomeName() {\n  const fakeEvent = {\n    namedValues: {\n      \"First Name\": [\"Test\"],\n      \"Last Name\": [\"Member\"]\n    }\n  }\n  logWelcome(fakeEvent)\n}\n\nfunction logWelcome(e) {\n  const answers = e.namedValues\n  console.log(`Welcome, ${answers[\"First Name\"][0]} ${answers[\"Last Name\"][0]}!`)\n}"],
+      "lines": 12,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile and the garden context. Ask for a Garden Tools menu with two items of your choice that run functions you've written in earlier lessons. (1) Paste the reply. (2) Check every method name against what you learned (for example, the method that puts the menu on the screen). (3) Did the assistant follow the new rule about explaining setup and testing? (4) Add it to your project, reload, and report what happened, including anything on the Executions page.",
+      "answer": "Full credit: method names checked (createMenu, addItem, addToUi); notes whether setup and testing were explained (onOpen needs no setup, just a reload); honest report of the result. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

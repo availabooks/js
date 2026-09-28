@@ -1,0 +1,57 @@
+{
+  "title": "How the Web Works",
+  "lesson": "http",
+  "text": "These questions check that you understand HTTP requests and responses, status codes and methods, and can design a simple REST API.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A request to sign up for a shift gets status 409. What does that most likely mean for the club's API?",
+      "choices": ["The shift doesn't exist", "The sign-up was created", "The shift is full, or you're already signed up", "The server crashed"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which method and address fit \"cancel sign-up 57\" in a REST API?",
+      "choices": ["GET /cancelSignup?id=57", "DELETE /signups/57", "POST /signups/57/delete", "GET /signups/57"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A page shows a link to /shifts/3/cancel, and visiting it (a GET) cancels a sign-up. Why is that a problem?",
+      "choices": [
+        "It isn't; links are the easiest way",
+        "GET requests are made freely by browsers, previews and crawlers, so something could cancel sign-ups by accident; a GET must not change anything",
+        "GET requests can't reach servers",
+        "The address is too long"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Your script gets a response with status 503. Is the problem most likely in your request or on the server? What would you do?",
+      "answer": "On the server (5xx): it's temporarily unavailable or overloaded. Read the body for details, wait and retry later (not rapidly), and check the service's status page.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "Why shouldn't the club's GET /shifts/1 response include the email addresses of the volunteers who signed up?",
+      "answer": "Anyone who can reach the API can make that request, so the response is as public as a web page; showing emails would expose members' personal data. Show counts (spots filled) instead.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "Design a REST API for the club's supplies: listing supplies, seeing one, adding one, changing an item's quantity, and removing one. Give the method and address for each, and the status code for a successful add.",
+      "answer": "GET /supplies; GET /supplies/:id; POST /supplies (201 Created); PATCH /supplies/:id (or PUT for a full replacement); DELETE /supplies/:id (204). Accept reasonable variations with nouns in addresses.",
+      "points": 5
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Ask for a design (no code yet) for an API that lets volunteers log harvests and see totals by bed. (1) Paste the reply. (2) Check it against REST: nouns in addresses, fitting methods and status codes, JSON errors. (3) Did it follow your new rule about personal data? Point to what it does with the Logged By email. (4) Use curl (or curl.exe) to make a GET request to Open-Meteo with -i, and explain each part of the response.",
+      "answer": "Full credit: design checked against REST; personal-data rule addressed (e.g. emails not returned); curl output explained (status line, headers, body). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

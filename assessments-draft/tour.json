@@ -1,0 +1,45 @@
+{
+  "title": "Other Places JavaScript Runs",
+  "lesson": "tour",
+  "text": "These questions check that you can tell platform-specific code from ordinary JavaScript, and start learning a new platform well.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "In a Figma plugin, text.characters = \"Ava Lopez\" fails with an error about an unloaded font. What's missing?",
+      "choices": ["await figma.loadFontAsync(...) before setting text", "figma.closePlugin()", "A semicolon", "document.createElement"],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which part of the Scriptable widget code is ordinary JavaScript you'd use anywhere?",
+      "choices": ["new ListWidget()", "config.runsInApp", "shifts.filter(shift => shift.spotsOpen > 0)", "Script.setWidget(widget)"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "The Figma reply invented twelve volunteers. Why, and what should the prompt have included?",
+      "answer": "The request mentioned 12 volunteers without giving names, so the assistant filled the gap with plausible made-up names. The prompt should have included the real roster (or said where to read it).",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "What four things does a good starter prompt for a new platform include?",
+      "answer": "What you already know; a request to explain what's different; a small, real example you care about (with your real data); a request to say what the assistant is unsure of.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Choose one platform from the tour. Write three lines you'd put in a platform profile for it, based on the lesson or its documentation.",
+      "answer": "Any accurate lines, e.g. Scriptable: no fetch, use new Request(url) and await loadJSON(); widgets are ListWidget objects set with Script.setWidget; iOS decides refresh times. Figma: use the figma object, colors 0–1, load fonts before setting text.",
+      "points": 4
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Pick a platform from the tour you'd like to try. Start a new chat with your learner profile and one of the lesson's starter prompts (or your own, following its pattern). (1) Paste the reply. (2) List what the reply says is different about the platform, and check two of those claims against the platform's documentation. (3) Try the example, and report what happened. (4) Write a first platform profile of at least four lines.",
+      "answer": "Full credit: two claims checked against documentation; honest report of trying it; a platform profile of at least four accurate lines. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

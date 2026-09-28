@@ -1,0 +1,54 @@
+{
+  "title": "Talking to Web Services",
+  "lesson": "web-services",
+  "text": "These questions check that you can read an API request, work with a JSON reply, handle errors without hiding them, and keep secrets out of your code.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "In https://api.open-meteo.com/v1/forecast?latitude=40.25&daily=precipitation_sum, what is daily?",
+      "choices": ["The service's address", "A name in the query string, with the value precipitation_sum", "A JavaScript variable", "The response format"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A trigger runs a function whose only error handling is catch (error) { Logger.log(error) }. The weather service is down. What appears on the Executions page?",
+      "choices": ["Failed, with the error", "Completed, as if nothing went wrong", "Nothing; the run isn't listed", "An email to you"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Where should a Discord webhook address be kept?",
+      "choices": ["In a constant at the top of Code.gs", "In a comment", "In Script Properties", "In the prompt you send your assistant"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Give two ways a script that fetches a forecast every morning could fail, even if its code is correct.",
+      "answer": "Any two: the service is down or unreachable; the internet connection fails; the service returns an error; the service changes its reply format or parameter names; a rate limit or changed terms.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "You want to ask an assistant why your webhook code fails. What should you do with the webhook address before pasting the code, and why?",
+      "answer": "Replace it with a placeholder (e.g. YOUR_WEBHOOK_URL), because anyone with the address can post to the channel, and anything pasted into a chat may be stored. If it leaks, delete it and create a new one.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function needsWatering(rainMm, thresholdMm) that returns true if the rain is less than the threshold, and false otherwise. Then write testNeedsWatering, which logs the result for 0 and 2, 1.7 and 2, and 2 and 2. (Expected: true, true, false.)",
+      "start": "function testNeedsWatering() {\n\n}\n\nfunction needsWatering(rainMm, thresholdMm) {\n\n}",
+      "key": ["function testNeedsWatering() {\n  console.log(needsWatering(0, 2))\n  console.log(needsWatering(1.7, 2))\n  console.log(needsWatering(2, 2))\n}\n\nfunction needsWatering(rainMm, thresholdMm) {\n  if (rainMm < thresholdMm) {\n    return true\n  }\n  return false\n}"],
+      "lines": 12,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Ask for a script that uses Open-Meteo to log tomorrow's maximum temperature for the garden's location (use a latitude and longitude of your choice), with error handling that doesn't hide failures. (1) Paste the reply. (2) Check the address's parameter names against Open-Meteo's documentation (open-meteo.com). Are they right? (3) What happens in the catch block? Would a failure show on the Executions page? (4) Run it in Apps Script and report the result.",
+      "answer": "Full credit: parameter names checked against the documentation (e.g. daily=temperature_2m_max); the catch block is evaluated for whether it rethrows or notifies; result reported. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

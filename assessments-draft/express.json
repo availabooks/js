@@ -1,0 +1,59 @@
+{
+  "title": "A Server with Node and Express",
+  "lesson": "express",
+  "text": "These questions check that you can build and test an Express API, serve a page from it, and control who can reach it.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "A request arrives for DELETE /signups/42. In the route app.delete(\"/signups/:id\", ...), what is req.params.id?",
+      "choices": ["42 (a number)", "\"42\" (a string)", "\"/signups/42\"", "undefined"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A POST route reads req.body.email, but req.body is undefined. What's the most likely cause?",
+      "choices": [
+        "The route should be app.get",
+        "app.use(express.json()) is missing, so JSON bodies aren't read",
+        "The port is wrong",
+        "express.static is missing"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "const shift = { id: 6, capacity: 3 }\nconst shown = { ...shift, spotsFilled: 1 }\nWhat is shown?",
+      "choices": ["{ spotsFilled: 1 }", "{ id: 6, capacity: 3, spotsFilled: 1 }", "{ shift, spotsFilled: 1 }", "An error"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "What's the difference between app.listen(3000) and app.listen(3000, \"127.0.0.1\"), and which should you use while developing on a campus network?",
+      "answer": "Without an address, the server listens on all network interfaces, so other devices on the network may reach it; with 127.0.0.1 only your own computer can. Use 127.0.0.1 while developing, especially on shared networks.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "The sign-up page disables the button for full shifts. Why must the server still check whether a shift is full?",
+      "answer": "Anyone can send a POST request directly (curl, a script) without the page, and two people could sign up at almost the same moment; only checks where the data is stored protect it. The page's check is a convenience.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function checkSignup(email, slot, signups, memberEmails) that returns an object { status, error } for problems, or { status: 201 } if the sign-up is allowed. Rules: missing email → 400; not in memberEmails (compare lowercase) → 400; already signed up → 409; full (signups for the slot ≥ capacity) → 409. signups are { slotId, memberEmail }. Then write testCheckSignup, which logs JSON.stringify for: (\"Ava.Lopez@example.com\", { id: 6, capacity: 3 }, [], [\"ava.lopez@example.com\"]) and (\"ben.okafor@example.com\", { id: 1, capacity: 1 }, [{ slotId: 1, memberEmail: \"ava.lopez@example.com\" }], [\"ava.lopez@example.com\", \"ben.okafor@example.com\"]).",
+      "start": "function testCheckSignup() {\n\n}\n\nfunction checkSignup(email, slot, signups, memberEmails) {\n\n}",
+      "key": ["function testCheckSignup() {\n  console.log(JSON.stringify(checkSignup(\"Ava.Lopez@example.com\", { id: 6, capacity: 3 }, [], [\"ava.lopez@example.com\"])))\n  console.log(JSON.stringify(checkSignup(\"ben.okafor@example.com\", { id: 1, capacity: 1 }, [{ slotId: 1, memberEmail: \"ava.lopez@example.com\" }], [\"ava.lopez@example.com\", \"ben.okafor@example.com\"])))\n}\n\nfunction checkSignup(email, slot, signups, memberEmails) {\n  const cleanEmail = String(email ?? \"\").trim().toLowerCase()\n  if (cleanEmail === \"\") {\n    return { status: 400, error: \"Email is required\" }\n  }\n  if (!memberEmails.includes(cleanEmail)) {\n    return { status: 400, error: \"Not a club member\" }\n  }\n  const forSlot = signups.filter(s => s.slotId === slot.id)\n  if (forSlot.some(s => s.memberEmail === cleanEmail)) {\n    return { status: 409, error: \"Already signed up\" }\n  }\n  if (forSlot.length >= slot.capacity) {\n    return { status: 409, error: \"Shift is full\" }\n  }\n  return { status: 201 }\n}"],
+      "lines": 20,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start with the lesson's server. In a new chat with your updated learner profile, ask for a new route, GET /shifts/:id/spots, that returns only { spotsLeft }. (1) Paste the reply. (2) Does it follow REST and your rules (no emails, 404 for unknown shifts)? (3) Add it, add two test requests to test-api.js (a real shift and an unknown one), run them, and paste the output. (4) Check that the server still listens on 127.0.0.1.",
+      "answer": "Full credit: route checked against rules; tests run with correct results (e.g. shift 6 → 3 spots left before any sign-up; 404 for unknown); listening address confirmed. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

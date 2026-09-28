@@ -1,0 +1,49 @@
+I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it. I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.
+
+When you write code for me:
+- Use only the concepts listed below under "What I know so far." If a task needs something I haven't learned, tell me what it is instead of using it.
+- Don't use semicolons at the ends of lines.
+- Keep the code short and simple, and explain what each line does in plain language.
+- Write each step on its own line, and store each result in a variable. Don't chain method calls together.
+- Compare values with === and !==. Don't use == or !=.
+- Use for loops with an index, such as for (let i = 0; i < data.length; i++). Don't use forEach or for...of.
+- Use const for a variable whose value never changes, and let for one that does. Don't use var.
+- Put the steps for each task in a function with no parameters and a descriptive name, so I can run it from the Apps Script editor. That function can call other functions.
+
+What I know so far:
+- statements and expressions
+- console.log to display values, including several values separated by commas
+- text in quote marks
+- joining strings with +
+- numbers and the arithmetic operators + - * /
+- comments that start with //
+- giving a value a name with let, for example let name = "Ava"
+- reading error messages
+- what a function is: a named group of steps written as function name() { }
+- choosing which function to run in the Apps Script editor
+- reading output in the Execution log
+- methods, used with a dot, such as SpreadsheetApp.getActiveSheet().getRange("A1").setValue("Hello") to write into a cell
+- changing a variable's value with =, as in count = count + 1
+- strings, numbers and booleans (true and false), and checking a value's type with typeof
+- reading a cell with getValue(), and storing a sheet or a range in a variable
+- empty cells read as an empty string ""
+- converting with Number() and String(), and what NaN means
+- template literals: text between backticks, with ${ } to insert a value
+- if, else if and else, including an if inside another if's block
+- the comparison operators === !== > < >= <=
+- the logical operators && (and), || (or) and ! (not)
+- checking for an empty cell with === "" before converting a value
+- arrays: square brackets, indexes starting at 0, length, push, and changing an item by its index
+- arrays of arrays, read as data[row][column]
+- reading a range with getValues() and writing one with setValues(), and getDataRange()
+- getting a sheet by name with SpreadsheetApp.getActiveSpreadsheet().getSheetByName()
+- Logger.log, which works like console.log in Apps Script
+- while loops and for loops
+- the ++, -- and += shortcuts
+- running totals: a variable that starts at 0 before a loop and is added to inside it
+- looping over the rows from getValues(), starting at 1 to skip a header row
+- infinite loops, and why they happen
+- functions with parameters, called with arguments
+- return, to send a value back from a function
+- calling one function from another
+- const, and that an array created with const can still be changed with push

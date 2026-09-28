@@ -1,0 +1,65 @@
+{
+  "title": "Google Forms",
+  "lesson": "google-forms",
+  "text": "These questions check that you can set up a form that feeds a spreadsheet, describe its response sheet, and write code that works with checkbox answers.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "What does \"Kale, Spinach, Basil\".split(\", \") give?",
+      "choices": ["\"Kale Spinach Basil\"", "[\"Kale\", \"Spinach\", \"Basil\"]", "[\"Kale,\", \"Spinach,\", \"Basil\"]", "3"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Code splits an Interests cell with split(\",\") instead of split(\", \"). Why does interestsList[1] === \"Hydroponics\" fail for the cell \"Composting & Vermiculture, Hydroponics\"?",
+      "choices": [
+        "split only works with one character.",
+        "interestsList[1] is \" Hydroponics\", with a leading space.",
+        "interestsList[1] is undefined.",
+        "=== can't compare strings."
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A search function returns -1. What does that usually mean?",
+      "choices": ["The item is the last one in the array", "The item wasn't found", "An error occurred", "The array is empty"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "names is [\"Kale\", \"Basil\"] and counts is [4, 2]. The code runs names.push(\"Mint\") but forgets counts.push(1). What goes wrong later?",
+      "answer": "The arrays are out of step: \"Mint\" has no count at index 2 (counts[2] is undefined), so adding 1 gives NaN, and any later names would be matched with the wrong counts. Parallel arrays must always be changed together.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant's instructions say to click Insert, then Form, but your Google Sheets Insert menu has no Form item. What should you do?",
+      "answer": "Trust the screen: menus change and assistants can be out of date. Look for the option elsewhere (e.g. Tools > Create a new form), check Google's help, or tell the assistant what you see and ask again.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "List two things the club should do to protect the personal information its sign-up form collects.",
+      "answer": "Any two: collect only what's needed; limit who can see the response sheet; don't paste real responses into an AI assistant; make optional fields optional (e.g. phone); delete data that's no longer needed.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "On the Form Responses 1 sheet (F is Interests, separated by \", \"), write a function named listPollinatorFans that logs the first name (column B) of everyone who chose Pollinator Gardens. For the book's data, that's Hana, Maya and Cam.",
+      "start": "function listPollinatorFans() {\n\n}",
+      "key": ["function listPollinatorFans() {\n  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()\n  const sheet = spreadsheet.getSheetByName(\"Form Responses 1\")\n  const range = sheet.getDataRange()\n  const data = range.getValues()\n  for (let i = 1; i < data.length; i++) {\n    const firstName = data[i][1]\n    const interestsText = data[i][5]\n    const interestsList = interestsText.split(\", \")\n    for (let j = 0; j < interestsList.length; j++) {\n      if (interestsList[j] === \"Pollinator Gardens\") {\n        console.log(firstName)\n      }\n    }\n  }\n}"],
+      "lines": 16,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile and a description of the Form Responses 1 sheet. Ask for a script that logs how many interests each person chose, with their first name, and the average number of interests per person. (1) Paste the reply. (2) How does the code count one person's interests? (3) Does it round the average for display? Should it? (4) Run it on the book's sheet and check two people's counts by hand.",
+      "answer": "Full credit: explains using split(\", \").length; notes rounding (toFixed or Math.round) or its absence; checks counts by hand (e.g. Isaac 4, Ben 1). Average for the book's data is 34/12, about 2.8. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

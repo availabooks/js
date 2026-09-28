@@ -1,0 +1,9 @@
+{
+  "name": "book-js-tools",
+  "private": true,
+  "type": "module",
+  "description": "Authoring tools for the JS book (not published)",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.128.0"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "title": "Excel's JavaScript API, with JADE",
+  "lesson": "jade",
+  "text": "These questions check that you understand how Office.js code talks to Excel, can read and write ranges in JADE, and can read arrow functions.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "const cell = sheet.getRange(\"D2\")\nJade.print(cell.values)\nThis stops with an error saying the property isn't available. What's missing?",
+      "choices": [
+        "cell.load(\"values\") and await excel.sync() before reading values",
+        "A semicolon",
+        "Jade.open_output()",
+        "Excel.run"
+      ],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A JADE function sets range.values = [[\"Done\"]] and ends without calling excel.sync(). What happens?",
+      "choices": ["An error appears", "The cell changes anyway", "Nothing changes, because the queued request is never sent", "Excel asks for confirmation"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which does the same as (kg) => { return kg * 1000 }?",
+      "choices": ["function(kg) { return kg * 1000 }", "function kg() { return 1000 }", "kg * 1000", "(kg) => 1000"],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Why does Office.js make you load values and call sync, instead of reading and writing cells one line at a time the way Apps Script did?",
+      "answer": "Office.js queues requests and sends them to Excel in batches with sync, because Excel may be in another process or on another computer (Excel on the web); sending one batch is much faster than many round trips. Proxy objects are empty until their properties are loaded and synced.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant says console.log output appears in JADE's Output panel. What actually happens, and what should you use instead?",
+      "answer": "console.log writes to the task pane's hidden browser console, not the Output panel. Use Jade.print(text, heading) and Jade.open_output() to show it.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a JADE function countHarvests(excel) that reads the Harvests sheet's used range and prints how many harvests there are (rows after the header) with Jade.print, then shows the Output panel. (For the book's data, 32.)",
+      "start": "async function countHarvests(excel) {\n\n}",
+      "key": ["async function countHarvests(excel) {\n  const sheet = excel.workbook.worksheets.getItem(\"Harvests\")\n  const usedRange = sheet.getUsedRange()\n  usedRange.load(\"values\")\n  await excel.sync()\n  const harvestCount = usedRange.values.length - 1\n  Jade.print(`There are ${harvestCount} harvests.`, \"Harvest count\")\n  Jade.open_output()\n}"],
+      "lines": 10,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Install JADE, and build the Harvests sheet with the lesson's buildHarvestsSheet function. Then start a new chat with your updated learner profile, and ask for a JADE function that writes each crop's total kilograms to a new sheet named Crop Totals. (1) Paste the reply. (2) Does it use async function name(excel), or Excel.run? Does it use console.log or Jade.print? (3) Point to each load and sync, and say what it's for. (4) Fix anything that doesn't fit JADE, run it, and report the result.",
+      "answer": "Full credit: identifies JADE fit (function shape, output method); explains each load/sync; runs it and reports results (e.g. Bean 10.1, Tomato 10.2). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

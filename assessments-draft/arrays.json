@@ -1,0 +1,72 @@
+{
+  "title": "Arrays",
+  "lesson": "arrays",
+  "text": "These questions check that you can read array indexes, translate between sheet rows and array indexes, use getValues and setValues, and describe a sheet to an assistant.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "let crops = [\"Tomato\", \"Basil\", \"Lettuce\", \"Radish\"]\nWhat is crops[2]?",
+      "choices": ["\"Basil\"", "\"Lettuce\"", "\"Radish\"", "undefined"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "let crops = [\"Tomato\", \"Basil\"]\ncrops.push(\"Kale\")\nWhat is crops.length now?",
+      "choices": ["2", "3", "\"Kale\"", "4"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "let data = sheet.getRange(\"A1:E13\").getValues()\nWhich value is in sheet cell C4?",
+      "choices": ["data[4][3]", "data[3][2]", "data[2][3]", "data[4][2]"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which array can be written with setValues into the range B2:C3?",
+      "choices": [
+        "[\"Ava\", \"Ben\", \"Cam\", \"Dev\"]",
+        "[[\"Ava\", \"Ben\", \"Cam\", \"Dev\"]]",
+        "[[\"Ava\", 12], [\"Ben\", 4]]",
+        "[[\"Ava\"], [\"Ben\"], [\"Cam\"], [\"Dev\"]]"
+      ],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant writes code that logs data[1][1] and says: \"I'll assume there's a header row and that last names are in column B.\" Your sheet has Last Name in column A and First Name in column B. What will the code log, will you get an error, and what should you have done differently?",
+      "answer": "It logs the first member's first name, with no error, because the assumption about the columns was wrong. Check stated assumptions against the sheet before running; better, describe the sheet in the prompt (name, header row, which rows hold data, what each column holds and its type).",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain this error, and say how to fix it: TypeError: SpreadsheetApp.getSheetByName is not a function",
+      "answer": "The code calls getSheetByName on SpreadsheetApp, which doesn't have that method. getSheetByName belongs to a spreadsheet (the whole file). Fix: let spreadsheet = SpreadsheetApp.getActiveSpreadsheet(), then let sheet = spreadsheet.getSheetByName(\"Members\").",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Write a description of the Members sheet from this lesson that you could paste into a chat, so an assistant wouldn't need to guess anything about it.",
+      "answer": "Should give the sheet name (Members); that row 1 is headers and rows 2–13 are members; and each column with its contents and type: A First Name (text), B Last Name (text), C Email (text), D Dues Paid (checkbox, true/false), E Volunteer Hours (number).",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "On the Members sheet, write a function named logThirdMember that reads A1:E13 with getValues and logs the third member's first name and volunteer hours, in a message like Ben has 4 volunteer hours. (The third member is in sheet row 4.)",
+      "start": "function logThirdMember() {\n\n}",
+      "key": ["function logThirdMember() {\n  let sheet = SpreadsheetApp.getActiveSheet()\n  let range = sheet.getRange(\"A1:E13\")\n  let data = range.getValues()\n  let memberRow = data[3]\n  let firstName = memberRow[0]\n  let hours = memberRow[4]\n  console.log(`${firstName} has ${hours} volunteer hours.`)\n}"],
+      "lines": 10,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with the updated learner profile from the end of this lesson, then paste your description of the Members sheet. Ask for a function that writes the text Paid or Unpaid into G2:G4 for the first three members, based on their Dues Paid checkbox, using one getValues call and one setValues call. (1) Paste the reply. (2) Did the assistant make any assumptions your description didn't cover? (3) Explain the array passed to setValues and why it fits G2:G4. (4) Run it on the book's Members sheet, and report the result.",
+      "answer": "Full credit: the description is included; any assumptions are identified (or none); the setValues array is shown to be three rows of one column each; the result is checked against the sheet (Maya Paid, Ava Paid, Ben Unpaid). Replies vary; the code may use if statements, which the profile allows.",
+      "points": 10
+    }
+  ]
+}

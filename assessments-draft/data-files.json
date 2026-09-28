@@ -1,0 +1,52 @@
+{
+  "title": "Working with Data Files",
+  "lesson": "data-files",
+  "text": "These questions check that you can read and write data files, normalize data from different sources, check a merge, and evaluate packages.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "What does 'Twine,2,\"rolls, jute\",3'.split(\",\") give?",
+      "choices": [
+        "[\"Twine\", \"2\", \"rolls, jute\", \"3\"]",
+        "[\"Twine\", \"2\", \"\\\"rolls\", \" jute\\\"\", \"3\"]",
+        "An error",
+        "[\"Twine,2,rolls, jute,3\"]"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Three CSV files with 10, 12 and 9 rows are merged, and the result has 30 records. What does that suggest?",
+      "choices": ["The merge worked", "A row was lost somewhere, such as a header treated as data or a blank line dropped wrongly", "CSV files always lose one row", "The dates were sorted"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "What does it mean to normalize data from several sources, and why do it as early as possible?",
+      "answer": "Convert everything to one consistent form (same field names, types and formats, e.g. YYYY-MM-DD dates and numbers as numbers). Doing it early means all later steps (combining, sorting, totaling) work on one kind of data and don't need special cases.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "An assistant says a package is \"popular and actively maintained.\" Where do you check, and what two facts do you look at?",
+      "answer": "Its page on npmjs.com (and its repository): weekly downloads and the date of the latest release (also open issues, maintainers). Assistants recall from training, so claims can be stale.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function usToIso(dateText) that turns a date like 6/5/2027 into 2027-06-05. Then write testUsToIso, which logs usToIso(\"6/5/2027\") and usToIso(\"12/31/2027\").",
+      "start": "function testUsToIso() {\n\n}\n\nfunction usToIso(dateText) {\n\n}",
+      "key": ["function testUsToIso() {\n  console.log(usToIso(\"6/5/2027\"))\n  console.log(usToIso(\"12/31/2027\"))\n}\n\nfunction usToIso(dateText) {\n  const [month, day, year] = dateText.split(\"/\")\n  return `${year}-${month.padStart(2, \"0\")}-${day.padStart(2, \"0\")}`\n}"],
+      "lines": 10,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Download or recreate the three harvest CSV files from the lesson. Start a new chat with your updated learner profile, and ask for a script that merges them and writes a CSV of total kilograms by crop. (1) Paste the reply. (2) Did it follow the new rule, printing counts or totals you can check? (3) Run it and check: 32 records read, 70.9 kg in total, and one crop total of your choice against the harvest table in Objects and JSON's assessment. Report what you found.",
+      "answer": "Full credit: notes rule compliance; reports the checks (32, 70.9, e.g. Bean 10.1). Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

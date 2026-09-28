@@ -79,19 +79,21 @@ Time to use the five-step workflow on something small.
 
 **Ask.** Start a new chat, paste your learner profile from [Working with an AI Assistant](ai-assistant){.book-link}, and send this prompt:
 
-::: {.ai-conversation prompt="Write one line of JavaScript that prints a greeting to the console." assistant="Gemini" model="gemini-3.8-flash" captured="2026-09-26" profile="ai-assistant" transcript="first-code/greeting"}
-> ```javascript
+::: {.ai-conversation prompt="Write one line of JavaScript that prints a greeting to the console." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="ai-assistant" transcript="first-code/greeting"}
+> ```
 > console.log("Hi there!")
 > ```
 >
-> ### What this line does:
-> * `console.log(...)` tells the computer to display something on the screen.
-> * `"Hi there!"` is the greeting text you want to print, wrapped in quotation marks.
+> **What this does:**
+> - `console.log(...)` tells the computer to display whatever is inside the parentheses
+> - `"Hi there!"` is the text (a **string**) that gets displayed — the quote marks tell JavaScript "this is text, not code"
+>
+> Run it and you should see `Hi there!` show up in your console.
 :::
 
 **Read.** The reply is short because the learner profile asked for short, simple code. Go through it using what you've just learned:
 
-- `"Hi there!"` is an expression. It's a string, so it's in quote marks.
+- `"Hi there!"` is an expression. It's a string, so it's in quote marks. The assistant even uses the word *string*, which you've just learned.
 - `console.log( )` makes the line a statement that displays the value in its parentheses.
 - There's no semicolon at the end, because the profile asked for none.
 
@@ -171,30 +173,38 @@ A named value like this is called a **variable**. You'll learn much more about v
 
 Here's how an assistant handles a request that needs a variable:
 
-::: {.ai-conversation prompt="Write JavaScript that stores my name, Ava, and then prints a greeting that uses it." assistant="Gemini" model="Gemini 3.6 Thinking (Gemini app)" captured="2026-09-26" profile="ai-assistant" transcript="first-code/named-value"}
-> To store a name and use it in a greeting, this task requires two new concepts: **variables** (used to store information) and **text combination** using the `+` operator.
+::: {.ai-conversation prompt="Write JavaScript that stores my name, Ava, and then prints a greeting that uses it." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="ai-assistant" transcript="first-code/named-value"}
+> To do this, you need a new concept called a **variable**. A variable is like a labeled box that stores a value so you can use it later.
 >
-> ```javascript
-> let name = "Ava"
-> console.log("Hello, " + name)
+> Here's the code:
 >
 > ```
+> let name = "Ava"
+> console.log("Hello, " + name)
+> ```
 >
-> * `let` tells JavaScript to create a variable, which acts like a labeled box for storing data.
-> * `name` is the label given to this box.
-> * `=` places the text `"Ava"` inside the `name` box.
-> * `+` glues the text `"Hello, "` together with the stored value inside `name`.
-> * `console.log(...)` displays the final combined message (`Hello, Ava`).
+> **What this does:**
+> - `let name = "Ava"` creates a variable called `name` and puts the text `"Ava"` inside it. Think of it as labeling a box "name" and putting "Ava" in the box.
+> - `console.log("Hello, " + name)` prints text to the screen. The `+` here joins two pieces of text together — it combines `"Hello, "` with whatever is stored in the `name` box.
+> - Since `name` holds `"Ava"`, the output will be:
 >
-> Would you like to try adding a second variable, such as your favorite color or city, to expand the greeting?
+> ```
+> Hello, Ava
+> ```
+>
+> **New concepts used:**
+> 1. `let` — a way to create a variable (a labeled storage box)
+> 2. `+` for joining text together (this is called **concatenation**)
+>
+> Want to try changing the name or the greeting text yourself to see how it changes the output?
 :::
 
-**Read.** This reply was sent with the learner profile from the previous lesson, which says you know nothing yet, and the assistant handled that sensibly. It started by naming the two concepts the task needs, *variables* and *text combination*, and then explained each piece of the code as it used it. That's close to what the profile asks for, though not exactly: the profile asks the assistant to *tell you* what a task needs instead of using it. When an assistant goes ahead anyway, as it did here, the explanation is what lets you keep up.
+**Read.** This reply was sent with the learner profile from the previous lesson, which says you know nothing yet, and the assistant handled that sensibly. It started by naming the new concept the task needs, a *variable*, and at the end it listed both new ideas it had used: `let` and joining text with `+`. That's close to what the profile asks for, though not exactly: the profile asks the assistant to *tell you* what a task needs instead of using it. When an assistant goes ahead anyway, as it did here, its explanation and its list of new concepts are what let you keep up.
 
 You can now read every line:
 
 - `let name = "Ava"` creates a variable called `name` holding the string "Ava", just like the example above.
-- `console.log("Hello, " + name)` uses `+` in a new way. With numbers, `+` adds. With strings, it joins them end to end, so `"Hello, " + name` becomes the single string "Hello, Ava".
+- `console.log("Hello, " + name)` uses `+` in a new way. With numbers, `+` adds. With strings, it joins them end to end, so `"Hello, " + name` becomes the single string "Hello, Ava". The assistant gives this its proper name, **concatenation**.
 
 Compare it with the version earlier in this section, `console.log("Hello,", name)`. Both display *Hello, Ava*, but they get there differently:
 
@@ -209,7 +219,7 @@ console.log("Hello,", name)
 console.log("Hello, " + name)
 </pre>
 
-You'll learn more about joining strings with `+` in the lesson on variables and data. The assistant's closing question, about adding a second variable, is a good one to try on your own.
+You'll learn more about joining strings with `+` in the lesson on variables and data. The assistant's closing suggestion, changing the name or the greeting, is a good one to try on your own.
 
 ## Why This Book Leaves Out Semicolons
 
@@ -283,25 +293,29 @@ Error messages look intimidating, but they're usually telling you three useful t
 
 When a message doesn't make sense, your AI assistant can help, but how you ask matters. Here's one way to ask about the first error, in a new chat that starts with your learner profile:
 
-::: {.ai-conversation prompt="I ran this line: console.log(&quot;Hello&quot; and got this error: SyntaxError: missing ) after argument list. What does this error mean? Explain it, but don't fix it yet." assistant="Gemini" model="Gemini 3.6 Thinking (Gemini app)" captured="2026-09-26" profile="ai-assistant" transcript="first-code/explain-error"}
-> A **SyntaxError** means JavaScript couldn't run your code because it broke a basic grammar rule of the language.
+::: {.ai-conversation prompt="I ran this line: console.log(&quot;Hello&quot; and got this error: SyntaxError: missing ) after argument list. What does this error mean? Explain it, but don't fix it yet." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="ai-assistant" transcript="first-code/explain-error"}
+> Good, let's look at that error closely — this is a great one to understand early on.
 >
-> Specifically, **"missing ) after argument list"** happens because of how opening and closing punctuation work:
+> **The error:** `SyntaxError: missing ) after argument list`
 >
-> * The opening parenthesis `(` tells JavaScript: *"Start looking at the item I want to display."*
-> * JavaScript reads `"Hello"`.
-> * It expects a matching closing parenthesis `)` right after that to finish the instruction, but it reached the end of the line without finding one.
+> Here's what each part means:
 >
-> Because JavaScript never saw that closing symbol, it got stuck waiting for the instruction to end and flagged the mistake.
+> - **SyntaxError** — this means you broke one of the grammar rules of JavaScript. Just like a sentence in English needs proper punctuation, JavaScript code needs to be written in a way that follows its rules. When you break a rule, the computer can't understand what you meant, so it stops and complains before it even tries to run your code.
 >
-> Would you like to try fixing the code yourself now, or move on to your next textbook exercise?
+> - **"missing )"** — the computer is telling you it expected to find a closing parenthesis `)` somewhere, but never found one.
+>
+> - **"after argument list"** — the "argument" is the thing you put inside the parentheses for `console.log` to work with (in your case, `"Hello"`). So this means: "I found your opening parenthesis and the thing inside it, but then I was expecting a closing parenthesis to finish it off, and it wasn't there."
+>
+> Basically, parentheses `(` and `)` always need to come in pairs — every opening one needs a matching closing one. The computer read your line and got left "hanging," waiting for that closing `)` that never showed up.
+>
+> Take a look at your line again and see if you can spot the missing piece yourself before we fix it together.
 :::
 
-This reply teaches something you can use again. Parentheses come in pairs, and when JavaScript finds an opening `(` it keeps reading until it finds the matching `)`. Here it ran out of line first. The next time you see "missing )", you'll know to count your parentheses.
+This reply teaches something you can use again. It takes the message apart one piece at a time, and it ends with a rule: parentheses come in pairs, and when JavaScript finds an opening `(` it keeps reading until it finds the matching `)`. Here it ran out of line first. The next time you see "missing )", you'll know to count your parentheses.
 
-The explanation also answers a question the message raises without spelling it out: the "argument list" is whatever sits inside the parentheses, here `"Hello"`. A value you hand to `console.log` (or any other command) this way is called an **argument**. If a word in an explanation is new to you, you can always ask the assistant what it means.
+It also explains a word in the message you may not have known. The "argument list" is whatever sits inside the parentheses, here `"Hello"`. A value you hand to `console.log` (or any other command) this way is called an **argument**. If a word in an explanation is new to you, you can always ask the assistant what it means.
 
-Notice what the assistant *didn't* do: it didn't hand you the corrected line. It left the fix to you, as you asked. Try it now. Add the missing parenthesis and run the code:
+Notice what the assistant *didn't* do: it didn't hand you the corrected line. It left the fix to you, as you asked, and even suggested you find the missing piece yourself. Try it now. Add the missing parenthesis and run the code:
 
 <pre class="code">
 console.log("Hello"
@@ -309,20 +323,28 @@ console.log("Hello"
 
 For comparison, here's the other way to ask, sent in a new chat with the same learner profile:
 
-::: {.ai-conversation prompt="I ran this line: console.log(&quot;Hello&quot; and got this error: SyntaxError: missing ) after argument list. Fix it." assistant="Gemini" model="Gemini 3.6 Thinking (Gemini app)" captured="2026-09-26" profile="ai-assistant" transcript="first-code/fix-error"}
-> ```javascript
-> console.log("Hello")
+::: {.ai-conversation prompt="I ran this line: console.log(&quot;Hello&quot; and got this error: SyntaxError: missing ) after argument list. Fix it." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="ai-assistant" transcript="first-code/fix-error"}
+> Good catch — that error means you're missing a closing parenthesis at the end.
+>
+> Here's the fix:
 >
 > ```
+> console.log("Hello")
+> ```
 >
-> * `console.log(...)` tells JavaScript to display the text inside the parentheses.
-> * `"Hello"` is the text to display.
-> * `)` closes the argument list so JavaScript knows the instruction is complete.
+> **What was wrong:**
+> - `console.log(` opens with a parenthesis, so it needs a matching `)` to close it
+> - You had `console.log("Hello"` — the quote marks were closed, but the parenthesis wasn't
+> - Adding `)` at the very end completes the command properly
+>
+> A good habit: whenever you type `(`, immediately type its matching `)` before you fill in what goes inside. That way you won't forget it.
+>
+> Try running the corrected line and let me know what you see.
 :::
 
-This reply is correct, and because of your learner profile it even explains each part. But look at what it leaves out. It never says what went wrong or why JavaScript complained. It just hands you the working line. You'd be able to run it, but the next time you forget a parenthesis you'd have to ask again.
+This reply is correct, and because your learner profile asks for explanations, it even says what was wrong. It adds a useful habit, too: type the closing `)` as soon as you type the opening one. So what's the difference?
 
-The first reply took you one step further. It explained the rule behind the error and left the fix to you, so the next time you see "missing )" you can fix it yourself, without asking.
+The difference is who found the mistake. Here, the assistant found it and handed you the working line, so all that was left for you to do was read. In the first reply, the assistant explained the rule and left the finding to you. Spotting the missing parenthesis yourself is what builds the skill, and the next time you forget one you'll be able to fix it without asking.
 
 Both kinds of question have their place. Once you understand an error, asking for a fix is a fine way to save time. While you're learning, though, ask for the explanation first.
 

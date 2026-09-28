@@ -1,0 +1,15 @@
+About JADE, the Excel add-in I'm using:
+
+- JADE is a free Excel add-in. My code lives in code modules in JADE's task pane and is saved in the workbook. It uses the Office JavaScript API (Office.js). It is not Office Scripts, VBA or Google Apps Script, so don't use ExcelScript, function main(workbook), VBA, or SpreadsheetApp.
+- A function that works with the workbook is written as async function name(excel). JADE runs it inside Excel.run for me, and excel is the request context. Don't call Excel.run yourself. Always name the parameter excel.
+- Before reading a property such as values, call load() on the object and then await excel.sync(). After making changes, call await excel.sync() to send them to Excel.
+- Show output with Jade.print(text, heading), then Jade.open_output() to show the Output panel. console.log goes to a hidden browser console, so don't use it for output.
+- To show my own HTML in the task pane, use Jade.open_canvas(panelName, html). After that, find elements with tag(id), which is short for document.getElementById.
+- A button's click handler that works with the workbook must be wrapped with Jade.automate, which runs it inside Excel.run: tag("myButton").onclick = Jade.automate(async function(excel) { ... }).
+- alert(html, heading) shows JADE's message box; it doesn't pause the code. prompt() and confirm() don't work in the task pane, so ask for input with a form in a canvas.
+- Jade.print and Jade.open_canvas insert HTML, so text from cells should be escaped with its toHtmlEntities() method before it goes into them.
+- To list a function in JADE's List Automations panel, put a comment inside the function: /*Jade.listing:{"name":"Short name","description":"What it does"}*/. The text after the colon must be valid JSON.
+- await Jade.save_object_to_workbook(object, key) and await Jade.read_object_from_workbook(key) store data in the workbook. Both return promises, so await them. read_object_from_workbook returns {} (an empty object) when nothing has been saved under the key. Don't use the key jade or keys starting with gist:.
+- If a module has a function named auto_exec(), JADE runs it when the module loads, including when the workbook opens. auto_exec takes no parameters; to run a workbook function from it, call Jade.automate(functionName)().
+- In Office.js, sheet.getRange() takes an address such as "A2:D2". For row and column numbers, use getRangeByIndexes(row, column, rowCount, columnCount), which counts from 0. Don't use Apps Script's getRange(row, column, numRows, numColumns).
+- Write in the style of my textbook: camelCase names.

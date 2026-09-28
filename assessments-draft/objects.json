@@ -1,0 +1,54 @@
+{
+  "title": "Objects and JSON",
+  "lesson": "objects",
+  "text": "These questions check that you can work with objects and arrays of objects, count with an object, and convert to and from JSON.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "const bed = { id: \"B3\", sizeSqFt: 48 }\nconst key = \"sizeSqFt\"\nWhich expression gives 48?",
+      "choices": ["bed.key", "bed[key]", "bed[\"key\"]", "bed.48"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "const bed = { id: \"B3\" }\nWhat is bed.zone?",
+      "choices": ["null", "\"\"", "undefined", "An error"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which is valid JSON?",
+      "choices": ["{name: \"Ava\"}", "{'name': 'Ava'}", "{\"name\": \"Ava\"}", "{\"name\": \"Ava\",}"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain what each line does:\nif (counts[crop] === undefined) {\n  counts[crop] = 0\n}\ncounts[crop] += 1",
+      "answer": "counts is an object of counts keyed by crop name. If there's no property for this crop yet (undefined), create it with value 0; then add 1. Bracket notation is used because the key is in the variable crop.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "Why is it a good idea to turn the rows of a sheet into objects in one function, such as getMembers, and use property names everywhere else?",
+      "answer": "Property names say what the values mean (member.volunteerHours vs data[i][4]); the column positions appear in one place, so if the sheet's columns change, only that function changes.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "On the Harvests sheet (A Date, B Bed ID, C Crop, D Kilograms, E Logged By), write a function named logKilogramsByCrop that uses an object to total the kilograms for each crop and logs each crop with its total rounded to one decimal place, like Tomato: 12.3 kg.",
+      "start": "function logKilogramsByCrop() {\n\n}",
+      "key": ["function logKilogramsByCrop() {\n  const spreadsheet = SpreadsheetApp.getActiveSpreadsheet()\n  const sheet = spreadsheet.getSheetByName(\"Harvests\")\n  const range = sheet.getDataRange()\n  const data = range.getValues()\n  const totals = {}\n  for (let i = 1; i < data.length; i++) {\n    const crop = data[i][2]\n    const kilograms = data[i][3]\n    if (totals[crop] === undefined) {\n      totals[crop] = 0\n    }\n    totals[crop] += kilograms\n  }\n  const crops = Object.keys(totals)\n  for (let i = 0; i < crops.length; i++) {\n    const crop = crops[i]\n    console.log(`${crop}: ${totals[crop].toFixed(1)} kg`)\n  }\n}"],
+      "lines": 20,
+      "points": 8
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile and the garden context. Ask for a script that reads the Beds sheet into an array of bed objects, then logs each bed as JSON. (1) Paste the reply. (2) Which function turns rows into objects, and what are the property names? (3) Explain the difference between a bed object and the JSON text that's logged. (4) Run it and compare one bed's JSON with the sheet.",
+      "answer": "Full credit: identifies the conversion function and its properties; explains that JSON is text (a string) while the object is a value with properties; the JSON is checked against the sheet. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

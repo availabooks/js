@@ -1,0 +1,59 @@
+{
+  "title": "A Web App with Apps Script",
+  "lesson": "web-app",
+  "text": "These questions check that you can read basic HTML, build and deploy an Apps Script web app, and think about who can see it.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Which HTML makes one table row with two ordinary cells?",
+      "choices": ["<tr><td>Kale</td><td>4.6</td></tr>", "<td><tr>Kale</tr><tr>4.6</tr></td>", "<table>Kale, 4.6</table>", "<row>Kale 4.6</row>"],
+      "answer": 0,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "You changed your web app's code and saved, but the link shows the old page. What should you do?",
+      "choices": ["Wait an hour", "Deploy a new version under Manage deployments", "Rename doGet", "Clear your browser history"],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "A web app is set to Execute as: Me and Who has access: Anyone. Who can open it, and whose permissions does it use?",
+      "choices": [
+        "Only you; your permissions",
+        "Anyone with the link; the visitor's permissions",
+        "Anyone with the link; your permissions",
+        "Only people who can edit the spreadsheet; your permissions"
+      ],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Why would it be a bad idea to deploy a web app that lists every member's name and email address with Who has access set to Anyone?",
+      "answer": "Anyone who gets the link, including people outside the club, could see members' personal information; because it executes as you, it can show anything your account can read. Limit access or don't show personal data.",
+      "points": 3
+    },
+    {
+      "type": "short-answer",
+      "text": "A web app puts each form response's comment into a table cell. One comment contains <h1>Hi</h1>. What will visitors see, and why does it matter?",
+      "answer": "A large heading inside the table, because text inserted into HTML is read as HTML. It matters because people could change the page, or insert scripts, through text they type; special characters need to be replaced so they display as text.",
+      "points": 4
+    },
+    {
+      "type": "code",
+      "text": "Write a function buildList(crops) that returns an HTML list, with a <ul> around the whole list and an <li> around each crop, such as <ul><li>Kale</li><li>Mint</li></ul>. Then write testBuildList, which logs buildList([\"Kale\", \"Mint\", \"Basil\"]).",
+      "start": "function testBuildList() {\n\n}\n\nfunction buildList(crops) {\n\n}",
+      "key": ["function testBuildList() {\n  console.log(buildList([\"Kale\", \"Mint\", \"Basil\"]))\n}\n\nfunction buildList(crops) {\n  let html = \"<ul>\"\n  for (let i = 0; i < crops.length; i++) {\n    html += `<li>${crops[i]}</li>`\n  }\n  html += \"</ul>\"\n  return html\n}"],
+      "lines": 12,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile and the garden context. Ask for a web app that shows the Supplies sheet as a table, highlighting items that need reordering. (1) Paste the reply. (2) Did the assistant follow the new rule, saying who can see the page and what it shows? (3) Which function could you test on this book's pages? (4) Deploy it with a test deployment and describe the result.",
+      "answer": "Full credit: notes whether the rule was followed; identifies a pure HTML-building or calculating function; describes the test deployment result. The highlighting may use a style attribute or CSS, which the student should note is new. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "title": "Writing Your Own Learning Profile",
+  "lesson": "learning-profile",
+  "text": "This capstone checks that you understand how a learner profile works and can design one, with a learning path, for something new.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Which of these rules is scaffolding, meant to be removed later, rather than a lasting habit?",
+      "choices": [
+        "Keep secrets out of the code",
+        "Use for loops with an index, not forEach",
+        "Dry-run anything that sends or deletes",
+        "Print counts after combining data"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which rule made the book's approach work, and was missing from the assistant's draft Python profile?",
+      "choices": [
+        "Explain new syntax the first time you use it",
+        "Use only what I know, and tell me when a task needs something new instead of using it",
+        "Use pandas for everything",
+        "Point out differences from JavaScript"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Name the five kinds of change your learner profile went through, with one example of each.",
+      "answer": "Knowledge grew (e.g. arrays added); environments changed (e.g. Apps Script to web pages); scaffolding came off (e.g. one-function rule removed in Functions); rules were corrected (e.g. semicolons only in JavaScript); habits accumulated (e.g. dry runs, pinned versions).",
+      "points": 5
+    },
+    {
+      "type": "short-answer",
+      "text": "Why should a learner profile eventually be rewritten and shortened, rather than only added to?",
+      "answer": "It grows too long to paste and read; parts stop being true (\"I'm a beginner\"); a huge list of known concepts is less useful than a summary. Keeping the lasting habits and summarizing knowledge makes it accurate and practical.",
+      "points": 3
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Capstone. Choose a platform, language or skill you haven't learned. Submit: (1) a learner profile for it, with each rule marked as scaffolding (and when you'd remove it) or as a habit, including a \"use only what I know\" rule; (2) a platform profile of at least five lines, each backed by the tool's documentation (give links); (3) a learning path of five to ten steps, listing the concepts each adds; (4) your first real exchange: the prompt, the reply, and a line-by-line reading noting what fits your profile and what doesn't.",
+      "answer": "Grade on: a complete profile with the core rule and clearly separated scaffolding/habits; accurate, documented platform profile lines; a sensible ordered path; a careful critical reading of the first reply. Replies vary, so grade the reasoning and care.",
+      "points": 30
+    }
+  ]
+}

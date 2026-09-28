@@ -1,0 +1,59 @@
+{
+  "title": "A Chat Bot for the Club",
+  "lesson": "discord",
+  "text": "These questions check that you understand how a chat platform calls your code, how to verify its requests, and how to keep a bot's secrets.",
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "text": "Why does the Worker read the request body with request.text() before verifying, instead of request.json()?",
+      "choices": [
+        "request.json() doesn't work in Workers",
+        "The signature covers the exact raw text; parsing and re-serializing could change it and break the check",
+        "Discord sends XML",
+        "text() is faster"
+      ],
+      "answer": 1,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "Which value must be kept secret?",
+      "choices": ["The Application ID", "The Public Key", "The Bot Token", "The Interactions Endpoint URL"],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "multiple-choice",
+      "text": "What does parseInt(\"ff\", 16) give?",
+      "choices": ["NaN", "15", "255", "\"ff\""],
+      "answer": 2,
+      "points": 2
+    },
+    {
+      "type": "short-answer",
+      "text": "Explain in your own words how a signature proves a request came from Discord, and what the Worker should do if verification fails.",
+      "answer": "Discord signs each request (timestamp + body) with a private key only it has; the Worker checks the signature with Discord's public key. Only the holder of the private key can produce a signature that verifies, and any change to the body breaks it. If it fails, respond 401 and do nothing else.",
+      "points": 4
+    },
+    {
+      "type": "short-answer",
+      "text": "What's the difference between WHERE and HAVING in SQL? Give an example from this lesson.",
+      "answer": "WHERE filters rows before grouping; HAVING filters groups after aggregation. E.g. HAVING COUNT(slotSignups.id) < slots.capacity keeps only shifts that aren't full, which needs the count.",
+      "points": 3
+    },
+    {
+      "type": "code",
+      "text": "Write a function hexToBytes(hex) that turns hex text such as \"0aff10\" into an array of numbers, using parseInt with base 16 on each pair of characters. Then write testHexToBytes, which logs JSON.stringify(hexToBytes(\"0aff10\")). (Expected: [10,255,16])",
+      "start": "function testHexToBytes() {\n\n}\n\nfunction hexToBytes(hex) {\n\n}",
+      "key": ["function testHexToBytes() {\n  console.log(JSON.stringify(hexToBytes(\"0aff10\")))\n}\n\nfunction hexToBytes(hex) {\n  const bytes = []\n  for (let i = 0; i < hex.length; i += 2) {\n    bytes.push(parseInt(hex.slice(i, i + 2), 16))\n  }\n  return bytes\n}"],
+      "lines": 10,
+      "points": 6
+    },
+    {
+      "type": "ai-exchange",
+      "text": "Start a new chat with your updated learner profile. Paste the lesson's Discord handler and ask for a second command, /spots with a shift number, that replies with the spots left on that shift. (1) Paste the reply. (2) Does the new command still go through the signature check first, as your new rule asks? (3) How does it read the command's option from the interaction? Check the field names against Discord's documentation. (4) If you have a Discord server and a Cloudflare account, deploy it and try it; otherwise, write two test requests (a valid shift and an unknown one) that the handler should answer correctly, and explain the expected replies.",
+      "answer": "Full credit: verification order checked; option reading checked against docs (interaction.data.options[0].value); tested or reasoned test cases. Replies vary, so grade the reasoning.",
+      "points": 10
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "lesson": "platform-profile",
+  "name": "no-profile",
+  "assistant": "Claude",
+  "attempts": [
+    {
+      "profile": "none",
+      "model": "claude-sonnet-5",
+      "captured": "2026-09-27T03:32:44.977Z",
+      "messages": [
+        {
+          "role": "user",
+          "text": "Write JavaScript for Excel that highlights in yellow every row of my Supplies sheet where Quantity (column B) is at or below Reorder At (column D). Row 1 has headers."
+        },
+        {
+          "role": "assistant",
+          "text": "# Excel JavaScript: Highlight Rows Where Quantity ≤ Reorder At\n\nHere's a script using the Office Scripts API for Excel:\n\n```javascript\nfunction main(workbook: ExcelScript.Workbook) {\n  // Get the Supplies sheet\n  const sheet = workbook.getWorksheet(\"Supplies\");\n  \n  // Get the used range to determine how many rows have data\n  const usedRange = sheet.getUsedRange();\n  const rowCount = usedRange.getRowCount();\n  \n  // Get values for columns B (Quantity) and D (Reorder At)\n  // Starting from row 2 (index 1) since row 1 is headers\n  const dataRange = sheet.getRangeByIndexes(1, 0, rowCount - 1, 4); // Columns A-D\n  const values = dataRange.getValues();\n  \n  // Loop through each row of data\n  for (let i = 0; i < values.length; i++) {\n    const quantity = values[i][1];   // Column B\n    const reorderAt = values[i][3];  // Column D\n    \n    // Check if both values are numbers before comparing\n    if (typeof quantity === \"number\" && typeof reorderAt === \"number\") {\n      if (quantity <= reorderAt) {\n        // Highlight the entire row (adjust column range as needed)\n        const rowIndex = i + 1; // +1 to account for header row\n        const rowRange = sheet.getRangeByIndexes(rowIndex, 0, 1, 4); // A:D\n        rowRange.getFormat().getFill().setColor(\"#FFFF00\");\n      } else {\n        // Optional: clear fill for rows that don't meet criteria\n        const rowIndex = i + 1;\n        const rowRange = sheet.getRangeByIndexes(rowIndex, 0, 1, 4);\n        rowRange.getFormat().getFill().clear();\n      }\n    }\n  }\n}\n```\n\n## Notes:\n\n1. **Column range**: This highlights columns A–D. If your sheet has more columns (e.g., Supply Name, Unit Cost, etc.), adjust the `4` in `getRangeByIndexes(rowIndex, 0, 1, 4)` to match your total column count.\n\n2. **Clearing non-matching rows**: The `else` block clears fill color for rows that don't meet the condition — useful if you re-run the script after updating quantities. Remove this block if you don't want that behavior.\n\n3. **Header row**: The script starts checking from row 2 (index 1 in the array, but index 1 in the sheet since row 0 = header row 1).\n\n4. **Where to run this**: \n   - Open your workbook in Excel (desktop or web)\n   - Go to **Automate** tab → **New Script**\n   - Paste this code, rename the function if desired, and click **Run**\n\n### If you need it for VBA instead\nLet me know — this version is for **Office Scripts** (used in Excel Online / the \"Automate\" tab). VBA macros use a different syntax entirely.",
+          "modelVersion": "claude-sonnet-5",
+          "finishReason": "end_turn"
+        }
+      ]
+    }
+  ]
+}
