@@ -40,7 +40,7 @@ Read it one line at a time, the way the computer does:
 3. `count = count + 1` looks strange if you read `=` as "equals." Read it instead as "store": *work out `count + 1`, then store the result in `count`*. At that moment `count` holds 20, so `count + 1` is 21, and 21 is stored.
 4. `console.log(count)` displays 21.
 
-::: {.term}
+::: {.term .qbh}
 > **Assignment** — Storing a value in a variable with `=`. In `count = count + 1`, the right side is worked out first, using the variable's current value, and the result is then stored on the left.
 :::
 
@@ -80,7 +80,11 @@ console.log(typeof "12")
 console.log(typeof true)
 ```
 
+::: {.ars}
+
 `typeof` is especially handy when a value doesn't behave the way you expect, because the problem is often that it's a different type than you thought. You'll see exactly that later in this lesson.
+
+:::
 
 ### Values from a spreadsheet
 
@@ -106,7 +110,11 @@ function showTypes() {
 }
 ```
 
+::: {.ver}
+
 Text comes back as a string and a number as a number. A checkbox comes back as a boolean: `true` if it's checked, `false` if it isn't. An empty cell comes back as an empty string, `""`. Try changing the code to read an empty cell, such as `G3`, and see what it displays.
+
+:::
 
 ## Reading a Cell
 
@@ -202,7 +210,7 @@ Second, the long lines are hard to check. The first one does four things, and th
 This version is longer, but every line does exactly one thing, and each variable holds the result of one step:
 
 - `sheet` holds the sheet. Both cells are picked from it, so the code gets the sheet only once.
-- `cellA1` and `cellB1` hold the two cells. A variable can hold a cell, a sheet or anything else, not just text and numbers.
+- [`cellA1` and `cellB1` hold the two cells. A variable can hold a cell, a sheet or anything else, not just text and numbers.]{.yc6}
 - `name` holds the value read from A1.
 - `greeting` holds the message built from it.
 
@@ -413,7 +421,11 @@ let totalText = String(total)
 console.log(totalText + 2, typeof totalText)
 ```
 
+::: {.jfd}
+
 If a string doesn't look like a number, such as `"twelve"`, `Number()` gives a special value called `NaN`, short for "not a number." If you see `NaN` in your output, some text that wasn't a number ended up in a calculation.
+
+:::
 
 Here's the function again, rewritten in the book's style with `Number()` and one step per line. Before you run it, set E3 back to 12 by typing into the cell.
 
@@ -450,7 +462,7 @@ console.log(`Thank you, ${firstName}! You have ${hours} volunteer hours.`)
 
 Both lines display the same message. The template literal reads like the finished sentence, with the spaces exactly where you see them. The backtick key is usually at the top left of the keyboard, next to the 1 key.
 
-::: {.term}
+::: {.term .dj9}
 > **Template literal** — A string written between backticks, in which `${ }` inserts the value of a variable or expression: `` `Hello, ${name}!` ``.
 :::
 
@@ -501,20 +513,7 @@ Capital letters matter. `hours` and `Hours` are two different names, which is a 
 
 You've learned a lot in this lesson, and your profile gets two new rules:
 
-::: {.ai-profile lesson="variables"}
-Add rules:
-
-- Use let for every variable. Don't use var or const.
-- Write each step on its own line, and store each result in a variable. Don't chain method calls together.
-
-Add to "What I know so far":
-
-- changing a variable's value with =, as in count = count + 1
-- strings, numbers and booleans (true and false), and checking a value's type with typeof
-- reading a cell with getValue(), and storing a sheet or a range in a variable
-- empty cells read as an empty string ""
-- converting with Number() and String(), and what NaN means
-- template literals: text between backticks, with ${ } to insert a value
+::: {.learner-profile .hd5 .tjp}
 :::
 
 What's new:

@@ -192,13 +192,15 @@ console.log(interestsList[1])
 
 The separator is removed, and each piece becomes an item. If the text has no separator in it, you get an array with one item, the whole string. Try splitting `"Community Gardening"`.
 
-::: {.term}
+::: {.term .zvv}
 > **split** — A string method that breaks text into an array of pieces wherever a separator appears: `"a, b".split(", ")` gives `["a", "b"]`.
 :::
 
 The description of column F made this possible. Without "separated by a comma and a space," the assistant would have had to guess what the cell looks like, and a separator of `","` instead of `", "` would leave a space at the start of every interest after the first, so `" Hydroponics"` wouldn't equal `"Hydroponics"`.
 
+::: {.m1k}
 **Read.** There's a loop inside a loop, written in one function this time. The outer loop goes through the sign-ups, one row at a time. For each row, `split` turns the Interests cell into a list, and the inner loop goes through that list, adding 1 to `count` for each exact match. The inner loop's counter is called `j`, because `i` is already in use by the outer loop. That's a common convention: `i` for the outer loop, `j` for the one inside it.
+:::
 
 Why split at all, rather than checking whether the cell contains the word? Because comparing whole items with `===` is exact. If the form had options named *Hydroponics* and *Hydroponics Basics*, as an early draft of Maya's list did, a "contains" check would count both.
 
@@ -330,10 +332,12 @@ This is a harder problem than it looks. Counting Hydroponics needed one counter.
 
 **Read.**
 
+::: {.bd5 .wn5}
 - **Two arrays that work together.** `interestNames` holds each interest the first time it's seen, and `interestCounts` holds its count at the *same index*. If `interestNames[3]` is "Hydroponics", then `interestCounts[3]` is how many people chose it. Arrays used in pairs like this are called **parallel arrays**.
 - **A helper function that searches.** `findIndexOfInterest` loops through `interestNames` and returns the index where it finds a match. If there's no match, it returns `-1`. Since no real index is ever negative, -1 is a safe way to say "not found," and you'll see it used this way often, including by JavaScript's own methods.
 - **The counting.** For each interest in each sign-up, the code asks the helper for its index. If it's -1, the interest is new, so it's added to `interestNames` with a count of 1 in `interestCounts`. Otherwise, the count at that index goes up by one.
 - **Writing the results.** The two arrays are combined into an array of arrays, one `[name, count]` row per interest, which `setValues` writes to the sheet. It uses the numeric form of `getRange` you've seen before: start at row 1, column 1, and take as many rows as there are interests, and 2 columns.
+:::
 
 One more thing about this code: the helper is written *above* the function you run. That makes `findIndexOfInterest` the first function in the file, so in the Apps Script editor, and on this page, it's the one selected in the menu at first. Choose `countAllInterests` before you click Run.
 
@@ -425,13 +429,7 @@ Parallel arrays work, but keeping two arrays in step is fiddly: add to one and f
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="google-forms"}
-Add to "What I know so far":
-
-- split(), to break text into an array at a separator
-- getRange(row, column, numRows, numColumns), to get a range with numbers
-- parallel arrays, and returning -1 from a search when nothing is found
-- nested loops, using i for the outer loop and j for the inner one
+::: {.learner-profile}
 :::
 
 Four new items. As before, the response sheet's description goes in your prompt, not the profile. You may want to add it to your garden context, since the club will use this form all season.

@@ -63,7 +63,11 @@ The computer did calculate `5 + 7`, but nothing told it to do anything with the 
 console.log(5 + 7)
 ```
 
+::: {.gxs}
+
 This time you see `12`. The expression `5 + 7` is the value, and `console.log(...)` is the instruction that displays it.
+
+:::
 
 Text works the same way. In JavaScript, text goes inside quote marks, so the computer can tell the words you want to display from the words that are part of the code:
 
@@ -71,7 +75,7 @@ Text works the same way. In JavaScript, text goes inside quote marks, so the com
 console.log("JavaScript is fun!")
 ```
 
-::: {.term}
+::: {.term .ime}
 > **String** — A piece of text in a program, written inside quote marks, such as `"Hello"`. The name comes from the idea of a string of characters.
 :::
 
@@ -125,7 +129,11 @@ console.log(10 * 10)
 console.log(100 / 4 - 5)
 ```
 
+::: {.bkj}
+
 JavaScript uses `+` and `-` for adding and subtracting, `*` for multiplying and `/` for dividing. As in ordinary math, multiplying and dividing happen before adding and subtracting, and parentheses change the order: `(2 + 3) * 4` is 20, while `2 + 3 * 4` is 14.
+
+:::
 
 You can display several values at once by separating them with commas. `console.log` puts a space between them:
 
@@ -134,7 +142,11 @@ console.log("The total is", 5 + 7)
 console.log("Two times three is", 2 * 3, "and ten minus four is", 10 - 4)
 ```
 
+::: {.viw}
+
 Labeling a value this way makes output much easier to understand, especially once a program displays more than one thing.
+
+:::
 
 ## Comments
 
@@ -147,7 +159,7 @@ console.log(7)
 console.log(24 * 7) // the number of hours in a week
 ```
 
-::: {.term}
+::: {.term .bhs}
 > **Comment** — A note in the code, starting with `//`, that the computer ignores. Comments explain code to the people who read it.
 :::
 
@@ -172,7 +184,7 @@ The first line says: *give a value the name* `student`*, and store the string "A
 
 A named value like this is called a **variable**. You'll learn much more about variables later, including how to change what they hold. For now, it's enough to recognize the pattern, because you'll see it in almost every piece of code an AI assistant writes for you.
 
-::: {.term}
+::: {.term .e07}
 > **Variable** — A name that refers to a stored value. `let student = "Ava"` creates a variable called `student` that holds the string "Ava."
 :::
 
@@ -203,7 +215,7 @@ Here's how an assistant handles a request that needs a variable:
 You can now read every line:
 
 - `let student = "Ava"` creates a variable called `student` holding the string "Ava", just like the example above.
-- `console.log("Hello, " + student)` uses `+` in a new way. With numbers, `+` adds. With strings, it joins them end to end, so `"Hello, " + student` becomes the single string "Hello, Ava". Joining strings this way is called **concatenation**.
+- [`console.log("Hello, " + student)` uses `+` in a new way. With numbers, `+` adds. With strings, it joins them end to end, so `"Hello, " + student` becomes the single string "Hello, Ava". Joining strings this way is called **concatenation**.]{.yrx}
 
 Compare it with the version earlier in this section, `console.log("Hello,", student)`. Both display *Hello, Ava*, but they get there differently:
 
@@ -288,7 +300,11 @@ Most errors a beginner meets fall into four groups:
 
 ### Reading an error message
 
+::: {.zf5}
+
 Error messages look intimidating, but they're usually telling you three useful things: *what kind* of error it is, *what went wrong*, and *where* (the line number). "ReferenceError: stduent is not defined" says the problem is a name (`stduent`) that JavaScript doesn't recognize. Once you know that, the typo is easy to spot.
+
+:::
 
 When a message doesn't make sense, your AI assistant can help, but how you ask matters. Here's one way to ask about the first error, in a new chat that starts with your learner profile:
 
@@ -376,17 +392,7 @@ Syntax is about whether code is *valid*. **Structure** is about whether it's *un
 
 You've learned enough to update your learner profile. Use this version at the start of every new chat from now on:
 
-::: {.ai-profile lesson="first-code"}
-Add to "What I know so far":
-
-- statements and expressions
-- console.log to display values, including several values separated by commas
-- text in quote marks
-- joining strings with +
-- numbers and the arithmetic operators + - * /
-- comments that start with //
-- giving a value a name with let, for example let student = "Ava"
-- reading error messages
+::: {.learner-profile}
 :::
 
 Two things changed. The sentence "I don't know any programming concepts yet" is gone, and "What I know so far" now lists what you learned in this lesson. The rules stay the same. With this profile, an assistant can use `console.log`, arithmetic, strings, comments and `let` in its code, and should tell you when a task needs anything else.

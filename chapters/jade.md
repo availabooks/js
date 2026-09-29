@@ -24,7 +24,11 @@ You could copy the numbers by hand. But Excel can run JavaScript too, which mean
 
 Excel has had a way to automate it for decades, a language called VBA, which you may hear about. It has a newer one, too: the **Office JavaScript API**, usually called **Office.js**, which works in Excel on Windows, on a Mac and on the web. It's the same API that professional Office add-ins are built with.
 
+::: {.ri9}
+
 To use it, you need somewhere to write and run code inside Excel. This book uses **JADE**, the JavaScript Automation Development Environment, a free add-in written by one of this book's authors. It adds a task pane to Excel with a code editor, a Run button and an Output panel, and it saves your code inside the workbook, so the code travels with the file. It works in Excel on the web with a free Microsoft account, so you don't need to buy Office.
+
+:::
 
 ::: {.term}
 > **Office.js** — The Office JavaScript API: JavaScript objects and methods for working with Excel, Word and PowerPoint documents, used by Office add-ins.
@@ -135,13 +139,17 @@ async function copyFirstCrop(excel) {
 
 Most of it will look familiar from Apps Script, with different names: `worksheets.getItem("Harvests")` is `getSheetByName`, and a range's `values` property is like `getValues` and `setValues`, always an array of arrays, even for one cell. Three things are different, and they're the heart of Office.js.
 
+::: {.g12}
+
 **`async function name(excel)`.** A JADE function that works with the workbook takes one parameter, which the book always names `excel`. When you run it, JADE passes in the **request context**, the connection between your code and the workbook. Every Office.js object you get comes, directly or indirectly, from `excel.workbook`.
+
+:::
 
 **Nothing happens until `sync`.** Your code doesn't talk to Excel line by line. Instead, each line that asks for something or changes something is added to a queue of requests, and **`await excel.sync()`** sends the whole queue to Excel at once and waits for the reply. That's why the function is `async`: `sync` returns a promise, as `fetch` did in [Asynchronous JavaScript](async){.book-link}. Excel may be on another computer, in Excel on the web, and sending one batch instead of dozens of separate requests keeps things fast.
 
 **`load` before you read.** Because of the queue, an object like `cropCell` starts out empty: it's a stand-in, called a *proxy*, for the real cell in Excel. To read its `values`, you first ask for them with **`load("values")`**, then `sync`, and only then read `cropCell.values`. Writing works the other way: set `values`, and the change is sent at the next `sync`.
 
-::: {.term}
+::: {.term .jmz}
 > **excel.sync()** — Sends all the queued Office.js requests to Excel and waits for the reply. Values you've asked for with `load` can be read after it; changes you've made take effect with it.
 :::
 
@@ -152,7 +160,11 @@ The two most common Office.js mistakes both come from this:
 
 ### Output in JADE
 
+::: {.r81}
+
 `Jade.print(text, heading)` writes to JADE's **Output** panel, and a heading starts a new block with a timestamp. `print` doesn't switch to the Output panel by itself, so call `Jade.open_output()` when you want to show it. You'll see why that matters in a moment.
+
+:::
 
 ## Asking for a Harvest Total
 
@@ -211,7 +223,11 @@ Your learner profile needs a new environment line for Excel, as it did for the b
 > Would you like to try running this, or do you want me to explain `Excel.run` and `context.sync()` a bit more first?
 :::
 
+::: {.h8g}
+
 **Read.** The assistant listed the three new pieces, and the pattern is the one you just learned: get the sheet, get the range, `load("values")`, `sync`, read, add up, write, `sync` again. `getUsedRange()` is like Apps Script's `getDataRange()`: the range covering all the cells that have something in them.
+
+:::
 
 Two things don't fit, though:
 
@@ -236,7 +252,7 @@ function compareFunctions() {
 
 The parameters go in the parentheses, then `=>`, then the body. Office.js documentation and examples use arrow functions everywhere, so it's worth being able to read them, even though this book doesn't write them. (There are shorter forms still, such as `number => number * 2`, with no parentheses, braces or `return`. When you see one, read it as "take `number`, give back `number * 2`.")
 
-::: {.term}
+::: {.term .lda}
 > **Arrow function** — A shorter way to write an anonymous function: `(x) => { return x * 2 }` does the same as `function(x) { return x * 2 }`.
 :::
 
@@ -374,16 +390,7 @@ That's the subject of the next lesson: how to describe a platform an assistant d
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="jade"}
-Environment: I'm writing JavaScript for Microsoft Excel, using the Office JavaScript API (Office.js) in a free Excel add-in called JADE.
-
-Add to "What I know so far":
-
-- Office.js in JADE: async function name(excel), where excel is the request context
-- excel.workbook.worksheets.getItem(), worksheets.add(), getRange(), getUsedRange(), and a range's values and numberFormat (arrays of arrays)
-- load() before reading a property, and await excel.sync() to send queued requests to Excel
-- Jade.print(text, heading) and Jade.open_output()
-- reading arrow functions, such as (context) => { }
+::: {.learner-profile}
 :::
 
 The environment line is the only change to your rules. The next lesson adds a description of JADE itself, the kind of thing that would have prevented both of this lesson's wrong guesses.

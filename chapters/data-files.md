@@ -26,6 +26,8 @@ Work of this kind, combining files, cleaning them up and converting between form
 
 ### JSON files
 
+::: {.ayd}
+
 Reading and writing JSON files is two steps you know, put together:
 
 ```{.code environment="nodejs"}
@@ -42,6 +44,8 @@ const loaded = JSON.parse(fs.readFileSync("beds.json", "utf8"))
 console.log(loaded[1].sizeSqFt + 10)
 ```
 
+:::
+
 ### CSV files, and why they're trickier than they look
 
 A CSV line looks easy to take apart with `split(",")`. It is, until a value contains a comma. Run this:
@@ -51,7 +55,11 @@ const line = 'Seed packets,40,"Tomato, pepper and basil",15'
 console.log(line.split(","))
 ```
 
+::: {.x1e}
+
 Four values become five, because the comma inside the quotes was split too. The CSV rules, which you met in [Automating Pages You Use](automating-pages){.book-link}, say a value with a comma is wrapped in quotes, and a quote inside a value is written twice. Handling every case correctly takes more code than it seems. For real-world CSV files, well-established packages such as `csv-parse` and `papaparse` do it properly. For files you *know* have no commas or quotes in their values, `split(",")` is fine, as long as you've checked.
+
+:::
 
 ## Merging the Harvest Logs
 
@@ -161,7 +169,7 @@ The same information, three ways: different column names, a different column ord
 
 **Read.** The design is the important part. Each file gets its own small parsing function, `parseSpring`, `parseJune` and `parseSummer`, and each one returns objects of the *same* shape, with the same property names and types. Everything after that, combining, sorting and saving, works on one consistent kind of data. This is called **normalizing** the data: converting everything to one standard form as early as possible.
 
-::: {.term}
+::: {.term .cze}
 > **Normalizing data** — Converting data from different sources into one consistent form: the same field names, types and formats.
 :::
 
@@ -192,7 +200,11 @@ console.log(`Total kilograms: ${totalKg.toFixed(1)}`)
 console.log(`From ${sortedHarvests[0].date} to ${sortedHarvests[sortedHarvests.length - 1].date}`)
 ```
 
+::: {.fwc .mno}
+
 For the club's files, that prints 32 records, 70.9 kilograms, from 2027-04-18 to 2027-08-16. A count that's off means rows were lost or duplicated; a total that's off means numbers were misread, for example a text value that `Number()` turned into `NaN`. This is worth a profile rule.
+
+:::
 
 ## Writing an Excel File
 
@@ -270,7 +282,11 @@ The sustainability office would rather have Excel. Continuing the chat:
 > and check that `harvests.xlsx` opens correctly in Excel afterward.
 :::
 
+::: {.d84 .psq}
+
 **Read.** The assistant followed both parts of your package rule: it said a package was needed, because Node can't write Excel's format by itself, and it said how widely used `exceljs` is. The code creates a workbook and a worksheet, sets up the columns with a header and a `key` each, adds one row per harvest, where each row's values are matched to columns by their keys, and writes the file with `await`. Top-level `await` works in an ES module, as the reply explains.
+
+:::
 
 The code works: the file opens in Excel with a header row and 32 harvests. But check the claims about the package, because your profile asked the assistant to say how widely used it is, and it can only say what it remembers. On npmjs.com, the `exceljs` page shows its weekly downloads, which are indeed high, and the date of its latest release. At the time of writing, that was December 2024, almost two years earlier. "Actively maintained" was a stretch. A package that works well and hasn't changed in two years may be fine, but it's a fact you should see for yourself before relying on it.
 
@@ -292,19 +308,7 @@ The approach is always the same: describe each source exactly, normalize everyth
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="data-files"}
-Add rules:
-
-- After code combines, cleans or converts data, have it print counts or totals I can check.
-
-Add to "What I know so far":
-
-- reading and writing JSON files with fs, JSON.parse and JSON.stringify
-- CSV files, quoting, why split(",") fails on quoted commas, and packages such as csv-parse and papaparse
-- normalizing data from different sources into one shape
-- checking a merge with counts and totals
-- writing Excel files with the exceljs package
-- top-level await in ES modules
+::: {.learner-profile}
 :::
 
 ## Summary

@@ -141,9 +141,13 @@ Two parts of the script aren't JavaScript you've seen, and the follow-up asked a
 > **Type annotation** — A type written after a name with a colon, such as `workbook: ExcelScript.Workbook`, saying what kind of value the name may hold.
 :::
 
+::: {.sim}
+
 The second new part is **`as number`**, a *type assertion*. The assistant's explanation of it is important, so here it is again in different words: `as number` tells TypeScript to *treat* the value as a number. It does **not** turn it into one. `getValues()` can return strings, numbers or booleans, and TypeScript won't let you add a value of unknown type to a number, so `as number` quiets the complaint.
 
 That creates a trap you've met before. If the Kilograms column were formatted as text, as the Volunteer Hours column was in [Variables and Data](variables){.book-link}, then `values[i][3] as number` would still be a string, and `total + kilograms` would join instead of add. TypeScript's check can't catch it, because you told it to trust you. When values might be text, convert them for real:
+
+:::
 
 ```{.code environment="officescriptexcel"}
 function main(workbook: ExcelScript.Workbook) {
@@ -195,6 +199,8 @@ function main(workbook: ExcelScript.Workbook) {
 }
 ```
 
+::: {.aqa}
+
 | | JADE (Office.js) | Office Scripts |
 |---|---|---|
 | Account needed | Free Microsoft account | Microsoft 365 work or school |
@@ -207,6 +213,8 @@ function main(workbook: ExcelScript.Workbook) {
 | Language | JavaScript | TypeScript |
 
 Office Scripts is simpler for straightforward jobs: no async, no queue. JADE can do more, such as building an app in the task pane or loading libraries, and it works without a work or school account. Both are real, supported ways of automating Excel, and knowing both makes you better at reading whatever an assistant gives you.
+
+:::
 
 ## Running a Script on a Schedule
 
@@ -226,23 +234,25 @@ Apps Script had time-driven triggers. Here's what the assistant said about Offic
 > Would you like either of those?
 :::
 
+::: {.dcg}
+
 That's accurate, and notice the honesty rule again: it gave the idea confidently, and declined to guess at the menu names. **Power Automate** is Microsoft's service for automated workflows: "when this happens, do that." A flow with a **Recurrence** trigger, set to Mondays, and an Excel action to **Run script**, pointed at your workbook and script, runs the script on schedule. Whether you can use it depends on your organization's Microsoft 365 plan and settings. Microsoft's documentation, under "Run Office Scripts with Power Automate," has the current steps. You'll build a workflow of this kind yourself, with a free tool called n8n, later in the book.
+
+:::
 
 ## And VBA?
 
+::: {.kjl}
+
 You'll hear about **VBA** (Visual Basic for Applications) as soon as you talk to anyone who automates Excel. It's the original way, dating from the 1990s, built into Excel on Windows and Mac as *macros*. There's an enormous amount of VBA in the world, and assistants know it very well. But it's a different language, not JavaScript, and it doesn't run in Excel on the web. You'll recognize it by lines like `Sub TotalHarvest()`, `Dim total As Double` and `End Sub`.
+
+:::
 
 If you're given a workbook with VBA macros, an assistant can explain the code line by line, and can often translate it into Office.js or Office Scripts. Treat workbooks with macros from people you don't know with the same caution as any other code: Excel blocks macros in files from the internet for a reason.
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="office-scripts"}
-Add to "What I know so far":
-
-- Office Scripts: function main(workbook: ExcelScript.Workbook), getWorksheet, getUsedRange, getValues, setValue and setValues, and that it has no load or sync
-- reading TypeScript: type annotations such as count: number, and that "as number" doesn't convert a value
-- that Power Automate can run Office Scripts on a schedule
-- recognizing VBA
+::: {.learner-profile}
 :::
 
 There's no change to your environment line; your main Excel tool is still JADE. When you work in Office Scripts, say so at the start of the chat, as the request in this lesson did.

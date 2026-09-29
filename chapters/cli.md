@@ -161,7 +161,11 @@ Parsing a command line well is a common enough job that Node includes a tool for
 > **Trade-off:** `parseArgs` also gives you free error messages if someone passes an option you didn't declare, which the manual version doesn't do. For a small personal script either approach works fine — I'd say use `parseArgs` since it's built-in and a little less code for you to maintain.
 :::
 
+::: {.d74}
+
 **Read.** `parseArgs` takes a description of the options you accept, and returns their values in an object. You describe the options once, and it handles the rest, including the edge cases: an option given without its value, or an option you didn't declare, stops the tool with a clear error instead of a silently empty report. Try `node garden-report.js --size 3` and you get an error naming the unknown option.
+
+:::
 
 The assistant flagged uncertainty about when `parseArgs` became stable, which is honest. It was added in Node 18, and every current LTS version has it; the Node documentation for your version says whether it's marked stable. And it introduced **`??`**, the *nullish coalescing* operator: `values.crop ?? null` gives `values.crop` unless it's `null` or `undefined`, in which case it gives `null`. It's the right way to supply a default. The older `||`, which you saw in [Loops and Repetition](loops){.book-link}, also replaces `0` and `""`, which is sometimes wrong: `hours || 1` would turn a real 0 hours into 1, but `hours ?? 1` keeps it.
 
@@ -174,7 +178,7 @@ let crop
 console.log(crop ?? "all crops")
 ```
 
-::: {.term}
+::: {.term .avd}
 > **??** — The nullish coalescing operator: `a ?? b` is `a`, unless `a` is `null` or `undefined`, in which case it's `b`. Useful for defaults.
 :::
 
@@ -283,13 +287,21 @@ Typing `node garden-report.js` from the right folder is fine for you, but not fo
 
 **Read.** There are two separate problems here, and the reply solves both.
 
+::: {.zxl .k3i}
+
 **Finding the data.** `readFileSync("harvests.json")` looks in the current working directory, from [Installing Node and Running Scripts](node){.book-link}, which is wherever you happen to be when you type the command. To find a file *next to the script*, you need the script's own folder. **`import.meta.url`** gives the script's location as a `file:` web address, and `fileURLToPath` and `dirname` turn it into a folder path. (Recent versions of Node, 20.11 and later, also have **`import.meta.dirname`**, which gives the folder directly.)
+
+:::
+
+::: {.bp7}
 
 **Making a command.** Three pieces work together:
 
 - **The shebang line**, `#!/usr/bin/env node`, at the very top, tells Mac and Linux to run the file with Node.
 - **`bin` in `package.json`** maps a command name, `garden-report`, to the script.
 - **`npm link`**, run once in the project folder, installs the command on your computer, so it works in any terminal. On Windows, npm creates a small `.cmd` file that runs Node for you, so the shebang isn't needed there, though it does no harm.
+
+:::
 
 Run from a different folder, the tool now finds its data. For the club's harvests, `garden-report --crop Tomato` reports 5 of 32 records and 10.20 kilograms. The reply's last line is your rule from [Working with Data Files](data-files){.book-link} again: check the counts after changing where the data comes from.
 
@@ -308,9 +320,17 @@ const cropFilter = answer.trim() === "" ? null : answer.trim()
 console.log(cropFilter ?? "All crops")
 ```
 
+::: {.k6p}
+
 `terminal.question` shows a question and waits, with `await`, until the person presses Enter. `process.stdin` and `process.stdout` are the terminal's input and output. Always `close` the interface when you're done, or the program keeps waiting for more.
 
+:::
+
+::: {.gek}
+
 The line that sets `cropFilter` uses one more new operator, the **conditional operator**: `condition ? a : b` is `a` if the condition is true, and `b` if it isn't. It's a short `if...else` that produces a value. You'll see it often.
+
+:::
 
 A tool that asks questions is friendly for people, but a tool that takes options can also be run by other programs and schedules. Good tools do both: options when they're given, questions when they're not.
 
@@ -385,24 +405,15 @@ Two practical warnings the reply doesn't give:
 - **Run that command in Command Prompt, not PowerShell.** The `\"` inside the quotes is how Command Prompt nests quotes; PowerShell treats them differently, and the task would be created with a broken command. VS Code's terminal on Windows is often PowerShell, so open Command Prompt from the Start menu for this.
 - **A sleeping laptop doesn't run tasks.** If the laptop is closed at 7 on Monday, the report doesn't happen. In Task Scheduler, the task's settings include "Run task as soon as possible after a scheduled start is missed," which is worth turning on. For something that must run reliably, a computer that's always on, or a server, is the answer; you'll run code on a server in the next part of the book.
 
+::: {.pq2}
+
 On a Mac or Linux, the traditional scheduler is **cron**. Running `crontab -e` opens a list of scheduled commands, and a line like `0 7 * * 1 /usr/local/bin/node /Users/maya/garden-report/garden-report.js >> /Users/maya/garden-log.txt 2>&1` runs the report at 7:00 every Monday. Ask your assistant for the details for your system, and check where Node is with `which node`.
+
+:::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="cli"}
-Add rules:
-
-- When a script reads files that live next to it, find them from the script's folder, not the current working directory.
-
-Add to "What I know so far":
-
-- process.argv, and parseArgs from node:util for command-line options
-- the ?? operator, and how it differs from ||
-- the conditional operator: condition ? a : b
-- import.meta.url, import.meta.dirname, fileURLToPath and dirname
-- making a command: the shebang line, bin in package.json and npm link
-- asking a question in the terminal with node:readline/promises
-- scheduling with Windows Task Scheduler (schtasks) or cron, and saving output with >>
+::: {.learner-profile}
 :::
 
 ## Summary

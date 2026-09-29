@@ -259,13 +259,15 @@ Here's the request, in a new chat with your learner profile from [How the Web Wo
 
 **Read.** Each route in the design is one `app.get`, `app.post` or `app.delete`, and each follows the same pattern: find what the request is about, check for every problem, send an error response at the first one, and otherwise do the work and send the result.
 
+::: {.d33 .iio}
 - **`app.use(express.json())`** tells Express to read JSON request bodies, so `req.body.email` works in the POST route.
 - **`req.params.id`** is the `:id` part of the address, always a string, which is why it goes through `Number()` before comparing with the numeric ids.
 - **`find`**, **`some`** and **`filter`** do the looking up, as in [Scripting Your Notes in Obsidian](obsidian){.book-link}. Two array methods are new: **`findIndex`**, which gives the position of the first match, or -1, and **`splice(index, 1)`**, which removes one item at that position.
 - **`res.status(409).json({ error: ... })`** sends an error with a status code and a JSON message, in the shape the design chose. The `return` after each one stops the route there.
 - **`shapeSlot`** builds what a slot looks like to the outside world, with its spots filled but no emails, following your profile's new rule. It uses **object spread**, `{ ...slot, spotsFilled: ... }`, which copies all of a slot's properties into a new object and adds one: the object version of the array spread from [Working with Files and Folders](files){.book-link}.
+:::
 
-::: {.term}
+::: {.term .z6y}
 > **Object spread** — `{ ...object, name: value }`, which makes a new object with all of an object's properties, plus or replacing the ones listed after it.
 :::
 
@@ -319,7 +321,9 @@ DELETE /signups/13 -> 204
 DELETE /signups/13 -> 404 {"error":"Sign-up not found"}
 ```
 
+::: {.dxz}
 Every rule in the design gets a test: a good sign-up, a duplicate, a full shift, a non-member, a missing email, an unknown shift, a cancellation, and cancelling again. That's the edge-case testing from [Making Decisions](decisions){.book-link}, applied to a server.
+:::
 
 ## Who Can Reach Your Server?
 
@@ -345,13 +349,17 @@ The assistant's reply ended with a claim worth checking: that only your own comp
 > Want me to update the server code to bind to `127.0.0.1`?
 :::
 
+::: {.gt4 .bx4}
 The correction is right, and it's an important one. `app.listen(3000)`, with no address, listens on *every* network connection your computer has, so a phone or laptop on the same Wi-Fi may be able to reach it, at your computer's network address. Windows asked about the firewall because it noticed. Adding `"127.0.0.1"`, the address that always means "this computer," restricts the server to requests from your own machine. That's the right setting while you're developing, especially on shared networks like a campus or a café.
+:::
 
 Notice how the assistant handled being wrong: it said so, explained why, gave the fix, and was clear about which parts it wasn't sure of. That's what you want, and it's also a reminder that it was wrong in the first place, confidently. Claims about security deserve checking.
 
 ## The Sign-Up Page
 
+::: {.c3k}
 An API is for programs. Volunteers need a page. Express can serve that too: **`express.static`** serves the files in a folder, as they are, so a file named `index.html` in a folder named `public` appears at `http://localhost:3000/`. Because the page and the API come from the same server, the page can `fetch` from addresses like `/shifts` without any CORS problems, the rule you met in [Asynchronous JavaScript](async){.book-link}.
+:::
 
 Here's the server in the book's style, with the fixes: the current Express, careful email comparison, the page served from `public`, and `127.0.0.1`:
 
@@ -509,19 +517,7 @@ Stop the server and start it again, and every sign-up made since it started is g
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="express"}
-Add rules:
-
-- When starting a server on my computer, listen on 127.0.0.1 unless I ask otherwise.
-
-Add to "What I know so far":
-
-- Express: app.get, app.post and app.delete routes, req.params, req.body with express.json(), res.json(), res.status() and res.end()
-- serving files with express.static
-- app.listen with a port and 127.0.0.1, and what localhost and ports are
-- object spread: { ...object, name: value }
-- findIndex and splice
-- testing an API with a script that uses fetch
+::: {.learner-profile}
 :::
 
 ## Summary

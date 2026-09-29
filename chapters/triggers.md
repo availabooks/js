@@ -99,13 +99,17 @@ Now the problem. After you save this and reload the spreadsheet, no menu appears
 
 This time the assistant found its own mistake and said so: the last method is `addToUi()`, not `addToMenu()`. Compare that with the `getSheetByName` error in [Arrays](arrays){.book-link}, where the assistant fixed its mistake without admitting it. Either way, the lesson is the same: code from an assistant is a draft until it runs.
 
+::: {.yq9}
 The more important lesson is about *where the error went*. When you run a function yourself, errors appear in the Execution log below the code. When a trigger runs a function, nobody is watching, so the error doesn't appear on screen. It's recorded on the **Executions** page instead: click **Executions** in the Apps Script editor's left sidebar. Each run is listed with its trigger, its status and, when it failed, the error message. Make checking it a habit whenever automatic code doesn't seem to do anything.
+:::
 
 ::: {.screenshot-needed file="images/triggers-executions.png"}
 The Apps Script Executions page showing a failed onOpen run, with the error "addToMenu is not a function" visible.
 :::
 
+::: {.cny}
 Here's the working menu, written one step per line. `createMenu` returns a menu, and you can call `addItem` on it as many times as you like before adding it to the screen:
+:::
 
 ```{.code environment="appsscriptsheets"}
 function onOpen() {
@@ -234,7 +238,7 @@ Second, it said you "haven't learned" to use the contents of `e`. But `e` is an 
 
 **Read.** This version is simpler, and more reliable. When a form is submitted, Apps Script passes the function an **event object** describing the submission. Its `namedValues` property is itself an object: each key is a question's title, and each value is an array holding the answer. So `responses["First Name"][0]` is the first name. The value is an array because a question can have several answers, like the Interests checkboxes. Bracket notation is needed because the keys contain spaces.
 
-::: {.term}
+::: {.term .pus}
 > **Event object** — An object Apps Script passes to a trigger function, usually named `e`, describing what happened. For a form submission, `e.namedValues` holds the answers by question title, and `e.values` holds them as an array, in column order.
 :::
 
@@ -255,7 +259,9 @@ function addMemberFromSignUp(e) {
 }
 ```
 
+::: {.txf}
 `appendRow` takes one row as a plain array, not an array of arrays. A new row written this way shows `FALSE` in the Dues Paid column, not a checkbox, unless the column is already formatted with checkboxes. To format it, select column D in the Members sheet, then click **Insert**, then **Checkbox**. Empty cells in the column stay blank until something is written to them.
+:::
 
 ## Testing a Trigger Function
 
@@ -296,7 +302,9 @@ function addMemberFromSignUp(e) {
 
 A new row appears after Keisha Brown. Run it again and you get a second one, which is exactly what would happen if the same person submitted the form twice. (Handling duplicates is a good follow-up question for your assistant.)
 
+::: {.r3p}
 This is how professionals test code that normally runs in response to something outside their control: they simulate the input. It works in Apps Script, too. Paste both functions into your project, run `testAddMemberFromSignUp`, then delete the test row from Members.
+:::
 
 Now choose `addMemberFromSignUp` in the menu and run it directly. It stops with an error about reading `namedValues` of `undefined`. When you run a trigger function yourself, there's no event, so `e` is `undefined`. That's the error you'll see in the Execution log if you click Run on a trigger function in the Apps Script editor. It isn't a bug in the function; it's a sign to test it with a fake event instead.
 
@@ -323,7 +331,9 @@ The last piece is a weekly update. Continuing the same chat:
 > One thing to note: since this function runs automatically, it shouldn't have a parameter like `e` — that's only for triggers tied to an event like a form submission. Since `writeInterestCounts` takes no parameters, it works perfectly as-is for a time-driven trigger.
 :::
 
+::: {.odi}
 **Read.** The steps are the same as for the form trigger, with a different event source. Note the detail that a time-driven trigger runs at some point *within* the hour you choose, not at an exact minute.
+:::
 
 The last paragraph is worth comparing with what the assistant said earlier. First, a trigger function "has to list" `e`. Now, a time-driven function "shouldn't have" a parameter like `e`. Both statements are wrong in the same way. Every trigger passes an event object, including time-driven ones, and a function can list the parameter or not, as it likes. The practical advice, that `writeInterestCounts` works as it is, happens to be right. When an assistant's explanations contradict each other, that's a signal to check the documentation, which for Apps Script is at **developers.google.com/apps-script**.
 
@@ -342,19 +352,7 @@ Automatic code deserves more care than code you run yourself, because nobody is 
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="triggers"}
-Add rules:
-
-- When code needs a trigger, tell me how to set it up in the Apps Script editor, and how to test it without waiting for the event.
-
-Add to "What I know so far":
-
-- simple triggers (onOpen, onEdit) and installable triggers (on form submit, time-driven)
-- custom menus with SpreadsheetApp.getUi(), createMenu(), addItem() and addToUi()
-- the event object e, including e.namedValues for a form submission
-- testing a trigger function by calling it with a made-up event object
-- checking the Executions page when automatic code fails
-- adding a row with appendRow()
+::: {.learner-profile .gq0}
 :::
 
 The new rule asks for two things assistants often leave out: how to connect the function to its trigger, and how to test it. You've seen that the first is essential, since the function does nothing without the trigger, and the second saves you from testing with real sign-ups.

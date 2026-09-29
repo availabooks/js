@@ -28,7 +28,11 @@ The club has plenty of work for it: sorting a folder of garden photos, combining
 
 ## Installing Node
 
+::: {.s3h}
+
 You'll need a computer where you can install software: Windows, Mac or Linux. (A Chromebook or school-managed computer may not allow it. Check with your school, or use a free online environment such as GitHub Codespaces.) Here's the question, in a new chat with your learner profile, updated for Node.js as shown at the end of this lesson:
+
+:::
 
 ::: {.ai-conversation prompt="How do I install Node.js on my Windows laptop, and how do I check that it worked?" assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="node" transcript="node/install"}
 > Here's how to install Node.js on Windows and check it worked.
@@ -101,11 +105,17 @@ A handful of commands covers most of what you'll need:
 | Go up one folder | `cd ..` | `cd ..` |
 | Clear the screen | `cls` (or `clear`) | `clear` |
 
+::: {.bpb}
+
 Two shortcuts save a lot of typing: press **Tab** to finish a file or folder name you've started typing, and press the **up arrow** to bring back your last command.
+
+:::
 
 ## Visual Studio Code
 
 You can write JavaScript files in any text editor, but a code editor makes it much easier. **Visual Studio Code**, usually called VS Code, is free from **code.visualstudio.com**, and it's what most JavaScript programmers use. It colors your code, points out some mistakes as you type, and has a terminal built in.
+
+::: {.drq}
 
 The way to work in VS Code:
 
@@ -113,6 +123,8 @@ The way to work in VS Code:
 2. In VS Code, choose **File**, then **Open Folder**, and open that folder.
 3. Create files with the **New File** button in the Explorer panel on the left.
 4. Open a terminal with **Terminal**, then **New Terminal**. It opens at the bottom of the window, already *in* your project folder.
+
+:::
 
 That last point matters more than it seems, as you're about to see.
 
@@ -180,7 +192,11 @@ That's exactly right, and the error message is more helpful than it looks: it sh
 - **Move the terminal to the file:** type `cd Documents`, then `node countdown.js` again.
 - **Work in VS Code with the folder open,** so the terminal starts in the right place.
 
+::: {.zw3}
+
 This is the most common problem people have when they start with Node. When Node can't find a file, look at the path in the message, and compare it with where the file really is.
+
+:::
 
 When it works, the terminal shows the script's `console.log` output:
 
@@ -201,25 +217,20 @@ TypeError: today.getDya is not a function
     at Object.<anonymous> (C:\Users\maya\Documents\garden-scripts\countdown.js:3:25)
 ```
 
+::: {.lw7}
+
 The first line gives the file and the line number, 3. Then it shows the line, with a `^` pointing at the problem, and the error itself, a TypeError you'd recognize from any platform. The lines starting with `at` are the **stack trace**, which lists where the error happened and what called it. For now, the first line of it, with your file's name, is the useful one.
 
 Two more things to know about running scripts:
 
 - **Stopping a script.** If a script runs longer than you want, perhaps because of an infinite loop from [Loops and Repetition](loops){.book-link}, press **Ctrl+C** in the terminal. It works on a Mac too, not Cmd+C.
-- **Browser code doesn't all work.** Code that uses `document` or `alert` fails in Node with an error like `ReferenceError: document is not defined`, because there's no page. If you see that, the code was written for a browser.
+- [**Browser code doesn't all work.** Code that uses `document` or `alert` fails in Node with an error like `ReferenceError: document is not defined`, because there's no page. If you see that, the code was written for a browser.]{.ss1}
+
+:::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="node"}
-Environment: I'm writing JavaScript that runs with Node.js on my own computer, editing files in Visual Studio Code and running them in a terminal.
-
-Add to "What I know so far":
-
-- running a JavaScript file with node filename.js in a terminal
-- terminal basics: the current working directory, pwd, ls or dir, cd and cd ..
-- opening a project folder in VS Code and using its terminal
-- reading Node's error messages and stack traces, and stopping a script with Ctrl+C
-- that Node has no document or window, because there's no web page
+::: {.learner-profile}
 :::
 
 The environment line is the only change to your rules. Everything else you've learned comes along, which will matter in the next lessons: Node code uses modern JavaScript, including array methods and `async` and `await`, all of which you know.

@@ -34,7 +34,9 @@ With Node installed, run this in a terminal:
 npx n8n
 ```
 
+::: {.lj2}
 `npx`, which you used in [Automating the Web with Playwright](playwright){.book-link}, downloads n8n the first time, which takes a few minutes, and starts it. When it's ready, it prints an address, `http://localhost:5678`. Open that in your browser. **localhost** means "this computer": n8n is running as a small web server on your own machine, and the browser is its screen. You'll build servers of your own in the next part of the book.
+:::
 
 The first time, n8n asks you to create an owner account, which is stored on your computer. Then you're in the workflow editor.
 
@@ -55,7 +57,9 @@ Data moves between nodes as a list of **items**. Each item is an object with a `
 ]
 ```
 
+::: {.xuh .nxh}
 A node usually runs once for each item it receives. In a node's settings, you can refer to the current item's data with an **expression** in double curly braces, such as `{{ $json.memberEmail }}`, which n8n replaces with the value. It's the same idea as `${ }` in a template literal.
+:::
 
 ## The Code Node
 
@@ -109,12 +113,16 @@ When no ready-made node does what you need, the **Code node** runs JavaScript. H
 
 **Read.** The middle of it is the counting-by-name pattern you know. The n8n parts are at the start and the end:
 
+::: {.r0j}
 - **`$input.all()`** gives every item coming into the node, as an array. Each item's data is in `item.json`.
 - **The last line** wraps each result as `{ json: row }`, because n8n requires every output item to have that shape. Forgetting the wrapper is the most common Code node mistake.
+:::
 
 The assistant added a check that prints counts, following your profile's rule, and suggested cleaning up the emails before grouping, since `Ava.Lopez@example.com` and `ava.lopez@example.com` would count as two people. Both are good habits. One detail: in the Code node, `console.log` output goes to your *browser's* developer console, not to the node's output panel, so press F12 in the browser to see it.
 
+::: {.ssq}
 This reply uses n8n's current way of writing Code node JavaScript. Much of what you'll find online, including in some AI replies, is older: a node called **Function**, which the Code node replaced, and a variable called `items` instead of `$input.all()`. If code from somewhere else refers to `items` or a Function node, it was written for an older version, and needs updating. Like the stale menus and model names you've met before, it's a sign to check the documentation.
+:::
 
 ## The Monday Watering Workflow
 
@@ -206,7 +214,9 @@ Continuing the chat, the whole workflow, and a bigger question:
 
 The workflow is the same logic as the script, spread across boxes. What changed is that the schedule, the web requests and the branching are handled by nodes you configure instead of code you write, and the only code left is the part that makes a decision.
 
+::: {.cdj}
 **The webhook address** is still a secret. The assistant's advice is right: n8n has a **Credentials** feature that stores secrets encrypted, separately from the workflow, and some nodes, including its Discord node, can use them. It was honest about not being sure of the details for using environment variables in your version; n8n has changed how, and whether, workflows can read environment variables, so check its documentation. And the advice to test first, with a private test channel or the last node disconnected, is your dry-run rule in a new setting.
+:::
 
 **To test it now,** instead of waiting for Monday, click **Test workflow** (or **Execute workflow**) in the editor. Every node shows the items it produced, so you can check each step: the forecast from Open-Meteo, the Code node's total and decision, and which branch the IF node took. That view is one of the best reasons to use a workflow tool.
 
@@ -221,7 +231,9 @@ The assistant's comparison is thoughtful, and worth keeping. In short:
 | You want to see each run's data without writing logging | You want the code in plain text files, to share or keep in version control |
 | Someone who doesn't program may need to change it | It's a tool people will run themselves, such as a command |
 
+::: {.uko}
 And the pattern the reply ends with is the one most people settle on: **nodes for the plumbing, code for the decisions.** The schedule, the requests and the posting are nodes; the one step that needs real logic is a Code node.
+:::
 
 ### An AI step
 
@@ -229,19 +241,7 @@ n8n also has nodes for calling AI models, the kind of call you wrote by hand in 
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="n8n"}
-Add rules:
-
-- In n8n's Code node, use $input.all() or $input.first(), and return items as objects with a json property.
-
-Add to "What I know so far":
-
-- n8n: running it with npx n8n, workflows, triggers, nodes and items
-- expressions such as {{ $json.field }}
-- the Schedule Trigger, HTTP Request, Code and IF nodes, and n8n credentials for secrets
-- that older n8n examples use a Function node and an items variable
-- localhost, a server running on my own computer
-- choosing between a workflow tool and a script
+::: {.learner-profile}
 :::
 
 The rule is a small platform profile of its own, in one line, heading off the two mistakes you're most likely to see in n8n code from elsewhere. This is the end of Part VI, and your environment line still says Node.js on your own computer, which remains true for n8n.

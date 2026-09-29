@@ -285,10 +285,12 @@ This is a long reply, but it's organized well, and it started by listing what's 
 
 ### The back end: doPost
 
+::: {.wyv}
 - **`doPost(e)`** receives the request. The data the extension sent is in **`e.postData.contents`**, as text, and `JSON.parse` turns it into an object.
 - **`appendRow`** adds the shift to Shifts, with the values in the sheet's column order: date, task, email, hours. That order comes from the garden context, which is exactly why you pasted it.
 - **`ContentService.createTextOutput`** sends a reply back, here a small JSON object saying it worked. It's `doPost`'s version of `HtmlService`.
 - **`testDoPost`** calls `doPost` with a made-up event, the testing method from [Menus and Triggers](triggers){.book-link}. Run it before anything else.
+:::
 
 The deployment notes are thoughtful. "Who has access" has to be *Anyone*, because the extension can't sign in as a club member. And the assistant followed your profile's web page rule by spelling out what that means: anyone who has the address can add rows to Shifts. They can't *read* the sheet through it, because there's no `doGet`, but they could add fake shifts.
 
@@ -296,11 +298,13 @@ The deployment notes are thoughtful. "Who has access" has to be *Anyone*, becaus
 
 - **`manifest.json`** is the extension's settings, in JSON. `manifest_version` must be 3. `action.default_popup` names the page that opens when the toolbar button is clicked. `host_permissions` lists the sites the extension may send requests to, which also lets it get past the CORS rule you met in [Asynchronous JavaScript](async){.book-link}.
 - **`popup.html`** is an ordinary web page with a form. Notice its script is in a separate file, `popup.js`, loaded with `<script src="popup.js">`. That's not just tidiness: Manifest V3 extensions aren't allowed to run JavaScript written inside the HTML, as a security measure. A `<script>` with code between its tags would simply not run.
-- **`popup.js`** does the work. `handleLogClick` checks every field, including that the task is one of the five the sheet expects, with a loop over an array of allowed tasks, and `sendShift` sends the shift with `fetch`, using the `method` and `body` options, an `await`, and the `response.ok` check you know.
+- [**`popup.js`** does the work. `handleLogClick` checks every field, including that the task is one of the five the sheet expects, with a loop over an array of allowed tasks, and `sendShift` sends the shift with `fetch`, using the `method` and `body` options, an `await`, and the `response.ok` check you know.]{.hy5}
 
 ### Loading and sharing
 
+::: {.dkv}
 **Load unpacked** installs an extension from a folder on your computer, for testing. It needs **Developer mode**, which is safe to turn on for your own extensions. The last note is honest and important: the web app's address is in `popup.js`, and anyone who has the extension can read it. As in [How Web Pages Work](web-pages){.book-link}, code that runs in the browser can't keep secrets.
+:::
 
 ::: {.screenshot-needed file="images/extension-load-unpacked.png"}
 The chrome://extensions page with Developer mode turned on and the "Load unpacked" button highlighted, and the Volunteer Shift Logger extension card below.
@@ -380,7 +384,9 @@ The popup checks what members type before sending it. Is that enough?
 > Want to try writing one of those bad test cases yourself, or should I write one as an example?
 :::
 
+::: {.h4i}
 That's the key principle, and it applies far beyond this project: **checks in the page are for convenience; checks where data is stored are for safety.** The popup's checks help an honest member fix a typo before sending. But the web app's address is public, and anyone can send it anything, without ever opening the popup. Only checks in `doPost` actually protect the sheet. The assistant even pointed out a gap in its own checks: a field that's missing entirely arrives as `undefined`, not `""`.
+:::
 
 ### Do the two halves agree?
 
@@ -414,7 +420,9 @@ async function sendShift(email, date, task, hours) {
 }
 ```
 
+::: {.mxk}
 Now `handleLogClick`'s `catch` shows the server's own message, such as "Task is not one of the allowed values." Whenever you connect two pieces of code, check that what one sends is what the other expects, and that errors travel all the way back to the person.
+:::
 
 ### Testing the checks on this page
 
@@ -474,17 +482,7 @@ Building one also shows you why to be careful about the extensions you install. 
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="extension"}
-Add rules:
-
-- When a page sends data that will be stored, check the data where it's stored, not only in the page.
-
-Add to "What I know so far":
-
-- Manifest V3 browser extensions: manifest.json, a popup page, host_permissions, loading an unpacked extension, and that JavaScript must be in separate .js files
-- doPost(e), e.postData.contents, and replying with ContentService.createTextOutput()
-- fetch with method: "POST" and a body
-- reading both halves of a system together, and passing errors back to the person
+::: {.learner-profile}
 :::
 
 The new rule captures this lesson's main idea, so that any time you ask for code that stores data, the assistant checks it on the storing side too.

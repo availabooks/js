@@ -35,7 +35,11 @@ In [Sharing and Reusing Code](sharing-code){.book-link}, you loaded Chart.js wit
 </script>
 ```
 
+::: {.ntk}
+
 `import * as Plot` puts everything the library exports into one object named `Plot`. The address comes from **jsDelivr**, a service that serves npm packages to web pages; `@0.6.17` pins the version, as your profile asks, and `/+esm` asks for the ES module form.
+
+:::
 
 ## Totals by Crop
 
@@ -123,6 +127,8 @@ Here's the first request, in a new chat with your learner profile from [Working 
 
 **Read.** The assistant started with two notes that show your profile rules at work: where the libraries come from, with pinned versions, and who could see the page, including a warning that publishing it would expose volunteers' email addresses. That's a good catch: if the page were published, the `loggedBy` field should be removed first.
 
+::: {.k0z}
+
 Then the analysis, as an Arquero chain, one step per line, each explained:
 
 - **`aq.from(harvests)`** turns the array of objects into an Arquero table.
@@ -130,6 +136,8 @@ Then the analysis, as an Arquero chain, one step per line, each explained:
 - **`.rollup({ totalKg: d => aq.op.sum(d.kg) })`** reduces each group to one row, with a new column, `totalKg`, holding the sum of its kilograms. `aq.op` holds Arquero's operations: `sum`, `mean`, `count`, `max` and more.
 - **`.orderby(aq.desc("totalKg"))`** sorts the rows, largest first.
 - **`.objects()`** turns the table back into an array of objects, for Plot.
+
+:::
 
 It's the counting-by-name pattern from [Objects and JSON](objects){.book-link}, in four lines. And the chart is one call: **`Plot.plot`** takes an object describing the chart, with **`Plot.barY(totals, { x: "crop", y: "totalKg" })`** as its one mark, a vertical bar for each row. The `domain` setting keeps the bars in the sorted order. `Plot.plot` returns an SVG element, a drawing, which `append` adds to the page.
 
@@ -232,7 +240,11 @@ The next question is harder, and more interesting: did beds with full sun do bet
 > Does that approach make sense, or would you rather start simpler with the two-bar average version and add the dot plot later?
 :::
 
+::: {.xxq .mv0}
+
 That's the Plan step applied to charts, and the reasoning is excellent. Two bars showing averages would answer the question in one glance, but they'd hide how many beds are behind each bar and how much they differ. With only eight beds, showing each one as a dot is more honest. It's a principle worth remembering: **the fewer the data points, the more you should show them all.**
+
+:::
 
 Here's the dot plot. It combines the two arrays, which is new: for each bed, it looks up the bed's total kilograms, divides by its size, and keeps its sun. Run it:
 
@@ -322,9 +334,17 @@ Here's the dot plot. It combines the two arrays, which is new: for each bed, it 
 </script>
 ```
 
+::: {.usk}
+
 Two pieces of syntax are new. `(kgByBed[harvest.bed] || 0)` uses `||` the way you saw in [Loops and Repetition](loops){.book-link}: if the bed has no total yet, `undefined || 0` gives 0. And `bed => ({ ... })` is an arrow function that returns an object; the parentheses around the braces tell JavaScript the braces are an object, not the function's body.
 
+:::
+
+::: {.gpj}
+
 **`Plot.dot`** places a dot for each bed, with `x` its yield and `y` its sun, colored by sun, and **`Plot.text`** labels each dot with the bed's ID.
+
+:::
 
 ## What the Chart Can and Can't Say
 
@@ -338,23 +358,15 @@ So the honest conclusion for the university is: *in the first season, full-sun b
 
 ### When the data grows: SQL
 
+::: {.skf}
+
 For much larger data, or data from several related tables, many people analyze it with **SQL**, the language of databases. A tool called **DuckDB** runs SQL directly on CSV and JSON files, in Node or in a web page, with no database to set up. If you know SQL, from this book's companion on the subject or elsewhere, "total kilograms by crop" is `SELECT crop, SUM(kg) FROM harvests GROUP BY crop`, and DuckDB can run exactly that on `harvests.json`. It's a good tool to ask your assistant about when Arquero starts to feel slow.
+
+:::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="charts"}
-Add rules:
-
-- Before writing code for a chart, tell me what question it answers, and suggest a chart that shows the data honestly.
-
-Add to "What I know so far":
-
-- loading ES modules in a web page with script type="module" and import from a CDN such as jsDelivr
-- Arquero: aq.from(), groupby, rollup with aq.op.sum and others, orderby with aq.desc, and objects()
-- Observable Plot: Plot.plot() with barY, dot, text and ruleY marks, and axis options such as label and domain
-- choosing a chart for a question, and showing every point when there are few
-- an arrow function that returns an object: x => ({ ... })
-- that DuckDB can run SQL on CSV and JSON files
+::: {.learner-profile}
 :::
 
 ## Summary

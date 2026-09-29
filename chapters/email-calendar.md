@@ -84,7 +84,7 @@ The club's first email: a welcome message for each new sign-up. It builds on the
 
 The new rule in your profile worked. Without being asked, the assistant explained how to set up the trigger and wrote a test function with a made-up event, and it told you to put your own email address in the test, so the only message sent goes to you. That's exactly how to test code that sends email.
 
-::: {.term}
+::: {.term .w11}
 > **\\n** — In a string, a backslash followed by `n` stands for a line break. `"Hi Ava,\n\nThanks"` is two lines with a blank line between them.
 :::
 
@@ -136,7 +136,9 @@ Sending email is powerful access to give a script, so it's worth asking about:
 
 The advice to use `MailApp` is good. It can only send email, so it's the right tool when sending is all you need, and its `sendEmail` takes the same arguments.
 
+::: {.b2x}
 But the first part of the answer is wrong. At the time of writing, a script that uses `GmailApp` at all asks for permission to "Read, compose, send, and permanently delete all your email from Gmail," not just to send. Apps Script decides what to ask for from which services your code uses, not from which of their methods it calls. `MailApp` asks only to "Send email as you."
+:::
 
 You don't have to take the book's word for this either. The permission screen is the final word: run the test function and read what it asks for. That's the habit from [Getting Started with Google Apps Script in Google Sheets](apps-script){.book-link}, and this is a case where it catches an assistant's mistake. If you see a request for full Gmail access for a script that only sends mail, switch to `MailApp`.
 
@@ -220,7 +222,9 @@ day.setDate(day.getDate() + 7)
 console.log(day.getMonth() + 1, day.getDate())
 ```
 
+::: {.sgy}
 May 29 plus 7 days is June 5, and JavaScript rolled over into June by itself.
+:::
 
 ### Dates as text
 
@@ -232,7 +236,9 @@ const timeZone = Session.getScriptTimeZone()
 const dateText = Utilities.formatDate(today, timeZone, "yyyy-MM-dd")
 ```
 
+::: {.l8v}
 The pattern `"yyyy-MM-dd"` means four-digit year, two-digit month, two-digit day. (Capital `MM` is month; lowercase `mm` is minutes.) The time zone matters because "today" depends on where you are: at 11 p.m. in California, it's already tomorrow in London. `Session.getScriptTimeZone()` uses the time zone in your project's settings.
+:::
 
 Going the other way, from text to a Date, has a trap:
 
@@ -435,7 +441,7 @@ Read the logged emails as if you were the member receiving one. Farah's and Hana
 
 When the logged emails look right, replace the three `Logger.log` lines with one call to `MailApp.sendEmail(email, subject, body)`, test once with a date and your own address in place of the members', and then set up a weekly time-driven trigger for `logSaturdayShiftEmails` (you might rename it `sendSaturdayShiftReminders` at that point) on Fridays.
 
-::: {.term}
+::: {.term .xf6}
 > **Dry run** — Running code that would take an action, such as sending email, so that it only logs what it would do. It lets you check the results before anything happens for real.
 :::
 
@@ -488,7 +494,9 @@ The club's workdays are Saturday mornings, and members keep asking when the next
 > No trigger is needed here since you're just running it once to create the events.
 :::
 
+::: {.phr}
 **Read.** `CalendarApp.getDefaultCalendar()` gets your main calendar, and `createEvent(title, start, end)` adds an event, with the start and end as Date objects. The assistant flagged the month-counting trap, and the code uses 4 for May.
+:::
 
 Look at how it found the Saturdays: it worked them out itself and typed them into an array, `[1, 8, 15, 22, 29]`. That's a fact you should check, because an assistant can get a calendar calculation wrong as easily as a person. You can check it right here:
 
@@ -512,19 +520,7 @@ For a club, it's better to create a separate calendar for the garden and share i
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="email-calendar"}
-Add rules:
-
-- Before code sends email or changes a calendar, have it log what it would do (a dry run), unless I ask for the real thing.
-
-Add to "What I know so far":
-
-- sending email with MailApp.sendEmail(), and that GmailApp asks for full access to Gmail
-- \n for a line break in a string
-- the Date object: new Date(), new Date(year, month, day, hour, minute) with months counting from 0, getFullYear, getMonth, getDate, getDay, and adding days with setDate
-- formatting a date as text with Utilities.formatDate()
-- creating events with CalendarApp
-- dry runs that log instead of acting
+::: {.learner-profile .dnf}
 :::
 
 The new rule builds the dry run into every request that sends or schedules something. You'll still decide when to switch to the real thing, and you'll do it after reading the output.

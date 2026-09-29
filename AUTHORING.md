@@ -32,7 +32,7 @@ _$_import: monaco, appsscript
 
 - **`_$_import`**: `monaco` gives runnable code editors; `appsscript` adds on-page spreadsheets with a stand-in `SpreadsheetApp` (see "Spreadsheets on the page").
 - A lesson with no code needs no front matter at all.
-- Learner-profile changes don't go here. They go in the lesson body (see "Showing the profile").
+- Learner-profile changes don't go here. They go in `skills.yaml` and the lesson body (see "Showing the profile").
 
 ---
 
@@ -52,7 +52,7 @@ _$_import: monaco, appsscript
    ```
 
 2. **Sections (`##`)**. Most follow the workflow from outline §2: Plan, then Ask (an AI exchange), then Read (a line-by-line walkthrough), then Scrutinize and Edit (together, PARSE).
-3. **A "Your Learner Profile" section** in any lesson that changes the profile. It holds the lesson's `ai-profile` block and explains what changed (see "Showing the profile").
+3. **A "Your Learner Profile" section** in any lesson that changes the profile. It holds a `learner-profile` box and explains what changed (see "Showing the profile").
 4. **`## Summary`**: a short paragraph or two.
 5. **The assessment** is a separate draft file (see "Assessments").
 
@@ -151,7 +151,7 @@ Every reply is **real output captured from the Claude API** while the lesson is 
 | `prompt` | What the reader types. The build shows it above the reply with a copy button (a paper-airplane icon) that copies the prompt, so readers can paste it into their own assistant. It does not send anything itself. |
 | `assistant`, `model` | Where the reply came from. |
 | `captured` | The date it was captured, so old replies can be found and re-captured. |
-| `profile` | Which learner profile was used: `none`, or the id of the lesson whose profile it was (for example `variables`). |
+| `profile` | Which learner profile was used: `none`, the id of the lesson whose end-of-lesson profile it was (for example `variables`), or `here` for the profile at this block. |
 | `transcript` | Path under `transcripts/` to the saved raw exchange (without `.json`). |
 
 - **Follow-up turns** ("Try again. Use only what I know.") are separate blocks, as in the SQL book.
@@ -174,39 +174,42 @@ Every reply is **real output captured from the Claude API** while the lesson is 
 
 ## Showing the profile
 
-A lesson that changes the learner profile says how, in an `ai-profile` block in its "Your Learner Profile" section:
+The learner profile is built from **skills**, listed in `skills.yaml` at the top of the book folder. `skills.yaml` also holds the profile's fixed text: `intro`, `noConceptsYet`, `rulesHeading`, `knowsHeading` and `knowsNone`. Each skill has an id, a type and a text:
 
-```markdown
-::: {.ai-profile lesson="apps-script"}
-Environment: I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.
-
-Add rules:
-
-- Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.
-
-Remove rules:
-
-- Use let for every variable. Don't use const.
-
-Add to "What I know so far":
-
-- what a function is: a named group of steps written as function name() { }
-:::
+```yaml
+  - id: e4q
+    type: environment        # replaces the previous environment once it's learned
+    text: I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.
+  - id: t4d
+    type: rule
+    text: Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.
+  - id: k7m                  # type "know" (the default): a "What I know so far" item
+    text: "what a function is: a named group of steps written as function name() { }"
+  - id: w9c
+    type: rule
+    text: Use const for a variable whose value never changes, and let for one that does. Don't use var.
+    replaces: [r2x]          # r2x comes off once w9c is learned
+    with: c3n                # w9c is also on whenever c3n is, for example when a reader marks c3n as known
 ```
 
-- **Every part is optional.** "Environment" is a whole sentence, because the wording differs between platforms, and it replaces the previous one. Rules and "What I know so far" items are added in order. A rule is removed by repeating its exact wording.
-- **Profile changes go at the end of a lesson,** where the lesson explains them. A lesson has one profile before it and one after.
-- **The build generates the full profile** (`tools/author-tools/learnerProfile.js`) from these blocks and the `learnerProfile` template in `config.json`. A lesson's profile is everything the lessons *before* it added, in the order of the version being built, so a course track that skips lessons gets the right profile automatically.
+- **Ids** are random: a lowercase letter, then two lowercase letters or digits. They say nothing about order. Make new ones with `node ../../tools/new-skill-id.mjs js [count]` (add `--append` to add stub entries to `skills.yaml`). Never reuse or renumber an id.
+- **The order of `skills.yaml`** is the order of lines in the profile, within each lesson.
+- **Tag the content that teaches each skill** with its id as a class. A skill is learned at the *end* of its first tag, in the order of the version being built:
+  - one or more paragraphs: wrap them in `::: {.k7m}` … `:::` (several ids can share a wrapper: `::: {.k7m .w9c}`);
+  - a list item: `- [the item's text]{.k7m}`;
+  - an existing div, such as an AI conversation: add the class, as in `::: {.ai-conversation .k7m prompt="..."}`.
 
-On each page, the build adds:
+  Don't put a heading inside a wrapper, and never add a class to a code fence (it must keep its single `.code` class).
+- **Rules and environments** are tagged where the lesson tells the reader about them, often in its "Your Learner Profile" section.
+- **The "Your Learner Profile" section** in a lesson that changes the profile holds an empty `::: {.learner-profile}` / `:::` box. It shows the profile at that point, with this lesson's new lines highlighted and a copy button. Skill ids may also sit on this box (`::: {.learner-profile .w9c}`) when the section is where the skill is taught. Follow it with a short explanation of what's new and why. For a removed rule, say why the reader no longer needs it.
 
-- **After the Learning Objectives box** (or at the top, if a lesson has none): "Copy this lesson's learner profile", which copies the profile readers should use while working through the lesson (the one its examples were captured with), with a "Show the profile" toggle. Clicking the copy button also opens the toggle, so readers see what they copied. It's omitted when no profile exists yet.
-- **In place of each `ai-profile` block:** the complete updated profile, with this lesson's changes highlighted, and a copy button.
-- **At the bottom:** "Copy updated learner profile", but only when the lesson has an `ai-profile` block.
+On every page, the book adds (from `tools/system-files/dev/learner-profile.js`, which the build includes for any book with a `skills.yaml`):
 
-Follow the block with a short explanation of what's new and why. For a removed rule, say why the reader no longer needs it.
+- **A box at the start** (after the Learning Objectives box, or at the top) and **one at the end** of each lesson, each with "Copy learner profile" and "Show profile". The box at the start is hidden until some earlier lesson has taught a skill.
+- **A profile for any paragraph.** On a computer, hovering over a paragraph shows a small person icon at its end. On a phone, tapping a paragraph shows it. The icon opens the profile through that paragraph. A floating **Profile** button opens the profile for the paragraph being read.
+- **"Skills I already know."** The profile panel lists the skills from later in the book, by lesson, as checkboxes. Anything a reader checks goes into their profile everywhere. Checks are saved in the reader's browser; for a signed-in reader with a paid account they're also saved to the account, so they follow the login to other devices (see `tools/system-files/reader-state.md`).
 
-**After changing any `ai-profile` block,** run `node tools/build-profiles.mjs` to regenerate `reference/profiles/*.txt`, the files `capture.mjs` sends, so captures use exactly the profile readers see.
+**After tagging or changing skills,** run `node tools/build-profiles.mjs` to regenerate `reference/profiles/*.txt` (the profile at the end of each lesson), the files `capture.mjs --profile <lesson-id>` sends. `capture.mjs --profile here` instead sends the profile a reader has at the conversation's own block, worked out from the tags before it.
 
 ---
 

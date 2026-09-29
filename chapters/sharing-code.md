@@ -53,7 +53,11 @@ async function printBedTotals(excel) {
 }
 ```
 
+::: {.jvn}
+
 `kilogramsByBed` doesn't touch the workbook at all: it takes rows and returns an object, like the calculating functions in [Generating Documents](documents){.book-link}. Functions like that are the easiest to share, because they work anywhere.
+
+:::
 
 ## Sharing Between Workbooks
 
@@ -156,7 +160,11 @@ With the new lines in the platform profile, the same question gets a different a
 > Want help writing the loader module or checking your Harvest App's structure so it plays nicely with `load_gist`?
 :::
 
+::: {.wls}
+
 **Read.** The comparison is exactly right: `import_code_module` copies the code into their workbook once, and `load_gist` downloads it from GitHub, using the cached copy unless it has changed, so your updates reach them. A small loader module in their workbook calls `load_gist` when the workbook opens, and then opens the app. The notes are good too, especially that a *secret* gist is only unlisted, not private: anyone with the link can read it.
+
+:::
 
 Now look at the name of the loader function: `autoExec`. The explanation even says "an `auto_exec()` function," and then the code says `autoExec`. JADE only runs a function spelled exactly `auto_exec`, so this loader would never run, and nothing would tell you why.
 
@@ -183,6 +191,8 @@ Sharing code this way is powerful, and it deserves a moment of care, because of 
 - **The gist's owner controls the code.** If you change the gist, their workbook runs the change the next time it opens. If someone took over your GitHub account, they could put anything in it.
 - **Anyone can read it,** public or secret. Never put passwords, keys or private data in a gist.
 
+::: {.jqu}
+
 So match the method to the trust:
 
 | Situation | Use | Why |
@@ -192,6 +202,8 @@ So match the method to the trust:
 | Code you haven't read | Neither, yet | Don't run code you can't explain. |
 
 The university office is in a middle position: they're trusting you. A reasonable arrangement is to tell them what the code does, and to change the gist only when you've tested the change.
+
+:::
 
 ## Loading a Library
 
@@ -291,13 +303,17 @@ Some code is so widely useful that other people have already written it, package
 
 **Read.** The first half is the counting-by-name pattern, followed by building two parallel arrays: bed IDs for the labels and totals for the bars. Then:
 
+::: {.iun}
+
 - **`await Jade.load_js(url, null)`** downloads Chart.js and waits until it's ready, so the next lines can use it. `null` means "run it at global scope," which is how Chart.js expects to be loaded: it creates a global named `Chart`.
 - **`<canvas>`** is an HTML element for drawing, and `getContext("2d")` gets the tool Chart.js draws with.
 - **`new Chart(context, { ... })`** creates the chart from an object that describes it: its `type`, its `labels` and a `datasets` array with the numbers. The shape of that object comes from Chart.js's documentation, and the assistant knows Chart.js well; it's one of the most popular libraries on the web.
 
+:::
+
 The assistant's reasoning about escaping is correct: the labels are drawn on the canvas, not inserted as HTML, so `toHtmlEntities` isn't needed. Three things need fixing:
 
-- **The library's address has no version.** `https://cdn.jsdelivr.net/npm/chart.js` means "the latest version, whatever that is today." When Chart.js releases a new major version, your chart could change or break, without your code changing at all. An address with the version in it, like `chart.js@4.5.1`, always gets the same file. That's called **pinning** the version, and your platform profile now asks for it.
+- [**The library's address has no version.** `https://cdn.jsdelivr.net/npm/chart.js` means "the latest version, whatever that is today." When Chart.js releases a new major version, your chart could change or break, without your code changing at all. An address with the version in it, like `chart.js@4.5.1`, always gets the same file. That's called **pinning** the version, and your platform profile now asks for it.]{.twd}
 - **The bars are in a strange order.** `Object.keys` gives the beds in the order they first appear in the Harvests sheet, B2, B4, B1 and so on, not B1 to B8. For a chart, order matters.
 - **The panel name has a space,** `"Harvest Chart"`, the same slip as before.
 
@@ -355,22 +371,15 @@ async function showHarvestChart(excel) {
 }
 ```
 
+::: {.zpo}
+
 A library is code from elsewhere, like a gist, and the same questions apply. Chart.js is maintained by a large, long-running open-source project and served by a major content delivery network, and the pinned version always delivers the same file. That's about as trustworthy as outside code gets. Be much more careful with an obscure library from an address you don't recognize, even if an assistant suggests it.
+
+:::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="sharing-code"}
-Add rules:
-
-- Before code loads code or a library from the internet, tell me where it comes from, and use an address with the version in it.
-
-Add to "What I know so far":
-
-- jade_modules, for calling functions in another code module
-- GitHub gists, and the difference between Jade.load_gist (loads the latest version each time) and Jade.import_code_module (copies it once)
-- loading libraries with await Jade.load_js(url, null), and pinning their versions
-- drawing a chart with Chart.js on a canvas element
-- deciding whether to trust code from elsewhere before it runs
+::: {.learner-profile}
 :::
 
 Your JADE platform profile changed too: four new lines about loading code, a new line about pinning versions, and a change to the style line that says JADE's required names win over camelCase.

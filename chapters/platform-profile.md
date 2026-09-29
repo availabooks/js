@@ -91,6 +91,8 @@ First, a complication that makes Excel especially prone to mix-ups. Here's a req
 
 This is **Office Scripts**, a different way to automate Excel with JavaScript, not Office.js. It would not run in JADE. And the assistant's instructions to use the **Automate** tab only work with a Microsoft 365 work or school account. With a free or personal account, there's no Automate tab at all.
 
+::: {.mp7}
+
 "JavaScript for Excel" can mean several things, and replies mix them up. Learn to recognize each one by its markers:
 
 | Kind | Where it runs | How to recognize it |
@@ -101,6 +103,8 @@ This is **Office Scripts**, a different way to automate Excel with JavaScript, n
 | **Apps Script** | Google Sheets | `SpreadsheetApp`, `getRange(row, column, numRows, numColumns)`, `getValues()` |
 
 The `: ExcelScript.Workbook` in the reply is also a clue. It's **TypeScript**, JavaScript with types added, which Office Scripts uses. An optional lesson at the end of this part covers Office Scripts and TypeScript, for readers who have the license.
+
+:::
 
 ## Without a Platform Profile
 
@@ -340,13 +344,21 @@ Here's the same request, in a new chat with the learner profile and the platform
 > Want me to rewrite the row range using the numeric version of `getRange` instead, so it matches what you've already learned more closely?
 :::
 
+::: {.rmh .trm}
+
 The difference is large. The panel is built with `Jade.open_canvas`, the button is found with `tag`, and its handler is wrapped in `Jade.automate`, so it runs inside `Excel.run` with `excel` as its parameter. The function is a plain `function`, it has a `Jade.listing` comment so it appears in the List Automations panel, and the report ends with `Jade.open_output()`. Every line of the platform profile that applied was followed.
 
+:::
+
 **Read.** It's still worth reading closely, and three things need attention:
+
+::: {.fzp}
 
 - **The panel's name has a space in it.** `"Reorder Check"` becomes the panel's element id, and ids shouldn't contain spaces, because CSS selectors like `#Reorder Check` can't find them. `"reorderCheck"` is safer.
 - **The canvas HTML is a whole page,** with a doctype, `<html>`, `<head>` and `<body>`. The canvas is a part of the task pane, not a new page, so only the heading and the button are needed. The browser ignores the rest, but it's clutter.
 - **The last offer mixes two APIs.** The assistant offers to rewrite the range "using the numeric version of `getRange`... that you've already learned." That's Apps Script's `getRange(row, column, numRows, numColumns)`, from [Google Forms](google-forms){.book-link}. Office.js's `getRange` only takes an address, like `"A2:D2"`. Its version with numbers is a different method, `getRangeByIndexes(row, column, rowCount, columnCount)`, and it counts rows and columns from 0. Taking the offer would give you code that fails. Your learner profile lists what you know from *both* platforms, and the assistant blended them.
+
+:::
 
 ### A platform profile grows
 
@@ -356,7 +368,11 @@ The last mistake is exactly the kind a platform profile should prevent next time
 - In Office.js, sheet.getRange() takes an address such as "A2:D2". For row and column numbers, use getRangeByIndexes(row, column, rowCount, columnCount), which counts from 0. Don't use Apps Script's getRange(row, column, numRows, numColumns).
 ```
 
+::: {.xgw}
+
 A platform profile is never finished. Each time an assistant makes a mistake the profile could have prevented, add a line. Over time, it becomes a record of everything that's tricky about the platform, which is useful to *you*, not just the assistant.
+
+:::
 
 ### The finished panel
 
@@ -417,18 +433,7 @@ At the end of the book, you'll write a learning profile of your own for a new su
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="platform-profile"}
-Add rules:
-
-- When you're not sure how a tool or platform works, say so instead of guessing.
-
-Add to "What I know so far":
-
-- recognizing Office.js, Office Scripts, VBA and Apps Script code
-- platform profiles, such as my JADE platform profile
-- JADE canvases: Jade.open_canvas(), tag(), and button handlers wrapped in Jade.automate()
-- the Jade.listing comment
-- a range's format.fill.color, and getRangeByIndexes() in Office.js
+::: {.learner-profile .mf6}
 :::
 
 The new rule asks for honesty about uncertainty. Assistants won't always notice when they're guessing, so it's no substitute for a platform profile, but it helps, and it applies everywhere.

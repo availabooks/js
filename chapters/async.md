@@ -92,7 +92,9 @@ It's also a real design choice, not just a workaround. Doing the work on a serve
 
 In Apps Script, `UrlFetchApp.fetch(url)` stopped your script until the reply arrived, and then the next line ran. That's called **synchronous** code: each line finishes before the next one starts. It was fine, because nobody was looking at your script while it waited.
 
+::: {.dtv}
 A web page is different. Someone *is* looking at it, scrolling, clicking and typing. If the page stopped everything while waiting a second or two for a reply from another computer, it would freeze: buttons wouldn't respond, and nothing would scroll. So in the browser, a request for data is **asynchronous**: your code asks for the data, carries on, and handles the reply when it arrives.
+:::
 
 ::: {.term}
 > **Asynchronous** — Code that starts something that takes time, such as a web request, and carries on without waiting; the result is handled when it arrives. *Synchronous* code waits for each step to finish.
@@ -137,7 +139,7 @@ Two `await`s are needed. `fetch` gives a promise of a **response**, which holds 
 > **async function** — A function marked with `async`, which can use `await` to pause until a promise is fulfilled. An async function itself returns a promise.
 :::
 
-::: {.note}
+::: {.note .wmk}
 > **You'll also see `.then()`.** Before `async` and `await` existed, promises were used with a method called `then`, which takes a function to run with the result: `fetch(url).then(function(response) { ... })`. It does the same job, and you'll see it in older code and some AI replies. `async` and `await` are easier to read, and this book uses them.
 :::
 
@@ -240,7 +242,7 @@ Back to the chat, now that you know `async` and `await`:
 
 - **`loadForecast`** is `async`, and it's called once at the end of the script.
 - **`await fetch(url)`** and **`await response.json()`** are the two waits you just learned.
-- **`response.ok`** is a property that's `true` when the server replied successfully. Unlike `UrlFetchApp`, `fetch` doesn't treat an error reply, such as "404 Not Found," as a failure; it only fails when there's no reply at all. So checking `ok` is how you notice that the server said no. When it's false, the code **throws** an error of its own, with **`new Error(...)`**, which creates an error object with a message.
+- [**`response.ok`** is a property that's `true` when the server replied successfully. Unlike `UrlFetchApp`, `fetch` doesn't treat an error reply, such as "404 Not Found," as a failure; it only fails when there's no reply at all. So checking `ok` is how you notice that the server said no. When it's false, the code **throws** an error of its own, with **`new Error(...)`**, which creates an error object with a message.]{.zu2}
 - **`document.createElement("li")`** creates a new list item, and **`appendChild`** adds it to the end of the list. It's a way to build a page without writing HTML in a string, which also means the text goes in through `textContent`, so it can never be read as HTML. Neither method was on your list, and the reply didn't mention that; you can read them from their names, but it's worth noticing.
 - **`try` and `catch`** put a message on the page if anything fails, instead of leaving a blank list. Unlike the Apps Script trigger in [Talking to Web Services](web-services){.book-link}, where catching an error hid it, here a person is looking at the page, so showing the message is exactly right.
 
@@ -322,7 +324,7 @@ Run it:
 </html>
 ```
 
-::: {.caution}
+::: {.caution .yft}
 > **Not every API works from a web page.** For security, a browser only lets a page fetch from another site if that site allows it, a rule called *CORS*. Open-Meteo allows it, but many APIs don't, especially ones that need a key. When a fetch works in Apps Script but fails in a page with an error mentioning CORS, that's why, and fetching on a server, as in the assistant's first answer, is the usual solution.
 :::
 
@@ -444,18 +446,13 @@ Here's the forecast as part of the club's home page, in the book's style. It add
 </html>
 ```
 
+::: {.jhm}
 Two touches worth copying: the list says "Loading the forecast..." until the data arrives, so visitors know something is happening, and an error replaces it with a message a club member can understand. Try breaking the address, for example by changing `open-meteo` to `open-meteor`, to see the error message.
+:::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="async"}
-Add to "What I know so far":
-
-- synchronous and asynchronous code, and why the browser doesn't wait
-- promises, async functions and await, and recognizing .then() in other code
-- fetch() and await response.json(), checking response.ok, and throw new Error()
-- document.createElement(), appendChild() and className
-- CORS, and why some APIs can't be fetched from a web page
+::: {.learner-profile}
 :::
 
 ## Summary

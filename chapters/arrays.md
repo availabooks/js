@@ -63,9 +63,13 @@ firstNames[0] = "Dev"
 console.log(firstNames)
 ```
 
+::: {.mgs}
+
 Notice that `length` has no parentheses. It's a **property**, a value that belongs to the array, not a method that does something. `push("Cam")` is a method, so it has parentheses to carry the value to add.
 
 Because indexes start at 0, the last item's index is always one less than the length. With 4 items, the last one is `firstNames[3]`, which you can also write as `firstNames[firstNames.length - 1]`.
+
+:::
 
 ## Arrays of Arrays
 
@@ -88,7 +92,7 @@ Read `members[1][0]` from left to right: `members[1]` is the second row, `["Maya
 
 Writing the array over several lines, one row per line, doesn't change it. JavaScript ignores the line breaks. It just makes the rows easy to see.
 
-::: {.term}
+::: {.term .yas}
 > **Array of arrays** — An array whose items are arrays, often used for rows and columns: `data[row][column]`. Also called a *two-dimensional array*.
 :::
 
@@ -381,7 +385,11 @@ The explanation narrows the problem to two possibilities: the method doesn't exi
 > calls `getSheetByName` on the spreadsheet (not on `SpreadsheetApp`), which works correctly.
 :::
 
+::: {.uz7}
+
 So the second possibility was right. `getSheetByName` belongs to a *spreadsheet*, the whole file, which you get with `SpreadsheetApp.getActiveSpreadsheet()`. A spreadsheet contains sheets, so you ask the spreadsheet for one by name. `getActiveSheet()` happens to work on both `SpreadsheetApp` and a spreadsheet, which is probably how the assistant mixed them up.
+
+:::
 
 Notice what the reply doesn't say: that the mistake was its own. It explains what was wrong as if the code had come from somewhere else. That's not unusual, and it doesn't matter much, but it's a reminder that an assistant's code is a draft, not a finished product. It looked right, the explanation of each line was confident, and it still didn't run. Reading catches a lot, and running catches the rest.
 
@@ -449,7 +457,11 @@ A sheet description is worth saving somewhere you can copy it from, such as a no
 > 5. `labelRange.setValues(labels)` writes those three rows into F2:F4 all at once — "High" goes in F2, "Medium" in F3, "Low" in F4.
 :::
 
+::: {.qov}
+
 **Read.** The important line is `let labels = [["High"], ["Medium"], ["Low"]]`. Even though there's only one column, each label is inside its own inner array, because `setValues` always takes rows, and each row is an array. Three rows of one column each fit the range F2:F4, which is also three rows of one column.
+
+:::
 
 Run it, and watch column F:
 
@@ -540,7 +552,11 @@ To finish, here's the kind of code you'll find online and in replies from an ass
 > Let me know if you'd like a version that loops through *all* members instead of just the first one!
 :::
 
+::: {.wko}
+
 You can read nearly all of it now. It uses `const` and semicolons, as expected, and a short variable name, `ss`, for the spreadsheet. It chains `getDataRange().getValues()`. And it uses `Logger.log` instead of `console.log`. In Apps Script, `Logger.log` also writes to the Execution log, so for your purposes the two work the same way.
+
+:::
 
 The instructions at the end are the part to check. They say to see the output under **View**, then **Logs**. The current Apps Script editor has no View menu; the Execution log opens by itself below the code when you run a function. That menu was in an older version of the editor, and plenty of instructions written for it are still online. As in [Getting Started with Google Apps Script in Google Sheets](apps-script){.book-link}, check an assistant's directions against what's on your screen.
 
@@ -548,14 +564,7 @@ The instructions at the end are the part to check. They say to see the output un
 
 Here's the update for this lesson:
 
-::: {.ai-profile lesson="arrays"}
-Add to "What I know so far":
-
-- arrays: square brackets, indexes starting at 0, length, push, and changing an item by its index
-- arrays of arrays, read as data[row][column]
-- reading a range with getValues() and writing one with setValues(), and getDataRange()
-- getting a sheet by name with SpreadsheetApp.getActiveSpreadsheet().getSheetByName()
-- Logger.log, which works like console.log in Apps Script
+::: {.learner-profile}
 :::
 
 Five new items, and no new rules this time.

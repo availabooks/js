@@ -31,9 +31,11 @@ The club's case for this part is its website. Maya wants a simple site with the 
 
 You can try pages in three places:
 
+::: {.f1h}
 - **This book's HTML editors.** Code in an editor marked for HTML shows the page below it when you run it.
 - **A file on your computer.** Create a plain text file, save it with a name ending in `.html`, such as `garden.html`, and open it in your browser (double-click it, or drag it onto a browser window). Edit the file, save, and reload the page to see the change. Any plain text editor works, such as Notepad on Windows or TextEdit on a Mac (in TextEdit, choose **Format**, then **Make Plain Text** first). A code editor such as the free Visual Studio Code is nicer, and you'll install it later in the book.
 - **The browser's developer tools,** which you'll meet later in this lesson.
+:::
 
 ## The Structure of a Page
 
@@ -52,10 +54,12 @@ In the last lesson, HTML was a few tags in a string. A complete page has a stand
 </html>
 ```
 
+::: {.rj5}
 - **`<!doctype html>`** tells the browser this is a modern HTML page. It always comes first.
 - **`<html>`** wraps everything else.
 - **`<head>`** holds information *about* the page that isn't shown in it, such as the **`<title>`**, which appears on the browser tab, and, as you'll see, the page's CSS.
 - **`<body>`** holds everything that appears on the page.
+:::
 
 The indentation is only for people. The browser ignores it, but it makes it much easier to see which tags are inside which.
 
@@ -86,7 +90,9 @@ A handful of tags covers most pages:
 
 Two more tags have no meaning of their own, and are used to group things so CSS or JavaScript can find them: **`<div>`** for a block, such as a section of the page, and **`<span>`** for a few words inside a line.
 
+::: {.cb0}
 Any tag can also have an **`id`** attribute, a name that's unique on the page, and a **`class`** attribute, a name shared by all the elements that should be treated alike. You'll use both in a moment.
+:::
 
 ::: {.term}
 > **Attribute** — Extra information in an HTML opening tag, written as `name="value"`, such as `href` on a link or `class` on any element.
@@ -137,9 +143,11 @@ There are three kinds of selectors here:
 
 The properties are mostly readable: `color` for text color, `background-color`, `font-family` for the typeface (with a general fallback like `sans-serif` at the end), `font-weight`. A few need a word of explanation:
 
+::: {.jj5}
 - **Colors** can be names, such as `darkgreen`, or codes like `#f4f9f4`, which mix red, green and blue in amounts from `00` to `ff`.
 - **`margin`** is space *outside* an element's edge, and **`padding`** is space *inside* it, between the edge and the content.
 - **`border`** takes three values: the thickness, the style (`solid`, `dashed` and others) and the color.
+:::
 
 Notice the punctuation. Each declaration ends with a **semicolon**. In JavaScript, the book leaves semicolons out because they're optional. In CSS they're not: they're what separates one declaration from the next. Remember that; you'll see why it matters shortly.
 
@@ -181,7 +189,9 @@ Every major browser has built-in tools for people who build pages. In Chrome or 
 Chrome's developer tools open beside a simple page, with the Elements panel showing the page's tags and the Styles pane showing a CSS rule for h1.
 :::
 
+::: {.d30}
 Open a file you've made, press F12, and look at both panels. On some school computers, the developer tools are turned off. If yours are, you can still do everything in this book's editors, which show console output below the page.
+:::
 
 ## Your Profile Moves to the Browser
 
@@ -390,7 +400,9 @@ The heart of the explanation is right: CSS needs a semicolon after each declarat
 
 The details are wrong, though. The assistant says the first property in each rule "might work." You can see that it doesn't: the font didn't change. When declarations run together, the browser reads them as one long, invalid value for the *first* property, and throws the whole thing away. You told the assistant the font didn't appear, and its explanation contradicted what you saw. When that happens, believe your screen.
 
+::: {.fb8}
 The more interesting question is *why* the semicolons were missing. Your profile says "Don't use semicolons at the ends of lines," and the assistant followed it, in a language where the rule doesn't belong. It's your rule, written when JavaScript was the only language you used. The fix belongs in the profile, and it's in the updated version at the end of this lesson: no semicolons in JavaScript, but CSS still needs them.
+:::
 
 This is a lesson about profiles in general. Rules are written for a situation, and when the situation changes, such as a new language or a new platform, some of them need to change too. When an assistant does something odd, ask whether your profile told it to.
 
@@ -490,35 +502,15 @@ Here's the page with its CSS fixed, and one improvement: the workdays are in *on
 </html>
 ```
 
+::: {.evj}
 The new property is **`innerHTML`**. `textContent` sets an element's *text*: anything in it, including `<`, is shown as it is. `innerHTML` sets its *HTML*: the string is read as tags. Here that's what you want, because the string contains `<li>` tags. But it's the same rule you met in [A Web App with Apps Script](web-app){.book-link}: text inserted into HTML is read as HTML. Use `innerHTML` only with HTML you built yourself from text you trust, and `textContent` for anything else, especially anything a person typed.
+:::
 
 Add a fourth workday to the array, and run it again. The list and the count both update.
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="web-pages"}
-Environment: I'm writing web pages with HTML, CSS and JavaScript, and opening them in my web browser.
-
-Remove rules:
-
-- Don't use semicolons at the ends of lines.
-- Put the steps for each task in a function with no parameters and a descriptive name, so I can run it from the Apps Script editor. That function can call other functions.
-- When code needs a trigger, tell me how to set it up in the Apps Script editor, and how to test it without waiting for the event.
-- Keep secrets such as webhook addresses and API keys out of the code. Store them in Script Properties.
-
-Add rules:
-
-- Don't use semicolons at the ends of lines in JavaScript. CSS still needs a semicolon after each property.
-- When I'm working in Apps Script, put the steps for each task in a function with no parameters that I can run from the editor, and when code needs a trigger, tell me how to set it up and test it.
-- Keep secrets such as webhook addresses and API keys out of the code. In Apps Script, store them in Script Properties. In a web page, remember that anyone who opens the page can read its code.
-
-Add to "What I know so far":
-
-- the structure of an HTML page: doctype, html, head, title and body
-- more HTML: h2, ul, ol, li, a with href, img with src and alt, div and span, and the id and class attributes
-- CSS in a style tag: selectors for tags, classes (.name) and ids (#name), and properties such as color, font-family, margin, padding and border
-- the DOM, and changing a page with a script tag at the end of the body: document.querySelector(), textContent and innerHTML
-- opening a page's developer tools (F12) to see the Console and the Elements panel
+::: {.learner-profile .sf6 .d3z}
 :::
 
 What changed, and why:

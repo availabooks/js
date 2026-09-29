@@ -49,7 +49,9 @@ By now you've written `data[i][4]` many times, and each time you've had to remem
 > If you want, once you're comfortable with arrays and functions, objects are the next concept that would let you write `row.hours` directly — happy to explain that later when you're ready. For now, would you like to try renaming your other column numbers this way?
 :::
 
+::: {.egx}
 The assistant named the real answer, an **object**, then respected your profile and offered a workaround with what you know: a constant with a descriptive name. Writing a fixed value's name in capital letters with underscores, like `HOURS_COLUMN`, is a common convention for "this is a setting, not a value that changes." It's a good habit, and you'll see it in code from other people.
+:::
 
 Did you notice the sheet name? The question didn't describe the sheet, so the assistant guessed `"Sheet1"`, the name Google gives the first sheet in a new spreadsheet. It's the same lesson as in [Arrays](arrays){.book-link}: whatever you don't describe, the assistant guesses.
 
@@ -104,7 +106,9 @@ console.log(member)
 console.log(member.phone)
 ```
 
+::: {.pfe}
 Notice that `member` was declared with `const`, and its properties still changed. As with arrays, `const` stops the variable from being given a whole new object, but not the object from changing.
+:::
 
 ### Bracket notation
 
@@ -124,7 +128,9 @@ console.log(member[whichProperty])
 
 `member["firstName"]` does the same thing as `member.firstName`. The difference is that the brackets can hold any expression, including a variable. In the last line, `member[whichProperty]` reads whichever property `whichProperty` names, here `volunteerHours`. Dot notation can't do that: `member.whichProperty` would look for a property literally named "whichProperty."
 
+::: {.zar}
 So use dot notation when you know the key as you write the code, and bracket notation when the key is in a variable. You'll need bracket notation later in this lesson.
+:::
 
 ## Arrays of Objects
 
@@ -207,7 +213,9 @@ The data in a sheet arrives from `getValues` as an array of arrays. So a common 
 - **`getMembers`** reads the sheet, then builds one object per row. Inside the loop, `const member = { ... }` is an object written over several lines, with each property's value taken from a column. The column numbers appear exactly once, here, and nowhere else in the script. The function returns the array of objects.
 - **`logUnpaidMembers`** calls `getMembers` and loops through what it returns. `members[i].duesPaid` and `members[i].firstName` say what they mean.
 
+::: {.qwp}
 This split is worth copying. If the club ever adds a column to the Members sheet, only `getMembers` needs to change. Every function that works with members uses names, not positions.
+:::
 
 There's one catch when you run it. Both functions have no parameters, so the editor's menu lists both, and `getMembers` comes first. Running `getMembers` reads the sheet and returns the array, but displays nothing, because returning a value isn't the same as logging it. The function that does the job is `logUnpaidMembers`. Choose it in the menu, then run:
 
@@ -344,7 +352,9 @@ counts[interest] += 1
 
 Bracket notation is essential here. The key is in a variable, `interest`, and keys like "Nutrition & Wellness" contain spaces and an ampersand, which dot notation couldn't handle anyway.
 
+::: {.p5z}
 To write the results, `writeInterestCounts` needs to go through the object's properties. `Object.keys(counts)` gives an array of its keys, which a `for` loop can go through like any array. For each key, `counts[interest]` is its count.
+:::
 
 Compare this with the parallel arrays: no search function, no -1, and no way for a name and its count to get out of step. The assistant's closing question is a good one, too. If someone submitted the form without choosing any interests, their cell would be empty, `"".split(", ")` would give `[""]`, and the counts would include an interest with no name. Nobody in the book's data did that, but a real form might get one.
 
@@ -479,7 +489,7 @@ Objects live inside a running program. When the script ends, they're gone. To sa
 
 That's a clear explanation. One small thing: the example member, Ava Chen, isn't in the club. The assistant made up an example rather than using your data, which is fine for showing how something works, but it's a reminder that assistants invent plausible details freely.
 
-::: {.term}
+::: {.term .zkh}
 > **JSON** — JavaScript Object Notation: a text format for data that looks like JavaScript objects and arrays. `JSON.stringify` turns a value into JSON text, and `JSON.parse` turns JSON text back into a value.
 :::
 
@@ -514,15 +524,7 @@ JSON looks almost like the objects you write, with a few stricter rules:
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="objects"}
-Add to "What I know so far":
-
-- objects: properties in curly braces, read and changed with dot notation or bracket notation
-- a property that doesn't exist is undefined
-- arrays of objects, such as turning the rows of a sheet into member objects
-- counting by name with an object, and listing its keys with Object.keys()
-- JSON, with JSON.stringify() and JSON.parse()
-- naming a fixed value in capitals, such as HOURS_COLUMN
+::: {.learner-profile}
 :::
 
 With objects on the list, an assistant can now answer questions like the one that opened this lesson directly. You should see more code that turns rows into objects early and uses property names from then on.

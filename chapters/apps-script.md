@@ -84,7 +84,11 @@ The main parts are:
 - **The toolbar,** above the code, with a **Run** button, a **Debug** button, and a menu that shows the name of a function (here, `myFunction`).
 - **The Execution log,** which opens below the code when you run something. It shows what your code displayed with `console.log`, and any errors.
 
+::: {.nux}
+
 The project is attached to the spreadsheet you opened it from. That's what lets its code read and change that sheet. The project is saved automatically, and you can get back to it any time through **Extensions**, then **Apps Script**.
+
+:::
 
 ## A First Look at Functions
 
@@ -104,14 +108,22 @@ This is a **function**: a named group of steps. Apps Script needs functions beca
 
 Here are the parts of a function:
 
+::: {.f6f}
+
 - **`function`** is a keyword that tells JavaScript a function is starting.
 - **`myFunction`** is the function's name. It's what appears in the toolbar's menu.
 - **`( )`** is a pair of parentheses. They're empty for now. You'll see what can go in them in a later lesson.
 - **`{ }`** is a pair of curly braces. The steps of the function go between them, one per line.
 
+:::
+
 You've already been using functions without knowing it. `console.log` is a function, and each time you wrote `console.log("Hello")`, you *called* it. You told it to run, and the parentheses carried the value it should display. Writing your own function is the other half of the story: you define the steps, and Apps Script calls it when you click Run.
 
+::: {.jnz}
+
 A file can hold several functions. The menu in the toolbar lists them all, and **Run** runs whichever one is selected. That's handy, and it's also a common source of confusion: if you click Run and nothing seems to happen, check which function is selected.
+
+:::
 
 Give your functions names that say what they do, such as `writeGreeting` or `listUnpaidMembers`, not `myFunction`. Like the names of values, function names can't contain spaces, so this book uses *camelCase*: the first word in lowercase, and each word after it starting with a capital letter.
 
@@ -138,7 +150,11 @@ The Execution log opens below the code:
 
 ![The Execution log, showing Execution started, then the value 10, then Execution completed.](https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjP3hh-YYHn0EgM_VPlCLHqfmQ-CtJbjkncf_Ylaf5caooCSraRp5jF2c-wxQArAEuzWiu0NbzIjnrrJHmrfGfy_wbcvOs8EEB926WDeOrZMNPdbE1J7P7vwk6whzUGGxCYR1a-MSpgTA6spM2uWhofYUpNdMT6Vucm__o9vaI3bCdmslDaatH4Mew0qTw/s1600/9109882d.png)
 
+::: {.bxj}
+
 It has three entries. The first and last are notices from Apps Script saying when the function started and finished. The middle entry, marked *Info*, is the output of `console.log(count)`: the value 10.
+
+:::
 
 ::: {.note}
 > **The screenshots show semicolons.** The code in these screenshots ends its lines with semicolons. As you saw in [Your First Lines of Code](first-code){.book-link}, they're optional, and the code works the same either way.
@@ -178,7 +194,7 @@ It's long, but it reads left to right, one step at a time. Each dot (`.`) means 
 
 Each of these steps is a **method**, an action that belongs to something, such as the spreadsheet tool, a sheet or a cell. You use a method by writing a dot after the thing it belongs to, then the method's name and parentheses. The parentheses work just as they do with `console.log`: they carry any values the method needs, such as which cell to get or what to write.
 
-::: {.term}
+::: {.term .fv7}
 > **Method** — An action that belongs to something, used with a dot: `getRange("A1")` is a method of a sheet, and `setValue("Hello")` is a method of a range.
 :::
 
@@ -274,19 +290,7 @@ None of these slips would cause harm, and the explanation of *why* is good. But 
 
 Your code now runs in a different place, so your learner profile needs to say so. You've also learned what a function is, and there's one new rule:
 
-::: {.ai-profile lesson="apps-script"}
-Environment: I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.
-
-Add rules:
-
-- Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.
-
-Add to "What I know so far":
-
-- what a function is: a named group of steps written as function name() { }
-- choosing which function to run in the Apps Script editor
-- reading output in the Execution log
-- methods, used with a dot, such as SpreadsheetApp.getActiveSheet().getRange("A1").setValue("Hello") to write into a cell
+::: {.learner-profile .d18}
 :::
 
 Here's what changed:

@@ -1,0 +1,765 @@
+# Learner skills for this book: see tools/author-tools/skills.js.
+# Each skill's id is also the class that tags the paragraph teaching it,
+# as in ::: {.tty}. Make new ids with: node tools/new-skill-id.mjs js [count]
+# The order here is the order of lines in the profile.
+
+intro: I'm a beginner learning JavaScript from a textbook, and I'd like your help learning it.
+noConceptsYet: I don't know any programming concepts yet.
+rulesHeading: 'When you write code for me:'
+knowsHeading: 'What I know so far:'
+knowsNone: 'What I know so far: nothing yet.'
+
+skills:
+
+  # ai-assistant
+  - id: tty
+    type: environment
+    text: I'm running JavaScript in an online editor that shows console.log output.
+  - id: w0l
+    type: rule
+    text: Use only the concepts listed below under "What I know so far." If a task needs something I haven't learned, tell me what it is instead of using it.
+  - id: bcy
+    type: rule
+    text: Don't use semicolons at the ends of lines.
+  - id: lah
+    type: rule
+    text: Keep the code short and simple, and explain what each line does in plain language.
+
+  # first-code
+  - id: gxs
+    text: statements and expressions
+  - id: viw
+    text: console.log to display values, including several values separated by commas
+  - id: ime
+    text: text in quote marks
+  - id: yrx
+    text: joining strings with +
+  - id: bkj
+    text: numbers and the arithmetic operators + - * /
+  - id: bhs
+    text: comments that start with //
+  - id: e07
+    text: giving a value a name with let, for example let student = "Ava"
+  - id: zf5
+    text: reading error messages
+
+  # apps-script
+  - id: nux
+    type: environment
+    text: I'm writing Google Apps Script in the Apps Script editor attached to a Google Sheet.
+  - id: d18
+    type: rule
+    text: Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.
+  - id: f6f
+    text: 'what a function is: a named group of steps written as function name() { }'
+  - id: jnz
+    text: choosing which function to run in the Apps Script editor
+  - id: bxj
+    text: reading output in the Execution log
+  - id: fv7
+    text: methods, used with a dot, such as SpreadsheetApp.getActiveSheet().getRange("A1").setValue("Hello") to write into a cell
+
+  # variables
+  - id: hd5
+    type: rule
+    text: Use let for every variable. Don't use var or const.
+  - id: tjp
+    type: rule
+    text: Write each step on its own line, and store each result in a variable. Don't chain method calls together.
+  - id: qbh
+    text: changing a variable's value with =, as in count = count + 1
+  - id: ars
+    text: strings, numbers and booleans (true and false), and checking a value's type with typeof
+  - id: yc6
+    text: reading a cell with getValue(), and storing a sheet or a range in a variable
+  - id: ver
+    text: empty cells read as an empty string ""
+  - id: jfd
+    text: converting with Number() and String(), and what NaN means
+  - id: dj9
+    text: 'template literals: text between backticks, with ${ } to insert a value'
+
+  # decisions
+  - id: r8u
+    type: rule
+    text: Compare values with === and !==. Don't use == or !=.
+    with: n8s
+  - id: w5b
+    text: if, else if and else, including an if inside another if's block
+  - id: n8s
+    text: the comparison operators === !== > < >= <=
+  - id: svn
+    text: the logical operators && (and), || (or) and ! (not)
+  - id: q81
+    text: checking for an empty cell with === "" before converting a value
+
+  # arrays
+  - id: mgs
+    text: 'arrays: square brackets, indexes starting at 0, length, push, and changing an item by its index'
+  - id: yas
+    text: arrays of arrays, read as data[row][column]
+  - id: qov
+    text: reading a range with getValues() and writing one with setValues(), and getDataRange()
+  - id: uz7
+    text: getting a sheet by name with SpreadsheetApp.getActiveSpreadsheet().getSheetByName()
+  - id: wko
+    text: Logger.log, which works like console.log in Apps Script
+
+  # loops
+  - id: m95
+    type: rule
+    text: Use for loops with an index, such as for (let i = 0; i < data.length; i++). Don't use forEach or for...of.
+  - id: tew
+    text: while loops and for loops
+  - id: f5k
+    text: the ++, -- and += shortcuts
+  - id: rd2
+    text: 'running totals: a variable that starts at 0 before a loop and is added to inside it'
+  - id: yf3
+    text: looping over the rows from getValues(), starting at 1 to skip a header row
+  - id: siy
+    text: infinite loops, and why they happen
+
+  # functions
+  - id: pmf
+    type: rule
+    text: Use const for a variable whose value never changes, and let for one that does. Don't use var.
+    replaces: [hd5]
+    with: z4m
+  - id: z3e
+    type: rule
+    text: Put the steps for each task in a function with no parameters and a descriptive name, so I can run it from the Apps Script editor. That function can call other functions.
+    replaces: [d18]
+    with: i5d
+  - id: lhl
+    text: functions with parameters, called with arguments
+  - id: sq7
+    text: return, to send a value back from a function
+  - id: i5d
+    text: calling one function from another
+  - id: z4m
+    text: const, and that an array created with const can still be changed with push
+
+  # case
+  - id: vv3
+    text: rounding numbers with toFixed() and Math.round(), and that adding decimals can give results like 9.500000000000002
+
+  # google-forms
+  - id: zvv
+    text: split(), to break text into an array at a separator
+  - id: wn5
+    text: getRange(row, column, numRows, numColumns), to get a range with numbers
+  - id: bd5
+    text: parallel arrays, and returning -1 from a search when nothing is found
+  - id: m1k
+    text: nested loops, using i for the outer loop and j for the inner one
+
+  # objects
+  - id: zar
+    text: 'objects: properties in curly braces, read and changed with dot notation or bracket notation'
+  - id: pfe
+    text: a property that doesn't exist is undefined
+  - id: qwp
+    text: arrays of objects, such as turning the rows of a sheet into member objects
+  - id: p5z
+    text: counting by name with an object, and listing its keys with Object.keys()
+  - id: zkh
+    text: JSON, with JSON.stringify() and JSON.parse()
+  - id: egx
+    text: naming a fixed value in capitals, such as HOURS_COLUMN
+
+  # triggers
+  - id: gq0
+    type: rule
+    text: When code needs a trigger, tell me how to set it up in the Apps Script editor, and how to test it without waiting for the event.
+    with: r3p
+  - id: odi
+    text: simple triggers (onOpen, onEdit) and installable triggers (on form submit, time-driven)
+  - id: cny
+    text: custom menus with SpreadsheetApp.getUi(), createMenu(), addItem() and addToUi()
+  - id: pus
+    text: the event object e, including e.namedValues for a form submission
+  - id: r3p
+    text: testing a trigger function by calling it with a made-up event object
+  - id: yq9
+    text: checking the Executions page when automatic code fails
+  - id: txf
+    text: adding a row with appendRow()
+
+  # email-calendar
+  - id: dnf
+    type: rule
+    text: Before code sends email or changes a calendar, have it log what it would do (a dry run), unless I ask for the real thing.
+    with: xf6
+  - id: b2x
+    text: sending email with MailApp.sendEmail(), and that GmailApp asks for full access to Gmail
+  - id: w11
+    text: \n for a line break in a string
+  - id: sgy
+    text: 'the Date object: new Date(), new Date(year, month, day, hour, minute) with months counting from 0, getFullYear, getMonth, getDate, getDay, and adding days with setDate'
+  - id: l8v
+    text: formatting a date as text with Utilities.formatDate()
+  - id: phr
+    text: creating events with CalendarApp
+  - id: xf6
+    text: dry runs that log instead of acting
+
+  # documents
+  - id: xzi
+    type: rule
+    text: Before code sends email, changes a calendar, or creates, changes or deletes files in Google Drive, have it log what it would do (a dry run) or test it on one item, unless I ask for the real thing.
+    replaces:
+      - dnf
+  - id: i7b
+    text: 'DriveApp: getFileById, getFolderById, makeCopy, createFile and setTrashed, and finding a file''s ID in its web address'
+  - id: len
+    text: 'DocumentApp: create, openById, getBody, replaceText, appendParagraph, setHeading, appendTable and saveAndClose'
+  - id: cqc
+    text: saving a document as a PDF with getAs("application/pdf")
+  - id: k74
+    text: constants declared at the top of the file, outside any function, for settings such as IDs
+  - id: ajf
+    text: keeping calculations in their own functions so they can be tested without creating anything
+
+  # custom-functions
+  - id: ogw
+    text: custom functions typed into a cell like a formula, which receive a range argument as an array of arrays and return a value to the cell
+  - id: qzi
+    text: that Sheets recalculates a custom function only when its arguments change, so data it uses should be passed in as a range
+  - id: lm7
+    text: 'what custom functions can''t do: anything that needs permission, or changing other cells'
+  - id: tkt
+    text: the /** ... */ comment with @param and @customfunction
+
+  # web-services
+  - id: vkq
+    type: rule
+    text: Keep secrets such as webhook addresses and API keys out of the code. Store them in Script Properties.
+    with: uxn
+  - id: myf
+    text: web APIs, query strings, and reading JSON replies
+  - id: bzk
+    text: UrlFetchApp.fetch() and getContentText(), including posting JSON with an options object
+  - id: fzq
+    text: try and catch, and throw to raise an error again so a failure isn't hidden
+  - id: dd0
+    text: incoming webhooks
+  - id: uxn
+    text: PropertiesService.getScriptProperties() for storing secrets
+  - id: c0p
+    text: strings in single quotes, useful when the text contains double quotes
+
+  # web-app
+  - id: c1x
+    type: rule
+    text: When code creates a web page that other people can open, tell me who will be able to see it and what data it shows.
+    with: auv
+  - id: byy
+    text: 'basic HTML: tags such as h1, p, strong, table, tr, th and td, and attributes'
+  - id: szj
+    text: 'web apps in Apps Script: doGet and HtmlService.createHtmlOutput()'
+  - id: auv
+    text: deploying a web app, choosing who can open it, test deployments, and making a new version after changing the code
+  - id: x9c
+    text: using an object as a lookup table, such as bed names by bed ID
+  - id: b2f
+    text: text inserted into HTML is read as HTML
+
+  # web-pages
+  - id: f1h
+    type: environment
+    text: I'm writing web pages with HTML, CSS and JavaScript, and opening them in my web browser.
+  - id: fb8
+    type: rule
+    text: Don't use semicolons at the ends of lines in JavaScript. CSS still needs a semicolon after each property.
+    with: jj5
+    replaces:
+      - bcy
+  - id: sf6
+    type: rule
+    text: When I'm working in Apps Script, put the steps for each task in a function with no parameters that I can run from the editor, and when code needs a trigger, tell me how to set it up and test it.
+    replaces: [z3e, gq0]
+  - id: d3z
+    type: rule
+    text: Keep secrets such as webhook addresses and API keys out of the code. In Apps Script, store them in Script Properties. In a web page, remember that anyone who opens the page can read its code.
+    replaces: [vkq]
+  - id: rj5
+    text: 'the structure of an HTML page: doctype, html, head, title and body'
+  - id: cb0
+    text: 'more HTML: h2, ul, ol, li, a with href, img with src and alt, div and span, and the id and class attributes'
+  - id: jj5
+    text: 'CSS in a style tag: selectors for tags, classes (.name) and ids (#name), and properties such as color, font-family, margin, padding and border'
+  - id: evj
+    text: 'the DOM, and changing a page with a script tag at the end of the body: document.querySelector(), textContent and innerHTML'
+  - id: d30
+    text: opening a page's developer tools (F12) to see the Console and the Elements panel
+
+  # events
+  - id: ou4
+    text: events and addEventListener, with click and input events
+  - id: v5o
+    text: 'passing a function as a value, without parentheses, and anonymous functions written in place: function() { }'
+  - id: lqj
+    text: 'form inputs: input with type text or number, label, and reading value (always a string)'
+  - id: r78
+    text: 'validating input: empty fields, isNaN, and values that make no sense for the problem'
+  - id: ixw
+    text: Math.floor and Math.ceil
+
+  # async
+  - id: dtv
+    text: synchronous and asynchronous code, and why the browser doesn't wait
+  - id: wmk
+    text: promises, async functions and await, and recognizing .then() in other code
+  - id: zu2
+    text: fetch() and await response.json(), checking response.ok, and throw new Error()
+  - id: jhm
+    text: document.createElement(), appendChild() and className
+  - id: yft
+    text: CORS, and why some APIs can't be fetched from a web page
+
+  # automating-pages
+  - id: cks
+    type: rule
+    text: When code runs on a website I don't own, remind me to check the site's terms of use, and keep it to what I could do by hand in my own account.
+    with: n0t
+  - id: hbw
+    text: document.querySelectorAll(), and calling querySelector or querySelectorAll on an element to search inside it
+  - id: n0t
+    text: running code in the developer tools' Console and Snippets
+  - id: wrl
+    text: 'bookmarklets: javascript: addresses, (function() { ... })() to keep variables private, and that one-line code needs semicolons and no // comments'
+  - id: om0
+    text: 'userscripts with Tampermonkey: the metadata block, @match and @run-at'
+  - id: plz
+    text: setting an input's value from code
+  - id: tbv
+    text: making a file to download with Blob, URL.createObjectURL() and a link with a download attribute
+  - id: nzs
+    text: CSV files, and quoting values that contain commas
+
+  # extension
+  - id: h4i
+    type: rule
+    text: When a page sends data that will be stored, check the data where it's stored, not only in the page.
+    with: wyv
+  - id: dkv
+    text: 'Manifest V3 browser extensions: manifest.json, a popup page, host_permissions, loading an unpacked extension, and that JavaScript must be in separate .js files'
+  - id: wyv
+    text: doPost(e), e.postData.contents, and replying with ContentService.createTextOutput()
+  - id: hy5
+    text: 'fetch with method: "POST" and a body'
+  - id: mxk
+    text: reading both halves of a system together, and passing errors back to the person
+
+  # publishing
+  - id: czb
+    text: 'a website as a folder: index.html, and CSS and JavaScript in their own files with link rel="stylesheet" and script src'
+  - id: o6c
+    text: relative and absolute paths, and that file names on web servers are case-sensitive
+  - id: q2r
+    text: publishing a static site for free, such as with Cloudflare's direct upload, and updating it
+  - id: abj
+    text: the Network panel in the developer tools, and 404 errors
+  - id: zie
+    text: that everything in a published site's folder is public, including its code
+
+  # jade
+  - id: ri9
+    type: environment
+    text: I'm writing JavaScript for Microsoft Excel, using the Office JavaScript API (Office.js) in a free Excel add-in called JADE.
+  - id: g12
+    text: 'Office.js in JADE: async function name(excel), where excel is the request context'
+  - id: h8g
+    text: excel.workbook.worksheets.getItem(), worksheets.add(), getRange(), getUsedRange(), and a range's values and numberFormat (arrays of arrays)
+  - id: jmz
+    text: load() before reading a property, and await excel.sync() to send queued requests to Excel
+  - id: r81
+    text: Jade.print(text, heading) and Jade.open_output()
+  - id: lda
+    text: reading arrow functions, such as (context) => { }
+
+  # platform-profile
+  - id: mf6
+    type: rule
+    text: When you're not sure how a tool or platform works, say so instead of guessing.
+  - id: mp7
+    text: recognizing Office.js, Office Scripts, VBA and Apps Script code
+  - id: xgw
+    text: platform profiles, such as my JADE platform profile
+  - id: rmh
+    text: 'JADE canvases: Jade.open_canvas(), tag(), and button handlers wrapped in Jade.automate()'
+  - id: trm
+    text: the Jade.listing comment
+  - id: fzp
+    text: a range's format.fill.color, and getRangeByIndexes() in Office.js
+
+  # excel-app
+  - id: bbt
+    text: select and option elements for drop-down lists
+  - id: j3b
+    text: auto_exec in JADE, and Jade.open_automations()
+  - id: rcn
+    text: storing settings with await Jade.save_object_to_workbook() and await Jade.read_object_from_workbook(), which returns {} when nothing is saved
+  - id: wxs
+    text: 'JADE themes: the fourth argument to Jade.open_canvas(), Jade.set_theme() and Jade.list_themes()'
+  - id: wgg
+    text: redrawing a panel by calling the function that builds it again
+  - id: t6w
+    text: loading only the properties you need, such as rowCount
+
+  # sharing-code
+  - id: zpo
+    type: rule
+    text: Before code loads code or a library from the internet, tell me where it comes from, and use an address with the version in it.
+    with: twd
+  - id: jvn
+    text: jade_modules, for calling functions in another code module
+  - id: wls
+    text: GitHub gists, and the difference between Jade.load_gist (loads the latest version each time) and Jade.import_code_module (copies it once)
+  - id: twd
+    text: loading libraries with await Jade.load_js(url, null), and pinning their versions
+  - id: iun
+    text: drawing a chart with Chart.js on a canvas element
+  - id: jqu
+    text: deciding whether to trust code from elsewhere before it runs
+
+  # office-scripts
+  - id: aqa
+    text: 'Office Scripts: function main(workbook: ExcelScript.Workbook), getWorksheet, getUsedRange, getValues, setValue and setValues, and that it has no load or sync'
+  - id: sim
+    text: 'reading TypeScript: type annotations such as count: number, and that "as number" doesn''t convert a value'
+  - id: dcg
+    text: that Power Automate can run Office Scripts on a schedule
+  - id: kjl
+    text: recognizing VBA
+
+  # airtable
+  - id: gx1
+    type: environment
+    text: I'm writing JavaScript in Airtable's Scripting extension, in my own Airtable base.
+  - id: j2t
+    text: Airtable bases, tables, fields, records, linked records and primary fields
+  - id: qbb
+    text: 'base.getTable(), await table.selectRecordsAsync({ fields: [...] }), and record.getCellValue()'
+  - id: vze
+    text: 'linked record values: arrays of { id, name }, and writing them as [{ id }]'
+  - id: vx0
+    text: output.text(), output.table(), input.textAsync() and input.buttonsAsync()
+  - id: ovf
+    text: 'await table.createRecordAsync(fields), and that a single select is written as { name: "..." }'
+  - id: tfo
+    text: top-level await and return in an Airtable script
+  - id: sv1
+    text: grouping and totaling records by ID, not by name
+
+  # obsidian
+  - id: u3b
+    type: environment
+    text: I'm writing JavaScript in Obsidian, the note-taking app, using the Dataview plugin's DataviewJS code blocks and the Templater plugin.
+  - id: mx0
+    type: rule
+    text: Use array methods such as filter, map, sort and forEach, and chain them when that's clearer, but explain what each step of a chain does.
+    replaces: [tjp, m95]
+    with: l46
+  - id: wz7
+    type: rule
+    text: Write short functions as arrow functions when they're passed to array methods.
+    with: a4y
+  - id: l46
+    text: 'array methods: filter, map, sort, forEach, find, some, every, join and reduce, and chaining them'
+  - id: a4y
+    text: writing arrow functions, including the short form x => x * 2
+  - id: yiy
+    text: for...of loops
+  - id: f1j
+    text: Obsidian vaults, Markdown notes and front matter
+  - id: bvq
+    text: 'DataviewJS: dv.pages(), where, sort by a key, dv.table(), dv.date() and Luxon dates'
+  - id: ono
+    text: 'Templater: tp.system.prompt(), tp.date.now() and tp.file.rename()'
+  - id: thy
+    text: deciding whether to trust a community plugin
+
+  # node
+  - id: s3h
+    type: environment
+    text: I'm writing JavaScript that runs with Node.js on my own computer, editing files in Visual Studio Code and running them in a terminal.
+  - id: zw3
+    text: running a JavaScript file with node filename.js in a terminal
+  - id: bpb
+    text: 'terminal basics: the current working directory, pwd, ls or dir, cd and cd ..'
+  - id: drq
+    text: opening a project folder in VS Code and using its terminal
+  - id: lw7
+    text: reading Node's error messages and stack traces, and stopping a script with Ctrl+C
+  - id: ss1
+    text: that Node has no document or window, because there's no web page
+
+  # node-modules
+  - id: vw9
+    type: rule
+    text: Use ES modules, with import and export, not require and module.exports.
+    with: f5s
+  - id: mlg
+    type: rule
+    text: Prefer built-in JavaScript and Node features to packages when they do the job. When you suggest a package, say how widely used it is.
+    with: cjq
+  - id: f5s
+    text: 'ES modules: export and import, and "type": "module" in package.json'
+  - id: fby
+    text: 'recognizing CommonJS: require() and module.exports'
+  - id: pq3
+    text: object shorthand, such as { bed, kilograms }, and destructuring, such as const { bed } = planting
+  - id: u7k
+    text: package.json, including scripts run with npm run
+  - id: rbq
+    text: npm install, node_modules and package-lock.json
+  - id: olw
+    text: Intl.DateTimeFormat for formatting dates
+  - id: cjq
+    text: checking whether a package is trustworthy before installing it
+
+  # files
+  - id: g2u
+    type: rule
+    text: Before code sends email, changes a calendar, or creates, moves, changes or deletes files, on my computer or in Google Drive, have it show what it would do (a dry run) or test it on one item, unless I ask for the real thing. Check before overwriting a file.
+    with: fhq
+    replaces:
+      - xzi
+  - id: fhq
+    text: 'the fs module: readFileSync, writeFileSync, appendFileSync, readdirSync, statSync, existsSync, mkdirSync with recursive, and renameSync to move a file'
+  - id: oxv
+    text: the async versions in node:fs/promises
+  - id: bft
+    text: path.join, and that relative paths depend on the current working directory (process.cwd())
+  - id: pcy
+    text: 'importing named functions: import { readFileSync } from "node:fs"'
+  - id: r1z
+    text: array destructuring, rest (...rest) and spread ([...list])
+  - id: wd6
+    text: 'string methods: split, trim, toLowerCase, startsWith, endsWith and padStart; and array slice'
+
+  # data-files
+  - id: mno
+    type: rule
+    text: After code combines, cleans or converts data, have it print counts or totals I can check.
+    with: fwc
+  - id: ayd
+    text: reading and writing JSON files with fs, JSON.parse and JSON.stringify
+  - id: x1e
+    text: CSV files, quoting, why split(",") fails on quoted commas, and packages such as csv-parse and papaparse
+  - id: cze
+    text: normalizing data from different sources into one shape
+  - id: fwc
+    text: checking a merge with counts and totals
+  - id: d84
+    text: writing Excel files with the exceljs package
+  - id: psq
+    text: top-level await in ES modules
+
+  # charts
+  - id: xxq
+    type: rule
+    text: Before writing code for a chart, tell me what question it answers, and suggest a chart that shows the data honestly.
+    with: mv0
+  - id: ntk
+    text: loading ES modules in a web page with script type="module" and import from a CDN such as jsDelivr
+  - id: k0z
+    text: 'Arquero: aq.from(), groupby, rollup with aq.op.sum and others, orderby with aq.desc, and objects()'
+  - id: gpj
+    text: 'Observable Plot: Plot.plot() with barY, dot, text and ruleY marks, and axis options such as label and domain'
+  - id: mv0
+    text: choosing a chart for a question, and showing every point when there are few
+  - id: usk
+    text: 'an arrow function that returns an object: x => ({ ... })'
+  - id: skf
+    text: that DuckDB can run SQL on CSV and JSON files
+
+  # cli
+  - id: zxl
+    type: rule
+    text: When a script reads files that live next to it, find them from the script's folder, not the current working directory.
+    with: k3i
+  - id: d74
+    text: process.argv, and parseArgs from node:util for command-line options
+  - id: avd
+    text: the ?? operator, and how it differs from ||
+  - id: gek
+    text: 'the conditional operator: condition ? a : b'
+  - id: k3i
+    text: import.meta.url, import.meta.dirname, fileURLToPath and dirname
+  - id: bp7
+    text: 'making a command: the shebang line, bin in package.json and npm link'
+  - id: k6p
+    text: asking a question in the terminal with node:readline/promises
+  - id: pq2
+    text: scheduling with Windows Task Scheduler (schtasks) or cron, and saving output with >>
+
+  # playwright
+  - id: i7x
+    type: rule
+    text: When code visits websites automatically, pause between requests, and remind me to check the site's terms, its robots.txt, and whether it offers an official data source.
+    with: m8e
+  - id: u6b
+    text: 'Playwright: chromium.launch(), newPage(), goto(), screenshot(), setViewportSize(), locator() with count(), getAttribute() and textContent(), and waitForTimeout()'
+  - id: kiy
+    text: that the function given to page.$$eval runs inside the browser page and can't use the Node script's variables
+  - id: o8g
+    text: npx, for running a command that comes with a package
+  - id: hbo
+    text: new URL(relative, base) for turning a relative link into a full address
+  - id: m8e
+    text: web scraping, and when it's appropriate
+
+  # ai-api
+  - id: aqm
+    type: rule
+    text: When code calls an AI model, have the code calculate any numbers and pass them in, tell the model not to add facts, and have a person review the output before it's used anywhere.
+    with: uop
+  - id: fut
+    type: rule
+    text: Keep secrets such as API keys in a .env file, loaded with node --env-file=.env and read from process.env.
+    with: wmx
+  - id: xnt
+    text: 'calling an AI model''s API with fetch: headers, a model name, messages, and reading the reply''s content blocks'
+  - id: wmx
+    text: API keys, environment variables, process.env, .env files and .gitignore
+  - id: r9o
+    text: tokens, and estimating what a call costs
+  - id: uop
+    text: hallucinations, and designing code so that the code calculates, the model writes, and a person checks
+  - id: ahx
+    text: Object.entries() and Object.values(), and destructuring in a function's parameters
+
+  # n8n
+  - id: r0j
+    type: rule
+    text: In n8n's Code node, use $input.all() or $input.first(), and return items as objects with a json property.
+    with: xuh
+  - id: xuh
+    text: 'n8n: running it with npx n8n, workflows, triggers, nodes and items'
+  - id: nxh
+    text: expressions such as {{ $json.field }}
+  - id: cdj
+    text: the Schedule Trigger, HTTP Request, Code and IF nodes, and n8n credentials for secrets
+  - id: ssq
+    text: that older n8n examples use a Function node and an items variable
+  - id: lj2
+    text: localhost, a server running on my own computer
+  - id: uko
+    text: choosing between a workflow tool and a script
+
+  # http
+  - id: q99
+    type: environment
+    text: 'I''m building web servers and web APIs with JavaScript: first with Node.js on my own computer, then online with Cloudflare Workers.'
+  - id: kpp
+    type: rule
+    text: When designing or building a web API, follow REST conventions, use fitting status codes, and never send personal data such as emails in responses that anyone could request.
+    with: kt7
+  - id: nmg
+    text: 'HTTP requests and responses: methods, addresses, headers, bodies and status codes'
+  - id: dhd
+    text: status code groups (2xx, 3xx, 4xx, 5xx) and common codes such as 200, 201, 204, 400, 401, 403, 404, 409, 429 and 500
+  - id: ftc
+    text: GET, POST, PUT, PATCH and DELETE, and that a GET must not change anything
+  - id: kt7
+    text: REST API design, with path parameters such as /shifts/:id
+  - id: hhn
+    text: response.headers, and response.text()
+  - id: ssx
+    text: curl, and curl.exe in PowerShell
+
+  # express
+  - id: bx4
+    type: rule
+    text: When starting a server on my computer, listen on 127.0.0.1 unless I ask otherwise.
+    with: gt4
+  - id: d33
+    text: 'Express: app.get, app.post and app.delete routes, req.params, req.body with express.json(), res.json(), res.status() and res.end()'
+  - id: c3k
+    text: serving files with express.static
+  - id: gt4
+    text: app.listen with a port and 127.0.0.1, and what localhost and ports are
+  - id: z6y
+    text: 'object spread: { ...object, name: value }'
+  - id: iio
+    text: findIndex and splice
+  - id: dxz
+    text: testing an API with a script that uses fetch
+
+  # database
+  - id: mha
+    type: rule
+    text: Always pass values into SQL with $1, $2 placeholders. Never build SQL text from values that came from outside the code.
+    with: aid
+  - id: lxv
+    type: rule
+    text: In SQL, name tables and columns in snake_case, and turn rows into objects with camelCase names in JavaScript.
+    with: c5i
+  - id: lam
+    text: 'PGlite (PostgreSQL in Node): new PGlite(folder), exec, query with $1 placeholders, result.rows, transaction, and close'
+  - id: owt
+    text: 'SQL: CREATE TABLE, INSERT with RETURNING, SELECT with WHERE, ORDER BY, COUNT, SUM, GROUP BY, JOIN and LEFT JOIN, and DELETE'
+  - id: oh2
+    text: 'constraints: PRIMARY KEY, NOT NULL, UNIQUE and REFERENCES, and ids with GENERATED BY DEFAULT AS IDENTITY'
+  - id: heb
+    text: transactions, and Postgres error codes such as 23505 (a unique rule broken)
+  - id: c5i
+    text: Postgres turns unquoted names into lowercase, and end is a reserved word, so it's written "end"
+  - id: aid
+    text: SQL injection, and why placeholders prevent it
+
+  # workers
+  - id: ffj
+    type: rule
+    text: When moving code to a new platform, ask me for the old code or a full list of its rules before rewriting it.
+  - id: v5k
+    text: 'serverless, and Cloudflare Workers: export default { async fetch(request, env) }, and building Response objects'
+  - id: fzw
+    text: 'D1: env.DB.prepare(sql).bind(values), with first(), all() and run(), and result.meta.last_row_id and result.meta.changes'
+  - id: fce
+    text: 'Wrangler: login, d1 create, d1 execute with --local and --remote, dev and deploy, and wrangler.jsonc'
+  - id: xgh
+    text: routing by splitting the URL's path
+  - id: la3
+    text: random tokens with crypto.randomUUID(), to protect actions on a public API
+
+  # full-stack
+  - id: jf2
+    text: 'full-stack apps: front end, back end and database'
+  - id: vly
+    text: serving a page and an API from one Worker, with "assets" in wrangler.jsonc
+  - id: m2d
+    text: 'localStorage: setItem and getItem, storing JSON, and its limits'
+  - id: w5l
+    text: the submit event and event.preventDefault()
+  - id: vve
+    text: testing a whole app in a browser with Playwright, waiting for the page with waitForSelector
+
+  # discord
+  - id: r2h
+    type: rule
+    text: When a platform sends requests to my code, verify that each request really comes from it before doing anything else.
+    with: w2w
+  - id: qdb
+    text: 'slash commands: the platform calling my code, and replying with type 1 to a ping and type 4 with a message'
+  - id: w2w
+    text: digital signatures, and verifying Discord's Ed25519 signatures with crypto.subtle
+  - id: ql0
+    text: reading a request's raw body with request.text() before parsing it
+  - id: puz
+    text: hex text and parseInt(text, 16)
+  - id: bpa
+    text: registering commands with a bot token kept in .env, and wrangler secret put
+  - id: jyt
+    text: SQL HAVING, to filter groups after counting
+  - id: j1e
+    text: how Telegram and Slack bots compare
+
+  # tour
+  - id: gt1
+    text: 'other places JavaScript runs: Scriptable, Figma and Penpot plugins, Zapier and Make, JXA on a Mac, Deno and Bun, Electron and Tauri, React Native and Expo, and p5.js'
+  - id: ijs
+    text: writing starter prompts to begin learning a new platform

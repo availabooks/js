@@ -291,7 +291,9 @@ concepts.
 
 ## Creative Coding: p5.js
 
+::: {.gt1}
 **p5.js** is a free library for drawing, animation and interactive art in the browser, with a friendly online editor at editor.p5js.org, built for artists, designers and beginners. It's a very different use of the same language, and a fun one: a garden that grows on screen as the harvest totals come in, for example.
+:::
 
 ```{.code environment="none"}
 Using p5.js in the online editor, draw eight raised garden beds as
@@ -322,15 +324,13 @@ Each starter prompt above follows the same pattern, and you can write your own f
 - **Ask for a small, real example,** preferably one you care about.
 - **Ask what the assistant is unsure of,** which is especially important for less common platforms.
 
+::: {.ijs}
 Then do what you did with JADE: check the reply against the platform's documentation, collect what you learn into a platform profile, and add a line each time you catch a mistake.
+:::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="tour"}
-Add to "What I know so far":
-
-- other places JavaScript runs: Scriptable, Figma and Penpot plugins, Zapier and Make, JXA on a Mac, Deno and Bun, Electron and Tauri, React Native and Expo, and p5.js
-- writing starter prompts to begin learning a new platform
+::: {.learner-profile}
 :::
 
 ## Summary

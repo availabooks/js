@@ -299,10 +299,12 @@ The math isn't wrong in any way that matters for a garden. The problem is only h
 
 Both options are worth knowing:
 
+::: {.vv3}
 - **`toFixed(1)`** is a number method that rounds to one decimal place and gives back a *string*: `(9.500000000000002).toFixed(1)` is `"9.5"`. It always shows exactly that many decimals, so 10 becomes `"10.0"`. It's the simplest choice for displaying a number.
 - **`Math.round()`** rounds to the nearest whole number. To round to one decimal place, multiply by 10, round, and divide by 10: `Math.round(9.500000000000002 * 10) / 10` is `9.5`. The result is still a *number*, so you can keep calculating with it.
 
 `Math` is a built-in collection of math tools, which you use like `SpreadsheetApp`: `Math.round(...)`, and others such as `Math.max(...)` and `Math.min(...)`.
+:::
 
 Here's the logging line changed to use `toFixed`, in the version of the function you'd keep:
 
@@ -356,10 +358,7 @@ Later, the club will outgrow a single spreadsheet, and you'll follow it onto oth
 
 One small addition:
 
-::: {.ai-profile lesson="case"}
-Add to "What I know so far":
-
-- rounding numbers with toFixed() and Math.round(), and that adding decimals can give results like 9.500000000000002
+::: {.learner-profile}
 :::
 
 The garden context isn't part of the profile. As with the Members sheet description in [Arrays](arrays){.book-link}, the profile describes you, and the garden context describes the club's data. Paste them one after the other when you ask about the garden.

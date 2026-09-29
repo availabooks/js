@@ -50,7 +50,9 @@ The page then *links* to them:
 
 Separate files are easier to work with as a site grows. Several pages can share one stylesheet, so changing the club's colors means changing one file. You've already met one place that requires this: the extension in [Building a Browser Extension](extension){.book-link}.
 
+::: {.czb}
 One file name is special. **`index.html`** is the page a web server sends when someone visits the site's address without naming a page, so every site's home page is called `index.html`.
+:::
 
 ### Relative paths
 
@@ -128,9 +130,11 @@ The Cloudflare dashboard's create-project screen with the option to upload a fol
 
 A few things come with the free address automatically:
 
+::: {.q2r}
 - **HTTPS.** The address starts with `https://`, and the connection is encrypted. You don't have to set anything up.
 - **Updates.** To change the site, edit the files on your computer, then upload the folder again as a new deployment. The address stays the same.
 - **Your own domain, optionally.** An address like `collegecommunitygarden.org` costs money, about $10 to $20 a year at the time of writing, and can be connected to the free hosting. It's not needed.
+:::
 
 ## When It Works on Your Computer but Not Online
 
@@ -156,14 +160,18 @@ A very common first experience with publishing: the site is online, but it looks
 
 That's exactly right. `C:\Users\maya\Desktop\club\` exists on one computer. The fix is `href="style.css"` and `src="garden.jpg"`. Some code editors insert absolute paths when you drag a file in, so it's worth checking.
 
+::: {.o6c}
 Another difference catches people out. On Windows and Mac computers, file names usually aren't case-sensitive, so `Garden.JPG` and `garden.jpg` are the same file. On most web servers they're different files. A page that says `src="garden.jpg"` for a file named `Garden.JPG` works on your computer and breaks online. The simplest habit: use lowercase file names, with hyphens instead of spaces, like `plant-spacing.html`.
+:::
 
 ### Finding what's missing
 
 The developer tools will tell you exactly which files failed. Open them on the published site, and:
 
+::: {.abj}
 - **Console** lists errors, including files that couldn't be loaded.
 - **Network** lists every file the page asked for, with its status. Reload the page with the Network panel open. A file shown in red, with the status **404**, wasn't found. Its address shows you where the browser looked.
+:::
 
 ::: {.screenshot-needed file="images/publishing-network-404.png"}
 Chrome's Network panel after reloading a page, with style.css and garden.jpg shown in red with status 404.
@@ -177,9 +185,11 @@ Chrome's Network panel after reloading a page, with style.css and garden.jpg sho
 
 The assistant's note about who can see the site is worth repeating in full. Publishing a site sends every file in the folder to anyone who asks for it. That includes:
 
+::: {.zie}
 - **Your code.** Anyone can read your HTML, CSS and JavaScript in the developer tools. That's normal on the web, but it means a web page can never hold a secret, such as an API key or a webhook address.
 - **Every file in the folder,** even ones no page links to. If a spreadsheet of members' contact details is sitting in the folder, it's online too, for anyone who guesses its name. Keep the site's folder for the site's files only.
 - **Anything in the pages.** Before publishing, read the site as a stranger would. Members' names, phone numbers and schedules don't belong on a public page without their permission.
+:::
 
 ## The Club's Site
 
@@ -284,14 +294,7 @@ This version builds the workday list with `createElement` and `textContent` inst
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="publishing"}
-Add to "What I know so far":
-
-- a website as a folder: index.html, and CSS and JavaScript in their own files with link rel="stylesheet" and script src
-- relative and absolute paths, and that file names on web servers are case-sensitive
-- publishing a static site for free, such as with Cloudflare's direct upload, and updating it
-- the Network panel in the developer tools, and 404 errors
-- that everything in a published site's folder is public, including its code
+::: {.learner-profile}
 :::
 
 ## Summary

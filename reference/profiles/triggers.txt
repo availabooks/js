@@ -18,7 +18,7 @@ What I know so far:
 - joining strings with +
 - numbers and the arithmetic operators + - * /
 - comments that start with //
-- giving a value a name with let, for example let name = "Ava"
+- giving a value a name with let, for example let student = "Ava"
 - reading error messages
 - what a function is: a named group of steps written as function name() { }
 - choosing which function to run in the Apps Script editor

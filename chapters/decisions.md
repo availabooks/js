@@ -152,7 +152,11 @@ console.log("Ava" === "ava")
 console.log("12" === 12)
 ```
 
+::: {.n8s}
+
 Two of these results are worth a second look. `"Ava" === "ava"` is false, because comparing strings is exact, and capital letters count. And `"12" === 12` is false, because one is a string and the other is a number. `===` only says two values are equal if they're the same type *and* the same value.
+
+:::
 
 ### === and ==
 
@@ -415,12 +419,20 @@ The assistant offered a fix, and suggested checking `rawHours === ""` before con
 > - **"abc" (text)** → this would still slip through to the number conversion and become `NaN`, which would end up as `"Low"` since `NaN >= 20` and `NaN >= 10` are both `false`. Let me know if you'd like to handle that case too!
 :::
 
+::: {.w5b}
+
 **Read.** The new part is an `if` whose `else` block contains another `if` chain. Putting one `if` inside another's block is called **nesting**. Read it from the outside in:
 
 - If `rawHours` is the empty string, `result` becomes "No data", and the whole `else` block is skipped.
 - Otherwise, the code converts the value and runs the familiar High, Medium, Low chain.
 
+:::
+
+::: {.q81}
+
 The order is the important part. The empty check has to come *before* the conversion, because once `""` has become 0, you can't tell an empty cell from a real zero anymore.
+
+:::
 
 Notice the end of the reply, too. Without being asked, the assistant pointed out another edge case: text such as "abc" becomes `NaN`, and `NaN` fails every comparison, so it would be labeled Low. That's worth knowing, even if you decide it's unlikely in this sheet.
 
@@ -553,23 +565,17 @@ if (!duesPaid) {
 }
 ```
 
+::: {.svn}
+
 You'll see `!` often in AI code, especially with booleans. It's short, but when you're reading carefully, `=== false` is harder to misread. Either is fine.
+
+:::
 
 ## Your Learner Profile
 
 You can now write code that makes decisions. Here's the update:
 
-::: {.ai-profile lesson="decisions"}
-Add rules:
-
-- Compare values with === and !==. Don't use == or !=.
-
-Add to "What I know so far":
-
-- if, else if and else, including an if inside another if's block
-- the comparison operators === !== > < >= <=
-- the logical operators && (and), || (or) and ! (not)
-- checking for an empty cell with === "" before converting a value
+::: {.learner-profile .r8u}
 :::
 
 What's new:

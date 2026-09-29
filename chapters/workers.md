@@ -36,7 +36,7 @@ export default {
 
 `request` is a standard **Request** object, the same kind `fetch` sends, and the function returns a standard **Response**, the same kind `fetch` receives. So everything you learned about requests and responses in [How the Web Works](http){.book-link} applies directly. `env` holds the Worker's **bindings**: connections to other Cloudflare services, such as a D1 database.
 
-::: {.term}
+::: {.term .v5k}
 > **Binding** — In a Cloudflare Worker, a named connection to a resource such as a D1 database, available in the code as a property of `env`, such as `env.DB`.
 :::
 
@@ -339,9 +339,13 @@ The reply stopped in the middle of a function. Long replies sometimes do, when t
 
 **Read the setup first.** Wrangler, Cloudflare's command-line tool, does the work: `wrangler login` connects it to your account, `wrangler d1 create` makes a database, a configuration file connects the database to the Worker as the binding `DB`, and `wrangler d1 execute` runs SQL files against the database, first a *local* copy for testing, then the real, *remote* one. `wrangler dev` runs the Worker on your own computer, with the local database, and `wrangler deploy` puts it online. The advice to test locally, then check counts in the real database after deploying, is exactly right.
 
+::: {.fce}
 Two details in the setup are dated: the configuration file. New Cloudflare projects now usually use `wrangler.jsonc`, the same settings in JSON, and the `compatibility_date` should be a recent date, which the reply mentions. The older `wrangler.toml` still works.
+:::
 
+::: {.fzw .xgh}
 **Then the code.** The Worker's `fetch` handler does its own routing: it splits the address's path into parts, `/shifts/6/signups` becoming `["shifts", "6", "signups"]`, and checks the method and parts to decide which function handles the request. Each function is the Express route's logic with D1's methods: `env.DB.prepare(sql).bind(values).first()` for one row, `.all()` for many, and `.run()` for changes, all awaited, because D1 is a service across the network. Instead of `res.json()`, a small `json` helper builds a `Response` with the status and a `content-type` header.
+:::
 
 ### What was lost in the move
 
@@ -351,7 +355,9 @@ Compare this with the API you designed and built, and several things changed tha
 - **`spotsFilled` became `signupCount`.** The sign-up page from [A Server with Node and Express](express){.book-link} reads `shift.spotsFilled`. With the new name, it would show "NaN spots left." Each half works; together they don't, the lesson from [Building a Browser Extension](extension){.book-link}.
 - **The data never arrives.** The reply creates the tables, but never loads the members and shifts into them.
 
+::: {.ffj}
 None of this is carelessness. The request said "the routes and rules stay the same," but the assistant, in a new chat, didn't know what the rules *were*: your request listed some and not others. When you move code to a new platform, give the assistant the whole thing: the old code, or a complete list of every rule. "The same as before" means nothing to a chat that wasn't there before.
+:::
 
 ## A Public API Needs Protection
 
@@ -362,7 +368,7 @@ The reply's own warning points to the biggest change of all: on your computer, o
 
 The second is a real limitation, which a login system would fix, and is beyond this book. The first has a simple fix: when someone signs up, give them a **cancel code**, a long random string that only they receive, and require it to cancel. A number can be guessed; `crypto.randomUUID()`, built into Workers and Node, makes a string like `3b9f0c7e-5a8d-4e1f-9c2b-7d4e6a1f8b30`, which can't be.
 
-::: {.term}
+::: {.term .la3}
 > **Random token** — A long, unguessable random string, such as one from `crypto.randomUUID()`, given to one person as proof that they're allowed to do something, like cancel their own sign-up.
 :::
 
@@ -569,18 +575,7 @@ If the sign-up page from [A Server with Node and Express](express){.book-link} s
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="workers"}
-Add rules:
-
-- When moving code to a new platform, ask me for the old code or a full list of its rules before rewriting it.
-
-Add to "What I know so far":
-
-- serverless, and Cloudflare Workers: export default { async fetch(request, env) }, and building Response objects
-- D1: env.DB.prepare(sql).bind(values), with first(), all() and run(), and result.meta.last_row_id and result.meta.changes
-- Wrangler: login, d1 create, d1 execute with --local and --remote, dev and deploy, and wrangler.jsonc
-- routing by splitting the URL's path
-- random tokens with crypto.randomUUID(), to protect actions on a public API
+::: {.learner-profile}
 :::
 
 The new rule captures what went wrong in the move: an assistant can't keep rules it was never shown.

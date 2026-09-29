@@ -22,7 +22,7 @@ Over the last few lessons you've built the pieces of the club's sign-up system s
 - **The back end**: the API on a server, which decides what's allowed.
 - **The database**: where the data lives, and where the rules that matter most are enforced.
 
-::: {.term}
+::: {.term .jf2}
 > **Full-stack app** — An application with a front end in the browser, a back end on a server, and a database, working together. *Front end* and *back end* are also used on their own for those two sides.
 :::
 
@@ -322,7 +322,9 @@ Following the rule you added in the last lesson, the request starts with the Wor
 
 This is a very good reply, and much of that is because the request had everything in it. The assistant could see the API's rules and field names, so it kept every one, and it noticed that the Worker needed no changes at all.
 
+::: {.vly}
 **Read the configuration first.** The one change to `wrangler.jsonc` is `"assets": { "directory": "./public" }`. With it, Cloudflare serves the files in `public` directly: a request for `/` gets `index.html`, and `/script.js` gets the script. Any request that doesn't match a file goes on to the Worker's `fetch` function, which handles the API. The assistant was honest about not knowing every detail of this newer feature, and told you exactly what to test. (It works as described.)
+:::
 
 **Then the page.** It's HTML you know: a table of shifts, a form with a drop-down of shifts and an email box, and a list for "my sign-ups."
 
@@ -331,14 +333,16 @@ This is a very good reply, and much of that is because the request had everythin
 - **`loadMySignups` and `saveMySignups`** use **`localStorage`**, which you haven't met: a small store of text, kept by the browser for each website. `localStorage.setItem(key, text)` saves, and `getItem(key)` reads, giving `null` when nothing's there. It only holds strings, so the array of sign-ups is saved as JSON, the same idea as saving objects in the workbook in [Building an Application in Excel](excel-app){.book-link}.
 - **`loadShifts`** fetches `/shifts`, a relative address, which works because the page and the API now share one.
 - **The three `render` functions** each clear part of the page and rebuild it from data, and **`refreshPage`** calls all three. After any change, the page rebuilds everything from the server's current data, the redraw pattern from the JADE app.
-- **The form** uses the **`submit`** event, which happens when a form's button is clicked or Enter is pressed. **`event.preventDefault()`** stops the browser's normal behavior, which would be to leave the page and send the form somewhere, so the script can send it with `fetch` instead.
+- [**The form** uses the **`submit`** event, which happens when a form's button is clicked or Enter is pressed. **`event.preventDefault()`** stops the browser's normal behavior, which would be to leave the page and send the form somewhere, so the script can send it with `fetch` instead.]{.w5l}
 - **Only after the server says yes** does the script save the cancel code, and only after a 204 does cancelling remove it. The browser's record follows the server, never the other way around.
 
 ::: {.term}
 > **localStorage** — A small store in the browser, kept separately for each website, where a page can save text with `setItem` and read it back with `getItem`, even after the browser is closed.
 :::
 
+::: {.m2d}
 **The limits are spelled out** in the "Who can see this" section, and they're worth repeating. The cancel codes live in one browser: on another device, or after clearing the browser's data, "My sign-ups" is empty. And anyone using the same browser could cancel those sign-ups. For a club, that's an acceptable trade. A system where the same person can manage their sign-ups from anywhere needs a login, which is beyond this book.
+:::
 
 One small thing to notice: `renderShiftsTable` fills each row with `innerHTML`. The values come from the club's own database, set by the club, so it's safe here. If the table ever showed text that visitors typed, it would need `textContent` or `createElement`, the rule from [How Web Pages Work](web-pages){.book-link}.
 
@@ -413,20 +417,15 @@ non-member: That email doesn't belong to a club member
 
 Every layer checked at once: the page loaded eight shifts from the database; signing up with `Jordan.Lee@example.com`, in capitals, worked, because the API compares emails in lowercase; the shift's spots left dropped from 3 to 2; the sign-up appeared in "My sign-ups" from `localStorage`; the Cancel button removed it; and a non-member got the server's own error message.
 
+::: {.vve}
 One detail in the test is worth knowing. The line `await page.waitForSelector("#my-signups-list li button")` waits for the Cancel button to appear. The first version of this test didn't wait, and read the list too soon, while the page was still refreshing it, so it reported no sign-ups even though the sign-up had worked. Tests of a page have to wait for the page, just as code that fetches has to `await`. Playwright's waiting methods exist for exactly this.
+:::
 
 When it all works, `npx wrangler deploy` publishes the app, page and API together, at one `workers.dev` address. Run the remote `d1 execute` commands from the last lesson first, if you haven't. Then send the address to a club member and ask them to sign up from their phone.
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="full-stack"}
-Add to "What I know so far":
-
-- full-stack apps: front end, back end and database
-- serving a page and an API from one Worker, with "assets" in wrangler.jsonc
-- localStorage: setItem and getItem, storing JSON, and its limits
-- the submit event and event.preventDefault()
-- testing a whole app in a browser with Playwright, waiting for the page with waitForSelector
+::: {.learner-profile}
 :::
 
 ## Summary

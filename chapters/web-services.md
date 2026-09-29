@@ -45,7 +45,9 @@ Open that address in your browser, and you'll see the reply: JSON. Here's a real
 {"latitude":40.256767,"longitude":-111.66114,"generationtime_ms":0.05125999450683594,"utc_offset_seconds":-21600,"timezone":"America/Denver","timezone_abbreviation":"GMT-6","elevation":1427.0,"daily_units":{"time":"iso8601","precipitation_sum":"mm"},"daily":{"time":["2026-09-26","2026-09-27","2026-09-28"],"precipitation_sum":[0.00,0.00,1.70]}}
 ```
 
+::: {.myf}
 (That reply asked for three days, with `&forecast_days=3` added to the address. Without it, you get seven.) The part you need is `daily`: an object with two arrays, `time` with the dates and `precipitation_sum` with the rain in millimeters. They're parallel arrays, like the ones in [Google Forms](google-forms){.book-link}: the rain for `time[1]` is `precipitation_sum[1]`.
+:::
 
 ## Getting the Forecast
 
@@ -152,7 +154,9 @@ function rainForDate(responseText, dateText) {
 }
 ```
 
+::: {.c0p}
 The string is in single quotes, `'...'`, because the JSON inside it is full of double quotes. Either kind of quote can start a string, as long as the same kind ends it. Try other dates, including one that isn't in the reply.
+:::
 
 Separating `rainForDate` from the part that fetches is the same habit as in [Generating Documents](documents){.book-link}: the calculating part can be tested anywhere, and the part that talks to the outside world stays small.
 
@@ -262,7 +266,9 @@ console.log("The program carries on")
 
 The assistant's explanation of *what* can fail is good: an unreachable service, an error from the service, and a reply in an unexpected shape. But look at what its `catch` block does with the error: it logs it. For a script run by a trigger, that's worse than doing nothing. Without `try`, a failure would stop the script and show up as *Failed* on the Executions page. With this `catch`, the script finishes normally, the run is marked *Completed*, and the only trace of the problem is a line in a log that nobody reads. The assistant said the catch keeps the script from "crashing silently," but it actually makes the failure quieter.
 
+::: {.fzq}
 Catching an error is only useful if you *do* something with it: tell someone, try again, or use a sensible fallback. The assistant's closing offer, to email you when the fetch fails, is the right idea. Another option is to log the error and then let it continue to the Executions page, with `throw error` at the end of the `catch` block. `throw` raises an error on purpose, so the run is marked as failed and, if you asked for failure notifications when you set up the trigger, Google emails you.
+:::
 
 ```{.code}
 function checkForecast() {
@@ -388,14 +394,16 @@ The club talks in a Discord channel, so the most useful place for a watering ale
 
 **Read.** Two new ideas:
 
+::: {.bzk .uxn}
 - **Sending, not just getting.** `UrlFetchApp.fetch` takes a second argument, an options object. `method: "post"` means "I'm sending something," `contentType` says it's JSON, and `payload` is the message itself, turned into JSON text. Discord expects an object with a `content` property holding the message, a detail the assistant knew from Discord's documentation.
 - **Script Properties.** The webhook address isn't in the code. It's stored in the project's settings, and `PropertiesService.getScriptProperties().getProperty("DISCORD_WEBHOOK_URL")` reads it when the script runs.
+:::
 
 The assistant applied your dry-run rule to Discord, too, even though the rule doesn't name it: `postToDiscord` logs the message, and the real request is commented out. That's a sensible reading of the rule's intent.
 
 Its suggestion for testing, temporarily changing the `if` to `if (true)`, works, but it's easy to forget to change back. A cleaner way, now that the reading is in its own function, is to test the decision with made-up rain amounts, as you did with `rainForDate`.
 
-::: {.term}
+::: {.term .dd0}
 > **Webhook** — A web address that another service gives you, so your code can send it data. An *incoming* webhook posts what you send as a message in a chat channel.
 :::
 
@@ -413,19 +421,7 @@ The Apps Script Project Settings page, scrolled to Script Properties, with one p
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="web-services"}
-Add rules:
-
-- Keep secrets such as webhook addresses and API keys out of the code. Store them in Script Properties.
-
-Add to "What I know so far":
-
-- web APIs, query strings, and reading JSON replies
-- UrlFetchApp.fetch() and getContentText(), including posting JSON with an options object
-- try and catch, and throw to raise an error again so a failure isn't hidden
-- incoming webhooks
-- PropertiesService.getScriptProperties() for storing secrets
-- strings in single quotes, useful when the text contains double quotes
+::: {.learner-profile .vkq}
 :::
 
 The new rule makes keeping secrets out of the code the default, so you don't have to remember to ask.

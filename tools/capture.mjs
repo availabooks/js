@@ -8,6 +8,8 @@
 //   node tools/capture.mjs --lesson ai-assistant --name sum-1-to-10 --continue --turn "Try again. Use only what I know."
 //
 // --profile <lesson-id|none>  sends reference/profiles/<lesson-id>.txt as the first message, as a reader would paste it
+// --profile here              sends the profile a reader has at this conversation's block in the lesson (the first
+//                             ::: {.ai-conversation} with transcript="<lesson>/<name>"), from skills.yaml and the tags before it
 // --turn <text>               a message to send; repeat for several turns
 // --continue                  add turns to the latest attempt instead of starting a new attempt
 // --model <id>                override the default model (a gemini-* id uses the Gemini API)
@@ -19,6 +21,8 @@
 import fs from "node:fs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import { createRequire } from "node:module"
+import crypto from "node:crypto"
 import Anthropic from "@anthropic-ai/sdk"
 
 // pinned so every reply in the book comes from the same model; Sonnet is the
@@ -161,6 +165,33 @@ async function profileOpening(model, profile, profileText) {
     { role: "assistant", text: result.reply, modelVersion: result.modelVersion }]
 }
 
+// The learner profile at a conversation block: skills taught in earlier lessons
+// (alpha order) plus the lesson's tags that close before the block starts.
+function profileHere(lesson, name) {
+  const require = createRequire(import.meta.url)
+  const repoRoot = path.resolve(bookDir, "..", "..")
+  const { loadSkills, taughtInFromMarkdown } = require(path.join(repoRoot, "tools", "author-tools", "skills.js"))
+  const { sourceBaseForChapterId } = require(path.join(repoRoot, "tools", "author-tools", "book.js"))
+  const { profileText, idsBeforeChapter } = require(path.join(repoRoot, "tools", "system-files", "dev", "learner-profile.js"))
+  const skills = loadSkills(bookDir)
+  if (!skills) fail("--profile here needs a skills.yaml.")
+  const config = JSON.parse(fs.readFileSync(path.join(bookDir, "config.json"), "utf8"))
+  const chapters = config.versions.alpha.chapters
+  const index = chapters.findIndex(chapter => chapter.id === lesson)
+  if (index < 0) fail(`No lesson ${lesson} in the alpha version.`)
+  const { taughtIn, tagsByChapter } = taughtInFromMarkdown(bookDir, skills.catalog, chapters, id => sourceBaseForChapterId(bookDir, id))
+  const file = path.join(bookDir, "chapters", `${sourceBaseForChapterId(bookDir, lesson)}.md`)
+  const lines = fs.readFileSync(file, "utf8").replace(/\r\n/g, "\n").split("\n")
+  const blockLine = lines.findIndex(line => /^:{3,}\s*\{[^}]*\.ai-conversation\b/.test(line) && line.includes(`transcript="${lesson}/${name}"`))
+  if (blockLine < 0) fail(`No ai-conversation block with transcript="${lesson}/${name}" in ${path.relative(bookDir, file)}. Add the block first.`)
+  const data = { ...skills.catalog, taughtIn }
+  const ids = new Set(idsBeforeChapter(data, index))
+  for (const tag of tagsByChapter[lesson]) {
+    if (tag.line < blockLine && taughtIn[tag.id] === index) ids.add(tag.id)
+  }
+  return profileText(data, ids)
+}
+
 async function capture(args) {
   if (!args.lesson || !args.name) fail("--lesson and --name are required.")
   if (args.turns.length === 0) fail("Give at least one --turn.")
@@ -187,7 +218,12 @@ async function capture(args) {
     const profile = args.profile || "none"
     attempt = { profile, model, captured: new Date().toISOString(), messages: [] }
     record.attempts.push(attempt)
-    if (profile !== "none") {
+    if (profile === "here") {
+      const profileText = profileHere(args.lesson, args.name)
+      // cached by the text itself, since many blocks share the same profile
+      const cacheName = `here-${crypto.createHash("sha1").update(profileText).digest("hex").slice(0, 12)}`
+      attempt.messages.push(...await profileOpening(attempt.model, cacheName, profileText))
+    } else if (profile !== "none") {
       const profileFile = path.join(bookDir, "reference", "profiles", `${profile}.txt`)
       if (!fs.existsSync(profileFile)) fail(`No profile file at ${profileFile}.`)
       // normalize line endings so a Windows (CRLF) copy of the file sends the same text

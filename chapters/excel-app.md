@@ -52,7 +52,11 @@ A drop-down list in HTML is a **`<select>`** element, with an **`<option>`** for
 </script>
 ```
 
+::: {.bbt}
+
 The select's `value` is the `value` of whichever option is chosen, "B2" for the second option, even though the list shows "Bed 2."
+
+:::
 
 ## Asking for the App
 
@@ -198,7 +202,11 @@ JADE's documentation answers the question: a function named **`auto_exec`**, in 
 - **Showing it.** `Jade.open_canvas` puts the form in the task pane.
 - **The Add button.** Its handler is wrapped in `Jade.automate`. It reads each field's `value`, checks for empty fields and a sensible number of kilograms, finds the next empty row by counting the sheet's rows, and writes the new harvest with `getRangeByIndexes`, the method you added to the platform profile in the last lesson. Then it saves the email and calls `showHarvestForm(excel)` again, which redraws the whole panel, so the new harvest appears in the recent list.
 
+::: {.wgg}
+
 That last step, a function calling itself to redraw the page, is a simple way to keep a panel up to date: after any change, rebuild everything from the sheet.
+
+:::
 
 Three smaller things to fix:
 
@@ -246,7 +254,11 @@ if (typeof lastEmail !== "string") {
 }
 ```
 
+::: {.rcn}
+
 Checking `typeof lastEmail !== "string"` handles `{}`, `null`, `undefined` and anything else unexpected, all at once.
+
+:::
 
 This is another mistake a platform profile should prevent, so the JADE profile gets two new lines, one for this and one for `auto_exec`:
 
@@ -275,7 +287,11 @@ function auto_exec() {
 }
 ```
 
+::: {.j3b}
+
 For an app with one job, opening the form directly is friendlier.
+
+:::
 
 ::: {.note}
 > **Code that runs when a file opens.** `auto_exec` runs every time someone opens the workbook with JADE, without them clicking anything. That's what makes the app convenient, and it's also why you should only open workbooks with code from people you trust, and read that code before relying on it. The next lesson says more about using other people's code.
@@ -283,7 +299,11 @@ For an app with one job, opening the form directly is friendlier.
 
 ## The Finished App
 
+::: {.wxs}
+
 Here's the app in the book's style, with the fixes: the first-run check, awaited saving, a panel name without spaces, labels connected to their inputs, and `auto_exec`. It also gives the panel a theme: the fourth argument to `Jade.open_canvas` is the name of one of JADE's built-in styles. Try `"water"`, `"mvp"` or `"sajura"`; `Jade.list_themes()` returns all of them.
+
+:::
 
 ```{.code environment="jade"}
 const BED_IDS = ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"]
@@ -380,7 +400,11 @@ async function addHarvest(excel) {
 }
 ```
 
+::: {.t6w}
+
 Two small differences from the assistant's version are worth noticing. `addHarvest` loads `rowCount`, the number of rows in the used range, instead of all the values, because that's all it needs; Office.js is faster when you load only what you use. The check on kilograms has an upper limit, as the shift logger's did in [Building a Browser Extension](extension){.book-link}. And the recent-harvests table leaves out the Logged By column, so the panel doesn't show every volunteer's email address to whoever opens the workbook.
+
+:::
 
 Save the module, close the workbook, and open it again. The form appears by itself.
 
@@ -390,15 +414,7 @@ Excel with the JADE task pane showing the finished harvest entry form in the "wa
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="excel-app"}
-Add to "What I know so far":
-
-- select and option elements for drop-down lists
-- auto_exec in JADE, and Jade.open_automations()
-- storing settings with await Jade.save_object_to_workbook() and await Jade.read_object_from_workbook(), which returns {} when nothing is saved
-- JADE themes: the fourth argument to Jade.open_canvas(), Jade.set_theme() and Jade.list_themes()
-- redrawing a panel by calling the function that builds it again
-- loading only the properties you need, such as rowCount
+::: {.learner-profile}
 :::
 
 Your JADE platform profile has grown too, with the two lines from this lesson.

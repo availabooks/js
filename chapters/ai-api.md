@@ -128,7 +128,7 @@ You've kept secrets out of code before: in Script Properties, in [Talking to Web
 
 **Read the key handling first,** because it's the part that matters most. The key goes in `.env`, as `ANTHROPIC_API_KEY=...`, and the script is run with `node --env-file=.env harvest-summary.js`, which loads the file into `process.env`. The code only ever says `process.env.ANTHROPIC_API_KEY`, so the key never appears in the `.js` file, and the script stops with a clear message if it's missing. If you use Git, a `.gitignore` file listing `.env` keeps the file out of anything you share. All of that is right.
 
-::: {.term}
+::: {.term .wmx .fut}
 > **Environment variable** — A named value given to a program by the terminal or system that starts it, read in Node from `process.env`. Commonly used for secrets and settings.
 :::
 
@@ -184,9 +184,13 @@ console.log(text)
 console.log(`\n(${data.usage.input_tokens} tokens in, ${data.usage.output_tokens} tokens out)`)
 ```
 
+::: {.ahx}
 **The code does the arithmetic.** The total is calculated in JavaScript, with `reduce`, and given to the model as a fact, along with the instruction to use the numbers exactly and add no others. Language models are good at writing and unreliable at arithmetic. Anything that can be calculated should be calculated by code, which is never wrong about sums.
+:::
 
+::: {.xnt}
 **The reply is read carefully.** The reply's `content` is an array of blocks, and the text is in the blocks whose `type` is `"text"`, so the code collects just those, rather than assuming the first block is always the text. Error replies include the API's own message, which usually says exactly what's wrong, such as an unknown model name.
+:::
 
 The model's name is in a constant at the top, where it's easy to change. Providers offer several models at different prices: larger ones for harder tasks, smaller and cheaper ones for simple ones, like a short paragraph. The provider's model list says which is which.
 
@@ -208,7 +212,7 @@ It's pleasant, and every number is right. The `**` around the heading are Markdo
 
 Models are priced by **token**, a piece of text of around three or four characters on average, counted separately for what you send and what comes back. At the time of writing, the model above cost $5 per million tokens sent and $25 per million received, so this run cost about 116 × $5 + 263 × $25, divided by a million: less than a cent. The reply's `usage` shows the counts for every call, which is why the script prints them. Prices vary a lot between models and change over time, so check the provider's pricing page, and set a monthly spending limit on your account, which most providers allow.
 
-::: {.term}
+::: {.term .r9o}
 > **Token** — The unit AI models read and write in, and are priced by: a piece of text averaging a few characters. A short paragraph is around 100 tokens.
 :::
 
@@ -246,7 +250,9 @@ That's the right explanation, and it applies to every assistant, including the o
 
 The assistant's three suggestions are the right defense, in order of strength: tell the model not to add facts; always have a person read the output; and never let a script publish model-written text by itself. The first reduces the problem. Only the second and third solve it. That's why the script prints the paragraph instead of emailing it, and it's the same reason for the dry-run rule in your profile: some actions deserve a person's check before they happen.
 
+::: {.aqm .uop}
 Put together, this is a good pattern for any program that uses a model: **the code calculates, the model writes, and a person checks.**
+:::
 
 ## What You Send
 
@@ -267,19 +273,7 @@ Providers also publish official packages for their APIs, such as `@anthropic-ai/
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="ai-api"}
-Add rules:
-
-- When code calls an AI model, have the code calculate any numbers and pass them in, tell the model not to add facts, and have a person review the output before it's used anywhere.
-- Keep secrets such as API keys in a .env file, loaded with node --env-file=.env and read from process.env.
-
-Add to "What I know so far":
-
-- calling an AI model's API with fetch: headers, a model name, messages, and reading the reply's content blocks
-- API keys, environment variables, process.env, .env files and .gitignore
-- tokens, and estimating what a call costs
-- hallucinations, and designing code so that the code calculates, the model writes, and a person checks
-- Object.entries() and Object.values(), and destructuring in a function's parameters
+::: {.learner-profile}
 :::
 
 ## Summary

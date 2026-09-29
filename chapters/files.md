@@ -45,7 +45,7 @@ Run it with Node in an empty project folder, and look at the folder afterward: `
 - **`"."`** means "the current folder." All these relative names, `notes.txt` included, are relative to the terminal's current working directory, from [Installing Node and Running Scripts](node){.book-link}, not to the script's location. Run the script from a different folder, and it reads and writes there.
 - **`writeFileSync` replaces a file without asking.** There's no "are you sure?" and no undo.
 
-::: {.note}
+::: {.note .oxv}
 > **Sync or not?** Each of these functions has an asynchronous version in `node:fs/promises`, used with `await`: `await readFile("notes.txt", "utf8")`. Asynchronous versions let a program do other things while it waits for the disk, which matters for servers handling many people at once. For a script that does one job from start to finish, the `Sync` versions are simpler, and they're what this lesson uses. You'll see both in AI replies.
 :::
 
@@ -139,7 +139,11 @@ And it made a dry run, without being asked. Your profile's dry-run rule mentions
 
 What if the month folder already has a file with the same name? Phones name photos with counters, such as `IMG_0412.jpg`, so two volunteers' photos can easily share a name. `renameSync` onto an existing file *replaces* it, silently, on Windows and Mac alike. One volunteer's photo would be gone.
 
+::: {.fhq}
+
 The fix is to check first, with **`existsSync`**, and skip any photo that would overwrite another. Here's the script with that check, in the book's style:
+
+:::
 
 ```{.code environment="nodejs"}
 import fs from "node:fs"
@@ -259,7 +263,11 @@ In [Scripting Your Notes in Obsidian](obsidian){.book-link}, you learned that an
 > One thing to check: this assumes every note's front matter has both `crop:` and `expected_harvest:` on their own lines, spelled exactly that way. If a note is missing one, that planting will show as `undefined` in the output rather than causing an error — let me know if you'd rather have it skip or flag those notes instead.
 :::
 
+::: {.pcy}
+
 **Read.** The overall plan is clear: list the notes, read each one, pull out two values from its front matter, sort, and write the lines to a file. It imports just the functions it needs, `import { readdirSync, readFileSync, writeFileSync } from "fs"`, another form of `import` you'll see often. The front matter is found by splitting the note into lines and finding the two `---` lines. Each line between them is split at the colon into a key and a value, stored in an object.
+
+:::
 
 That split uses syntax you haven't met: `const [key, ...rest] = line.split(":")`. It's **array destructuring**, like the object destructuring in [Modules and Packages](node-modules){.book-link}, but by position: `key` gets the first item of the array, and **`...rest`**, the *rest* syntax, gets all the remaining items as a new array. Then `rest.join(":")` puts them back together, so a value that contains a colon, like `note: water at 6:00`, isn't cut short. The assistant explained why, but not the syntax. Try it:
 
@@ -277,11 +285,17 @@ const moreParts = [...rest, "extra"]
 console.log(moreParts)
 ```
 
+::: {.r1z}
+
 In an array literal, the same `...` does the reverse, called **spread**: it spreads an array's items into the new array.
+
+:::
 
 ::: {.term}
 > **Rest and spread** — Three dots, `...`, either gather the remaining items into an array (rest, as in `const [first, ...others] = list`) or spread an array's items out (spread, as in `[...list, "new item"]`).
 :::
+
+::: {.wd6}
 
 Three other details:
 
@@ -289,9 +303,13 @@ Three other details:
 - **`slice(start, end)`** returns part of an array, from `start` up to but not including `end`.
 - The script expects to run from the vault folder, since it reads `"Plantings"`, a relative path. The instructions say so, which is the current working directory lesson again.
 
+:::
+
 The assistant pointed out what happens with a note that lacks a field: `undefined` in the calendar, rather than an error. That's worth deciding about. For a calendar, skipping those notes and printing a warning is probably best. Also, the sort converts each date text to a Date object and subtracts. It works, but as you saw in [Scripting Your Notes in Obsidian](obsidian){.book-link}, dates written as `YYYY-MM-DD` sort correctly as text with `localeCompare`, which avoids converting at all.
 
 ## Working Safely with Files
+
+::: {.g2u}
 
 Everything in this lesson changes your real files, immediately. A few habits keep that from going wrong:
 
@@ -299,27 +317,13 @@ Everything in this lesson changes your real files, immediately. A few habits kee
 - **Work on a copy** of important folders until the script has proved itself.
 - **Check before overwriting,** with `existsSync`, as the photo script now does.
 - **Deleting is permanent.** `fs.rmSync` and `fs.unlinkSync` delete files without using the Recycle Bin or Trash. There's no getting them back.
-- **Watch the paths.** A script run from the wrong folder does its work in the wrong folder. Printing `process.cwd()`, the current working directory, at the start of a script is a quick check.
+- [**Watch the paths.** A script run from the wrong folder does its work in the wrong folder. Printing `process.cwd()`, the current working directory, at the start of a script is a quick check.]{.bft}
+
+:::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="files"}
-Add rules:
-
-- Before code sends email, changes a calendar, or creates, moves, changes or deletes files, on my computer or in Google Drive, have it show what it would do (a dry run) or test it on one item, unless I ask for the real thing. Check before overwriting a file.
-
-Remove rules:
-
-- Before code sends email, changes a calendar, or creates, changes or deletes files in Google Drive, have it log what it would do (a dry run) or test it on one item, unless I ask for the real thing.
-
-Add to "What I know so far":
-
-- the fs module: readFileSync, writeFileSync, appendFileSync, readdirSync, statSync, existsSync, mkdirSync with recursive, and renameSync to move a file
-- the async versions in node:fs/promises
-- path.join, and that relative paths depend on the current working directory (process.cwd())
-- importing named functions: import { readFileSync } from "node:fs"
-- array destructuring, rest (...rest) and spread ([...list])
-- string methods: split, trim, toLowerCase, startsWith, endsWith and padStart; and array slice
+::: {.learner-profile}
 :::
 
 The dry-run rule now covers files on your own computer, and asks the assistant to check before overwriting, the mistake the photo script almost made.

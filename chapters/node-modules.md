@@ -92,7 +92,11 @@ const { kilograms: total } = result
 console.log(whichBed, howMuch, total)
 ```
 
+::: {.pq3}
+
 (A colon inside destructuring gives the variable a different name from the property, as `bed: whichBed` does, so that this example doesn't clash with the `bed` variable above.)
+
+:::
 
 ::: {.term}
 > **Destructuring** — Creating variables from the properties of an object, or the items of an array, in one statement: `const { crop, bed } = planting`.
@@ -159,19 +163,27 @@ The reply works, but it uses the older of two module systems. So ask for the oth
 
 That's exactly right. JavaScript has two module systems, and you'll see both:
 
-- **CommonJS**, Node's original system: `require(...)` and `module.exports`. Most Node code written before about 2020 uses it, so assistants, which learned from that code, often reach for it first.
+- [**CommonJS**, Node's original system: `require(...)` and `module.exports`. Most Node code written before about 2020 uses it, so assistants, which learned from that code, often reach for it first.]{.fby}
 - **ES modules**, the standard built into the JavaScript language itself: `import` and `export`. Browsers use them, and modern Node projects do too. This book uses them.
 
 ::: {.term}
 > **ES module** — A JavaScript file that shares code with `export` and uses others' code with `import`. It's the language's standard module system, used by browsers and modern Node projects.
 :::
 
+::: {.f5s}
+
 Node needs to be told which system a project uses, which is what `"type": "module"` in `package.json` does. (Naming a file with `.mjs` instead of `.js` also marks it as an ES module. Recent versions of Node can often detect `import` statements on their own, with a warning, but saying so in `package.json` makes it certain.) Mixing the two systems gives errors you'll learn to recognize:
 
 - **`SyntaxError: Cannot use import statement outside a module`** means Node treated the file as CommonJS. Add `"type": "module"` to `package.json`.
 - **`ReferenceError: require is not defined in ES module scope`** means the reverse: `require` in an ES module. Change it to `import`.
 
+:::
+
+::: {.vw9}
+
 When an assistant's reply has `require`, it's CommonJS, and it's worth asking for the `import` version, as you'll make a profile rule to do.
+
+:::
 
 ## package.json
 
@@ -191,9 +203,13 @@ When an assistant's reply has `require`, it's CommonJS, and it's worth asking fo
 }
 ```
 
+::: {.u7k}
+
 - **`type`** chooses the module system.
 - **`scripts`** gives commands short names: with this one, `npm run report` runs `node report.js`. For a project with several tools, it's a handy list of what the project can do.
 - **`dependencies`** lists packages the project uses, which the next section explains.
+
+:::
 
 ## Packages and npm
 
@@ -230,7 +246,11 @@ A **package** is code someone has published for others to use, and **npm**, whic
 > Want to try it with a date read from a sheet or file, or is this just for a single report date?
 :::
 
+::: {.olw}
+
 This is good advice, and it's the first thing to know about packages: check whether JavaScript can already do the job. **`Intl.DateTimeFormat`** is built in, in Node and in browsers, and formats dates in any language's style. You can try it right here.
+
+:::
 
 But check the example before trusting it. The comment says the result is "Saturday, June 12," for June 12, 2025. Run it:
 
@@ -270,7 +290,11 @@ console.log(format(new Date(2027, 5, 12), "EEEE, MMMM d"))
 
 That prints *Saturday, June 12*. The `"EEEE, MMMM d"` is a pattern from date-fns's documentation: `EEEE` is the weekday's full name, `MMMM` the month's, and `d` the day. The assistant said it would rather point you to the documentation than guess this syntax from memory, which, as you know by now, is a sign of a good answer.
 
+::: {.rbq}
+
 `node_modules` can hold thousands of files. Never edit them, and don't copy or share the folder: anyone with your `package.json` and `package-lock.json` can recreate it by running `npm install`. If you use Git later, `node_modules` is always left out.
+
+:::
 
 ::: {.term}
 > **npm** — The package manager that comes with Node, and the online registry of published packages. `npm install name` adds a package to a project.
@@ -306,30 +330,24 @@ Installing a package means running a stranger's code on your computer. So, conti
 > Want me to walk through checking a specific package you're considering?
 :::
 
+::: {.cjq}
+
 That's a solid checklist, and it's the same question you asked about gists in [Sharing and Reusing Code](sharing-code){.book-link} and plugins in [Scripting Your Notes in Obsidian](obsidian){.book-link}: how widely used is it, is it maintained, and who's behind it? Two more things to add:
 
 - **Check the name carefully.** Attackers publish packages with names one letter off from popular ones, hoping for typos, such as `date-fsn` for `date-fns`. An assistant can also suggest a package name that doesn't exist, or suggest a real package for the wrong job. Look the package up on npmjs.com before installing it.
 - **Installing can run code.** Some packages run a setup script when installed, before you've used them at all. That's another reason to install only packages you've checked.
 
+:::
+
+::: {.mlg}
+
 The assistant's closing advice is the most useful: for small jobs, a few lines of your own code, or a built-in feature, is often better than a package. Every package you add is code you're trusting, and code that can break when it updates.
+
+:::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="node-modules"}
-Add rules:
-
-- Use ES modules, with import and export, not require and module.exports.
-- Prefer built-in JavaScript and Node features to packages when they do the job. When you suggest a package, say how widely used it is.
-
-Add to "What I know so far":
-
-- ES modules: export and import, and "type": "module" in package.json
-- recognizing CommonJS: require() and module.exports
-- object shorthand, such as { bed, kilograms }, and destructuring, such as const { bed } = planting
-- package.json, including scripts run with npm run
-- npm install, node_modules and package-lock.json
-- Intl.DateTimeFormat for formatting dates
-- checking whether a package is trustworthy before installing it
+::: {.learner-profile}
 :::
 
 The first rule heads off the most common module mix-up. The second builds this lesson's best advice into every request.

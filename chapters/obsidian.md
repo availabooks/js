@@ -33,7 +33,7 @@ Planted six seedlings along the north edge. Staked on April 24.
 
 With front matter, a folder of notes becomes a kind of database, where each note is a record and each property a field, with free-form writing underneath. That's a new shape of data after the rows of a sheet and the records of Airtable: **documents with metadata**. The club's volunteers like it for a garden journal, one note per planting, where they can write what happened as well as record the facts.
 
-::: {.term}
+::: {.term .f1j}
 > **Front matter** — Named values at the top of a Markdown note, between lines of `---`, such as `crop: Tomato`. Obsidian shows them as the note's properties, and plugins can query them.
 :::
 
@@ -44,18 +44,26 @@ With front matter, a folder of notes becomes a kind of database, where each note
 
 ## Plugins and Trust
 
+::: {.u3b}
+
 Obsidian runs JavaScript through **community plugins**, written by people outside the company. This lesson uses two of the most popular:
 
 - **Dataview**, which queries your notes' front matter. Its `dataviewjs` code blocks run JavaScript inside a note and show the result in place.
 - **Templater**, which fills in new notes from templates, and can run JavaScript while doing it.
 
+:::
+
 Before installing them, understand what you're agreeing to. A community plugin has the same access to your computer's files as Obsidian itself: it can read every note in your vault, and could read or change other files too, or send data over the internet. That's why Obsidian starts in **Restricted mode**, with community plugins turned off, and asks you to turn it off yourself.
+
+::: {.thy}
 
 To decide whether to trust a plugin, check:
 
 - **How widely it's used and how long it's been around.** Dataview and Templater have each been downloaded millions of times over several years.
 - **Whether it's maintained.** A plugin's page shows when it was last updated. At the time of writing, Dataview's author had shifted most new work to a successor project, and Dataview receives mainly fixes; check the current status when you install it.
 - **Where its code is.** Popular plugins are open source, so their code can be read, and has been, by many people.
+
+:::
 
 To install them: open **Settings**, then **Community plugins**, turn off Restricted mode, click **Browse**, and install and enable **Dataview** and **Templater**. In Dataview's settings, turn on **Enable JavaScript queries**, which is off by default, for the same reason Restricted mode exists.
 
@@ -96,7 +104,11 @@ plantings.filter((planting) => { return planting.crop === "Tomato" })
 plantings.filter(planting => planting.crop === "Tomato")
 ```
 
+::: {.a4y}
+
 Read the last one as "keep each planting whose crop is Tomato." That's the form you'll see and write from now on.
+
+:::
 
 The other methods work the same way. Run this, and compare each result with the data:
 
@@ -205,18 +217,26 @@ console.log(total)
 
 The function gets the running result so far and the next item, and returns the new running result. The `0` after the function is where the running result starts. It's the running-total pattern from [Loops and Repetition](loops){.book-link} in one line. You saw it in the very first AI reply in [Working with an AI Assistant](ai-assistant){.book-link}, `Array.from(...).reduce(...)`, and you can read it now.
 
-::: {.term}
+::: {.term .l46}
 > **Array method** — A method such as `filter`, `map`, `sort` or `reduce` that takes a function and applies it to the items of an array. Methods that return arrays can be chained.
 :::
 
+::: {.yiy}
+
 Finally, **`for...of`** is a loop that goes through an array's items without an index: `for (const planting of plantings) { ... }`. It's a good choice when you need a loop but not the index.
+
+:::
 
 ## Your Learner Profile: Two Rules Come Off
 
 Now that you know the array methods, two scaffolding rules come off, and are replaced. The updated profile, including the Obsidian environment line, is at the end of this lesson. The replies below were captured with it.
 
+::: {.mx0 .wz7}
+
 - **"Use for loops with an index"** was there so you could follow every step of a loop. You can still write those loops, and read them. But much code, especially Dataview code, is written with array methods, and a profile that forbids them would make assistants work against the grain of the platform.
 - **"Don't chain method calls together"** was there so each line did one thing you could check. A chain written one step per line, as above, keeps that benefit, and the new rule asks the assistant to explain each step.
+
+:::
 
 This is the same moment as in [Functions](functions){.book-link}, when the one-function rule and the `let`-only rule came off: you've learned what the rules were protecting you from.
 
@@ -287,7 +307,11 @@ dv.table(
 )
 ```
 
+::: {.bvq}
+
 This version uses `where`, Dataview's name for `filter`, and `p.file.link`, a link to each planting's note, so a click opens it.
+
+:::
 
 To try it with the club's data, the dates need to be near today, because the plantings are from 2027. Change `dv.date("today")` to `dv.date("2027-06-15")` to see what was ready in the second half of June 2027.
 
@@ -366,7 +390,11 @@ Creating a planting note means typing the same front matter every time. Template
 
 **Read.** A Templater template is ordinary text with tags in it. `<%* ... %>` runs JavaScript without writing anything, and `<% ... %>` writes a value into the note. The `-` in `-%>` removes the line break after the tag, so the front matter starts on the note's first line, where it has to be.
 
+::: {.ono}
+
 The code uses Templater's `tp` object: **`tp.system.prompt`** asks a question in a pop-up and waits for the answer, **`tp.date.now`** gives today's date in the format you give it, and **`tp.file.rename`** renames the note.
+
+:::
 
 Save it in a folder for templates, and in Templater's settings, tell it where that folder is. Then run **Templater: Create new note from template** from the command palette (**Ctrl+P**, or **Cmd+P** on a Mac).
 
@@ -378,28 +406,7 @@ Remember that your whole vault is a folder of text files. That makes it unusuall
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="obsidian"}
-Environment: I'm writing JavaScript in Obsidian, the note-taking app, using the Dataview plugin's DataviewJS code blocks and the Templater plugin.
-
-Remove rules:
-
-- Write each step on its own line, and store each result in a variable. Don't chain method calls together.
-- Use for loops with an index, such as for (let i = 0; i < data.length; i++). Don't use forEach or for...of.
-
-Add rules:
-
-- Use array methods such as filter, map, sort and forEach, and chain them when that's clearer, but explain what each step of a chain does.
-- Write short functions as arrow functions when they're passed to array methods.
-
-Add to "What I know so far":
-
-- array methods: filter, map, sort, forEach, find, some, every, join and reduce, and chaining them
-- writing arrow functions, including the short form x => x * 2
-- for...of loops
-- Obsidian vaults, Markdown notes and front matter
-- DataviewJS: dv.pages(), where, sort by a key, dv.table(), dv.date() and Luxon dates
-- Templater: tp.system.prompt(), tp.date.now() and tp.file.rename()
-- deciding whether to trust a community plugin
+::: {.learner-profile}
 :::
 
 Two rules were removed and two added in their place, as explained above. The rest of the profile, including everything you've learned on other platforms, comes along.

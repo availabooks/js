@@ -12,5 +12,5 @@ What I know so far:
 - joining strings with +
 - numbers and the arithmetic operators + - * /
 - comments that start with //
-- giving a value a name with let, for example let name = "Ava"
+- giving a value a name with let, for example let student = "Ava"
 - reading error messages

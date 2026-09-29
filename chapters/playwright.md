@@ -32,6 +32,8 @@ The club's idea is the third: Maya would like to compare seed prices across supp
 
 ## Before You Scrape
 
+::: {.i7x .m8e}
+
 A site's pages are there for people to read. Whether a program may collect them is up to the site's owner, and the rules vary:
 
 - **Look for an official source first.** Many suppliers offer a downloadable price list, a data feed or an API. That's always better than scraping: it's permitted, and it doesn't break when the site's design changes.
@@ -39,6 +41,8 @@ A site's pages are there for people to read. Whether a program may collect them 
 - **Check `robots.txt`.** Most sites publish a file at `/robots.txt`, such as `https://example.com/robots.txt`, listing parts of the site that automated programs are asked not to visit. It's a request, not a lock, and respecting it is standard practice.
 - **Be gentle.** A script can request pages far faster than a person, and a burst of requests can slow a small site down for everyone. Pause between pages.
 - **Leave personal data and logins alone.** Collecting people's information, or getting around a login, raises legal and ethical problems that price comparison doesn't need.
+
+:::
 
 For learning, this lesson uses **books.toscrape.com**, a fake bookstore built specifically for people to practice scraping. Its "catalog" of books stands in for a seed supplier's catalog: product boxes with titles and prices, spread over many pages, exactly the shape of a real one.
 
@@ -51,7 +55,11 @@ npm install playwright
 npx playwright install chromium
 ```
 
+::: {.o8g}
+
 **`npx`** runs a command that comes with a package, here Playwright's installer, which downloads a copy of Chromium, the open-source browser Chrome is built on. It's a large download, a few hundred megabytes, and only happens once.
+
+:::
 
 ## Collecting Prices
 
@@ -172,7 +180,7 @@ Most of this script runs in Node. But the function passed to `$$eval` runs *insi
 
 That's why the function can use `querySelector` and `getAttribute`, which exist only in a page, and why it can't use anything from the rest of the script, such as `scriptFolder`, which exists only in Node. What comes back must be plain data: strings, numbers, arrays and objects, not elements. Keep that boundary in mind, and most Playwright errors make sense.
 
-::: {.term}
+::: {.term .kiy}
 > **$$eval** — A Playwright method that finds every element matching a selector, runs a function on them *inside the page*, and returns the result to Node. The function can't use variables from the Node script.
 :::
 
@@ -269,12 +277,16 @@ if (failedPages.length > 0) {
 }
 ```
 
+::: {.hbo}
+
 A few pieces are new:
 
 - **A `while` loop**, from [Loops and Repetition](loops){.book-link}, because the number of pages isn't known in advance. It runs until `url` is `null`.
 - **`page.locator("li.next a")`** describes an element to find, and `count()` says how many match: 0 on the last page.
 - **`new URL(href, page.url())`** turns the link's relative address, such as `catalogue/page-2.html`, into a full one, based on the current page's address, the relative-path rules from [Publishing a Site for Free](publishing){.book-link}.
 - **`products.push(...pageProducts)`** uses spread to add one page's products to the list.
+
+:::
 
 It takes about a minute, and it finishes by printing checkable numbers, as your profile asks: 1,000 products, from £10.00 to £59.99. If a page fails, it stops and says which one, rather than quietly reporting a partial list as if it were complete.
 
@@ -300,22 +312,15 @@ console.log(`The page's heading is: ${heading}`)
 await browser.close()
 ```
 
+::: {.u6b}
+
 `fullPage: true` captures the whole page, not just the part that fits on the screen. Checking the heading's text is a tiny version of an automated **test**: if a change to the site ever broke the page, this script would notice. Playwright includes a complete testing tool, **Playwright Test**, built around this idea, and it's a good thing to ask your assistant about if you keep building sites.
+
+:::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="playwright"}
-Add rules:
-
-- When code visits websites automatically, pause between requests, and remind me to check the site's terms, its robots.txt, and whether it offers an official data source.
-
-Add to "What I know so far":
-
-- Playwright: chromium.launch(), newPage(), goto(), screenshot(), setViewportSize(), locator() with count(), getAttribute() and textContent(), and waitForTimeout()
-- that the function given to page.$$eval runs inside the browser page and can't use the Node script's variables
-- npx, for running a command that comes with a package
-- new URL(relative, base) for turning a relative link into a full address
-- web scraping, and when it's appropriate
+::: {.learner-profile}
 :::
 
 ## Summary

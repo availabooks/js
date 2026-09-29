@@ -28,9 +28,11 @@ There are three ways to do it, from quickest to most automatic:
 
 Running code on a page you're viewing is legal and normal; it's what the developer tools are for. But what you *do* with it matters:
 
+::: {.cks}
 - **Read the site's terms of use.** Some sites forbid automated access, or copying their data. Filling in your own form faster is almost always fine; collecting other people's data from a site usually isn't.
 - **Only act as yourself.** Automate what you could do by hand, in your own account, at a human pace. Code that sends hundreds of requests, or gets around a login or a limit, can break rules or laws, and can harm the site.
 - **Be careful with personal data.** A table you copy out of a site may include information about other people, and it needs the same care as the club's form responses.
+:::
 
 ::: {.caution}
 > **Never paste code you don't understand into the Console.** Scammers send messages like "paste this into your browser to get free credits" or "to verify your account." Code in the Console runs as *you*, on that page, with your login, so it can read your messages, change your settings or send data anywhere. Some sites print a warning in the Console for exactly this reason. The rule from the start of the book, don't run code you can't explain, matters more here than anywhere.
@@ -63,7 +65,9 @@ Running code on a page you're viewing is legal and normal; it's what the develop
 </script>
 ```
 
+::: {.hbw}
 The selector `"#harvests tr"`, with a space, means "every `tr` *inside* the element with id harvests." And `rows[i].querySelectorAll("td")` searches inside one row only: `querySelectorAll` can be called on any element, not just `document`. Reading a page's table is the same as reading a sheet's rows, with `textContent` in place of `getValues`, and every value arriving as text.
+:::
 
 ::: {.term}
 > **querySelectorAll** — A method that returns every element matching a CSS selector, as a list with a `length` that you can loop over by index.
@@ -73,7 +77,9 @@ The selector `"#harvests tr"`, with a space, means "every `tr` *inside* the elem
 
 The quickest way to run code on a page is the developer tools' **Console**, which you met in [How Web Pages Work](web-pages){.book-link}. Open it on any page (F12), type a line such as `document.querySelectorAll("a").length`, and press Enter: it tells you how many links the page has. The Console runs your code *on that page*, so `document` is that page.
 
+::: {.n0t}
 For code longer than a line or two, use **Snippets**, saved scripts you can run on any page: in Chrome or Edge, open the **Sources** panel, choose **Snippets** (you may need to click `>>` to find it), click **New snippet**, write or paste your code, and press **Ctrl+Enter** (**Cmd+Enter** on a Mac) to run it. Snippets are saved in your browser, so they're a good place to keep small tools while you're trying them out.
+:::
 
 ::: {.screenshot-needed file="images/automating-snippets.png"}
 Chrome's developer tools with the Sources panel open, the Snippets tab selected, and a short snippet in the editor.
@@ -166,8 +172,8 @@ Many sites show data in tables with no way to download it. A bookmarklet that tu
 **Read.** The assistant listed four new things first, which is exactly what your profile asks.
 
 - **The loops** are the ones you just saw: every `tr` in the table, then every `td` or `th` in each row. The selector `"td, th"`, with a comma, means "either kind of cell." Each cell's text is wrapped in quotes and separated by commas, and each row ends with `\n`.
-- **A CSV file** (comma-separated values) is plain text: one line per row, with commas between the values. The quotes around each value let a value contain a comma, like "Bed 3, south." The assistant pointed out the one case it doesn't handle, a value that contains a quote mark, which would need to be written as two quote marks.
-- **The download** takes three steps. A **`Blob`** holds the CSV text as file-like data. **`URL.createObjectURL`** gives it a temporary address. A link to that address with a **`download`** attribute makes the browser save the file instead of opening it, and **`click()`** clicks the link from code.
+- [**A CSV file** (comma-separated values) is plain text: one line per row, with commas between the values. The quotes around each value let a value contain a comma, like "Bed 3, south." The assistant pointed out the one case it doesn't handle, a value that contains a quote mark, which would need to be written as two quote marks.]{.nzs}
+- [**The download** takes three steps. A **`Blob`** holds the CSV text as file-like data. **`URL.createObjectURL`** gives it a temporary address. A link to that address with a **`download`** attribute makes the browser save the file instead of opening it, and **`click()`** clicks the link from code.]{.tbv}
 - **`(function() { ... })()`** is a function with no name, written in parentheses and called immediately with the `()` at the end. It keeps the bookmarklet's variables inside the function, so they don't clash with the page's own variables. It also lets the code use `return` to stop early when there's no table.
 
 ::: {.term}
@@ -247,7 +253,9 @@ Both suggestions are worth knowing. Some browsers do remove `javascript:` from p
 
 But the explanation misses the biggest problem. The original code is full of comments, and a `//` comment runs *to the end of the line*. Joined into one line, the first `// Find the first table on the page` turns *everything after it* into a comment, so almost none of the code is left. Look at the assistant's one-line version: it quietly removed every comment. Its fix works, but partly for a reason it didn't mention. When you compare a fix with the original, look for changes the explanation doesn't account for.
 
+::: {.wrl}
 So, for code that has to fit on one line: remove `//` comments (or use the `/* ... */` kind, which ends where it says), and separate statements with semicolons. The assistant's one-line version does both.
+:::
 
 ## Userscripts
 
@@ -296,31 +304,20 @@ Every week, someone signs the club up for shifts on the university's volunteer p
 > Since the form is never submitted, you'll still need to click Submit yourself once you check the fields look right.
 :::
 
+::: {.om0}
 **Read.** The code is short, because the hard part is done by Tampermonkey. The comment block at the top is its **metadata**: `@name` is what Tampermonkey shows in its list, `@match` is the address the script runs on, and `@run-at document-idle` waits until the page has loaded. The code finds the three boxes and sets their `value`, the reverse of reading it in [Events and Interactivity](events){.book-link}.
+:::
 
 Two things to know before relying on it:
 
 - **`@match` decides where your code runs.** A pattern like `https://volunteer.example.edu/*`, with a `*`, would run it on *every* page of the site. Keep it as narrow as the job needs, because a userscript runs with the same access to the page as the site's own code.
-- **Some sites don't notice values set by code.** Many modern sites keep their own record of what's been typed, updated by `input` events. Setting `value` changes the box, but not that record, so the site may treat the box as empty when you submit. If that happens, the fix is to send an `input` event after setting the value; your assistant can show you how, and it's a good question to ask if the form seems to ignore your script.
+- [**Some sites don't notice values set by code.** Many modern sites keep their own record of what's been typed, updated by `input` events. Setting `value` changes the box, but not that record, so the site may treat the box as empty when you submit. If that happens, the fix is to send an `input` event after setting the value; your assistant can show you how, and it's a good question to ask if the form seems to ignore your script.]{.plz}
 
 The assistant noted who can see the script, as your profile asks, but said nothing about the site's rules. A script that fills in your own form is almost certainly fine. Still, it's your job to check, and it's worth a new profile rule.
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="automating-pages"}
-Add rules:
-
-- When code runs on a website I don't own, remind me to check the site's terms of use, and keep it to what I could do by hand in my own account.
-
-Add to "What I know so far":
-
-- document.querySelectorAll(), and calling querySelector or querySelectorAll on an element to search inside it
-- running code in the developer tools' Console and Snippets
-- bookmarklets: javascript: addresses, (function() { ... })() to keep variables private, and that one-line code needs semicolons and no // comments
-- userscripts with Tampermonkey: the metadata block, @match and @run-at
-- setting an input's value from code
-- making a file to download with Blob, URL.createObjectURL() and a link with a download attribute
-- CSV files, and quoting values that contain commas
+::: {.learner-profile}
 :::
 
 ## Summary

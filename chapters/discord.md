@@ -18,7 +18,9 @@ Learning Objectives
 
 In [Talking to Web Services](web-services){.book-link}, your code posted to a Discord channel through a webhook: your code called Discord. A **slash command** works the other way around. When a member types `/nextshift` in the club's Discord server, Discord sends a request to an address *you* chose, and your code's response becomes the bot's reply. Your Worker is now the server, and Discord is the client.
 
+::: {.r2h}
 That changes the security question. A webhook address was a secret you kept. An address that Discord calls is one anyone could call, pretending to be Discord. So every request has to be checked, and Discord makes that possible by *signing* each one.
+:::
 
 ::: {.term}
 > **Slash command** — A command in a chat app, such as `/nextshift`, that the platform sends to a bot's code, and whose response it shows as the bot's reply.
@@ -206,24 +208,30 @@ Every request Discord sends has two headers: a timestamp and a **signature**, ma
 
 **Read `verifyDiscordRequest`** carefully, because the details matter:
 
-- The body is read with `request.text()`, as the raw text, *before* parsing it. The signature covers the exact characters Discord sent; parsing the JSON and turning it back into text could change spacing and break the check.
-- `crypto.subtle` is the Web Crypto API, built into Workers, browsers and Node. `importKey` loads the public key, and `verify` checks the signature against the timestamp joined with the body, using the **Ed25519** method that Discord uses.
-- The key and signature arrive as **hex** text, pairs of characters from 0 to 9 and a to f, each pair one byte. `hexToBytes` converts them, with `parseInt(text, 16)`, which reads a number written in base 16.
+- [The body is read with `request.text()`, as the raw text, *before* parsing it. The signature covers the exact characters Discord sent; parsing the JSON and turning it back into text could change spacing and break the check.]{.ql0}
+- [`crypto.subtle` is the Web Crypto API, built into Workers, browsers and Node. `importKey` loads the public key, and `verify` checks the signature against the timestamp joined with the body, using the **Ed25519** method that Discord uses.]{.w2w}
+- [The key and signature arrive as **hex** text, pairs of characters from 0 to 9 and a to f, each pair one byte. `hexToBytes` converts them, with `parseInt(text, 16)`, which reads a number written in base 16.]{.puz}
 
+::: {.qdb}
 Then `handleDiscord` returns 401 for anything that fails the check, answers Discord's test request, `type: 1`, with the same type, and answers the command, `type: 2`, with a message.
+:::
 
 The assistant said it hadn't run this exact code, and asked you to test it by setting the Interactions Endpoint URL, when Discord sends a test request and refuses the address unless it passes. That's the right test. The verification can also be checked on your own computer, with a key pair you make yourself, which is what this book did: a correctly signed request passed, and the same signature with a changed body failed. That's what you want from a signature check, and it's worth knowing how to test security code *without* trusting it.
 
 ### The query
 
+::: {.jyt}
 The query finds the first shift that isn't full, using **`HAVING`**, which the reply explains well: `WHERE` filters rows before they're grouped, and `HAVING` filters groups after they're counted, so it can compare the count with the capacity. For the club's data, it finds the harvesting shift on June 5, 2027, with 1 of 3 spots filled. A real version would also skip shifts whose date has passed, with `WHERE slots.date >= ?` and today's date.
+:::
 
 ### Registering and secrets
 
 Slash commands are registered once, by a small script you run on your own computer, which sends the command's name and description to Discord's API with the bot token. The table of secrets is exactly right, and it's the most important part of the reply:
 
+::: {.bpa}
 - **The bot token** stays in a `.env` file on your computer, used only by the registration script, as in [Calling AI Models from Your Code](ai-api){.book-link}. The Worker never needs it, because it only answers requests.
 - **The public key** isn't secret at all; that's what "public" means. Storing it with `wrangler secret put` is harmless, and keeps all the Worker's settings in one place.
+:::
 
 ::: {.caution}
 > **A leaked bot token is an emergency.** Anyone with it can act as your bot in every server it's in. If a token ends up in code you've shared, in a chat or in a screenshot, reset it immediately in the Developer Portal's Bot page, which makes the old one stop working.
@@ -242,26 +250,15 @@ Discord's approach is typical, but not the only one. Two others the club might u
 - **Telegram** bots are the easiest to set up: you talk to Telegram's own bot, @BotFather, which gives you a token in a minute. Telegram then sends messages to your address, a *webhook* in Telegram's terms, with a secret token in a header that you check, instead of a signature.
 - **Slack** apps work much like Discord's: commands are sent to your address, signed, and you verify the signature with a *signing secret*. Slack also offers **Socket Mode**, where your code connects out to Slack instead of waiting for requests, which works even without a public address, and its official **Bolt** library handles the details.
 
+::: {.j1e}
 Whichever platform, the same three questions apply: how does the platform reach your code, how do you know a request really came from it, and where does the bot's secret live?
+:::
 
 One thing to avoid, for a club: bots that read every message in a channel. They need broad permissions, raise privacy questions for every member, and are rarely needed. Commands, which members choose to use, are enough.
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="discord"}
-Add rules:
-
-- When a platform sends requests to my code, verify that each request really comes from it before doing anything else.
-
-Add to "What I know so far":
-
-- slash commands: the platform calling my code, and replying with type 1 to a ping and type 4 with a message
-- digital signatures, and verifying Discord's Ed25519 signatures with crypto.subtle
-- reading a request's raw body with request.text() before parsing it
-- hex text and parseInt(text, 16)
-- registering commands with a bot token kept in .env, and wrangler secret put
-- SQL HAVING, to filter groups after counting
-- how Telegram and Slack bots compare
+::: {.learner-profile}
 :::
 
 That's the end of Part VII. Your environment line still describes servers and Workers, and in the last part of the book, you'll change it one final time.

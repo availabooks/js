@@ -36,7 +36,7 @@ The club's spreadsheet has done a lot. But you've seen its weak spot: the sheets
 > **Linked record** — A field that points to records in another table, instead of copying a value from them. A shift's Member field links to one record in the Members table.
 :::
 
-::: {.term}
+::: {.term .j2t}
 > **Primary field** — The first field of an Airtable table, used as each record's name wherever the record is shown or linked.
 :::
 
@@ -57,7 +57,11 @@ The Airtable Shifts table with the Member field shown as linked record chips con
 
 ## The Scripting Extension
 
+::: {.gx1}
+
 Airtable's **Scripting** extension runs JavaScript on your base. Open it from the base's toolbar: click **Extensions**, then **Add an extension**, and choose **Scripting**. A panel opens with a code editor and a **Run** button, and output appears in the panel.
+
+:::
 
 ::: {.screenshot-needed file="images/airtable-scripting.png"}
 An Airtable base with the Scripting extension open on the right, showing a short script and its output table below the editor.
@@ -214,7 +218,11 @@ Look at the comment in the loop, though: `memberLinks[0].name` is described as `
 
 That's the heart of this lesson. A name is a label; an **ID** identifies. Every Airtable record has an `id`, a unique string like `rec8Hj2...`, that never changes, even if every field in the record does. The fix keys the totals by ID, and keeps the name alongside, as an object, for showing.
 
+::: {.sv1}
+
 The club's base avoids part of the problem by design: its primary field is Email, which is unique. But the lesson applies everywhere. Whenever you total, count or group records, group them by something unique, not by a name. You met the same idea in [College Community Garden: Case Setup](case){.book-link}, where sheets referred to beds by ID and members by email.
+
+:::
 
 Here's the script for the club's base, in the book's style. Because the primary field is Email, the linked record's `name` is an email, so the script reads the Members table too, to show each member's full name:
 
@@ -256,7 +264,11 @@ for (let i = 0; i < membersQuery.records.length; i++) {
 output.table(rows)
 ```
 
+::: {.qbb}
+
 This version passes `{ fields: [...] }` to `selectRecordsAsync`, so Airtable loads only the fields the script needs. Airtable's documentation recommends it, and on a big table it's much faster, the same idea as loading only `rowCount` in [Building an Application in Excel](excel-app){.book-link}. It also lists every member, including Jordan with 0 hours, because it goes through the Members table rather than only the members who appear in Shifts. The totals should match the Volunteer Hours you've seen all along: Maya 24, Ava 12, and so on.
+
+:::
 
 ## Adding Records
 
@@ -372,14 +384,22 @@ Continuing the chat, a script to log a shift:
 
 **Read.**
 
+::: {.vze .vx0 .tfo}
+
 - **`input.textAsync("...")`** shows a text box in the panel and waits for an answer; **`input.buttonsAsync("...", [...])`** shows a button for each choice. Both are awaited, because the script pauses for you.
 - The member is found by looping through the Members records and comparing emails, and the script stops early, with a top-level **`return`**, if there's no match. That's allowed in an Airtable script, which is really the inside of a function Airtable runs for you.
 - The date check splits the text on `-` and tests each part. It's careful work, though it would still accept February 31.
 - **`createRecordAsync(fields)`** creates the record from an object of field names and values. The linked Member field takes an array of objects with an `id`: `[{ id: memberId }]`.
 
+:::
+
+::: {.ovf}
+
 The notes at the end are the part to check, because one of them is wrong. For a **single select** field, Airtable doesn't accept a plain string like `"watering"`. It expects an object naming the option: `{ name: "watering" }`. So in the club's base, where Task is a single select, `createRecordAsync` would stop with an error saying the Task field can't accept the value. The assistant said it would work "if it's a single select field with those exact option names," which sounds right and isn't.
 
 This is where documentation earns its keep. Airtable's scripting documentation lists, for each field type, the shape of the value `getCellValue` returns and the shape `createRecordAsync` accepts, and they're not always the same: reading a single select gives `{ id, name, color }`, and writing one takes `{ name }`. When a write fails with a message about a field not accepting a value, look up that field type.
+
+:::
 
 The fix is one line:
 
@@ -406,18 +426,7 @@ One more thing to consider: the email comparison is exact, so `Ava.Lopez@example
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="airtable"}
-Environment: I'm writing JavaScript in Airtable's Scripting extension, in my own Airtable base.
-
-Add to "What I know so far":
-
-- Airtable bases, tables, fields, records, linked records and primary fields
-- base.getTable(), await table.selectRecordsAsync({ fields: [...] }), and record.getCellValue()
-- linked record values: arrays of { id, name }, and writing them as [{ id }]
-- output.text(), output.table(), input.textAsync() and input.buttonsAsync()
-- await table.createRecordAsync(fields), and that a single select is written as { name: "..." }
-- top-level await and return in an Airtable script
-- grouping and totaling records by ID, not by name
+::: {.learner-profile}
 :::
 
 The environment line changes, and your knowledge of Office.js and JADE comes along, in case you go back to Excel.

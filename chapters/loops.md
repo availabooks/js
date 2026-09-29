@@ -111,7 +111,11 @@ count = count + 1
 count++
 ```
 
+::: {.f5k}
+
 `--`, the **decrement operator**, subtracts 1 in the same way. There's also a shortcut for adding any amount: `total += 5` means `total = total + 5`. You'll see all three in code from an assistant, so it's worth recognizing them.
+
+:::
 
 You may also see `++count`, with the `++` in front. On a line by itself it does the same thing. It only behaves differently when it's part of a larger expression, which this book avoids because it makes code harder to read.
 
@@ -162,7 +166,11 @@ function logMembers() {
 }
 ```
 
+::: {.yf3}
+
 Run it. `data.length` is 13, so `rowIndex` goes from 1 to 12, and every member is logged. When `rowIndex` reaches 13, `13 < 13` is false, and the loop ends. Starting at 1 instead of 0 skips the header row.
+
+:::
 
 Now changing what's logged means changing one line, not twelve. To log each member's name, pick items out of the row. Storing the row in its own variable makes that easier to read:
 
@@ -229,7 +237,11 @@ That's a standard **`for` loop**. It does exactly what the `while` loop did, in 
 
 That last point is the one that trips people up: the step is written before the block but runs after it. If you ever lose track, rewrite the `for` loop as the `while` loop above in your head.
 
+::: {.tew}
+
 Why have both? Because putting all three controlling parts on one line makes the loop easy to read: you can see where it starts, where it stops and how it moves without hunting through the block. Use `for` when you're counting through a list, which is most of the time, and `while` when you're repeating until something happens.
+
+:::
 
 ::: {.term}
 > **for loop** — A loop with three parts in its parentheses, separated by semicolons: a setup that runs once, a condition checked before each pass, and a step that runs after each pass: `for (let i = 0; i < 5; i++) { }`.
@@ -345,7 +357,11 @@ Then a total:
 > - After the loop finishes going through all the members, `Logger.log(totalHours)` prints the final sum.
 :::
 
+::: {.rd2}
+
 This is a pattern you'll use constantly, called a **running total**. A variable starts at 0 *before* the loop, and each pass adds one member's hours to it. When the loop ends, it holds the sum. The variable has to be created before the loop: if `let totalHours = 0` were inside the block, it would be reset to 0 on every pass.
+
+:::
 
 Here are both tasks in the book's style, in one function. Run it, and check the results against the sheet. The unpaid members should be Ben, Elena, Gabe and Jordan, and the total should be 123:
 
@@ -403,7 +419,7 @@ When it runs in Apps Script, it logs "Maya" over and over, and never finishes. H
 
 The assistant spotted it immediately: nothing inside the loop changes `rowIndex`, so the condition `rowIndex < data.length` stays true forever. This is an **infinite loop**. The fix is the missing `rowIndex++` at the end of the block.
 
-::: {.term}
+::: {.term .siy}
 > **Infinite loop** — A loop whose condition never becomes false, so it never ends. Usually caused by forgetting to change the variable the condition depends on.
 :::
 
@@ -559,18 +575,7 @@ for (let i = 0; i < unpaidMembers.length; i++) {
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="loops"}
-Add rules:
-
-- Use for loops with an index, such as for (let i = 0; i < data.length; i++). Don't use forEach or for...of.
-
-Add to "What I know so far":
-
-- while loops and for loops
-- the ++, -- and += shortcuts
-- running totals: a variable that starts at 0 before a loop and is added to inside it
-- looping over the rows from getValues(), starting at 1 to skip a header row
-- infinite loops, and why they happen
+::: {.learner-profile .m95}
 :::
 
 What's new:

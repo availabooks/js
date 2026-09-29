@@ -70,7 +70,9 @@ You'll often see the handler written right inside the `addEventListener` call, w
 </script>
 ```
 
+::: {.v5o}
 `function() { ... }` with no name is an **anonymous function**. It's the same as writing a named function and passing its name, just shorter when the function is only used in one place. AI replies use this form a lot. Read it as "when clicked, do this."
+:::
 
 This example also shows why `let clickCount` is outside the handler. The handler runs once per click, and a variable created inside it would start at 0 every time.
 
@@ -98,7 +100,9 @@ A text box is an **`<input>`** element. Its **`value`** property is whatever is 
 
 Type 12 and click. It's the "122" problem from [Variables and Data](variables){.book-link} all over again, and the fix is the same: convert with `Number()`. The **`<label>`** isn't required, but it's good practice: its `for` attribute names the input's id, so clicking the label puts the cursor in the box, and screen readers announce what the box is for.
 
+::: {.ou4}
 There are other events besides `click`. The **`input`** event happens every time the text in a box changes, which lets a page respond as someone types. You'll use it in the finished calculator.
+:::
 
 ## The Plant-Spacing Calculator
 
@@ -358,14 +362,16 @@ With 0 spacing, the page says "You can fit about Infinity plants." With 24 and 1
 
 Both fixes are right.
 
-- **Values that make no sense.** Dividing by zero in JavaScript doesn't cause an error; it gives the special value `Infinity`. A number can be valid JavaScript and still be meaningless, so validation has to check what makes sense for the problem, here that both numbers are greater than zero.
-- **Rounding.** 24 square feet with 18-inch spacing gives 10.67. `Math.round` makes that 11, but the eleventh plant won't fit. **`Math.floor`** always rounds *down*, to 10. (Its partner, `Math.ceil`, always rounds up.) Which to use depends on what the number means: for plants that must fit, round down; for bags of compost you must buy to cover a bed, round up.
+- [**Values that make no sense.** Dividing by zero in JavaScript doesn't cause an error; it gives the special value `Infinity`. A number can be valid JavaScript and still be meaningless, so validation has to check what makes sense for the problem, here that both numbers are greater than zero.]{.r78}
+- [**Rounding.** 24 square feet with 18-inch spacing gives 10.67. `Math.round` makes that 11, but the eleventh plant won't fit. **`Math.floor`** always rounds *down*, to 10. (Its partner, `Math.ceil`, always rounds up.) Which to use depends on what the number means: for plants that must fit, round down; for bags of compost you must buy to cover a bed, round up.]{.ixw}
 
 This is the same habit as testing edges in [Making Decisions](decisions){.book-link}: after the ordinary case works, try zero, negatives, empty boxes, and values that don't divide evenly.
 
 ## The Finished Calculator
 
+::: {.lqj}
 This version adds two improvements. The inputs use `type="number"`, which gives a number keypad on phones and small up and down arrows in most browsers. And instead of a Calculate button, the result updates as the visitor types, using the `input` event on both boxes, with one named handler shared between them:
+:::
 
 ```{.code environment="html"}
 <!doctype html>
@@ -443,14 +449,7 @@ The club's beds are 24, 32, 48 and 64 square feet. Try each one with 12-, 18- an
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="events"}
-Add to "What I know so far":
-
-- events and addEventListener, with click and input events
-- passing a function as a value, without parentheses, and anonymous functions written in place: function() { }
-- form inputs: input with type text or number, label, and reading value (always a string)
-- validating input: empty fields, isNaN, and values that make no sense for the problem
-- Math.floor and Math.ceil
+::: {.learner-profile}
 :::
 
 ## Summary

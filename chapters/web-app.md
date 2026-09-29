@@ -217,8 +217,8 @@ The profile held the assistant back, and it offered a sensible alternative that 
 
 **Read.** Start at the bottom, with `doGet`, because that's where Apps Script starts.
 
-- **`doGet`** is a special name, like `onOpen`. When someone opens the web app's link, Apps Script runs `doGet`, and whatever it returns is the page. Here it gets the report, turns it into an HTML table, and passes that HTML to **`HtmlService.createHtmlOutput`**, which packages it as a web page.
-- **`calculateHarvestTotals`** and **`getBedNames`** each read one sheet into an object: kilograms by bed ID, and names by bed ID. The second is a new use of an object, as a *lookup table*: give it an ID, get back a name.
+- [**`doGet`** is a special name, like `onOpen`. When someone opens the web app's link, Apps Script runs `doGet`, and whatever it returns is the page. Here it gets the report, turns it into an HTML table, and passes that HTML to **`HtmlService.createHtmlOutput`**, which packages it as a web page.]{.szj}
+- [**`calculateHarvestTotals`** and **`getBedNames`** each read one sheet into an object: kilograms by bed ID, and names by bed ID. The second is a new use of an object, as a *lookup table*: give it an ID, get back a name.]{.x9c}
 - **`buildHarvestReport`** goes through every bed, not just the ones with harvests, and pairs its name with its total, or 0 if it has none. That's a thoughtful detail: a bed with nothing harvested yet still appears in the table.
 - **`buildHtmlTable`** builds the table as one long string, starting with the header row and adding a `<tr>` for each bed, with a template literal filling in the cells.
 
@@ -259,7 +259,9 @@ function buildHtmlTable(report) {
 }
 ```
 
+::: {.byy}
 Copy the logged HTML into the HTML editor earlier in this lesson, in place of the table there, and run it to see the page the club would see. The `border='1'` in the table's opening tag is an *attribute*, extra information inside a tag. It's an old way of drawing lines around cells; CSS is the modern way.
+:::
 
 ## Deploying and Updating
 
@@ -291,13 +293,17 @@ After deploying, a surprise is common. Here it is:
 > **For testing while you're still making changes**, use the **Test deployments** link instead (Deploy → Test deployments). That one always runs your most recently saved code, without needing a new version each time — which is handy while you're experimenting with the HTML.
 :::
 
+::: {.auv}
 That's right, and it's a useful safety feature once you know about it. The link runs the version you deployed, so you can keep editing without breaking the page members are using. When you're ready, **Manage deployments** and a **New version** update the live page, at the same address. While you're working, the **Test deployments** link runs your latest saved code, and only you can open it.
+:::
 
 ## A Word About Text in HTML
 
 The table's cells are filled with text from the spreadsheet, dropped straight into the HTML. That works because the bed names are ordinary words. But whatever is in the cell becomes part of the page, and the browser reads it as HTML. If someone renamed a bed `<h1>Bed 9</h1>`, the page would show a giant heading in the table. A cell containing a `<script>` tag could even run code in the browser of everyone who opens the page.
 
+::: {.b2f}
 That's not a worry for a club's harvest table, where only trusted members edit the sheet. But it becomes important any time a page shows text that other people typed, such as form responses. The fix is to replace the characters that HTML treats as special, like `<` and `>`, with codes that display them as ordinary characters. You'll learn how in the next part of the book. For now, remember the rule: **text inserted into HTML is read as HTML.**
+:::
 
 ## The Finished Page
 
@@ -318,18 +324,7 @@ function doGet() {
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="web-app"}
-Add rules:
-
-- When code creates a web page that other people can open, tell me who will be able to see it and what data it shows.
-
-Add to "What I know so far":
-
-- basic HTML: tags such as h1, p, strong, table, tr, th and td, and attributes
-- web apps in Apps Script: doGet and HtmlService.createHtmlOutput()
-- deploying a web app, choosing who can open it, test deployments, and making a new version after changing the code
-- using an object as a lookup table, such as bed names by bed ID
-- text inserted into HTML is read as HTML
+::: {.learner-profile .c1x}
 :::
 
 The new rule asks the assistant to be explicit about the most important decision in a web app: who can see it.

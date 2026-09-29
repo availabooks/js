@@ -128,16 +128,18 @@ Here's the request, in a new chat with your learner profile from [Email, Calenda
 3. `DocumentApp.openById` opens the copy for editing, and `getBody` gets its text.
 4. `replaceText` swaps each placeholder for the member's details. `String(hours)` turns the number into text, because `replaceText` works with text.
 5. `saveAndClose` saves the changes. This matters: without it, the PDF in the next step could be made from the unchanged copy.
-6. `getAs("application/pdf")` makes a PDF version of the copy, and `createFile` saves it in the folder.
+6. [`getAs("application/pdf")` makes a PDF version of the copy, and `createFile` saves it in the folder.]{.cqc}
 7. `setTrashed(true)` moves the Google Docs copy to the trash, so only the PDF is left.
 
 ### IDs and settings
 
+::: {.k74}
 The first three lines are new in another way: they're written *outside* any function. A variable declared at the top of the file, outside all functions, can be used by every function in the file. The assistant used this for settings: the template's ID, the folder's ID, and the minimum hours. Written in capitals, as you saw in [Objects and JSON](objects){.book-link}, they tell you these are values to set, not values that change as the script runs. If the club changes the threshold to 12 hours, there's one place to change it.
+:::
 
 Every file and folder in Google Drive has an **ID**, a long string of letters and numbers that never changes, even if the file is renamed or moved. You'll find it in the address bar when the file is open: in a document's address, it's the part between `/d/` and the next `/`, and in a folder's address, it's the part after `/folders/`. Scripts use IDs because names aren't unique: you could have three files named "Certificate," but only one with a given ID.
 
-::: {.term}
+::: {.term .i7b}
 > **File ID** — The unique identifier Google Drive gives each file and folder, found in its web address. Scripts use it to find exactly one file.
 :::
 
@@ -244,9 +246,11 @@ The newsletter doesn't need a template. Its contents change every week, so the s
 
 **Read.** `createNewsletter` reads like a table of contents: get the data, total it by crop, create the document, then add a heading, a paragraph and a table. Each step is its own function:
 
+::: {.len}
 - **`getCropTotals`** is the counting-by-name pattern from [Objects and JSON](objects){.book-link}, adding kilograms instead of 1.
 - **`addHeading`** appends a paragraph and makes it a heading. `DocumentApp.ParagraphHeading.HEADING1` is a built-in constant that means "Heading 1," the same style you'd pick from the Docs toolbar.
 - **`addHarvestTable`** builds an array of arrays, a header row and then one row per crop, and `appendTable` turns it into a table. The totals go through `toFixed(1)`, which also turns them into strings, as `appendTable` needs.
+:::
 
 Two small things to know when you run it. The new document is saved in the top level of your Drive, called My Drive, and each run creates *another* document named Garden News. And a new Google Doc starts with one empty paragraph, so the heading, appended after it, comes out one line down from the top. It's harmless, and your assistant can show you how to remove it.
 
@@ -293,7 +297,9 @@ function getCropTotals(harvestData) {
 
 You'll see some totals with a long tail of digits, like the ones in [College Community Garden: Case Setup](case){.book-link}, which is why the newsletter's table rounds them.
 
+::: {.ajf}
 This is a design habit worth copying. Keep the calculating separate from the doing. The calculating part is where most bugs are, and it can be tested anywhere, quickly and safely. The part that creates files or sends messages stays small, and you test it once, carefully.
+:::
 
 ::: {.tip}
 > **Other things DocumentApp can do.** Beyond paragraphs and tables, a script can add lists, images, page breaks and links, and change fonts and colors. Ask your assistant for what you need, and check the method names in its reply against the documentation if something doesn't work.
@@ -301,22 +307,7 @@ This is a design habit worth copying. Keep the calculating separate from the doi
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="documents"}
-Add rules:
-
-- Before code sends email, changes a calendar, or creates, changes or deletes files in Google Drive, have it log what it would do (a dry run) or test it on one item, unless I ask for the real thing.
-
-Remove rules:
-
-- Before code sends email or changes a calendar, have it log what it would do (a dry run), unless I ask for the real thing.
-
-Add to "What I know so far":
-
-- DriveApp: getFileById, getFolderById, makeCopy, createFile and setTrashed, and finding a file's ID in its web address
-- DocumentApp: create, openById, getBody, replaceText, appendParagraph, setHeading, appendTable and saveAndClose
-- saving a document as a PDF with getAs("application/pdf")
-- constants declared at the top of the file, outside any function, for settings such as IDs
-- keeping calculations in their own functions so they can be tested without creating anything
+::: {.learner-profile .xzi}
 :::
 
 The dry-run rule is replaced with a broader one that covers files, and allows a one-item test as an alternative, which is often more useful for documents than a log.

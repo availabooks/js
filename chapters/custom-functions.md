@@ -156,7 +156,9 @@ A cell showing an out-of-date answer, with no warning at all, is a dangerous kin
 > **One tradeoff to know about:** if you add a new row *below* the range `Shifts!A2:D` (for example, past row 1000 if that's as far as the range goes), it won't be included unless the range covers it. You may want to make the range generous, like `Shifts!A2:D1000`, to leave room to grow.
 :::
 
+::: {.ogw .qzi}
 **Read.** The function no longer reads the sheet. Instead, the data comes in as a second argument, `shiftsData`. When a formula passes a range like `Shifts!A2:D`, the function receives it as an array of arrays, exactly as if it had called `getValues()` on that range. And because the range is now in the formula, Sheets knows to recalculate whenever any cell in it changes.
+:::
 
 Two details:
 
@@ -230,7 +232,9 @@ function HOURSFOR(email, shiftsData) {
 
 Every member should show OK. Now change one of the hours on the Shifts sheet above and run the check again. The mismatch shows up immediately.
 
+::: {.tkt}
 The comment above `HOURSFOR` is a special kind, starting with `/**`. Sheets reads it: the description and `@param` lines appear as help when someone starts typing `=HOURSFOR(` in a cell, and `@customfunction` makes the function show up in the list of suggestions. It's optional, but it makes your formula feel like a built-in one to the rest of the club.
+:::
 
 ::: {.note}
 > **Why can the test's floating-point totals match exactly?** Each member's shifts are whole numbers or halves, like 1.5, and halves can be stored exactly in binary. The trouble in [College Community Garden: Case Setup](case){.book-link} came from tenths, like 0.1. If the shifts had tenths, the check would need to round before comparing.
@@ -240,22 +244,18 @@ The comment above `HOURSFOR` is a special kind, starting with `/**`. Sheets read
 
 A custom function runs every time Sheets recalculates its cell, which could be often, for anyone who opens the spreadsheet. So Google limits what it can do:
 
+::: {.lm7}
 - **It can't do anything that needs your permission.** No sending email, creating files or changing calendars. A custom function that calls `MailApp` stops with an error saying it doesn't have permission.
 - **It can't change other cells.** It can only return a value to its own cell. (It *can* return an array of arrays, and the values spill into the cells below and to the right, like some built-in formulas do.)
 - **It has to be quick.** A custom function that takes longer than 30 seconds is stopped.
 - **Errors show as `#ERROR!`.** Hover over the cell to see the message. For anything more, call the function from a test function and read the Execution log.
+:::
 
 When you need to change the spreadsheet or reach other services, use a menu item or a trigger, from [Menus and Triggers](triggers){.book-link}, instead.
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="custom-functions"}
-Add to "What I know so far":
-
-- custom functions typed into a cell like a formula, which receive a range argument as an array of arrays and return a value to the cell
-- that Sheets recalculates a custom function only when its arguments change, so data it uses should be passed in as a range
-- what custom functions can't do: anything that needs permission, or changing other cells
-- the /** ... */ comment with @param and @customfunction
+::: {.learner-profile}
 :::
 
 ## Summary

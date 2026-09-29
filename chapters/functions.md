@@ -48,7 +48,7 @@ The new part is `name` in the parentheses of `greet`. It's a **parameter**: a va
 > **Parameter** — A variable listed in a function's parentheses, such as `name` in `function greet(name)`. It holds whatever value the function is called with.
 :::
 
-::: {.term}
+::: {.term .lhl}
 > **Argument** — A value passed to a function when it's called, such as `"Ava"` in `greet("Ava")`.
 :::
 
@@ -89,7 +89,7 @@ function fullName(firstName, lastName) {
 
 `return` sends a value back to wherever the function was called. So `fullName("Keisha", "Brown")` becomes the string "Keisha Brown", which is stored in `name`. You can use a function call anywhere you could use a value. In the last line of `tryFullName`, `fullName("Dev", "Patel")` becomes "Dev Patel", and `.length` counts its characters.
 
-::: {.term}
+::: {.term .sq7}
 > **Return value** — The value a function sends back with `return`. The function call is replaced by that value, so it can be stored in a variable or used in an expression.
 :::
 
@@ -159,7 +159,11 @@ function labelForHours(hours) {
 }
 ```
 
+::: {.i5d}
+
 Make sure `labelAllMembers` is selected in the menu below the code, and run it. When the loop reaches `labelForHours(hours)`, JavaScript jumps into `labelForHours` with that member's hours, runs it until it reaches a `return`, and comes back with the label, which is stored in `label`. Then the loop carries on.
+
+:::
 
 Two details are new. `sheet.getRange(rowIndex + 1, 6)` uses the numeric form of `getRange` you saw in [Loops and Repetition](loops){.book-link}: row `rowIndex + 1`, column 6, which is F. And the variables are created with `const` instead of `let`. You'll learn about `const` shortly.
 
@@ -196,29 +200,17 @@ names[0] = "Dev"
 console.log(names)
 ```
 
+::: {.z4m}
+
 That runs without an error. `const` protects the variable, not what's inside it. `names` still refers to the same array. The array just has different items now. What `const` stops is `names = ["Cam"]`, which would make `names` refer to a different array.
+
+:::
 
 ## Your Learner Profile
 
 This lesson makes the biggest change to your learner profile so far. Two rules come off, and two new ones replace them:
 
-::: {.ai-profile lesson="functions"}
-Add rules:
-
-- Use const for a variable whose value never changes, and let for one that does. Don't use var.
-- Put the steps for each task in a function with no parameters and a descriptive name, so I can run it from the Apps Script editor. That function can call other functions.
-
-Remove rules:
-
-- Put all the code in one function with a descriptive name. Don't create extra functions or use parameters.
-- Use let for every variable. Don't use var or const.
-
-Add to "What I know so far":
-
-- functions with parameters, called with arguments
-- return, to send a value back from a function
-- calling one function from another
-- const, and that an array created with const can still be changed with push
+::: {.learner-profile .z3e .pmf}
 :::
 
 Here's why each change makes sense now:

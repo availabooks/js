@@ -28,7 +28,9 @@ The language of that conversation is **HTTP**, the HyperText Transfer Protocol. 
 > **Server** — A program that waits for requests and sends back responses. Also the computer it runs on.
 :::
 
+::: {.q99}
 Your learner profile needs a new environment line for this part; it's at the end of this lesson.
+:::
 
 ## Inside a Response
 
@@ -68,7 +70,9 @@ Here's a request for a script that shows what a response really contains, in a n
 > - The body will be JSON text — you'll likely see it cut off partway through a property, since it's just the first 200 characters, not a full JSON object. That's expected; this script is just letting you see the raw shape of an HTTP response before you parse anything.
 :::
 
+::: {.hhn}
 **Read.** It's short: `fetch`, then three things from the response. `response.status` is the **status code**. `response.headers` can be looped over with `for...of`, giving `[name, value]` pairs that are destructured in the loop, the syntax from [Working with Files and Folders](files){.book-link}. And `response.text()` reads the body as text. (The reply suggests a `.mjs` file name; in a project with `"type": "module"`, a `.js` name works the same.)
+:::
 
 Here's what it printed when this lesson was written:
 
@@ -92,7 +96,7 @@ Every response has the same three parts:
 
 A request has a similar shape: a **method**, such as GET or POST, an **address**, headers, and, for some methods, a body. You wrote all of these in [Calling AI Models from Your Code](ai-api){.book-link}, where the request carried headers with your API key and a JSON body with the prompt.
 
-::: {.term}
+::: {.term .nmg}
 > **Header** — A named piece of information sent with a request or response, such as `content-type: application/json`, describing the message rather than being part of its content.
 :::
 
@@ -169,7 +173,7 @@ The assistant's list of status codes is the one to learn. The first digit tells 
 
 The distinction between 4xx and 5xx matters when you debug: a 4xx means *your request* needs fixing, and a 5xx means the *server* broke, which, once you're writing servers, may be your code.
 
-::: {.term}
+::: {.term .dhd}
 > **Status code** — The three-digit number at the start of an HTTP response saying how the request went: 2xx success, 3xx redirect, 4xx a problem with the request, 5xx a problem on the server.
 :::
 
@@ -185,7 +189,9 @@ A request's **method** says what kind of action the client wants. Five cover alm
 | **PATCH** | Change part of something | Update just a member's phone number |
 | **DELETE** | Remove something | Cancel a sign-up |
 
+::: {.ftc}
 One rule matters more than the rest: **a GET should never change anything.** Browsers, search engines and link previews make GET requests freely, prefetching links and checking pages. A server where visiting an address deletes something will eventually delete it by accident.
+:::
 
 ## Designing an API
 
@@ -280,16 +286,18 @@ This is a design in the style called **REST**, the most common way to organize a
 - **Status codes say what happened:** 201 when a sign-up is created, 204 when a cancellation worked and there's nothing to send back, 404 for an id that doesn't exist.
 - **Requests and responses are JSON,** including errors, which always have the same shape, `{ "error": "..." }`, so a client can show the message.
 
-::: {.term}
+::: {.term .kt7}
 > **REST** — A common way of designing web APIs, in which addresses name resources, such as `/shifts/1`, and HTTP methods say what to do with them.
 :::
 
 The example data is invented, including volunteers named Sam and Priya, and dates in 2025. The club's real shifts are in its data. And the assistant ended by asking four good questions, which a design should answer before code is written. Here are the club's answers, which the next lessons build on:
 
+::: {.kpp}
 1. **Sign-ups use the member's email,** which must belong to a club member. But the API must not *show* emails: `GET /shifts/1` lists how many spots are filled, not who filled them. An API that anyone can call is as public as a web page.
 2. **`GET /shifts` shows upcoming shifts.** The club's data has eight, on Saturdays in June 2027.
 3. **A full shift gets 409 Conflict.** 409 means "this request conflicts with the current state," which is exactly what signing up for a full shift is, and it lets the page tell a full shift apart from a mistake in the request. Signing up twice for the same shift is also a 409.
 4. **Storage** comes in steps: in memory in the next lesson, then in a database in the one after.
+:::
 
 ## Trying Requests from the Terminal
 
@@ -301,27 +309,13 @@ curl -i "https://api.open-meteo.com/v1/forecast?latitude=40.25&longitude=-111.65
 
 `-i` shows the status and headers as well as the body. In the next lesson, you'll use curl to send POST and DELETE requests to your own server.
 
-::: {.caution}
+::: {.caution .ssx}
 > **curl in PowerShell.** In Windows PowerShell, `curl` is a nickname for a different command, `Invoke-WebRequest`, which takes different options. Type **`curl.exe`** instead, to get the real curl. In Command Prompt, Mac and Linux, plain `curl` is fine.
 :::
 
 ## Your Learner Profile
 
-::: {.ai-profile lesson="http"}
-Environment: I'm building web servers and web APIs with JavaScript: first with Node.js on my own computer, then online with Cloudflare Workers.
-
-Add rules:
-
-- When designing or building a web API, follow REST conventions, use fitting status codes, and never send personal data such as emails in responses that anyone could request.
-
-Add to "What I know so far":
-
-- HTTP requests and responses: methods, addresses, headers, bodies and status codes
-- status code groups (2xx, 3xx, 4xx, 5xx) and common codes such as 200, 201, 204, 400, 401, 403, 404, 409, 429 and 500
-- GET, POST, PUT, PATCH and DELETE, and that a GET must not change anything
-- REST API design, with path parameters such as /shifts/:id
-- response.headers, and response.text()
-- curl, and curl.exe in PowerShell
+::: {.learner-profile}
 :::
 
 ## Summary
