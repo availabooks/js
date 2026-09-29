@@ -65,6 +65,7 @@ Here's a simple request, sent to an assistant in a brand-new chat with no other 
 > Here are a few different ways to accomplish this in JavaScript:
 >
 > ## Method 1: Using a for loop
+>
 > ```javascript
 > let sum = 0;
 > for (let i = 1; i <= 10; i++) {
@@ -74,6 +75,7 @@ Here's a simple request, sent to an assistant in a brand-new chat with no other 
 > ```
 >
 > ## Method 2: Using Array and reduce()
+>
 > ```javascript
 > const sum = Array.from({length: 10}, (_, i) => i + 1)
 >   .reduce((acc, num) => acc + num, 0);
@@ -81,6 +83,7 @@ Here's a simple request, sent to an assistant in a brand-new chat with no other 
 > ```
 >
 > ## Method 3: Using the Gauss formula (most efficient)
+>
 > ```javascript
 > const n = 10;
 > const sum = (n * (n + 1)) / 2;
@@ -88,6 +91,7 @@ Here's a simple request, sent to an assistant in a brand-new chat with no other 
 > ```
 >
 > ## Method 4: Using a while loop
+>
 > ```javascript
 > let sum = 0;
 > let i = 1;
@@ -107,15 +111,18 @@ All four methods are correct, and all four print 55. But look at them from a beg
 
 This is where the rule "don't run code you can't explain" leaves you stuck. The code is probably fine, but you have no way to check it. So the natural next step is to ask for an explanation, which you can do in the same chat:
 
+::: {.tip}
+When reading the next AI chat, don't worry about trying to understand the whole response.  The whole point is that you probably won't understand it.
+:::
+
 ::: {.ai-conversation prompt="Explain what each line of Method 2 does." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="none" transcript="ai-assistant/sum-no-profile"}
-> […]
+> \[…\]
 >
 > ### `Array.from({length: 10}, (_, i) => i + 1)`
 >
 > This creates an array with 10 elements containing the numbers 1-10.
 >
 > - **`{length: 10}`** — This is an "array-like" object. It just tells `Array.from()` how many elements to create (10 in this case). It doesn't need to be a real array.
->
 > - **`(_, i) => i + 1`** — This is a mapping function that runs for each element:
 >   - `_` (underscore) is a placeholder for the first argument (the current element's value), which we don't need, so we use `_` as a convention to indicate "ignore this."
 >   - `i` is the **index** of each element, starting at 0.
@@ -130,27 +137,27 @@ This is where the rule "don't run code you can't explain" leaves you stuck. The 
 > This takes the array and "reduces" it down to a single value (the sum).
 >
 > - **`reduce()`** — An array method that iterates through each element and accumulates a result.
->
 > - **`(acc, num) => acc + num`** — The callback function that runs for each element:
 >   - `acc` (accumulator) — keeps track of the running total.
 >   - `num` — the current array element being processed.
 >   - `acc + num` — adds the current number to the running total.
->
 > - **`0`** — This is the **initial value** for `acc`. Without this, `reduce()` would use the first array element as the starting point instead of 0.
 >
 > **How it processes the array `[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]`:**
 >
-> | Step | acc (before) | num | acc (after) |
-> |------|--------------|-----|--------------|
-> | 1    | 0            | 1   | 1            |
-> | 2    | 1            | 2   | 3            |
-> | 3    | 3            | 3   | 6            |
-> | 4    | 6            | 4   | 10           |
-> | 5    | 10           | 5   | 15           |
-> | ...  | ...          | ... | ...          |
-> | 10   | 45           | 10  | 55           |
 >
-> […]
+> | Step | acc (before) | num | acc (after) |
+> | ---- | ------------ | --- | ----------- |
+> | 1    | 0            | 1   | 1           |
+> | 2    | 1            | 2   | 3           |
+> | 3    | 3            | 3   | 6           |
+> | 4    | 6            | 4   | 10          |
+> | 5    | 10           | 5   | 15          |
+> | ...  | ...          | ... | ...         |
+> | 10   | 45           | 10  | 55          |
+>
+>
+> \[…\]
 :::
 
 The explanation is accurate and carefully organized. It even includes a table that follows the running total step by step. It still doesn't help much, because it explains unfamiliar code using more unfamiliar words: *array, object, mapping function, argument, index, method, callback, accumulator.* Each of those is a real idea you'll learn, but you'd need several of them before this explanation made sense.
@@ -193,6 +200,7 @@ To use the profile, paste it as the first message of every new chat, before your
 > ```
 >
 > **What this does:**
+>
 > - `console.log(...)` means "show me whatever is inside the parentheses"
 > - `"Hello"` is some text (in programming, text like this is called a **string**, and it needs quote marks around it)
 > - Together, this line prints the word Hello to your console
@@ -224,6 +232,7 @@ Now the same request as before, in the same chat:
 > ```
 >
 > **What this does:**
+>
 > - `console.log(...)` displays whatever is inside the parentheses
 > - `1 + 2 + 3 + ... + 10` uses the `+` symbol to add numbers together, just like in math
 > - The result (55) gets printed to your console
@@ -251,14 +260,16 @@ console.log(1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10)
 
 The first reply is rarely the last word. Most of the value of an AI assistant comes from follow-up questions. These are worth keeping handy:
 
-| Ask this | When |
-|---|---|
-| "Explain line 3 in plain language." | One line doesn't make sense. |
-| "Rewrite this using only what I know." | The code uses something you haven't learned. |
+
+| Ask this                                                               | When                                                                                                    |
+| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| "Explain line 3 in plain language."                                    | One line doesn't make sense.                                                                            |
+| "Rewrite this using only what I know."                                 | The code uses something you haven't learned.                                                            |
 | "What does this error message mean? Explain it, but don't fix it yet." | Your code stopped with an error. Understanding the error teaches you more than getting a fixed version. |
-| "What would happen if the list were empty?" | You want to check an unusual case before trusting the code. |
-| "Why did you use this approach instead of a simpler one?" | The code seems more complicated than the task. |
-| "Does this code change or delete anything?" | Before you run code that works with real data. |
+| "What would happen if the list were empty?"                            | You want to check an unusual case before trusting the code.                                             |
+| "Why did you use this approach instead of a simpler one?"              | The code seems more complicated than the task.                                                          |
+| "Does this code change or delete anything?"                            | Before you run code that works with real data.                                                          |
+
 
 Notice that none of these ask the assistant to take over. Each one helps you understand the code well enough to decide for yourself whether it's right.
 
@@ -268,7 +279,7 @@ When you send one of this book's prompts to your own assistant, your reply will 
 
 - **Compare the code, not the wording.** Two replies can be worded completely differently and contain the same code.
 - **If your code differs, read it anyway.** Different code can be just as correct. The Read step works the same way on any reply.
-- **If your reply uses something you haven't learned,** ask the assistant to rewrite it using only what you know. That's a good sign your profile needs a reminder.
+- **If your reply uses something you haven't learned,** ask the assistant to rewrite it using only what you know. That's a good sign your assistant needs a reminder to use your profile.
 - **If your reply is completely different,** check that you started the chat with your current learner profile.
 
 ## Summary

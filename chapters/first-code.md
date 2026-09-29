@@ -23,7 +23,7 @@ Code editors like the one below appear throughout this book. Each one has a Run 
 console.log("Hello from JavaScript")
 ```
 
-You'll also see editors that show code without a Run button. That code is meant to run somewhere else, such as a Google Sheet, and the lesson explains where.
+As we reach more advanced topics, you'll need to run some code in  other places.  In that case, when you click the "Play" button, you'll see a message telling you where to you need to take the code to execute it.
 
 ::: {.note}
 > **Your browser has a console too.** Every modern browser (Chrome, Edge, Firefox and Safari) includes developer tools with a *console*, a panel where you can type JavaScript and see the result. You don't need it yet, because this book's editors work the same way. You'll use the browser's console later, when you work with web pages.
@@ -46,6 +46,10 @@ A **statement** is an instruction: it tells the computer to *do* something. A st
 ::: {.term}
 > **Statement** — A complete instruction that tells the computer to do something, such as display a value.
 :::
+
+A string of characters is more than just a collection. The order is important You can think of it as string of beads in the image below.
+
+![null](images/string.jpg)
 
 Run this editor. Nothing appears:
 
@@ -75,9 +79,9 @@ console.log("JavaScript is fun!")
 
 Time to use the PARSE workflow on something small.
 
-**Plan.** You want one line of code that displays a greeting. Nothing needs to go in. The output is a greeting in the console, and you'll know it worked if the greeting appears under the editor.
+**Plan.** You want one line of code that displays a greeting. There is not input from the user. The output is a greeting in the console, and you'll know it worked if the greeting appears under the editor.
 
-**Ask.** Start a new chat, paste your learner profile from [Working with an AI Assistant](ai-assistant){.book-link}, and send this prompt:
+**Ask.** Start a new chat, paste your learner profile from the beginning of this chapter, and send this prompt:
 
 ::: {.ai-conversation prompt="Write one line of JavaScript that prints a greeting to the console." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="ai-assistant" transcript="first-code/greeting"}
 > ```
@@ -85,6 +89,7 @@ Time to use the PARSE workflow on something small.
 > ```
 >
 > **What this does:**
+>
 > - `console.log(...)` tells the computer to display whatever is inside the parentheses
 > - `"Hi there!"` is the text (a **string**) that gets displayed — the quote marks tell JavaScript "this is text, not code"
 >
@@ -95,7 +100,7 @@ Time to use the PARSE workflow on something small.
 
 - `"Hi there!"` is an expression. It's a string, so it's in quote marks. The assistant even uses the word *string*, which you've just learned.
 - `console.log( )` makes the line a statement that displays the value in its parentheses.
-- There's no semicolon at the end, because the profile asked for none.
+- There's no semicolon at the end, because the profile asked to omit semicolons.
 
 It doesn't change or delete anything, and it matches the plan. You can explain every part of it.
 
@@ -109,7 +114,7 @@ console.log("Hi there!")
 
 ## More About console.log
 
-`console.log` is how your code shows you what it's doing, and you'll use it constantly: to see results, to check a value, and to find out which parts of your code actually ran.
+`console.log` is how your code shows you what it's doing, and you'll use it often: to see results, to check a value, and to find out which parts of your code actually ran.
 
 It can display numbers, text, and the results of calculations:
 
@@ -159,16 +164,16 @@ AI assistants often add comments to the code they write. They're worth reading. 
 Programs constantly need to remember values and use them again. You can give a value a name with `let`:
 
 ```{.code}
-let name = "Ava"
-console.log("Hello,", name)
+let student = "Ava"
+console.log("Hello,", student)
 ```
 
-The first line says: *create a name, `name`, and store the string "Ava" under it.* After that, whenever the code uses `name`, JavaScript uses the value stored there. Notice that `name` in the second line has no quote marks. Without quotes, it refers to the stored value. With quotes, `"name"` would just be the four letters n-a-m-e.
+The first line says: *give a value the name* `student`*, and store the string "Ava" under it.* After that, whenever the code uses `student`, JavaScript uses the value stored there. Notice that `student` in the second line has no quote marks. Without quotes, it refers to the stored value. With quotes, `"student"` would just be the seven letters s-t-u-d-e-n-t.
 
 A named value like this is called a **variable**. You'll learn much more about variables later, including how to change what they hold. For now, it's enough to recognize the pattern, because you'll see it in almost every piece of code an AI assistant writes for you.
 
 ::: {.term}
-> **Variable** — A name that refers to a stored value. `let name = "Ava"` creates a variable called `name` that holds the string "Ava."
+> **Variable** — A name that refers to a stored value. `let student = "Ava"` creates a variable called `student` that holds the string "Ava."
 :::
 
 Here's how an assistant handles a request that needs a variable:
@@ -179,11 +184,12 @@ Here's how an assistant handles a request that needs a variable:
 > Here's the code:
 >
 > ```
-> let name = "Ava"
-> console.log("Hello, " + name)
+> let firstName = "Ava"
+> console.log("Hello, " + firstName)
 > ```
 >
 > **What this does:**
+>
 > - `let name = "Ava"` creates a variable called `name` and puts the text `"Ava"` inside it. Think of it as labeling a box "name" and putting "Ava" in the box.
 > - `console.log("Hello, " + name)` prints text to the screen. The `+` here joins two pieces of text together — it combines `"Hello, "` with whatever is stored in the `name` box.
 > - Since `name` holds `"Ava"`, the output will be:
@@ -193,6 +199,7 @@ Here's how an assistant handles a request that needs a variable:
 > ```
 >
 > **New concepts used:**
+>
 > 1. `let` — a way to create a variable (a labeled storage box)
 > 2. `+` for joining text together (this is called **concatenation**)
 >
@@ -206,7 +213,7 @@ You can now read every line:
 - `let name = "Ava"` creates a variable called `name` holding the string "Ava", just like the example above.
 - `console.log("Hello, " + name)` uses `+` in a new way. With numbers, `+` adds. With strings, it joins them end to end, so `"Hello, " + name` becomes the single string "Hello, Ava". The assistant gives this its proper name, **concatenation**.
 
-Compare it with the version earlier in this section, `console.log("Hello,", name)`. Both display *Hello, Ava*, but they get there differently:
+Compare it with the version earlier in this section, `console.log("Hello,", student)`. Both display *Hello, Ava*, but they get there differently:
 
 - **With a comma,** `console.log` receives two separate values and puts a space between them for you.
 - **With `+`,** you build one string yourself, so you control the spacing. That's why the assistant's version has a space inside the quotes: `"Hello, "`. Leave it out and you'd get *Hello,Ava*.
@@ -301,9 +308,7 @@ When a message doesn't make sense, your AI assistant can help, but how you ask m
 > Here's what each part means:
 >
 > - **SyntaxError** — this means you broke one of the grammar rules of JavaScript. Just like a sentence in English needs proper punctuation, JavaScript code needs to be written in a way that follows its rules. When you break a rule, the computer can't understand what you meant, so it stops and complains before it even tries to run your code.
->
 > - **"missing )"** — the computer is telling you it expected to find a closing parenthesis `)` somewhere, but never found one.
->
 > - **"after argument list"** — the "argument" is the thing you put inside the parentheses for `console.log` to work with (in your case, `"Hello"`). So this means: "I found your opening parenthesis and the thing inside it, but then I was expecting a closing parenthesis to finish it off, and it wasn't there."
 >
 > Basically, parentheses `(` and `)` always need to come in pairs — every opening one needs a matching closing one. The computer read your line and got left "hanging," waiting for that closing `)` that never showed up.
@@ -333,6 +338,7 @@ For comparison, here's the other way to ask, sent in a new chat with the same le
 > ```
 >
 > **What was wrong:**
+>
 > - `console.log(` opens with a parenthesis, so it needs a matching `)` to close it
 > - You had `console.log("Hello"` — the quote marks were closed, but the parenthesis wasn't
 > - Adding `)` at the very end completes the command properly
@@ -385,7 +391,7 @@ Add to "What I know so far":
 - console.log to display values, including several values separated by commas
 - text in quote marks
 - joining strings with +
-- numbers and the arithmetic operators + - * /
+- numbers and the arithmetic operators + - \* /
 - comments that start with //
 - giving a value a name with let, for example let name = "Ava"
 - reading error messages
