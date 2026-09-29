@@ -178,40 +178,32 @@ A named value like this is called a **variable**. You'll learn much more about v
 
 Here's how an assistant handles a request that needs a variable:
 
-::: {.ai-conversation prompt="Write JavaScript that stores my name, Ava, and then prints a greeting that uses it." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="ai-assistant" transcript="first-code/named-value"}
-> To do this, you need a new concept called a **variable**. A variable is like a labeled box that stores a value so you can use it later.
+::: {.ai-conversation prompt="Write JavaScript that stores a student's name, Ava, in a variable called student, and then prints a greeting that uses it." assistant="Claude" model="claude-sonnet-5" captured="2026-09-29" profile="ai-assistant" transcript="first-code/named-value"}
+> This task needs a new concept: **variables**. A variable is like a labeled box where you can store information to use later.
 >
-> Here's the code:
+> Here's how to do it:
 >
 > ```
-> let firstName = "Ava"
-> console.log("Hello, " + firstName)
+> let student = "Ava"
+> console.log("Hello, " + student)
 > ```
 >
 > **What this does:**
 >
-> - `let name = "Ava"` creates a variable called `name` and puts the text `"Ava"` inside it. Think of it as labeling a box "name" and putting "Ava" in the box.
-> - `console.log("Hello, " + name)` prints text to the screen. The `+` here joins two pieces of text together — it combines `"Hello, "` with whatever is stored in the `name` box.
-> - Since `name` holds `"Ava"`, the output will be:
+> - `let student = "Ava"` creates a variable named `student` and puts the text `"Ava"` inside it. Think of it as labeling a box "student" and putting the name Ava in it.
+> - `console.log(...)` prints something to the screen, like before.
+> - `"Hello, " + student` joins the text `"Hello, "` together with whatever is stored in `student`. The `+` here glues two pieces of text together.
+> - So this line prints: `Hello, Ava`
 >
-> ```
-> Hello, Ava
-> ```
->
-> **New concepts used:**
->
-> 1. `let` — a way to create a variable (a labeled storage box)
-> 2. `+` for joining text together (this is called **concatenation**)
->
-> Want to try changing the name or the greeting text yourself to see how it changes the output?
+> Try running it and see if you get that greeting. Let me know when you're ready for the next concept!
 :::
 
-**Read.** This reply was sent with the learner profile from the previous lesson, which says you know nothing yet, and the assistant handled that sensibly. It started by naming the new concept the task needs, a *variable*, and at the end it listed both new ideas it had used: `let` and joining text with `+`. That's close to what the profile asks for, though not exactly: the profile asks the assistant to *tell you* what a task needs instead of using it. When an assistant goes ahead anyway, as it did here, its explanation and its list of new concepts are what let you keep up.
+**Read.** This reply was sent with the learner profile from the previous lesson, which says you know nothing yet, and the assistant handled that sensibly. It started by naming the new concept the task needs, a *variable*, and it explained every part of the code, including the new use of `+` to join text. That's close to what the profile asks for, though not exactly: the profile asks the assistant to *tell you* what a task needs instead of using it. When an assistant goes ahead anyway, as it did here, its explanations are what let you keep up.
 
 You can now read every line:
 
-- `let name = "Ava"` creates a variable called `name` holding the string "Ava", just like the example above.
-- `console.log("Hello, " + name)` uses `+` in a new way. With numbers, `+` adds. With strings, it joins them end to end, so `"Hello, " + name` becomes the single string "Hello, Ava". The assistant gives this its proper name, **concatenation**.
+- `let student = "Ava"` creates a variable called `student` holding the string "Ava", just like the example above.
+- `console.log("Hello, " + student)` uses `+` in a new way. With numbers, `+` adds. With strings, it joins them end to end, so `"Hello, " + student` becomes the single string "Hello, Ava". Joining strings this way is called **concatenation**.
 
 Compare it with the version earlier in this section, `console.log("Hello,", student)`. Both display *Hello, Ava*, but they get there differently:
 
@@ -221,12 +213,12 @@ Compare it with the version earlier in this section, `console.log("Hello,", stud
 **Scrutinize.** Run both versions and compare the output. Then take out the space inside the quotes in the second one and run it again to see the difference:
 
 ```{.code}
-let name = "Ava"
-console.log("Hello,", name)
-console.log("Hello, " + name)
+let student = "Ava"
+console.log("Hello,", student)
+console.log("Hello, " + student)
 ```
 
-You'll learn more about joining strings with `+` in the lesson on variables and data. The assistant's closing suggestion, changing the name or the greeting, is a good one to try on your own.
+You'll learn more about joining strings with `+` in the lesson on variables and data. For more practice, try changing the name or the greeting and running the code again.
 
 ## Why This Book Leaves Out Semicolons
 
@@ -273,12 +265,12 @@ The editor adds the line number where it found the problem, and the message may 
 Here's a different kind of error. The name is misspelled on the second line:
 
 ```{.code}
-let name = "Ava"
-console.log(nmae)
+let student = "Ava"
+console.log(stduent)
 ```
 
 ```{.code environment="message"}
-ReferenceError: nmae is not defined
+ReferenceError: stduent is not defined
 ```
 
 ### Kinds of errors
@@ -296,7 +288,7 @@ Most errors a beginner meets fall into four groups:
 
 ### Reading an error message
 
-Error messages look intimidating, but they're usually telling you three useful things: *what kind* of error it is, *what went wrong*, and *where* (the line number). "ReferenceError: nmae is not defined" says the problem is a name (`nmae`) that JavaScript doesn't recognize. Once you know that, the typo is easy to spot.
+Error messages look intimidating, but they're usually telling you three useful things: *what kind* of error it is, *what went wrong*, and *where* (the line number). "ReferenceError: stduent is not defined" says the problem is a name (`stduent`) that JavaScript doesn't recognize. Once you know that, the typo is easy to spot.
 
 When a message doesn't make sense, your AI assistant can help, but how you ask matters. Here's one way to ask about the first error, in a new chat that starts with your learner profile:
 
@@ -373,7 +365,7 @@ As you learn JavaScript, you'll meet a handful of building blocks over and over:
 
 - **Keywords,** words with special meaning to JavaScript, such as `let`.
 - **Values,** such as numbers and strings.
-- **Names** you choose for your own values, such as `name`.
+- **Names** you choose for your own values, such as `student`.
 - **Operators,** such as `+`, `-`, `*` and `/`.
 - **Punctuation,** such as parentheses `( )`, quote marks, and the curly braces `{ }` you'll soon use to group lines together.
 - **Comments,** starting with `//`.
@@ -391,9 +383,9 @@ Add to "What I know so far":
 - console.log to display values, including several values separated by commas
 - text in quote marks
 - joining strings with +
-- numbers and the arithmetic operators + - \* /
+- numbers and the arithmetic operators + - * /
 - comments that start with //
-- giving a value a name with let, for example let name = "Ava"
+- giving a value a name with let, for example let student = "Ava"
 - reading error messages
 :::
 
