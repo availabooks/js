@@ -15,6 +15,110 @@ Learning Objectives
 :::
 :::
 
+Press Play on the bar under this editor. The walkthrough covers this whole lesson: it types the code, runs it, and explains each idea. Pause whenever you want to try a change yourself. The rest of the chapter is the same material, written out, so you can read it and run the examples on your own.
+
+```{.code}
+// Your first lines of code
+```
+
+::: {.tutor}
+- say: "This walkthrough covers the whole lesson. Editors like this one appear throughout the book. Each one has a Run button. Press it, and the code runs right here on the page, with any output shown underneath. You can change the code and run it again as often as you like."
+- type: { text: "console.log(\"Hello from JavaScript\")" }
+  say: "Let's start with one statement. Console dot log displays whatever you put inside the parentheses. Here, that's the text Hello from JavaScript, written in quote marks."
+- run: {}
+  say: "Press Run. The greeting appears under the editor."
+- say: "You'll also see editors with no Run button. That code is meant to run somewhere else, such as a Google Sheet, and the lesson explains where. Your browser has a console too, inside its developer tools. You don't need it yet, because these editors work the same way. This is the environment your learner profile describes: an online editor that shows console dot log output."
+- reset: {}
+  say: "Two ideas sit underneath every line of JavaScript: expressions and statements."
+- type: { text: "5 + 7" }
+  say: "An expression is a piece of code that produces a value. Five plus seven is an expression whose value is twelve. The number twenty-five is an expression, and so is the text Hello."
+- run: {}
+  say: "Run it. Nothing appears. The computer did calculate five plus seven, but nothing told it to do anything with the result, so the result was thrown away."
+- replace: { find: "5 + 7", text: "console.log(5 + 7)" }
+  say: "A statement is an instruction. It tells the computer to do something. A statement often contains expressions, the way a sentence contains words. Wrap the expression in console dot log, and the line becomes a statement that displays the value."
+- point: { line: 2 }
+  say: "This line is the instruction. The expression five plus seven is still the value, and console dot log is what displays it."
+- run: {}
+  say: "Press Run, and you see twelve."
+- type: { text: "console.log(\"JavaScript is fun!\")" }
+  say: "Text works the same way. In JavaScript, text goes inside quote marks, so the computer can tell the words you want to display from the words that are part of the code. A piece of text in quote marks is called a string. The name comes from a string of characters."
+- run: {}
+  say: "Run it, and the sentence appears under the editor."
+- say: "Time to use the five-step workflow on something small. Plan: you want one line of code that displays a greeting. Nothing needs to go in. The output is a greeting, and you'll know it worked when the greeting appears. Ask: start a new chat, paste your learner profile, and ask for one line of JavaScript that prints a greeting to the console."
+- say: "Read the reply with what you've just learned. Hi there, in quote marks, is an expression. It's a string. Console dot log makes the line a statement that displays the value in its parentheses. There's no semicolon at the end, because the profile asked for none. The reply doesn't change or delete anything, it matches the plan, and you can explain every part of it."
+- reset: {}
+  say: "Run. Paste the code into the editor, or type it, and run it."
+- type: { text: "console.log(\"Hi there!\")" }
+  say: "This is the line the assistant returns. Console dot log, then the greeting in quote marks."
+- run: {}
+  say: "Hi there appears underneath. If your greeting appeared, there's nothing to revise. If your assistant's reply was different, run its version instead. Any line that puts a string inside console dot log does the same job."
+- reset: {}
+  say: "Console dot log is how your code shows you what it's doing, and you'll use it constantly: to see results, to check a value, and to find out which parts of your code actually ran. It can display numbers, text, and the results of calculations."
+- type: { text: "console.log(42)\nconsole.log(\"Learning JavaScript\")\nconsole.log(10 * 10)\nconsole.log(100 / 4 - 5)" }
+  say: "Forty-two is a number. Learning JavaScript is text. Ten times ten, and one hundred divided by four, minus five, are calculations. JavaScript uses plus and minus for adding and subtracting, an asterisk for multiplying, and a slash for dividing."
+- run: {}
+  say: "You see forty-two, the sentence, one hundred, and twenty. As in ordinary math, multiplying and dividing happen before adding and subtracting. One hundred divided by four is twenty-five, and twenty-five minus five is twenty."
+- type: { text: "console.log((2 + 3) * 4)\nconsole.log(2 + 3 * 4)" }
+  say: "Parentheses change the order. Two plus three, in parentheses, times four, is twenty. Without the parentheses, two plus three times four is fourteen, because the multiplication happens first."
+- run: {}
+  say: "The output is twenty, then fourteen."
+- type: { text: "console.log(\"The total is\", 5 + 7)\nconsole.log(\"Two times three is\", 2 * 3, \"and ten minus four is\", 10 - 4)" }
+  say: "You can display several values at once by separating them with commas. Console dot log puts a space between them. Labeling a value this way makes output much easier to understand, especially once a program displays more than one thing."
+- run: {}
+  say: "You see The total is, then twelve, and a second line that labels both calculations."
+- reset: {}
+  say: "Anything after two forward slashes on a line is a comment: a note for people, which the computer ignores."
+- type: { text: "// This line displays the number of days in a week\nconsole.log(7)\n\nconsole.log(24 * 7) // the number of hours in a week" }
+  say: "The first line explains the line under it. On the last line, the comment sits after the code, and only the calculation runs. Comments have three common uses. They explain what code does, so you can understand it later. They record why you did something a particular way, which the code alone can't show. And they turn a line off temporarily: put two slashes in front of a line to stop it from running without deleting it. That's handy when you're hunting for a problem. Assistants often add comments. They're worth reading. A comment tells you what the code is supposed to do, which makes it easier to check whether it actually does."
+- run: {}
+  say: "Only the two numbers appear: seven, and one hundred sixty-eight hours in a week. The notes are ignored."
+- reset: {}
+  say: "Programs constantly need to remember values and use them again. You can give a value a name with let. A named value is called a variable. You'll learn much more about variables later, including how to change what they hold. For now, it's enough to recognize the pattern, because you'll see it in almost every piece of code an assistant writes."
+- type: { text: "let name = \"Ava\"\nconsole.log(\"Hello,\", name)\nconsole.log(\"Hello, \" + name)" }
+  say: "The first line says: create a name, name, and store the string Ava under it. After that, whenever the code uses name, JavaScript uses the value stored there. Notice that name has no quote marks. Without quotes, it refers to the stored value. With quotes, it would just be the four letters."
+- point: { line: 3 }
+  say: "With a comma, console dot log receives two separate values and puts a space between them for you."
+- point: { line: 4 }
+  say: "With a plus sign, you build one string yourself, so you control the spacing. With numbers, plus adds. With strings, it joins them end to end, so Hello, with a space, plus name, becomes the single string Hello, Ava. Joining text this way is called concatenation. That's why the space is inside the quotes. Leave it out and you'd get Hello, Ava with no space between the comma and the name."
+- run: {}
+  say: "Both lines display Hello, Ava. They get there differently. An assistant asked to store your name and print a greeting will usually introduce let, and plus for joining text, and list them as new ideas. When an assistant goes ahead and uses something new, its explanation is what lets you keep up. Changing the name or the greeting is a good thing to try on your own. You'll learn more about joining strings in the lesson on variables and data."
+- reset: {}
+  say: "That semicolon you sometimes see at the end of a line is optional. JavaScript treats the end of a line as the end of a statement. Much of the JavaScript you'll find online, and much of what assistants write, uses semicolons anyway, because many other languages require them."
+- type: { text: "console.log(\"with a semicolon\");\nconsole.log(\"without a semicolon\")" }
+  say: "These two lines do exactly the same thing. You only need a semicolon if you put two statements on the same line."
+- run: {}
+  say: "Both greetings appear. This book leaves semicolons out, for two reasons. There's one less thing to remember, so you can focus on what each line does instead of on punctuation. And with less punctuation, the instructions themselves stand out, so the code is easier to read. Code with semicolons works just as well, so there's no need to remove them from code you find. Your learner profile asks your assistant to leave them out so its code matches this book."
+- reset: {}
+  say: "Every programmer, at every level, runs into errors constantly. An error isn't a sign you've failed. It's the computer telling you, as precisely as it can, that it tried to follow your instructions and couldn't."
+- type: { text: "console.log(\"Hello\"" }
+  say: "This line is missing its closing parenthesis. Run it, and look for a message instead of a greeting."
+- run: {}
+  say: "You get a syntax error: missing parenthesis after argument list. The editor adds the line number where it found the problem. The message may start with the word Uncaught, which just means nothing in the code handled the error. Other browsers word the message a little differently."
+- say: "Most errors a beginner meets fall into four groups. Syntax errors break the rules of how JavaScript must be written, such as a missing parenthesis or quote mark. The computer can't even start running the code. Reference errors use a name that doesn't exist, usually because of a typo, or because the name was never created. Type errors try to do something with a value that doesn't make sense for that kind of value. You'll meet those later. Logic errors run without complaint but do the wrong thing, such as adding when they should subtract. Those are the hardest to find, because nothing tells you they're there. You find them by checking results against your plan. Syntax means the rules for how code in a language must be written."
+- say: "Error messages look intimidating, but they're usually telling you three useful things: what kind of error it is, what went wrong, and where, which is the line number. When a message doesn't make sense, ask your assistant to explain it, and ask it not to fix the code yet. A good explanation takes the message apart one piece at a time. Parentheses come in pairs. When JavaScript finds an opening parenthesis, it keeps reading until it finds the matching one. Here, it ran out of line first. The argument list is whatever sits inside the parentheses. Here, that's the string Hello. A value you hand to console dot log this way is called an argument. If a word in an explanation is new, you can always ask what it means."
+- replace: { find: "console.log(\"Hello\"", text: "console.log(\"Hello\")" }
+  say: "Notice what that kind of reply doesn't do. It doesn't hand you the corrected line. It leaves the fix to you. Add the missing parenthesis. Spotting it yourself is what builds the skill, and the next time you forget one you'll be able to fix it without asking. Once you understand an error, asking for a fix is a fine way to save time. While you're learning, ask for the explanation first. A useful habit from the other kind of reply: whenever you type an opening parenthesis, immediately type its matching closing one, before you fill in what goes inside."
+- run: {}
+  say: "Now the greeting appears."
+- reset: {}
+  say: "Here's a different kind of error. The name is misspelled."
+- type: { text: "let name = \"Ava\"\nconsole.log(nmae)" }
+  say: "The first line creates name and stores Ava. The second line asks for n m a e, a name that was never created."
+- point: { line: 3 }
+  say: "The typo is on this line."
+- run: {}
+  say: "The message is a reference error: nmae is not defined. It says the problem is a name that JavaScript doesn't recognize. Once you know that, the typo is easy to spot."
+- replace: { find: "nmae", text: "name" }
+  say: "Correct the spelling, and the line uses the value stored under name."
+- run: {}
+  say: "Ava appears."
+- say: "Finding and fixing problems in code is called debugging. These habits will save you time from the start. Read the error message slowly, one piece at a time. Check for typos, especially in names and punctuation. Use console dot log to check values while the code runs. Turn off lines with two slashes to narrow down which one causes a problem. Make small changes and test each one, instead of changing many things at once. And ask your assistant to explain before you ask it to fix. An explanation helps you next time too."
+- say: "Every language has rules for how words fit together. JavaScript's rules are strict: a missing parenthesis or quote mark stops the code from running at all. That's why a human reader might not notice a problem that the computer refuses to accept. As you learn JavaScript, you'll meet a handful of building blocks over and over. Keywords, words with special meaning, such as let. Values, such as numbers and strings. Names you choose for your own values, such as name. Operators, such as plus, minus, asterisk, and slash. Punctuation, such as parentheses, quote marks, and the curly braces you'll soon use to group lines together. And comments, starting with two slashes."
+- say: "Syntax is about whether code is valid. Structure is about whether it's understandable: lines in a sensible order, consistent indentation, meaningful names, and comments where they help. The computer doesn't care about structure, but you will, and so will anyone else who reads your code later. Well-structured code is also easier to check, which matters when an assistant wrote it."
+- say: "You've learned enough to update your learner profile. Use the new version at the start of every new chat from now on. Two things changed. The sentence I don't know any programming concepts yet is gone, and What I know so far now lists what you learned here: statements and expressions, console dot log, including several values separated by commas, text in quote marks, joining strings with plus, numbers and the arithmetic operators, comments that start with two slashes, giving a value a name with let, and reading error messages. The rules stay the same. With this profile, an assistant can use those ideas in its code, and should tell you when a task needs anything else."
+- say: "Here's the lesson in one pass. This book's code editors run JavaScript right in the page. An expression produces a value, and a statement tells the computer to do something with it. Console dot log displays values: text in quote marks, numbers, calculations, or several values separated by commas. Comments start with two slashes and are ignored by the computer. Let gives a value a name, called a variable, so you can use it again. Semicolons are optional in JavaScript, and this book leaves them out. Errors are normal. They tell you what kind of problem the computer found, what it was, and where. When a message is unclear, ask your assistant to explain it before you ask it to fix the code."
+:::
+
 ## Where You'll Run Code
 
 Code editors like the one below appear throughout this book. Each one has a Run button (▶). Click it, and the code runs right here in the page, with any output shown underneath. You can change the code and run it again as often as you like.
