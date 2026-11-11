@@ -2,6 +2,8 @@
   "blogUrl": "book1007.blogspot.com",
   "bookId": "ms8i",
   "title": "Personal Productivity with Javascript",
+  "subject": "Data and programming",
+  "description": "Learn to program by automating real work in Google Sheets with JavaScript and Apps Script, with an AI assistant alongside.",
   "authors": [
     "Gove Allen",
     "Mattia Allen"
@@ -11,6 +13,7 @@
   "cloudflareAccountId": "0bfdb544606ce71a8c67be03fabd48ee",
   "appSlug": "js",
   "system": "dev",
+  "comprehensionPromptEnabled": true,
   "versions": {
     "alpha": {
       "chapters": [
@@ -253,35 +256,6 @@
           "id": "learning-profile",
           "title": "Writing Your Own Learning Profile",
           "filename": "48.html"
-        }
-      ]
-    },
-    "beta": {
-      "chapters": [
-        {
-          "id": "welcome",
-          "title": "Welcome to Programming",
-          "filename": "1.html"
-        },
-        {
-          "id": "first-code",
-          "title": "Your First Lines of Code",
-          "filename": "2.html"
-        },
-        {
-          "id": "apps-script",
-          "title": "Getting Started with Google Apps Script in Google Sheets",
-          "filename": "3.html"
-        },
-        {
-          "id": "decisions",
-          "title": "Making Decisions",
-          "filename": "5.html"
-        },
-        {
-          "id": "variables",
-          "title": "Variables and Data",
-          "filename": "4.html"
         }
       ]
     }

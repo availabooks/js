@@ -504,62 +504,6 @@ The message says exactly what's wrong, once you know how to read it: four rows o
 
 (The fix: change `"F2:F4"` to `"F2:F5"`.)
 
-## Reading Code from Elsewhere
-
-To finish, here's the kind of code you'll find online and in replies from an assistant that doesn't have your profile. The request describes the sheet, but no profile was sent:
-
-::: {.ai-conversation prompt="My Google Sheet is named Members. Row 1 has headers: First Name, Last Name, Email, Dues Paid, Volunteer Hours. Write Apps Script that reads the data with getValues and logs the first member's full name and email." assistant="Claude" model="claude-sonnet-5" captured="2026-09-26" profile="none" transcript="arrays/no-profile"}
-> Here's an Apps Script function that reads the data from your "Members" sheet and logs the first member's full name and email:
->
-> ```javascript
-> function logFirstMember() {
->   // Get the active spreadsheet and the "Members" sheet
->   const ss = SpreadsheetApp.getActiveSpreadsheet();
->   const sheet = ss.getSheetByName("Members");
->
->   // Get all data from the sheet as a 2D array
->   const data = sheet.getDataRange().getValues();
->
->   // Row 0 is the header row, so the first member is row index 1
->   const firstMemberRow = data[1];
->
->   // Columns: 0 = First Name, 1 = Last Name, 2 = Email, 3 = Dues Paid, 4 = Volunteer Hours
->   const firstName = firstMemberRow[0];
->   const lastName = firstMemberRow[1];
->   const email = firstMemberRow[2];
->
->   const fullName = firstName + " " + lastName;
->
->   Logger.log("Full Name: " + fullName);
->   Logger.log("Email: " + email);
-> }
-> ```
->
-> ### How it works:
-> 1. **`SpreadsheetApp.getActiveSpreadsheet()`** — gets the current spreadsheet.
-> 2. **`getSheetByName("Members")`** — targets your specific sheet by name.
-> 3. **`getDataRange().getValues()`** — reads all the data into a 2D array (`data`), where `data[0]` is the header row and `data[1]` is the first member's row.
-> 4. Indexes `[0]`, `[1]`, `[2]` correspond to **First Name**, **Last Name**, and **Email** columns respectively, based on your headers.
-> 5. **`Logger.log()`** — outputs the results, which you can view via **View > Logs** (or `Ctrl+Enter` in the Apps Script editor) after running the function.
->
-> ### To run it:
-> 1. Open your Google Sheet.
-> 2. Go to **Extensions > Apps Script**.
-> 3. Paste this code into the script editor.
-> 4. Save, then select `logFirstMember` from the function dropdown and click **Run**.
-> 5. Check the logs (**View > Logs** or **Ctrl+Enter**) to see the output.
->
-> Let me know if you'd like a version that loops through *all* members instead of just the first one!
-:::
-
-::: {.wko}
-
-You can read nearly all of it now. It uses `const` and semicolons, as expected, and a short variable name, `ss`, for the spreadsheet. It chains `getDataRange().getValues()`. And it uses `Logger.log` instead of `console.log`. In Apps Script, `Logger.log` also writes to the Execution log, so for your purposes the two work the same way.
-
-:::
-
-The instructions at the end are the part to check. They say to see the output under **View**, then **Logs**. The current Apps Script editor has no View menu; the Execution log opens by itself below the code when you run a function. That menu was in an older version of the editor, and plenty of instructions written for it are still online. As in [Getting Started with Google Apps Script in Google Sheets](apps-script){.book-link}, check an assistant's directions against what's on your screen.
-
 ## Your Learner Profile
 
 Here's the update for this lesson:

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Captures real AI replies for the book's conversation blocks (see AUTHORING.md,
+// Captures real AI replies for the book's conversation blocks (see AGENTS.md,
 // "Capturing replies"). Sends a conversation to Claude (the book's assistant) and
 // saves the full exchange in transcripts/<lesson>/<name>.json.
 //

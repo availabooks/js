@@ -2,7 +2,7 @@
 
 How lessons in *Personal Productivity with JavaScript* are written and marked up. The plan for the book is in `outline.md`; the platform's general chapter rules are in `tools/system-files/authoring-chapters.md` (in the monorepo), and they apply here too. Some conventions below describe features whose tooling isn't built yet. Use them anyway, so the tooling works on every lesson when it arrives.
 
-This file, `outline.md`, `reference/` and `private/` are not published. The build only reads `chapters/`, `assessments/` and `images/`.
+This file, `CLAUDE.md`, `outline.md`, `reference/` and `private/` are not published. The build only reads `chapters/`, `assessments/` and `images/`.
 
 ---
 
