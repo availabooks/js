@@ -102,8 +102,6 @@ skills:
     text: reading a range with getValues() and writing one with setValues(), and getDataRange()
   - id: uz7
     text: getting a sheet by name with SpreadsheetApp.getActiveSpreadsheet().getSheetByName()
-  - id: wko
-    text: Logger.log, which works like console.log in Apps Script
 
   # loops
   - id: m95
